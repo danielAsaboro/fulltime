@@ -9,64 +9,74 @@ zero fanswarm/QVAC/Tether identifiers in this tree). Both dirs are gitignored.
 
 ---
 
-## Current state — Phase 0 (scaffold) ✅ complete
+## Current state — Phase 1 (TxLINE spine) ✅ built + verified offline
 
-- Monorepo initialized: npm workspaces, TypeScript throughout. Fresh git on `main`.
-  - `apps/web` — Next.js 16 (App Router, TS, Tailwind v4, Turbopack), `@fulltime/web`.
-  - `apps/worker` — TS worker run with `tsx`, `@fulltime/worker`; hosts the TxLINE spine.
-  - `packages/shared` — framework-free domain model + pure logic, `@fulltime/shared`
-    (ships raw TS; worker transpiles via tsx, web via Next `transpilePackages`).
-- `packages/shared/src` domain modules (aligned 1:1 with PRD data tables):
-  `ids, time, identity, fixtures, feed, events, odds, rooms, matchsync, calls,
-  answers, settlements, receipts, scoring, social, market-says, records,
-  highlights, realtime`. Pure helpers already implemented + tested: MatchSync
-  release math (`time`), feed ordering/dedupe (`feed`), odds de-vig (`odds`),
-  difficulty/points (`scoring`), fixture status predicates (`fixtures`).
-- Root files: `.gitignore`, `.env.example`, `feedback.md`, `HANDOFF.md`, `README.md`,
-  `tsconfig.base.json`, root `package.json` (workspace scripts + shared devtools).
+Phase 0 scaffold (monorepo, shared domain model, web) is done — see git history and
+the shared module list below. Phase 1 built the worker's TxLINE spine end-to-end.
 
-**Verification (all green):** `shared` typecheck + 18 unit tests pass · `worker`
-typecheck + boots (`npm run worker`) · `web` typecheck + `next build` succeed.
+**Coded against the real OpenAPI spec** (`docs.yaml` v1.5.2, found at
+`https://txline.txodds.com/docs/docs.yaml`), not guesses. `apps/worker/src`:
+- `txline/types.ts` — exact wire shapes (Fixture, Scores/SoccerData/SoccerScore,
+  OddsPayload, SSE envelopes). The documented boundary with the feed.
+- `txline/auth.ts` + `txline/http.ts` — guest JWT + activate; every request sends
+  `Authorization: Bearer <jwt>` + `X-Api-Token`; transparent refresh + retry on 401.
+- `txline/activation.ts` — build the `${txSig}:${leagues}:${jwt}` binding, ed25519
+  wallet-sign it (Node-native, Solana-compatible), exchange for the API token.
+- `txline/fixtures.ts` — `/api/fixtures/snapshot` → normalized `Fixture[]`; find by teams.
+- `txline/sse.ts` — generic SSE loop: backoff reconnect, `Last-Event-ID` resume,
+  heartbeat-gap detection, event-id dedupe.
+- `txline/scores.ts` + `txline/odds.ts` — normalize records; odds read TxLINE's
+  pre-demargined `Pct[]` straight into de-vigged probabilities.
+- `txline/status.ts` — game-phase code → `FixtureStatus` (see status note below).
+- `state/fixture-machine.ts` — seq-ordered, idempotent fold → `FixtureState`,
+  phase-transition events, feed-gap recording.
+- `recorder/recorder.ts` — **RECORDER**: `corpus/{net}/{fixtureId}.jsonl`, raw
+  (payload + received_at + feed ts) + normalized snapshots.
+- `txline/snapshot.ts` — snapshot/updates recovery for reconnect rebuild.
+- `ingest.ts` / `index.ts` / `demo.ts` — orchestration + an offline synthetic demo.
 
-**Run it:** `npm install` → `npm run worker` (banner + missing-cred warnings) ·
-`npm run web` · `npm run typecheck` · `npm test`.
+**Verification (all green):** 3 workspaces typecheck · 26 unit tests pass
+(shared 18, worker 8) · **recorder proven offline** via `npm run worker -- --demo`
+(synthetic France–Morocco feed → 10 raw + 10 snapshot records incl. goals, cards,
+phase transitions, and a deliberate seq-gap captured as a `FeedGap`).
 
 ## Key decisions
 
-- **Package manager:** npm workspaces (no new tooling; Node 24 / npm 11 present).
-- **shared ships TS source, not a build artifact.** Avoids a build-ordering step in
-  a hackathon. Worker transpiles on the fly (`tsx`); web uses Next `transpilePackages`.
-- **TS resolution:** `moduleResolution: "Bundler"` in `tsconfig.base.json` so hand-written
-  source doesn't need explicit `.js` import extensions; `tsx` runs it as ESM directly.
-- **Feed time is authoritative.** MatchSync (per-user delay) is presentation-only and
-  never influences settlement. This is a hard invariant across worker + shared.
-- **Corpus-first recorder.** Because TxLINE message schemas aren't published as
-  JSON Schema, the recorder captures raw payloads on the wire first; normalized
-  schema is locked from real data. Corpus feeds settle-engine tests + replay + demo.
+- npm workspaces; **shared ships TS source** (no build step; tsx + Next `transpilePackages`).
+- `moduleResolution: "Bundler"` so source needs no `.js` extensions; tsx runs ESM directly.
+- **Feed time is authoritative; MatchSync is presentation-only.** Hard invariant.
+- **Two ways in, token fast-path preferred.** Seed `TXLINE_JWT` + `TXLINE_API_TOKEN`
+  (from the affiliate site / a prior activation) and the worker streams immediately.
+  The on-chain `subscribe` tx is produced externally with a funded wallet; the worker
+  does the wallet-signing + `/api/token/activate` given its `txSig`.
+- **Ordering keys differ per stream:** scores by `seq` (namespaced `fixtureId:seq`),
+  odds by `MessageId`. Both carry `ts`/`Ts` feed time.
+- **Status codes** mapped in `status.ts`; only `13 FPE` (ended after penalties) is
+  terminal among 11–13, not all three (brief was off here — logged in feedback.md).
 
 ## Next steps (in order)
 
-- **Phase 1 — TxLINE spine (tonight-critical).** In `apps/worker`:
-  1. Auth chain: `POST {origin}/auth/guest/start` → JWT; on-chain `subscribe`
-     (devnet level 1 + mainnet level 12 realtime if activation allows); wallet-sign
-     activation; `POST /api/token/activate`; every request carries
-     `Authorization: Bearer <jwt>` + `X-Api-Token`; persist tokens; auto-refresh on 401.
-  2. Fixtures loader (World Cup fixture ids, kickoffs, status map; shootout statuses
-     11–13 are terminal).
-  3. SSE clients for `/api/scores/stream` + `/api/odds/stream` (reconnect w/ backoff,
-     message-id dedupe, heartbeat gap detection).
-  4. **RECORDER** → `corpus/{net}/{fixtureId}.jsonl` (raw msg + received_at + feed ts)
-     plus a normalized state-snapshot stream.
-  5. Snapshot recovery: `/api/scores/snapshot/{fixtureId}` + updates search.
-  - **Acceptance:** recorder writing live events during tonight's France–Morocco QF.
-  - **CHECKPOINT:** show recorder output, update this file, commit. Stop for review
-    before Phase 2 unless told to continue.
+1. **Go live (needs credentials — see below).** Set `.env` and run `npm run worker`.
+   Confirm the wire matches `txline/types.ts`; fix any field/case drift and log it in
+   feedback.md. Confirm the real World Cup `competitionId` and set `WORLDCUP_COMPETITION_ID`.
+   Record tonight's France–Morocco QF into `corpus/`.
+2. **Phase 2 — data + transport.** Provision Supabase; build the schema from the PRD
+   tables; room provisioner (one global room per fixture); realtime channel-per-room
+   diff fan-out. The shared types already map 1:1 to the tables.
+3. **Phase 3 — the core** (settle engine over the corpus, call scheduler, scoring,
+   social layer, Market Says, receipts + anchor watcher, replay, SIWS). Settle-engine
+   tests run against the recorded corpus.
 
 ## Open questions / blockers
 
-- **Credentials needed to run Phase 1 live:** a Solana keypair at
-  `ACTIVATION_KEYPAIR_PATH` and confirmation that guest activation is permitted to
-  subscribe to mainnet level 12 (realtime). Devnet level 1 is the fallback demo path.
-- **Exact TxLINE message schemas** are unverified (no OpenAPI in the kit). Worker codes
-  against the documented shape; recorder captures raw so we can lock schema from the wire.
+- **To run live-fire you need one of:** (a) a seeded `TXLINE_API_TOKEN` (+ optional
+  `TXLINE_JWT`), or (b) `ACTIVATION_KEYPAIR_PATH` + `ACTIVATION_TX_SIG` from an on-chain
+  `subscribe` run with a funded wallet, plus `TXLINE_LEAGUES`. Also confirm guest
+  activation may subscribe to mainnet level 12 (realtime); else devnet level 1 (60s delay).
+- **On-chain `subscribe` is produced outside this worker.** Building/sending that Solana
+  tx (program IDL from `programs/*` + tx-on-chain repo) is not implemented here — the
+  worker consumes its resulting `txSig`. Wire this in if we want fully in-worker subscribe.
+- **Live schema drift:** types match the OpenAPI spec but haven't touched the live wire.
+  First live run may surface field/case differences (esp. `statusSoccerId` object variant
+  vs `dataSoccer.StatusId`, and `Prices[]` scaling). Recorder captures raw to reconcile.
 - Supabase project not yet provisioned (Phase 2).
