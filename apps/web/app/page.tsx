@@ -1,9 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Container, Eyebrow } from "@/components/ui/primitives";
+import { AnnouncementBar } from "@/components/announcement-bar";
+import { Faq } from "@/components/faq";
 import { LiveStrip } from "@/components/live-strip";
+import { MatchSyncFeature } from "@/components/match-sync-feature";
+import { PipelineDiagram } from "@/components/pipeline-diagram";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
+
+const BUILT_ON = ["TxLINE", "Solana", "Supabase", "Next.js", "World Cup 2026"];
 
 const FEATURES = [
   {
@@ -33,24 +39,27 @@ const STEPS = [
 export default function Home() {
   return (
     <>
+      <AnnouncementBar />
       <SiteNav />
 
       <main>
         {/* Hero */}
         <section className="relative overflow-hidden">
-          <div className="wash-coral-sky pointer-events-none absolute -top-32 right-0 h-96 w-96 opacity-40" aria-hidden />
-          <Container className="relative py-20 sm:py-28">
-            <div className="max-w-3xl space-y-6">
-              <Eyebrow>Spoiler-safe · World Cup 2026</Eyebrow>
+          <div className="wash-coral-sky pointer-events-none absolute -top-24 left-1/2 h-[420px] w-[720px] -translate-x-1/2 opacity-40" aria-hidden />
+          <Container className="relative py-20 text-center sm:py-28">
+            <div className="mx-auto max-w-3xl space-y-6">
+              <div className="flex justify-center">
+                <Eyebrow>Spoiler-safe · World Cup 2026</Eyebrow>
+              </div>
               <h1 className="text-heading sm:text-heading-lg lg:text-display text-off-black">
                 The World Cup, on your own clock.
               </h1>
-              <p className="max-w-2xl font-mono text-body-lg text-graphite">
+              <p className="mx-auto max-w-2xl font-mono text-body-lg text-graphite">
                 FullTime turns your second screen into a synced match room. Make calls that settle from
                 verified data, react to the moments as they reach <em>your</em> stream, and leave with a
                 Fan Report nobody can fake.
               </p>
-              <div className="flex flex-wrap gap-3 pt-2">
+              <div className="flex flex-wrap justify-center gap-3 pt-2">
                 <Button href="/matches" variant="primary" withArrow>
                   Find your match
                 </Button>
@@ -62,10 +71,31 @@ export default function Home() {
           </Container>
         </section>
 
+        {/* Built-on credibility strip */}
+        <section className="border-t border-ash">
+          <Container className="flex flex-col gap-4 py-8 sm:flex-row sm:items-center sm:gap-10">
+            <span className="font-mono text-caption uppercase tracking-[0.14em] text-smoke">Built on</span>
+            <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
+              {BUILT_ON.map((name) => (
+                <span key={name} className="font-mono text-body-sm uppercase tracking-[0.06em] text-smoke">
+                  {name}
+                </span>
+              ))}
+            </div>
+          </Container>
+        </section>
+
         {/* Live now */}
         <section className="border-t border-ash">
           <Container className="py-14">
             <LiveStrip />
+          </Container>
+        </section>
+
+        {/* MatchSync — the elevated Periwinkle feature */}
+        <section className="border-t border-ash">
+          <Container className="py-16 sm:py-20">
+            <MatchSyncFeature />
           </Container>
         </section>
 
@@ -92,6 +122,25 @@ export default function Home() {
           </Container>
         </section>
 
+        {/* Pipeline — how the data flows */}
+        <section className="border-t border-ash">
+          <Container className="py-16 sm:py-20">
+            <div className="max-w-2xl space-y-3">
+              <Eyebrow>Load-bearing TxLINE</Eyebrow>
+              <h2 className="text-heading-sm text-off-black">
+                Verified live data in. Playable, provable moments out.
+              </h2>
+              <p className="font-mono text-body-lg text-graphite">
+                Scores, odds, and events are normalized to one canonical, message-ordered state — then
+                fan out to the room as calls that settle, Market Says context, and receipts you can verify.
+              </p>
+            </div>
+            <div className="mt-12">
+              <PipelineDiagram />
+            </div>
+          </Container>
+        </section>
+
         {/* How it works */}
         <section className="border-t border-ash">
           <Container className="py-16 sm:py-20">
@@ -108,6 +157,19 @@ export default function Home() {
                 </li>
               ))}
             </ol>
+          </Container>
+        </section>
+
+        {/* FAQ */}
+        <section className="border-t border-ash">
+          <Container className="py-16 sm:py-20">
+            <div className="grid gap-10 lg:grid-cols-[320px_1fr]">
+              <div className="space-y-3">
+                <Eyebrow>Questions</Eyebrow>
+                <h2 className="text-heading-sm text-off-black">The honest answers.</h2>
+              </div>
+              <Faq />
+            </div>
           </Container>
         </section>
 

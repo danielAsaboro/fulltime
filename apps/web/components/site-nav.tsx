@@ -10,6 +10,7 @@ import { SignInModal } from "@/components/sign-in-modal";
 
 const LINKS = [
   { href: "/matches", label: "Matches" },
+  { href: "/replay/9001", label: "Replay" },
   { href: "/record", label: "Record" },
 ];
 
@@ -35,16 +36,21 @@ export function SiteNav({ border = false }: { border?: boolean }) {
           </nav>
         </div>
 
-        {session ? (
-          <div className="flex items-center gap-2">
-            <span className="size-2 rounded-full bg-mint" aria-hidden />
-            <span className="font-mono text-body-sm text-off-black">{session.displayName}</span>
-          </div>
-        ) : (
-          <Button variant="ghost" size="sm" onClick={() => setSignInOpen(true)}>
-            Sign in
+        <div className="flex items-center gap-3">
+          {session ? (
+            <div className="flex items-center gap-2">
+              <span className="size-2 rounded-full bg-mint" aria-hidden />
+              <span className="font-mono text-body-sm text-off-black">{session.displayName}</span>
+            </div>
+          ) : (
+            <Button variant="ghost" size="sm" onClick={() => setSignInOpen(true)}>
+              Sign in
+            </Button>
+          )}
+          <Button href="/matches" variant="secondary" size="sm" className="hidden sm:inline-flex">
+            Enter a room
           </Button>
-        )}
+        </div>
       </Container>
       <SignInModal open={signInOpen} onClose={() => setSignInOpen(false)} />
     </header>
