@@ -1,0 +1,81 @@
+import Link from "next/link";
+
+import type { FixtureCard as FixtureCardModel } from "@/lib/data";
+import { cn } from "@/lib/cn";
+import { Tag } from "@/components/ui/tag";
+
+function kickoffLabel(ms: number): string {
+  const d = new Date(ms);
+  const hh = String(d.getUTCHours()).padStart(2, "0");
+  const mm = String(d.getUTCMinutes()).padStart(2, "0");
+  return `${hh}:${mm} UTC`;
+}
+
+function crowdLabel(n: number): string {
+  return n >= 1000 ? `${(n / 1000).toFixed(1)}k` : String(n);
+}
+
+function TeamRow({ code, name, score }: { code: string; name: string; score?: number | null }) {
+  return (
+    <div className="flex items-baseline justify-between gap-3">
+      <span className="min-w-0 truncate">
+        <span className="font-mono text-body font-medium uppercase tracking-[0.02em] text-off-black">{code}</span>
+        <span className="ml-2 font-mono text-caption uppercase tracking-[0.08em] text-smoke">{name}</span>
+      </span>
+      {score != null ? (
+        <span className="font-mono text-body-lg font-medium tabular text-off-black">{score}</span>
+      ) : null}
+    </div>
+  );
+}
+
+export function FixtureCard({
+  card,
+  className,
+}: {
+  card: FixtureCardModel;
+  className?: string;
+}) {
+  const { fixture, phase, score, minute, crowd, roomId } = card;
+  const home = fixture.home.shortName ?? fixture.home.name.slice(0, 3).toUpperCase();
+  const away = fixture.away.shortName ?? fixture.away.name.slice(0, 3).toUpperCase();
+
+  return (
+    <Link
+      href={`/room/${roomId}`}
+      className={cn(
+        "group flex flex-col justify-between gap-4 rounded-card border border-ash bg-parchment p-6 transition-colors hover:border-off-black",
+        className,
+      )}
+    >
+      <div className="flex items-center justify-between">
+        {phase === "live" ? (
+          <Tag tone="live" dot="live">
+            {minute != null ? `${minute}'` : "Live"}
+          </Tag>
+        ) : phase === "finished" ? (
+          <Tag tone="muted">Full-time</Tag>
+        ) : (
+          <Tag>{kickoffLabel(Number(fixture.kickoff))}</Tag>
+        )}
+        <span className="font-mono text-caption uppercase tracking-[0.08em] text-smoke">
+          {crowdLabel(crowd)} in
+        </span>
+      </div>
+
+      <div className="space-y-2">
+        <TeamRow code={home} name={fixture.home.name} score={score?.home} />
+        <TeamRow code={away} name={fixture.away.name} score={score?.away} />
+      </div>
+
+      <div className="flex items-center justify-between border-t border-ash pt-3">
+        <span className="font-mono text-caption uppercase tracking-[0.08em] text-smoke">
+          {phase === "upcoming" ? "Room open" : phase === "live" ? "Join the room" : "Match memory"}
+        </span>
+        <span className="font-mono text-body-sm text-off-black transition-transform group-hover:translate-x-0.5" aria-hidden>
+          →
+        </span>
+      </div>
+    </Link>
+  );
+}

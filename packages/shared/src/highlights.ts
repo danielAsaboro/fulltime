@@ -5,8 +5,8 @@
  * pins every input the highlight was built from (PRD §4.9).
  */
 
-import type { FixtureId, HighlightId, RoomId } from "./ids.js";
-import type { WallClock } from "./time.js";
+import type { FixtureId, HighlightId, RoomId } from "./ids";
+import type { WallClock } from "./time";
 
 export type HighlightKind =
   | "half-time-pulse"

@@ -1,9 +1,9 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
-import { compareFeedOrder, dedupeByMessageId, orderFeed } from "../src/feed.js";
-import { asFeedMessageId } from "../src/ids.js";
-import { asFeedTimestamp } from "../src/time.js";
+import { compareFeedOrder, dedupeByMessageId, orderFeed } from "../src/feed";
+import { asFeedMessageId } from "../src/ids";
+import { asFeedTimestamp } from "../src/time";
 
 const msg = (ts: number | null, id: string | null) => ({
   feedTs: ts === null ? null : asFeedTimestamp(ts),

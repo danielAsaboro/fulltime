@@ -6,9 +6,9 @@
  * deweighting (PRD §4.2). A viewer's stream delay never changes settlement.
  */
 
-import type { AnswerId, CallId, UserId } from "./ids.js";
-import type { CallOptionId } from "./calls.js";
-import type { FeedTimestamp, WallClock } from "./time.js";
+import type { AnswerId, CallId, UserId } from "./ids";
+import type { CallOptionId } from "./calls";
+import type { FeedTimestamp, WallClock } from "./time";
 
 export interface Answer {
   id: AnswerId;

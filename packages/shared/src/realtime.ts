@@ -5,14 +5,14 @@
  * server broadcast reaches every viewer spoiler-safe on their own clock.
  */
 
-import type { CallId, PollId, RoomId } from "./ids.js";
-import type { Call } from "./calls.js";
-import type { FixtureState, MatchEvent } from "./events.js";
-import type { MarketSaysCard } from "./market-says.js";
-import type { Receipt } from "./receipts.js";
-import type { Note, Reaction, Poll } from "./social.js";
-import type { Settlement } from "./settlements.js";
-import type { FeedTimestamp, WallClock } from "./time.js";
+import type { CallId, PollId, RoomId } from "./ids";
+import type { Call } from "./calls";
+import type { FixtureState, MatchEvent } from "./events";
+import type { MarketSaysCard } from "./market-says";
+import type { Receipt } from "./receipts";
+import type { Note, Reaction, Poll } from "./social";
+import type { Settlement } from "./settlements";
+import type { FeedTimestamp, WallClock } from "./time";
 
 export type RoomDiff =
   | { type: "fixture.state"; state: FixtureState }

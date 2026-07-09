@@ -4,8 +4,8 @@
  * mispriced by the overround. No LLM touches this; it's deterministic math.
  */
 
-import type { FeedMessageId, FixtureId } from "./ids.js";
-import type { FeedTimestamp } from "./time.js";
+import type { FeedMessageId, FixtureId } from "./ids";
+import type { FeedTimestamp } from "./time";
 
 export type OutcomeKey = "home" | "draw" | "away";
 

@@ -5,12 +5,12 @@
  * messages yields the same result). Void is a first-class, honest outcome.
  */
 
-import type { FeedMessageId, SettlementId, CallId } from "./ids.js";
-import type { Call, CallOptionId } from "./calls.js";
-import type { FeedGap, MatchEvent } from "./events.js";
-import type { FixtureStatus } from "./fixtures.js";
-import type { OddsSnapshot } from "./odds.js";
-import type { FeedTimestamp } from "./time.js";
+import type { FeedMessageId, SettlementId, CallId } from "./ids";
+import type { Call, CallOptionId } from "./calls";
+import type { FeedGap, MatchEvent } from "./events";
+import type { FixtureStatus } from "./fixtures";
+import type { OddsSnapshot } from "./odds";
+import type { FeedTimestamp } from "./time";
 
 export type VoidReason =
   | "feed-gap"

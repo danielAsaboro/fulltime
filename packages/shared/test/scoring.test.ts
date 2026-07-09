@@ -6,7 +6,7 @@ import {
   MAX_DIFFICULTY_MULTIPLIER,
   callPoints,
   difficultyMultiplier,
-} from "../src/scoring.js";
+} from "../src/scoring";
 
 test("difficulty rewards the improbable and clamps the long shot", () => {
   assert.equal(difficultyMultiplier(0.5), 2);

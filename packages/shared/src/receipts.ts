@@ -4,9 +4,9 @@
  * legitimate, honest state; we never fake a checkmark before proof exists (PRD §4.8).
  */
 
-import type { FixtureId, MatchEventId, ReceiptId, UserId, CallId } from "./ids.js";
-import type { SettleOutcome } from "./settlements.js";
-import type { WallClock } from "./time.js";
+import type { FixtureId, MatchEventId, ReceiptId, UserId, CallId } from "./ids";
+import type { SettleOutcome } from "./settlements";
+import type { WallClock } from "./time";
 
 export type ReceiptState = "settled" | "proof-pending" | "anchored" | "void";
 

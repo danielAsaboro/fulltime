@@ -3,8 +3,8 @@
  * per fixture (see `rooms.ts`). Status drives room lifecycle and call scheduling.
  */
 
-import type { FixtureId } from "./ids.js";
-import type { FeedTimestamp } from "./time.js";
+import type { FixtureId } from "./ids";
+import type { FeedTimestamp } from "./time";
 
 export interface Team {
   /** TxLINE team identifier, kept as-is from the feed. */

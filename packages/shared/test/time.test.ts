@@ -8,7 +8,7 @@ import {
   isReleased,
   msUntilRelease,
   releaseAt,
-} from "../src/time.js";
+} from "../src/time";
 
 test("releaseAt adds the delay (in ms) to feed time", () => {
   assert.equal(releaseAt(asFeedTimestamp(1_000_000), 8), 1_008_000);

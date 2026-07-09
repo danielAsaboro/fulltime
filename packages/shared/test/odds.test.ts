@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
-import { impliedFromDecimal } from "../src/odds.js";
+import { impliedFromDecimal } from "../src/odds";
 
 test("de-vigs a clean book to exact probabilities", () => {
   const p = impliedFromDecimal({ home: 2, draw: 4, away: 4 });

@@ -10,9 +10,9 @@
  * window by which the outcome must resolve; unresolved or gap-crossed ⇒ void).
  */
 
-import type { CallId, FixtureId, RoomId } from "./ids.js";
-import type { TeamSide } from "./events.js";
-import type { FeedTimestamp } from "./time.js";
+import type { CallId, FixtureId, RoomId } from "./ids";
+import type { TeamSide } from "./events";
+import type { FeedTimestamp } from "./time";
 
 export type CallTemplateKind = "window" | "threshold" | "next-event" | "market-read" | "crowd";
 

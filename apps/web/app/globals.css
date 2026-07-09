@@ -1,26 +1,160 @@
 @import "tailwindcss";
 
+/*
+ * FullTime design system — "Monad": editorial serif + mono on warm parchment.
+ * Tokens are the visual law (internal/design.md, internal/designrule.md).
+ * Serif = Untitled Serif (fallback Newsreader) at weight 400, headings only.
+ * Mono  = ABC Diatype Mono (fallback JetBrains Mono), ALL functional UI + data.
+ * Lake Blue is the single primary action per screen; pastels are decorative only.
+ */
+
+@theme {
+  /* Colors */
+  --color-parchment: #f6f3f1;
+  --color-lake-blue: #2b59d1;
+  --color-periwinkle-mist: #cfdaf5;
+  --color-sky-blue: #a0b5eb;
+  --color-mint: #a7fccd;
+  --color-coral: #ff9473;
+  --color-gold: #ecda98;
+  --color-crimson: #f37a0a;
+  --color-off-black: #242424;
+  --color-ink: #000000;
+  --color-graphite: #4e4d4d;
+  --color-smoke: #797776;
+  --color-ash: #cecac8;
+
+  /* Fonts — next/font provides the variables set on <html> */
+  --font-serif: var(--font-newsreader), ui-serif, Georgia, Cambria, "Times New Roman", serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Type scale (size / line-height / tracking) */
+  --text-caption: 12px;
+  --text-caption--line-height: 1.2;
+  --text-caption--letter-spacing: -0.4px;
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 1.35;
+  --text-body-sm--letter-spacing: -0.28px;
+  --text-body: 16px;
+  --text-body--line-height: 1.35;
+  --text-body--letter-spacing: -0.4px;
+  --text-label: 18px;
+  --text-label--line-height: 1.2;
+  --text-label--letter-spacing: -0.4px;
+  --text-body-lg: 20px;
+  --text-body-lg--line-height: 1.35;
+  --text-body-lg--letter-spacing: -0.4px;
+  --text-subheading: 24px;
+  --text-subheading--line-height: 1.2;
+  --text-subheading--letter-spacing: -0.48px;
+  --text-heading-sm: 32px;
+  --text-heading-sm--line-height: 1.15;
+  --text-heading-sm--letter-spacing: -0.64px;
+  --text-heading: 40px;
+  --text-heading--line-height: 1.1;
+  --text-heading--letter-spacing: -0.8px;
+  --text-heading-lg: 48px;
+  --text-heading-lg--line-height: 1.08;
+  --text-heading-lg--letter-spacing: -0.96px;
+  --text-display: 80px;
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: -1.6px;
+
+  /* Radius */
+  --radius-lg: 16px;
+  --radius-card: 40px;
+  --radius-pill: 9999px;
+  --radius-btn: 100px;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --page-max-width: 1432px;
+  --shadow-md: rgba(0, 0, 0, 0.1) 0px 0px 10px 0px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-parchment);
+    color: var(--color-off-black);
+    font-family: var(--font-mono);
+    font-size: var(--text-body);
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-variant-numeric: tabular-nums;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  ::selection {
+    background-color: var(--color-lake-blue);
+    color: var(--color-parchment);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-off-black);
+    outline-offset: 2px;
+  }
+
+  button { cursor: pointer; }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer utilities {
+  /* Editorial mono meta line: uppercase, tracked, small. */
+  .meta {
+    font-size: var(--text-caption);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-smoke);
+  }
+
+  .tabular { font-variant-numeric: tabular-nums; }
+
+  /* Soft atmospheric wash behind hero / pressure — decorative only. */
+  .wash-coral-sky {
+    background:
+      radial-gradient(60% 80% at 30% 20%, color-mix(in srgb, var(--color-coral) 55%, transparent), transparent 70%),
+      radial-gradient(60% 80% at 80% 40%, color-mix(in srgb, var(--color-sky-blue) 55%, transparent), transparent 70%);
+    filter: blur(12px);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Motion — ONLY where the PRD names it: the settle moment + brief eruption. */
+@keyframes settle-pop {
+  0% { transform: scale(0.96); opacity: 0.4; }
+  55% { transform: scale(1.03); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes erupt {
+  0% { transform: scale(0.7); opacity: 0; }
+  40% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes fade-rise {
+  from { transform: translateY(6px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-settle { animation: settle-pop 480ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.animate-erupt { animation: erupt 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.animate-rise { animation: fade-rise 320ms ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

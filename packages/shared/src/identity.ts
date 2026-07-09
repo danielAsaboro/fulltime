@@ -4,8 +4,8 @@
  * fans are known by display name.
  */
 
-import type { UserId } from "./ids.js";
-import type { WallClock } from "./time.js";
+import type { UserId } from "./ids";
+import type { WallClock } from "./time";
 
 export interface User {
   id: UserId;

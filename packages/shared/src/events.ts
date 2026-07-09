@@ -7,9 +7,9 @@
  * that need an unsupported stat are hidden rather than guessed (PRD §6).
  */
 
-import type { FeedMessageId, FixtureId, MatchEventId } from "./ids.js";
-import type { FixtureScore, FixtureStatus } from "./fixtures.js";
-import type { FeedTimestamp } from "./time.js";
+import type { FeedMessageId, FixtureId, MatchEventId } from "./ids";
+import type { FixtureScore, FixtureStatus } from "./fixtures";
+import type { FeedTimestamp } from "./time";
 
 export type TeamSide = "home" | "away";
 

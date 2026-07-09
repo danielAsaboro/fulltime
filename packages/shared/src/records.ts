@@ -4,10 +4,10 @@
  * proof — bragging rights nobody can fake (PRD §4.8).
  */
 
-import type { CallId, FixtureId, RecordId, RoomId, UserId } from "./ids.js";
-import type { CallOptionId } from "./calls.js";
-import type { ReceiptState } from "./receipts.js";
-import type { WallClock } from "./time.js";
+import type { CallId, FixtureId, RecordId, RoomId, UserId } from "./ids";
+import type { CallOptionId } from "./calls";
+import type { ReceiptState } from "./receipts";
+import type { WallClock } from "./time";
 
 export interface ScoredCallSummary {
   callId: CallId;

@@ -8,8 +8,8 @@
  * the tests, and replay all agree on message order.
  */
 
-import type { FeedMessageId, FixtureId } from "./ids.js";
-import type { FeedTimestamp } from "./time.js";
+import type { FeedMessageId, FixtureId } from "./ids";
+import type { FeedTimestamp } from "./time";
 
 export type FeedSource = "scores" | "odds";
 

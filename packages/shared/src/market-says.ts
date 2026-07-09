@@ -5,9 +5,9 @@
  * advice; a sports-context layer only (PRD §4.7).
  */
 
-import type { FixtureId, MatchEventId } from "./ids.js";
-import type { OutcomeKey } from "./odds.js";
-import type { FeedTimestamp } from "./time.js";
+import type { FixtureId, MatchEventId } from "./ids";
+import type { OutcomeKey } from "./odds";
+import type { FeedTimestamp } from "./time";
 
 export type MarketSaysKind =
   | "pressure-building"

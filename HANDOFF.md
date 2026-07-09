@@ -9,6 +9,47 @@ zero fanswarm/QVAC/Tether identifiers in this tree). Both dirs are gitignored.
 
 ---
 
+## Current state — Frontend ✅ complete (mock-backed), backend handed off
+
+The full frontend is built and runs on a **mock adapter** — landing through every
+dashboard route. Backend work is documented in **`BACKEND-REMAINING.md`** for the next
+engineer; do not start backend implementation from this doc.
+
+**Design law:** `internal/design.md` + `internal/designrule.md` ("Monad" — editorial serif
++ mono on warm parchment, pill buttons, hairline borders, no shadows, Lake Blue = the single
+CTA per screen). Tokens live in `apps/web/app/globals.css` (`@theme`); fonts are Newsreader
+(serif) + JetBrains Mono via `next/font`. Motion only at the settle moment / brief eruptions.
+
+**Data seam (the architecture):** `apps/web/lib/data/`
+- `types.ts` — `FullTimeData`, the single interface every component consumes (over `@fulltime/shared`).
+- `mock/` — default. Deterministic France–Morocco scenario engine (`scenario.ts`, 10 labelled
+  beats: prematch → goal → settle → receipt anchored → void → penalty → FT) + corpus fixtures.
+- `live/` — `TODO(codex)` stubs; the only place a transport may be imported.
+- `provider.tsx` + `hooks.ts` — context, session, and `useFixtures/useRoom/useRoomState/…` hooks
+  with uniform loading/empty/error envelopes. **No Supabase import anywhere in the app.**
+
+**Routes (all with loading/empty/error):** `/` landing · `/matches` · `/room/[id]` (the product —
+sticky sacred scoreline, open calls with countdown rings + live tallies, Fan IQ, pressure, Market
+Says, reactions/notes/polls, inline receipts, FT→report rollover, one-thumb) · `/room/[id]/report`
+· `/record` (album) · `/receipt/[id]` (proof drawer) · `/replay/[id]` (dual-viewer judge replay) ·
+`/join/[code]` (guest preview) · `not-found` + root `error` boundary. SIWS modal (copy "Sign in",
+zero crypto vocab) + quiet calibration sheet. PWA manifest + maskable icon.
+
+**Verify:** `npm --workspace @fulltime/web run typecheck` ✓ · `run lint` ✓ · `run build` ✓
+(10 routes; landing/matches/record static). All 9 routes return 200 at runtime.
+
+**Run mock mode:** `npm run web` → http://localhost:3000. The France–Morocco room autoplays the
+scenario; a bottom-right **Mock controls** panel (mock only) jumps to any labelled beat and forces
+loading/empty/error on every route. `NEXT_PUBLIC_DATA_MODE=live` swaps in the (unfilled) live adapter.
+
+**Frontend decisions:** followed the provided design guides as the visual law (a full design pass)
+rather than invoking a design skill · `.js` import extensions stripped from `shared`/`web` relative
+imports so Turbopack resolves the raw-TS shared package (Bundler resolution across the toolchain) ·
+receipt/call state colour rides on small decorative accents (Mint = verified, Coral = missed), Lake
+Blue stays the single CTA · mock writes are optimistic; odds mirror TxLINE's pre-demargined `Pct[]`.
+
+---
+
 ## Current state — Phase 1 (TxLINE spine) ✅ built + verified offline
 
 Phase 0 scaffold (monorepo, shared domain model, web) is done — see git history and

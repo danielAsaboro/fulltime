@@ -15,8 +15,8 @@ import type {
   ReceiptId,
   RoomId,
   UserId,
-} from "./ids.js";
-import type { FeedTimestamp, WallClock } from "./time.js";
+} from "./ids";
+import type { FeedTimestamp, WallClock } from "./time";
 
 export type SocialAnchor =
   | { kind: "match-event"; matchEventId: MatchEventId }

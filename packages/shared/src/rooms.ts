@@ -5,8 +5,8 @@
  * replay a recorded corpus through the same loop.
  */
 
-import type { FixtureId, RoomId, UserId } from "./ids.js";
-import type { WallClock } from "./time.js";
+import type { FixtureId, RoomId, UserId } from "./ids";
+import type { WallClock } from "./time";
 
 export type RoomType = "global" | "private" | "judge";
 

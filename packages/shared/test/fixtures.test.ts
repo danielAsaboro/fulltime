@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
-import { isLiveFixtureStatus, isTerminalFixtureStatus } from "../src/fixtures.js";
+import { isLiveFixtureStatus, isTerminalFixtureStatus } from "../src/fixtures";
 
 test("a decided match is terminal; an in-progress shootout is not", () => {
   assert.equal(isTerminalFixtureStatus("after-penalties"), true);

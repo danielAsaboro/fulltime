@@ -5,8 +5,8 @@
  * only — never an input to settlement.
  */
 
-import type { RoomId, UserId } from "./ids.js";
-import type { DelaySeconds, StreamDelayProfile, WallClock } from "./time.js";
+import type { RoomId, UserId } from "./ids";
+import type { DelaySeconds, StreamDelayProfile, WallClock } from "./time";
 
 export type CalibrationMethod =
   | "preset"

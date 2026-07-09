@@ -13,7 +13,7 @@
  * that viewer's presentation delay. Presentation only — it can never move truth.
  */
 
-import type { Brand } from "./ids.js";
+import type { Brand } from "./ids";
 
 export type FeedTimestamp = Brand<number, "FeedTimestamp">;
 export type WallClock = Brand<number, "WallClock">;

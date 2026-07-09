@@ -5,7 +5,7 @@
  * skill; global ranking needs a minimum number of scored calls (PRD §4.6).
  */
 
-import type { AnswerId, CallId, UserId } from "./ids.js";
+import type { AnswerId, CallId, UserId } from "./ids";
 
 export const BASE_CALL_POINTS = 100;
 export const MAX_DIFFICULTY_MULTIPLIER = 5;
