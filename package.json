@@ -1,0 +1,29 @@
+{
+  "name": "fulltime",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Spoiler-safe verified second-screen match rooms for the World Cup, powered by TxLINE.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "worker": "npm --workspace @fulltime/worker run dev",
+    "worker:record": "npm --workspace @fulltime/worker run record",
+    "web": "npm --workspace @fulltime/web run dev",
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

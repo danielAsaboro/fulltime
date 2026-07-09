@@ -1,0 +1,40 @@
+# --- FullTime repo hygiene ---
+# Reference + spec material is private and must never enter history.
+/internal/
+/resources/
+
+# Recorded TxLINE corpora (feed replay material, can be large / spoiler-bearing)
+/corpus/
+corpus/
+
+# Secrets
+.env
+.env.*
+!.env.example
+*.keypair.json
+activation-keypair*.json
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.*
+
+# Build output
+dist/
+build/
+out/
+.next/
+next-env.d.ts
+*.tsbuildinfo
+
+# Logs / runtime
+*.log
+npm-debug.log*
+.DS_Store
+coverage/
+.turbo/
+.vercel/
+
+# Editors
+.idea/
+*.swp
