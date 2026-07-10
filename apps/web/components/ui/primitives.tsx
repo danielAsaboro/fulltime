@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { HTMLAttributes, ReactNode } from "react";
 
 import { cn } from "@/lib/cn";
+import { BrandMark } from "./brand-mark";
 
 export function Eyebrow({ className, children }: { className?: string; children: ReactNode }) {
   return (
@@ -17,9 +18,9 @@ export function Divider({ className }: { className?: string }) {
 
 export function Logo({ href = "/", className }: { href?: string | null; className?: string }) {
   const mark = (
-    <span className={cn("inline-flex items-center gap-2", className)}>
-      <span className="size-2.5 rounded-full bg-off-black" aria-hidden />
-      <span className="font-mono text-label font-medium uppercase tracking-[0.04em] text-off-black">
+    <span className={cn("inline-flex items-center gap-2.5", className)}>
+      <BrandMark size={40} />
+      <span className="font-mono text-label font-medium uppercase tracking-[-0.04em] text-off-black sm:text-[22px]">
         FullTime
       </span>
     </span>
