@@ -1,4 +1,5 @@
 import { cn } from "@/lib/cn";
+import { flagGradient } from "@/lib/flags";
 
 /**
  * FullTime brand mark — a monochrome line-art football at the centre, ringed by
@@ -7,17 +8,17 @@ import { cn } from "@/lib/cn";
  * flourish. Flags orbit while staying upright (ring rotates, faces counter-rotate).
  */
 
-const COUNTRIES: { code: string; flag: string }[] = [
-  { code: "Brazil", flag: "radial-gradient(circle at 50% 50%, #ffdf00 0 34%, #009c3b 34%)" },
-  { code: "Argentina", flag: "linear-gradient(#74acdf 34%, #ffffff 34% 66%, #74acdf 66%)" },
-  { code: "France", flag: "linear-gradient(90deg, #0055a4 34%, #ffffff 34% 66%, #ef4135 66%)" },
-  { code: "Germany", flag: "linear-gradient(#141414 34%, #dd0000 34% 66%, #ffce00 66%)" },
-  { code: "Spain", flag: "linear-gradient(#aa151b 28%, #f1bf00 28% 72%, #aa151b 72%)" },
-  { code: "Portugal", flag: "linear-gradient(90deg, #046a38 42%, #da291c 42%)" },
-  { code: "Netherlands", flag: "linear-gradient(#ae1c28 34%, #ffffff 34% 66%, #21468b 66%)" },
-  { code: "Mexico", flag: "linear-gradient(90deg, #006847 34%, #ffffff 34% 66%, #ce1126 66%)" },
-  { code: "USA", flag: "linear-gradient(135deg, #3c3b6e 0 46%, #b22234 46%)" },
-  { code: "Morocco", flag: "radial-gradient(circle at 50% 50%, #006233 0 30%, #c1272d 30%)" },
+const NATIONS: { code: string; label: string }[] = [
+  { code: "BR", label: "Brazil" },
+  { code: "AR", label: "Argentina" },
+  { code: "FR", label: "France" },
+  { code: "DE", label: "Germany" },
+  { code: "ES", label: "Spain" },
+  { code: "PT", label: "Portugal" },
+  { code: "NL", label: "Netherlands" },
+  { code: "MX", label: "Mexico" },
+  { code: "US", label: "USA" },
+  { code: "MA", label: "Morocco" },
 ];
 
 function Ball() {
@@ -58,23 +59,23 @@ export function BrandMark({
       aria-hidden
     >
       <span className="absolute inset-0" style={{ animation: anim }}>
-        {COUNTRIES.map((country, index) => {
-          const angle = (index / COUNTRIES.length) * 2 * Math.PI;
+        {NATIONS.map((nation, index) => {
+          const angle = (index / NATIONS.length) * 2 * Math.PI;
           const x = size / 2 + ring * Math.sin(angle);
           const y = size / 2 - ring * Math.cos(angle);
           return (
             <span
-              key={country.code}
+              key={nation.code}
               className="absolute"
               style={{ left: x, top: y, transform: "translate(-50%, -50%)" }}
             >
               <span
                 className="block rounded-full"
-                title={country.code}
+                title={nation.label}
                 style={{
                   width: flag,
                   height: flag,
-                  background: country.flag,
+                  background: flagGradient(nation.code) ?? "var(--color-periwinkle-mist)",
                   boxShadow: "0 0 0 1px var(--color-parchment)",
                   animation: animReverse,
                 }}

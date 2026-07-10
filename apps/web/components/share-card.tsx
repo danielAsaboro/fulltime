@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { cn } from "@/lib/cn";
+import { Flag } from "@/components/ui/flag";
 
 export interface ShareStat {
   label: string;
@@ -17,6 +18,7 @@ export function ShareCard({
   eyebrow,
   title,
   scoreline,
+  flags,
   stats,
   tagline,
   className,
@@ -24,6 +26,7 @@ export function ShareCard({
   eyebrow: string;
   title: string;
   scoreline?: string;
+  flags?: { home?: string; away?: string };
   stats?: ShareStat[];
   tagline?: string;
   className?: string;
@@ -40,7 +43,11 @@ export function ShareCard({
 
       <h3 className="mt-6 text-heading text-off-black">{title}</h3>
       {scoreline ? (
-        <p className="mt-2 font-mono text-body-lg font-medium tabular text-off-black">{scoreline}</p>
+        <div className="mt-3 flex items-center gap-2.5">
+          {flags?.home ? <Flag code={flags.home} size={22} /> : null}
+          <p className="font-mono text-body-lg font-medium tabular text-off-black">{scoreline}</p>
+          {flags?.away ? <Flag code={flags.away} size={22} /> : null}
+        </div>
       ) : null}
 
       {stats && stats.length > 0 ? (

@@ -2,6 +2,7 @@
 
 import { useRecord, type RecordEntry } from "@/lib/data";
 import { Container, EmptyState, ErrorState, Skeleton } from "@/components/ui/primitives";
+import { Flag } from "@/components/ui/flag";
 import { StatePill } from "@/components/ui/state-pill";
 import { CopyLinkButton, ShareCard } from "@/components/share-card";
 import { ReceiptChip } from "@/components/receipt-chip";
@@ -11,7 +12,11 @@ function EntryCard({ entry }: { entry: RecordEntry }) {
     <div className="flex flex-col justify-between gap-4 rounded-card border border-ash bg-parchment p-5">
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <span className="font-mono text-caption uppercase tracking-[0.1em] text-smoke">{entry.fixtureLabel}</span>
+          <span className="flex items-center gap-1.5 font-mono text-caption uppercase tracking-[0.1em] text-smoke">
+            {entry.homeCode ? <Flag code={entry.homeCode} size={14} /> : null}
+            {entry.awayCode ? <Flag code={entry.awayCode} size={14} /> : null}
+            {entry.fixtureLabel}
+          </span>
           {entry.minute != null ? (
             <span className="font-mono text-caption tabular text-smoke">{entry.minute}&apos;</span>
           ) : null}

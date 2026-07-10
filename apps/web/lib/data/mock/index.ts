@@ -383,6 +383,8 @@ function buildRecord(final: RoomLiveState, displayName: string): RecordView {
     return {
       callId: rc.callId,
       fixtureLabel: "FRA vs MAR",
+      homeCode: "FR",
+      awayCode: "MA",
       prompt: rc.prompt,
       chosenLabel: rc.chosenLabel,
       outcome: rc.outcome,
@@ -396,6 +398,8 @@ function buildRecord(final: RoomLiveState, displayName: string): RecordView {
     {
       callId: "rec-ger-1",
       fixtureLabel: "GER vs USA",
+      homeCode: "DE",
+      awayCode: "US",
       prompt: "Over 3.5 goals before full time?",
       chosenLabel: "Yes",
       outcome: "correct" as const,
@@ -406,6 +410,8 @@ function buildRecord(final: RoomLiveState, displayName: string): RecordView {
     {
       callId: "rec-ger-2",
       fixtureLabel: "GER vs USA",
+      homeCode: "DE",
+      awayCode: "US",
       prompt: "USA to score first?",
       chosenLabel: "Yes",
       outcome: "correct" as const,
@@ -416,6 +422,8 @@ function buildRecord(final: RoomLiveState, displayName: string): RecordView {
     {
       callId: "rec-cro-1",
       fixtureLabel: "CRO vs JPN",
+      homeCode: "HR",
+      awayCode: "JP",
       prompt: "Decided on penalties?",
       chosenLabel: "Yes",
       outcome: "correct" as const,

@@ -83,6 +83,7 @@ export function ReportView({ roomId }: { roomId: string }) {
               eyebrow="Full-time · Fan Report"
               title={report.data.displayName}
               scoreline={`${report.data.fixture.home.shortName} ${report.data.finalScore.home}–${report.data.finalScore.away} ${report.data.fixture.away.shortName}`}
+              flags={{ home: report.data.fixture.home.country, away: report.data.fixture.away.country }}
               stats={[
                 { label: "Fan IQ", value: String(report.data.fanIq) },
                 { label: "Accuracy", value: `${Math.round(report.data.accuracy * 100)}%` },

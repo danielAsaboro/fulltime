@@ -203,6 +203,9 @@ export interface RecordView {
 export interface RecordEntry {
   callId: string;
   fixtureLabel: string;
+  /** ISO-2 country codes for the two teams, for flag rendering. */
+  homeCode?: string;
+  awayCode?: string;
   prompt: string;
   chosenLabel: string;
   outcome: CallOutcome;

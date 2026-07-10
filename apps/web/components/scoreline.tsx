@@ -1,6 +1,7 @@
 import type { FixtureStatus, Team } from "@fulltime/shared";
 
 import { cn } from "@/lib/cn";
+import { Flag } from "@/components/ui/flag";
 
 function statusLabel(status: FixtureStatus, minute: number | null): { text: string; live: boolean } {
   switch (status) {
@@ -28,10 +29,13 @@ function statusLabel(status: FixtureStatus, minute: number | null): { text: stri
 function TeamBlock({ team, align }: { team: Team; align: "left" | "right" }) {
   return (
     <div className={cn("min-w-0 flex-1", align === "right" && "text-right")}>
-      <p className="truncate font-mono text-heading-sm font-medium uppercase tracking-[-0.02em] text-off-black">
-        {team.shortName ?? team.name.slice(0, 3).toUpperCase()}
-      </p>
-      <p className="truncate font-mono text-caption uppercase tracking-[0.1em] text-smoke">{team.name}</p>
+      <div className={cn("flex items-center gap-2.5", align === "right" && "flex-row-reverse")}>
+        <Flag code={team.country} size={24} />
+        <p className="truncate font-mono text-heading-sm font-medium uppercase tracking-[-0.02em] text-off-black">
+          {team.shortName ?? team.name.slice(0, 3).toUpperCase()}
+        </p>
+      </div>
+      <p className="mt-1 truncate font-mono text-caption uppercase tracking-[0.1em] text-smoke">{team.name}</p>
     </div>
   );
 }

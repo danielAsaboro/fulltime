@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import type { FixtureCard as FixtureCardModel } from "@/lib/data";
 import { cn } from "@/lib/cn";
+import { Flag } from "@/components/ui/flag";
 import { Tag } from "@/components/ui/tag";
 
 function kickoffLabel(ms: number): string {
@@ -15,12 +16,23 @@ function crowdLabel(n: number): string {
   return n >= 1000 ? `${(n / 1000).toFixed(1)}k` : String(n);
 }
 
-function TeamRow({ code, name, score }: { code: string; name: string; score?: number | null }) {
+function TeamRow({
+  code,
+  name,
+  country,
+  score,
+}: {
+  code: string;
+  name: string;
+  country?: string;
+  score?: number | null;
+}) {
   return (
-    <div className="flex items-baseline justify-between gap-3">
-      <span className="min-w-0 truncate">
+    <div className="flex items-center justify-between gap-3">
+      <span className="flex min-w-0 items-center gap-2">
+        <Flag code={country} size={18} />
         <span className="font-mono text-body font-medium uppercase tracking-[0.02em] text-off-black">{code}</span>
-        <span className="ml-2 font-mono text-caption uppercase tracking-[0.08em] text-smoke">{name}</span>
+        <span className="truncate font-mono text-caption uppercase tracking-[0.08em] text-smoke">{name}</span>
       </span>
       {score != null ? (
         <span className="font-mono text-body-lg font-medium tabular text-off-black">{score}</span>
@@ -64,8 +76,8 @@ export function FixtureCard({
       </div>
 
       <div className="space-y-2">
-        <TeamRow code={home} name={fixture.home.name} score={score?.home} />
-        <TeamRow code={away} name={fixture.away.name} score={score?.away} />
+        <TeamRow code={home} name={fixture.home.name} country={fixture.home.country} score={score?.home} />
+        <TeamRow code={away} name={fixture.away.name} country={fixture.away.country} score={score?.away} />
       </div>
 
       <div className="flex items-center justify-between border-t border-ash pt-3">
