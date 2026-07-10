@@ -48,7 +48,6 @@ export function MatchSyncFeature() {
           style={{
             background:
               "radial-gradient(60% 90% at 20% 20%, color-mix(in srgb, var(--color-coral) 60%, transparent), transparent 70%), radial-gradient(70% 90% at 90% 30%, color-mix(in srgb, var(--color-sky-blue) 60%, transparent), transparent 70%), radial-gradient(80% 90% at 60% 100%, color-mix(in srgb, var(--color-mint) 55%, transparent), transparent 70%)",
-            filter: "blur(6px)",
           }}
           aria-hidden
         />

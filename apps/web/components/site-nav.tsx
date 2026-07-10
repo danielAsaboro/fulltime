@@ -20,15 +20,15 @@ export function SiteNav({ border = false }: { border?: boolean }) {
 
   return (
     <header className={border ? "border-b border-ash" : undefined}>
-      <Container className="flex h-[72px] items-center justify-between gap-6">
-        <div className="flex items-center gap-8">
+      <Container className="flex h-[96px] items-center justify-between gap-6 lg:h-[112px]">
+        <div className="flex items-center gap-10">
           <Logo />
-          <nav className="hidden items-center gap-6 sm:flex">
+          <nav className="hidden items-center gap-8 lg:flex">
             {LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="font-mono text-body-sm uppercase tracking-[0.06em] text-graphite hover:text-off-black"
+                className="nav-link font-mono text-body uppercase tracking-[0.02em] text-off-black"
               >
                 {link.label}
               </Link>
@@ -43,11 +43,13 @@ export function SiteNav({ border = false }: { border?: boolean }) {
               <span className="font-mono text-body-sm text-off-black">{session.displayName}</span>
             </div>
           ) : (
-            <Button variant="ghost" size="sm" onClick={() => setSignInOpen(true)}>
-              Sign in
-            </Button>
+            <span className="hidden sm:inline-flex">
+              <Button variant="secondary" size="sm" onClick={() => setSignInOpen(true)}>
+                Sign in
+              </Button>
+            </span>
           )}
-          <Button href="/matches" variant="secondary" size="sm" className="hidden sm:inline-flex">
+          <Button href="/matches" variant="primary" size="sm" withArrow className="hidden sm:inline-flex">
             Enter a room
           </Button>
         </div>

@@ -43,23 +43,23 @@ export default function Home() {
       <SiteNav />
 
       <main>
-        {/* Hero */}
-        <section className="relative overflow-hidden">
-          <div className="wash-coral-sky pointer-events-none absolute -top-24 left-1/2 h-[420px] w-[720px] -translate-x-1/2 opacity-40" aria-hidden />
-          <Container className="relative py-20 text-center sm:py-28">
-            <div className="mx-auto max-w-3xl space-y-6">
-              <div className="flex justify-center">
-                <Eyebrow>Spoiler-safe · World Cup 2026</Eyebrow>
-              </div>
-              <h1 className="text-heading sm:text-heading-lg lg:text-display text-off-black">
-                The World Cup, on your own clock.
+        {/* Hero — pure typographic; the pipeline lives in its own section below */}
+        <section className="hero-shell relative overflow-hidden">
+          <div className="wash-coral-sky pointer-events-none absolute -top-24 left-1/2 h-[420px] w-[820px] -translate-x-1/2 opacity-40" aria-hidden />
+          <Container className="relative py-24 text-center sm:py-32">
+            <div className="hero-copy mx-auto max-w-[940px]">
+              <p className="mb-6 font-mono text-caption uppercase tracking-[0.14em] text-smoke">
+                Spoiler-safe · World Cup 2026
+              </p>
+              <h1 className="hero-title text-off-black">
+                The World Cup,<br />on your own clock.
               </h1>
-              <p className="mx-auto max-w-2xl font-mono text-body-lg text-graphite">
+              <p className="mx-auto mt-8 max-w-[650px] font-mono text-body-lg text-graphite">
                 FullTime turns your second screen into a synced match room. Make calls that settle from
                 verified data, react to the moments as they reach <em>your</em> stream, and leave with a
                 Fan Report nobody can fake.
               </p>
-              <div className="flex flex-wrap justify-center gap-3 pt-2">
+              <div className="mt-9 flex flex-wrap justify-center gap-3">
                 <Button href="/matches" variant="primary" withArrow>
                   Find your match
                 </Button>
@@ -108,7 +108,7 @@ export default function Home() {
                 A goal hits the feed once. Every fan sees the room react at the right moment.
               </h2>
             </div>
-            <div className="mt-10 grid gap-5 md:grid-cols-3">
+            <div className="mt-10 grid gap-5 lg:grid-cols-3">
               {FEATURES.map((f) => (
                 <Card key={f.title} padding="card" className="space-y-4">
                   <span className="inline-flex text-body-lg text-off-black" aria-hidden>

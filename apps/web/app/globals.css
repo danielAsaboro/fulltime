@@ -126,11 +126,135 @@
     background:
       radial-gradient(60% 80% at 30% 20%, color-mix(in srgb, var(--color-coral) 55%, transparent), transparent 70%),
       radial-gradient(60% 80% at 80% 40%, color-mix(in srgb, var(--color-sky-blue) 55%, transparent), transparent 70%);
-    filter: blur(12px);
   }
 }
 
-/* Motion — ONLY where the PRD names it: the settle moment + brief eruption. */
+/* Landing composition: measured against Monad's 1440px desktop canvas. */
+.hero-shell {
+  border-top: 1px solid color-mix(in srgb, var(--color-ash) 32%, transparent);
+}
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: clamp(54px, 6.1vw, 88px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.pipeline-hero {
+  margin-inline: calc(50% - 50vw);
+  padding-inline: max(24px, calc((100vw - var(--page-max-width)) / 2));
+}
+
+.pipeline-hero .pipeline-svg { height: 430px; }
+.pipeline-svg { display: block; }
+/* Lines stay static (animating stroke-dashoffset repaints every frame — expensive).
+   The "flow" is carried by small dots gliding the paths via offset-path, and a gentle
+   opacity breathe on the hub glow. Both are compositor-cheap. */
+.pipeline-line { stroke-dasharray: 9 7; opacity: 0.7; }
+.pipeline-glow { transform-box: fill-box; transform-origin: center; animation: glow-breathe 5s ease-in-out infinite; }
+.pipeline-flow-dot {
+  fill: color-mix(in srgb, var(--color-off-black) 55%, transparent);
+  offset-rotate: 0deg;
+  animation: pipeline-flow-dot 3.6s linear infinite;
+}
+.pipeline-node-label,
+.pipeline-node-icon {
+  fill: var(--color-off-black);
+  font-family: var(--font-mono);
+}
+.pipeline-node-label {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.pipeline-node-label-hub { font-size: 16px; font-weight: 500; }
+.pipeline-node-icon { fill: var(--color-smoke); font-size: 12px; }
+
+.pipeline-mobile-pill,
+.pipeline-mobile-hub {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-ash);
+  background: var(--color-parchment);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.pipeline-mobile-pill {
+  min-height: 42px;
+  border-radius: var(--radius-pill);
+  padding-inline: 6px;
+  color: var(--color-graphite);
+  font-size: 9px;
+  letter-spacing: .025em;
+}
+.pipeline-mobile-hub {
+  min-height: 58px;
+  width: min(280px, 82vw);
+  margin-inline: auto;
+  gap: 10px;
+  border-radius: var(--radius-pill);
+  color: var(--color-off-black);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .035em;
+}
+.pipeline-mobile-connector {
+  display: grid;
+  width: 1px;
+  height: 34px;
+  margin-inline: auto;
+  place-items: end center;
+  background: var(--color-ash);
+  color: var(--color-smoke);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1;
+}
+
+.brand-orbit {
+  position: relative;
+  display: inline-block;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  animation: orbit-turn 18s linear infinite;
+}
+
+.brand-orbit i {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 4px; height: 4px;
+  margin: -2px;
+  border-radius: 50%;
+  background: var(--color-off-black);
+  transform: rotate(calc(var(--i, 0) * 36deg)) translateY(-15px);
+}
+.brand-orbit i:nth-child(1) { --i: 0; } .brand-orbit i:nth-child(2) { --i: 1; }
+.brand-orbit i:nth-child(3) { --i: 2; } .brand-orbit i:nth-child(4) { --i: 3; }
+.brand-orbit i:nth-child(5) { --i: 4; } .brand-orbit i:nth-child(6) { --i: 5; }
+.brand-orbit i:nth-child(7) { --i: 6; } .brand-orbit i:nth-child(8) { --i: 7; }
+.brand-orbit i:nth-child(9) { --i: 8; } .brand-orbit i:nth-child(10) { --i: 9; }
+
+.nav-link { position: relative; transition: opacity 180ms ease; }
+.nav-link::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -7px; height: 1px; background: currentColor; transition: right 220ms ease; }
+.nav-link:hover::after { right: 0; }
+
+@keyframes orbit-turn { to { transform: rotate(360deg); } }
+@keyframes glow-breathe { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+@keyframes pipeline-flow-dot {
+  0% { offset-distance: 0%; opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
+/* Ambient landing motion is compositor-only (transform/opacity/offset). */
 @keyframes settle-pop {
   0% { transform: scale(0.96); opacity: 0.4; }
   55% { transform: scale(1.03); opacity: 1; }
@@ -157,4 +281,8 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+@media (max-width: 767px) {
+  .hero-title { font-size: clamp(40px, 11.5vw, 52px); line-height: 1.04; letter-spacing: -0.04em; }
 }
