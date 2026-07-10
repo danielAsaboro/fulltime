@@ -142,16 +142,6 @@ export function PipelineDiagram({ hero = false }: { hero?: boolean }) {
             strokeWidth="1.5"
           />
         ))}
-        {CONNECTORS.map((c) => (
-          <circle
-            key={`dot-${c.key}`}
-            className="pipeline-flow-dot"
-            r={3.5}
-            cx={0}
-            cy={0}
-            style={{ offsetPath: `path('${c.d}')`, animationDelay: `${c.delay}s` }}
-          />
-        ))}
 
         {SOURCES.map((s) => (
           <NodePill key={`sn-${s.label}`} x={SRC_X} y={s.y} width={PILL_W} height={PILL_H} icon={s.icon} label={s.label} />

@@ -150,16 +150,10 @@
 
 .pipeline-hero .pipeline-svg { height: 430px; }
 .pipeline-svg { display: block; }
-/* Lines stay static (animating stroke-dashoffset repaints every frame — expensive).
-   The "flow" is carried by small dots gliding the paths via offset-path, and a gentle
-   opacity breathe on the hub glow. Both are compositor-cheap. */
+/* Fully static — no perpetual ambient animation (those repaint forever and heat the
+   CPU). Motion is reserved for interaction + the settle moment. */
 .pipeline-line { stroke-dasharray: 9 7; opacity: 0.7; }
-.pipeline-glow { transform-box: fill-box; transform-origin: center; animation: glow-breathe 5s ease-in-out infinite; }
-.pipeline-flow-dot {
-  fill: color-mix(in srgb, var(--color-off-black) 55%, transparent);
-  offset-rotate: 0deg;
-  animation: pipeline-flow-dot 3.6s linear infinite;
-}
+.pipeline-glow { opacity: 0.8; }
 .pipeline-node-label,
 .pipeline-node-icon {
   fill: var(--color-off-black);
@@ -217,44 +211,14 @@
   line-height: 1;
 }
 
-.brand-orbit {
-  position: relative;
-  display: inline-block;
-  width: 38px;
-  height: 38px;
-  flex: 0 0 auto;
-  animation: orbit-turn 18s linear infinite;
-}
-
-.brand-orbit i {
-  position: absolute;
-  left: 50%; top: 50%;
-  width: 4px; height: 4px;
-  margin: -2px;
-  border-radius: 50%;
-  background: var(--color-off-black);
-  transform: rotate(calc(var(--i, 0) * 36deg)) translateY(-15px);
-}
-.brand-orbit i:nth-child(1) { --i: 0; } .brand-orbit i:nth-child(2) { --i: 1; }
-.brand-orbit i:nth-child(3) { --i: 2; } .brand-orbit i:nth-child(4) { --i: 3; }
-.brand-orbit i:nth-child(5) { --i: 4; } .brand-orbit i:nth-child(6) { --i: 5; }
-.brand-orbit i:nth-child(7) { --i: 6; } .brand-orbit i:nth-child(8) { --i: 7; }
-.brand-orbit i:nth-child(9) { --i: 8; } .brand-orbit i:nth-child(10) { --i: 9; }
+/* Opt-in keyframe for BrandMark spin (off by default — the logo is static). */
+@keyframes orbit-turn { to { transform: rotate(360deg); } }
 
 .nav-link { position: relative; transition: opacity 180ms ease; }
 .nav-link::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -7px; height: 1px; background: currentColor; transition: right 220ms ease; }
 .nav-link:hover::after { right: 0; }
 
-@keyframes orbit-turn { to { transform: rotate(360deg); } }
-@keyframes glow-breathe { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
-@keyframes pipeline-flow-dot {
-  0% { offset-distance: 0%; opacity: 0; }
-  12% { opacity: 1; }
-  88% { opacity: 1; }
-  100% { offset-distance: 100%; opacity: 0; }
-}
-
-/* Ambient landing motion is compositor-only (transform/opacity/offset). */
+/* Motion — ONLY where the PRD names it: the settle moment + brief eruption. */
 @keyframes settle-pop {
   0% { transform: scale(0.96); opacity: 0.4; }
   55% { transform: scale(1.03); opacity: 1; }

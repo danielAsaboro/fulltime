@@ -39,7 +39,7 @@ function Ball() {
 
 export function BrandMark({
   size = 40,
-  spin = true,
+  spin = false,
   className,
 }: {
   size?: number;
