@@ -10,20 +10,24 @@ export function PollCard({
   poll,
   onVote,
   canVote,
+  myVote,
   className,
 }: {
   poll: Poll;
   onVote: (option: string) => void;
   canVote: boolean;
+  myVote?: string;
   className?: string;
 }) {
-  const [choice, setChoice] = useState<string | null>(null);
+  const [optimisticChoice, setOptimisticChoice] = useState<string | null>(null);
+  const choice = myVote ?? optimisticChoice;
   const base = poll.options.reduce((sum, o) => sum + o.votes, 0);
-  const total = base + (choice ? 1 : 0);
+  const hasPendingVote = Boolean(optimisticChoice && !myVote);
+  const total = base + (hasPendingVote ? 1 : 0);
 
   const pick = (id: string) => {
     if (!canVote || choice) return;
-    setChoice(id);
+    setOptimisticChoice(id);
     onVote(id);
   };
 
@@ -33,7 +37,7 @@ export function PollCard({
       <h3 className="text-subheading text-off-black">{poll.question}</h3>
       <div className="mt-4 space-y-2">
         {poll.options.map((option) => {
-          const votes = option.votes + (choice === option.id ? 1 : 0);
+          const votes = option.votes + (hasPendingVote && choice === option.id ? 1 : 0);
           const pct = total > 0 ? Math.round((votes / total) * 100) : 0;
           const mine = choice === option.id;
           return (

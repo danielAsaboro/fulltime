@@ -6,24 +6,31 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
 
 export const metadata: Metadata = {
-  title: "Matches — FullTime",
-  description: "Every World Cup fixture, each with a live second-screen room.",
+  title: "Create a room — FullTime",
+  description: "Choose a World Cup fixture and create an invite-only match room.",
 };
 
-export default function MatchesPage() {
+export default async function MatchesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ fixture?: string | string[] }>;
+}) {
+  const fixtureParam = (await searchParams).fixture;
+  const initialFixtureId = Array.isArray(fixtureParam) ? fixtureParam[0] : fixtureParam;
+
   return (
     <>
       <SiteNav border />
       <main>
         <Container className="py-12 sm:py-16">
           <div className="mb-10 max-w-2xl space-y-3">
-            <Eyebrow>World Cup 2026</Eyebrow>
-            <h1 className="text-heading text-off-black">Find your match.</h1>
+            <Eyebrow>Invite-only match rooms</Eyebrow>
+            <h1 className="text-heading text-off-black">Create a room.</h1>
             <p className="font-mono text-body-lg text-graphite">
-              Every fixture gets a room. Jump into a live one, or open an upcoming room before kick-off.
+              Pick the fixture your group is watching, name the room, then send the private invite.
             </p>
           </div>
-          <MatchesIndex />
+          <MatchesIndex initialFixtureId={initialFixtureId} />
         </Container>
       </main>
       <SiteFooter />

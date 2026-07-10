@@ -226,7 +226,7 @@ const CALL_NEXTGOAL = call(
   { kind: "next-event", event: "goal", beforeMinute: 90 },
   "Next goal — France, Morocco, or neither?",
   opts(["fra", "France"], ["mar", "Morocco"], ["none", "Neither"]),
-  24,
+  23,
   40,
   90,
   0.39,
@@ -323,6 +323,15 @@ export function buildFraMarBeats(): Beat[] {
         notes: [...notes],
         receipts: [...receipts],
         fanIq: { ...fanIq },
+        items: [],
+        members: [],
+        typingUsers: [],
+        unreadState: {
+          count: 0,
+          firstUnreadItemId: null,
+          lastReadItemId: null,
+          isAtLiveEdge: true,
+        },
         pressure,
         lastEventId,
       },
@@ -404,7 +413,7 @@ export function buildFraMarBeats(): Beat[] {
     receiptId: "rcpt-nextgoal",
   });
   receipts.unshift(callReceipt("nextgoal", "call-nextgoal", "incorrect", "anchored", 67, CALL_NEXTGOAL.prompt, "Called France — Morocco struck. Verified.", true));
-  marketSays.push(marketSays_("m3", "draw-compressing", 68, "Morocco level and the draw price is compressing fast. The market thinks time is becoming the story."));
+  marketSays.push(marketSays_("m3", "draw-compressing", 67, "Morocco level and the draw price is compressing fast. The market thinks time is becoming the story."));
   scoreFan(0, false);
   snapshot("goal-mar", 67, "second-half", { home: 1, away: 1 }, "live", 2320, 0.82, "ev-goal-67");
 
@@ -427,7 +436,7 @@ export function buildFraMarBeats(): Beat[] {
   // 8 — penalty France retakes the lead
   pushEvent(ev("penalty-scored", 82, "home", { home: 2, away: 1 }, "Mbappé (pen)"), "82' PENALTY — France! 2–1", REACTS(1120, 1600, 300));
   receipts.unshift(momentReceipt("pen", "penalty", "ev-penalty-scored-82", "proof-pending", 82, "France's penalty — logged from the feed", false));
-  marketSays.push(marketSays_("m4", "not-buying-panic", 83, "France retake the lead from the spot and the market barely flinched — it saw this coming."));
+  marketSays.push(marketSays_("m4", "not-buying-panic", 82, "France retake the lead from the spot and the market barely flinched — it saw this coming."));
   snapshot("penalty", 82, "second-half", { home: 2, away: 1 }, "live", 2380, 0.78, "ev-penalty-scored-82");
 
   // 9 — full time; pre-match pick settles correct, receipts anchored, report unlocks

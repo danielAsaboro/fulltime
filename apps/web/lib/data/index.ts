@@ -4,6 +4,7 @@
  */
 
 export * from "./types";
+export * from "./room-feed";
 export * from "./hooks";
 export { DataProvider, useData } from "./provider";
 export type { ForcedState } from "./provider";

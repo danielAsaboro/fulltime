@@ -12,16 +12,27 @@ import type { CalibrationMethod } from "@fulltime/shared";
 
 import type {
   CalibrationView,
+  ChatMessage,
+  CreatePollInput,
+  CreateRoomInput,
+  DemoRoomEntry,
   FanReportView,
   FixtureCard,
   FixturesFilter,
   FullTimeData,
+  InviteView,
+  PollFeedItem,
   RecordView,
   ReceiptView,
   ReplayView,
   RoomLiveState,
+  RoomDetailsView,
+  RoomNotificationSettings,
   RoomView,
+  SendMessageInput,
+  SendReplyInput,
   Session,
+  ThreadReply,
 } from "../types";
 
 function notImplemented(method: string): never {
@@ -40,6 +51,11 @@ export class LiveDataClient implements FullTimeData {
     return notImplemented("getFixtureCard");
   }
 
+  // TODO(codex): provision or resolve the production guided-demo room + viewer.
+  async enterDemoRoom(): Promise<DemoRoomEntry> {
+    return notImplemented("enterDemoRoom");
+  }
+
   // TODO(codex): read `rooms` + `room_members` count; join `fixtures`.
   async getRoom(_roomId: string): Promise<RoomView | null> {
     return notImplemented("getRoom");
@@ -48,6 +64,18 @@ export class LiveDataClient implements FullTimeData {
   // TODO(codex): resolve `rooms.invite_code` → room (private room join).
   async getRoomByInvite(_code: string): Promise<RoomView | null> {
     return notImplemented("getRoomByInvite");
+  }
+
+  async createRoom(_input: CreateRoomInput): Promise<RoomDetailsView> {
+    return notImplemented("createRoom");
+  }
+
+  async joinRoom(_code: string, _referrerUserId?: string): Promise<RoomView> {
+    return notImplemented("joinRoom");
+  }
+
+  async getRoomDetails(_roomId: string): Promise<RoomDetailsView | null> {
+    return notImplemented("getRoomDetails");
   }
 
   // TODO(codex): hydrate room from `events`/`calls`/`answers`/`settlements`/
@@ -81,6 +109,73 @@ export class LiveDataClient implements FullTimeData {
   // TODO(codex): upsert `poll_votes`; return updated tally via realtime.
   async votePoll(_roomId: string, _pollId: string, _option: string): Promise<void> {
     return notImplemented("votePoll");
+  }
+
+  async sendMessage(_roomId: string, _input: SendMessageInput): Promise<ChatMessage> {
+    return notImplemented("sendMessage");
+  }
+
+  async createPoll(_roomId: string, _input: CreatePollInput): Promise<PollFeedItem> {
+    return notImplemented("createPoll");
+  }
+
+  async reactToItem(_roomId: string, _itemId: string, _emoji: string): Promise<void> {
+    return notImplemented("reactToItem");
+  }
+
+  async sendReply(_roomId: string, _itemId: string, _input: SendReplyInput): Promise<ThreadReply> {
+    return notImplemented("sendReply");
+  }
+
+  async markRoomRead(_roomId: string, _itemId: string): Promise<void> {
+    return notImplemented("markRoomRead");
+  }
+
+  async createInvite(_roomId: string): Promise<InviteView> {
+    return notImplemented("createInvite");
+  }
+
+  async regenerateInvite(_roomId: string): Promise<InviteView> {
+    return notImplemented("regenerateInvite");
+  }
+
+  async revokeInvite(_roomId: string): Promise<void> {
+    return notImplemented("revokeInvite");
+  }
+
+  async renameRoom(_roomId: string, _name: string): Promise<void> {
+    return notImplemented("renameRoom");
+  }
+
+  async removeMember(_roomId: string, _userId: string): Promise<void> {
+    return notImplemented("removeMember");
+  }
+
+  async setMemberRole(_roomId: string, _userId: string, _role: "member" | "moderator"): Promise<void> {
+    return notImplemented("setMemberRole");
+  }
+
+  async setSlowMode(_roomId: string, _seconds: number): Promise<void> {
+    return notImplemented("setSlowMode");
+  }
+
+  async closeRoom(_roomId: string): Promise<void> {
+    return notImplemented("closeRoom");
+  }
+
+  async updateNotificationSettings(
+    _roomId: string,
+    _settings: Partial<RoomNotificationSettings>,
+  ): Promise<void> {
+    return notImplemented("updateNotificationSettings");
+  }
+
+  async leaveRoom(_roomId: string): Promise<void> {
+    return notImplemented("leaveRoom");
+  }
+
+  async reportRoom(_roomId: string, _reason: string): Promise<void> {
+    return notImplemented("reportRoom");
   }
 
   // TODO(codex): read `receipts` + linked proof artifact (stat-validation + anchor).

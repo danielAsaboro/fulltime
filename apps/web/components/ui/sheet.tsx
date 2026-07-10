@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import type { ReactNode } from "react";
 
 import { cn } from "@/lib/cn";
@@ -27,11 +27,39 @@ export function Sheet({
   className?: string;
 }) {
   const panelRef = useRef<HTMLDivElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+  const onCloseRef = useRef(onClose);
+  const titleId = useId();
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
 
   useEffect(() => {
     if (!open) return;
+    previousFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
+      if (event.key === "Escape") onCloseRef.current();
+      if (event.key !== "Tab") return;
+      const panel = panelRef.current;
+      if (!panel) return;
+      const focusable = [...panel.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      )].filter((element) => element.offsetParent !== null);
+      if (focusable.length === 0) {
+        event.preventDefault();
+        panel.focus();
+        return;
+      }
+      const first = focusable[0]!;
+      const last = focusable[focusable.length - 1]!;
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
     document.addEventListener("keydown", onKey);
     const prevOverflow = document.body.style.overflow;
@@ -40,13 +68,20 @@ export function Sheet({
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prevOverflow;
+      previousFocusRef.current?.focus();
     };
-  }, [open, onClose]);
+  }, [open]);
 
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center" role="dialog" aria-modal="true">
+    <div
+      className="fixed inset-0 z-50 flex items-end justify-center sm:items-center"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={title ? titleId : undefined}
+      aria-label={title ? undefined : eyebrow ?? "Dialog"}
+    >
       <div className="absolute inset-0 bg-off-black/40 backdrop-blur-[2px]" onClick={onClose} aria-hidden />
       <div
         ref={panelRef}
@@ -62,12 +97,12 @@ export function Sheet({
             {eyebrow ? (
               <p className="font-mono text-caption uppercase tracking-[0.14em] text-smoke">{eyebrow}</p>
             ) : null}
-            {title ? <h2 className="text-subheading text-off-black">{title}</h2> : null}
+            {title ? <h2 id={titleId} className="text-subheading text-off-black">{title}</h2> : null}
           </div>
           <button
             onClick={onClose}
             aria-label="Close"
-            className="-mr-1 -mt-1 rounded-full p-2 font-mono text-body-lg leading-none text-smoke hover:text-off-black"
+            className="grid size-11 shrink-0 place-items-center rounded-full font-mono text-body-lg leading-none text-smoke hover:bg-white/70 hover:text-off-black"
           >
             ×
           </button>

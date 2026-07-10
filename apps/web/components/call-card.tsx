@@ -17,14 +17,19 @@ function pct(part: number, total: number): number {
 export function CallCard({
   view,
   onSelect,
+  canSelect = true,
+  showReceipt = true,
   className,
 }: {
   view: CallView;
   onSelect: (option: string) => void;
+  canSelect?: boolean;
+  showReceipt?: boolean;
   className?: string;
 }) {
   const { call, tally, total, myAnswer, outcome, points, receiptId } = view;
   const open = call.status === "open";
+  const selectable = open && canSelect;
   const settled = call.status === "settled";
   const isVoid = call.status === "void";
   const winning =
@@ -77,12 +82,12 @@ export function CallCard({
           return (
             <button
               key={option.id}
-              onClick={() => open && onSelect(option.id)}
-              disabled={!open}
+              onClick={() => selectable && onSelect(option.id)}
+              disabled={!selectable}
               className={cn(
                 "relative w-full overflow-hidden rounded-lg border px-4 py-3 text-left transition-colors",
                 mine ? "border-off-black" : "border-ash",
-                open ? "hover:border-off-black" : "cursor-default",
+                selectable ? "hover:border-off-black" : "cursor-default",
                 won && "border-off-black",
               )}
             >
@@ -112,17 +117,17 @@ export function CallCard({
               <span className="font-mono text-body-sm font-medium tabular text-off-black">+{points} IQ</span>
             ) : null}
           </div>
-          {outcome !== "void" ? (
+          {outcome !== "void" && showReceipt ? (
             <ReceiptChip state="anchored" receiptId={receiptId} />
-          ) : (
+          ) : outcome === "void" ? (
             <span className="font-mono text-caption uppercase tracking-[0.08em] text-smoke">Feed gap</span>
-          )}
+          ) : null}
         </div>
       ) : null}
 
       {open ? (
         <p className="mt-3 font-mono text-caption text-smoke">
-          {myAnswer ? "Locked in — you can change it until the whistle." : "Tap to call it. Points scale with the odds."}
+          {!canSelect ? "Calls are read-only right now." : myAnswer ? "Locked in — you can change it until the whistle." : "Tap to call it. Points scale with the odds."}
         </p>
       ) : null}
     </div>

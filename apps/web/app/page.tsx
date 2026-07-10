@@ -1,3 +1,7 @@
+import Image from "next/image";
+import Link from "next/link";
+import { Play, Plus, Ticket } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Container, Eyebrow } from "@/components/ui/primitives";
@@ -9,7 +13,7 @@ import { PipelineDiagram } from "@/components/pipeline-diagram";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
 
-const BUILT_ON = ["TxLINE", "Solana", "Supabase", "Next.js", "World Cup 2026"];
+const BUILT_ON = ["TxLINE", "Solana", "Next.js", "World Cup 2026"];
 
 const FEATURES = [
   {
@@ -43,29 +47,54 @@ export default function Home() {
       <SiteNav />
 
       <main>
-        {/* Hero — pure typographic; the pipeline lives in its own section below */}
-        <section className="hero-shell relative overflow-hidden">
-          <div className="wash-coral-sky pointer-events-none absolute -top-24 left-1/2 h-[420px] w-[820px] -translate-x-1/2 opacity-40" aria-hidden />
-          <Container className="relative py-24 text-center sm:py-32">
-            <div className="hero-copy mx-auto max-w-[940px]">
-              <p className="mb-6 font-mono text-caption uppercase tracking-[0.14em] text-smoke">
-                Spoiler-safe · World Cup 2026
-              </p>
-              <h1 className="hero-title text-off-black">
-                The World Cup,<br />on your own clock.
-              </h1>
-              <p className="mx-auto mt-8 max-w-[650px] font-mono text-body-lg text-graphite">
-                FullTime turns your second screen into a synced match room. Make calls that settle from
-                verified data, react to the moments as they reach <em>your</em> stream, and leave with a
-                Fan Report nobody can fake.
-              </p>
-              <div className="mt-9 flex flex-wrap justify-center gap-3">
-                <Button href="/matches" variant="primary" withArrow>
-                  Find your match
-                </Button>
-                <Button href="/replay/9001" variant="ghost">
-                  Watch a replay
-                </Button>
+        {/* Hero artwork is an original FullTime asset generated for this product. */}
+        <section className="hero-shell">
+          <Container className="py-5 sm:py-8">
+            <div className="relative min-h-[620px] overflow-hidden rounded-[28px] bg-off-black sm:min-h-[680px] lg:min-h-[720px]">
+              <Image
+                src="/images/fulltime-football-hero.png"
+                alt="Two footballers contesting a header under stadium lights"
+                fill
+                priority
+                sizes="(max-width: 767px) 100vw, 1432px"
+                className="object-cover object-[63%_center] grayscale sm:object-center"
+              />
+              <div
+                className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,.84)_0%,rgba(0,0,0,.56)_43%,rgba(0,0,0,.08)_75%),linear-gradient(0deg,rgba(0,0,0,.62)_0%,transparent_50%)]"
+                aria-hidden
+              />
+              <div className="relative z-10 flex min-h-[620px] max-w-[690px] flex-col justify-end px-6 py-9 sm:min-h-[680px] sm:px-12 sm:py-12 lg:min-h-[720px] lg:px-16 lg:py-16">
+                <p className="mb-5 font-mono text-caption uppercase tracking-[0.14em] text-parchment/70">
+                  Private rooms · Spoiler-safe · World Cup 2026
+                </p>
+                <h1 className="hero-title text-parchment">
+                  Your match.<br />Your people. Your clock.
+                </h1>
+                <p className="mt-6 max-w-[620px] font-mono text-body text-parchment/80 sm:text-body-lg">
+                  Create an invite-only room for any fixture. Chat through every moment, make calls that
+                  settle from verified data, and see each reaction when it reaches <em>your</em> stream.
+                </p>
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                  <Button href="/matches" variant="primary" className="sm:min-w-48">
+                    <Plus size={17} strokeWidth={1.8} aria-hidden />
+                    Create a room
+                  </Button>
+                  <Button
+                    href="/join"
+                    variant="ghost"
+                    className="border-parchment text-parchment hover:bg-parchment hover:text-off-black sm:min-w-48"
+                  >
+                    <Ticket size={17} strokeWidth={1.8} aria-hidden />
+                    Join with code
+                  </Button>
+                </div>
+                <Link
+                  href="/demo"
+                  className="mt-5 inline-flex w-fit items-center gap-2 font-mono text-caption uppercase tracking-[0.1em] text-parchment/75 transition-colors hover:text-parchment"
+                >
+                  <Play size={14} fill="currentColor" strokeWidth={1.5} aria-hidden />
+                  Watch a full match unfold
+                </Link>
               </div>
             </div>
           </Container>
@@ -85,7 +114,7 @@ export default function Home() {
           </Container>
         </section>
 
-        {/* Live now */}
+        {/* Live fixtures — private rooms are created from this public schedule. */}
         <section className="border-t border-ash">
           <Container className="py-14">
             <LiveStrip />
@@ -182,7 +211,7 @@ export default function Home() {
               </h2>
               <div className="mt-8">
                 <Button href="/matches" variant="primary" withArrow>
-                  Enter a room
+                  Create a room
                 </Button>
               </div>
             </div>

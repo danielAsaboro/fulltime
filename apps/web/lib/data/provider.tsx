@@ -6,7 +6,7 @@ import { cn } from "@/lib/cn";
 import { DATA_MODE, getDataClient } from "./client";
 import { MockDataClient } from "./mock/index";
 import { SCENARIO_LABELS, type ScenarioLabel } from "./mock/scenario";
-import type { FullTimeData, Session } from "./types";
+import type { FullTimeData, RoomView, Session } from "./types";
 
 export type ForcedState = "loading" | "empty" | "error" | null;
 
@@ -16,6 +16,7 @@ interface DataContextValue {
   session: Session | null;
   signIn: (displayName: string) => Promise<void>;
   signOut: () => Promise<void>;
+  enterDemoRoom: () => Promise<RoomView>;
   forcedState: ForcedState;
   setForcedState: (s: ForcedState) => void;
   scenario: ScenarioLabel | null;
@@ -40,6 +41,14 @@ export function DataProvider({ children }: { children: ReactNode }) {
     };
   }, [client]);
 
+  useEffect(() => {
+    if (!(client instanceof MockDataClient)) return;
+    const syncScenario = () => setScenarioState(client.scenarioLabel);
+    syncScenario();
+    const timer = window.setInterval(syncScenario, 500);
+    return () => window.clearInterval(timer);
+  }, [client]);
+
   const signIn = useCallback(
     async (displayName: string) => {
       const s = await client.signIn(displayName);
@@ -51,6 +60,14 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const signOut = useCallback(async () => {
     await client.signOut();
     setSession(null);
+  }, [client]);
+
+  const enterDemoRoom = useCallback(async () => {
+    setForcedState(null);
+    const entry = await client.enterDemoRoom();
+    setSession(entry.session);
+    setScenarioState("prematch");
+    return entry.room;
   }, [client]);
 
   const setScenario = useCallback(
@@ -67,6 +84,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
     session,
     signIn,
     signOut,
+    enterDemoRoom,
     forcedState,
     setForcedState,
     scenario,
@@ -96,7 +114,7 @@ function MockControls() {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-4 right-4 z-40 rounded-pill border border-ash bg-parchment px-3 py-2 font-mono text-caption uppercase tracking-[0.1em] text-smoke shadow-[var(--shadow-md)] hover:text-off-black"
+        className="fixed bottom-24 right-4 z-40 rounded-pill border border-ash bg-parchment px-3 py-2 font-mono text-caption uppercase tracking-[0.1em] text-smoke shadow-[var(--shadow-md)] hover:text-off-black lg:bottom-4"
       >
         ● Mock
       </button>
@@ -106,7 +124,7 @@ function MockControls() {
   const forced: ForcedState[] = [null, "loading", "empty", "error"];
 
   return (
-    <div className="fixed bottom-4 right-4 z-40 w-64 space-y-3 rounded-lg border border-ash bg-parchment p-4 shadow-[var(--shadow-md)]">
+    <div className="fixed bottom-24 right-4 z-40 w-64 space-y-3 rounded-lg border border-ash bg-parchment p-4 shadow-[var(--shadow-md)] lg:bottom-4">
       <div className="flex items-center justify-between">
         <span className="font-mono text-caption uppercase tracking-[0.12em] text-smoke">Mock controls</span>
         <button onClick={() => setOpen(false)} className="font-mono text-body-sm text-smoke hover:text-off-black">

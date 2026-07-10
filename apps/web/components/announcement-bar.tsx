@@ -12,13 +12,13 @@ export function AnnouncementBar() {
     <div className="bg-ink text-parchment">
       <div className="mx-auto flex h-[62px] max-w-[var(--page-max-width)] items-center gap-3 px-5 sm:px-8">
         <p className="flex-1 truncate text-center font-mono text-body-sm tracking-[-0.02em]">
-          <span className="text-parchment/60">World Cup 2026 ·</span> France–Morocco is live on your clock.
+          <span className="text-parchment/60">World Cup 2026 ·</span> Pick a fixture and bring your people.
         </p>
         <Link
-          href="/room/room-fra-mar"
+          href="/matches"
           className="hidden shrink-0 rounded-pill border border-parchment/50 px-3 py-0.5 font-mono text-caption uppercase tracking-[0.08em] hover:bg-parchment hover:text-ink sm:inline-flex"
         >
-          Watch
+          Create room
         </Link>
         <button
           onClick={() => setOpen(false)}

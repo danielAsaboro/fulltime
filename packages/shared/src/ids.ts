@@ -24,6 +24,12 @@ export type NoteId = Brand<string, "NoteId">;
 export type PollId = Brand<string, "PollId">;
 export type RecordId = Brand<string, "RecordId">;
 export type HighlightId = Brand<string, "HighlightId">;
+/** Stable identifier for any item rendered in a room's unified feed. */
+export type RoomItemId = Brand<string, "RoomItemId">;
+/** Stable identifier for a user-authored message or thread reply. */
+export type MessageId = Brand<string, "MessageId">;
+/** Identifier for an invite generation. Codes may rotate; invite IDs never do. */
+export type InviteId = Brand<string, "InviteId">;
 
 /** Ordering key for a single TxLINE feed message (see `feed.ts`). */
 export type FeedMessageId = Brand<string, "FeedMessageId">;
@@ -46,8 +52,14 @@ export const newNoteId = (): NoteId => createId("note");
 export const newPollId = (): PollId => createId("poll");
 export const newRecordId = (): RecordId => createId("rec");
 export const newHighlightId = (): HighlightId => createId("hl");
+export const newRoomItemId = (): RoomItemId => createId("item");
+export const newMessageId = (): MessageId => createId("msg");
+export const newInviteId = (): InviteId => createId("inv");
 
 export const asFixtureId = (raw: string): FixtureId => raw as FixtureId;
 export const asUserId = (raw: string): UserId => raw as UserId;
 export const asFeedMessageId = (raw: string): FeedMessageId => raw as FeedMessageId;
 export const asMatchEventId = (raw: string): MatchEventId => raw as MatchEventId;
+export const asRoomItemId = (raw: string): RoomItemId => raw as RoomItemId;
+export const asMessageId = (raw: string): MessageId => raw as MessageId;
+export const asInviteId = (raw: string): InviteId => raw as InviteId;

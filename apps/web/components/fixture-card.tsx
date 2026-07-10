@@ -44,9 +44,15 @@ function TeamRow({
 export function FixtureCard({
   card,
   className,
+  href,
+  callToAction,
+  hideCrowd = false,
 }: {
   card: FixtureCardModel;
   className?: string;
+  href?: string;
+  callToAction?: string;
+  hideCrowd?: boolean;
 }) {
   const { fixture, phase, score, minute, crowd, roomId } = card;
   const home = fixture.home.shortName ?? fixture.home.name.slice(0, 3).toUpperCase();
@@ -54,7 +60,7 @@ export function FixtureCard({
 
   return (
     <Link
-      href={`/room/${roomId}`}
+      href={href ?? `/room/${roomId}`}
       className={cn(
         "group flex flex-col justify-between gap-4 rounded-card border border-ash bg-parchment p-6 transition-colors hover:border-off-black",
         className,
@@ -70,9 +76,11 @@ export function FixtureCard({
         ) : (
           <Tag>{kickoffLabel(Number(fixture.kickoff))}</Tag>
         )}
-        <span className="font-mono text-caption uppercase tracking-[0.08em] text-smoke">
-          {crowdLabel(crowd)} in
-        </span>
+        {hideCrowd ? null : (
+          <span className="font-mono text-caption uppercase tracking-[0.08em] text-smoke">
+            {crowdLabel(crowd)} in
+          </span>
+        )}
       </div>
 
       <div className="space-y-2">
@@ -82,7 +90,7 @@ export function FixtureCard({
 
       <div className="flex items-center justify-between border-t border-ash pt-3">
         <span className="font-mono text-caption uppercase tracking-[0.08em] text-smoke">
-          {phase === "upcoming" ? "Room open" : phase === "live" ? "Join the room" : "Match memory"}
+          {callToAction ?? (phase === "upcoming" ? "Room open" : phase === "live" ? "Join the room" : "Match memory")}
         </span>
         <span className="font-mono text-body-sm text-off-black transition-transform group-hover:translate-x-0.5" aria-hidden>
           →

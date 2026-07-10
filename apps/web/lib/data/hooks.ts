@@ -68,8 +68,8 @@ export function useFixtures(phase?: RoomPhase | "all"): Async<FixtureCard[]> {
 }
 
 export function useRoom(roomId: string): Async<RoomView> {
-  const { client } = useData();
-  return useAsync(() => client.getRoom(roomId), [roomId]);
+  const { client, session } = useData();
+  return useAsync(() => client.getRoom(roomId), [roomId, session?.userId]);
 }
 
 export function useRoomByInvite(code: string): Async<RoomView> {
@@ -83,13 +83,13 @@ export function useReceipt(receiptId: string): Async<ReceiptView> {
 }
 
 export function useReport(roomId: string): Async<FanReportView> {
-  const { client } = useData();
-  return useAsync(() => client.getReport(roomId), [roomId]);
+  const { client, session } = useData();
+  return useAsync(() => client.getReport(roomId), [roomId, session?.userId]);
 }
 
 export function useRecord(): Async<RecordView> {
-  const { client } = useData();
-  return useAsync(() => client.getRecord(), []);
+  const { client, session } = useData();
+  return useAsync(() => client.getRecord(), [session?.userId]);
 }
 
 export function useReplay(fixtureId: string): Async<ReplayView> {
@@ -98,13 +98,13 @@ export function useReplay(fixtureId: string): Async<ReplayView> {
 }
 
 export function useCalibration(roomId: string): Async<CalibrationView> {
-  const { client } = useData();
-  return useAsync(() => client.getCalibration(roomId), [roomId]);
+  const { client, session } = useData();
+  return useAsync(() => client.getCalibration(roomId), [roomId, session?.userId]);
 }
 
 /** Live room state via subscription; honours forced states from the mock controls. */
 export function useRoomState(roomId: string): Async<RoomLiveState> {
-  const { client, forcedState } = useData();
+  const { client, forcedState, session } = useData();
   const [state, setState] = useState<Internal<RoomLiveState>>({ status: "loading", data: null, error: null });
 
   const [nonce, setNonce] = useState(0);
@@ -129,7 +129,7 @@ export function useRoomState(roomId: string): Async<RoomLiveState> {
         alive = false;
       };
     }
-  }, [roomId, forcedState, client, nonce]);
+  }, [roomId, forcedState, client, nonce, session?.userId]);
 
   const reload = () => setNonce((n) => n + 1);
   if (forcedState === "loading") return { status: "loading", data: null, error: null, reload };

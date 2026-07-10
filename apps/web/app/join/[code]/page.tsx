@@ -7,7 +7,15 @@ export const metadata: Metadata = {
   description: "You've been invited to a private FullTime match room.",
 };
 
-export default async function JoinPage({ params }: { params: Promise<{ code: string }> }) {
+export default async function JoinPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ code: string }>;
+  searchParams: Promise<{ ref?: string | string[] }>;
+}) {
   const { code } = await params;
-  return <JoinView code={code} />;
+  const refParam = (await searchParams).ref;
+  const referrerUserId = Array.isArray(refParam) ? refParam[0] : refParam;
+  return <JoinView code={code} referrerUserId={referrerUserId} />;
 }

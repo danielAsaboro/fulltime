@@ -1,6 +1,14 @@
 import { RoomView } from "@/components/room-view";
 
-export default async function RoomPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function RoomPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ demo?: string | string[] }>;
+}) {
   const { id } = await params;
-  return <RoomView roomId={id} />;
+  const demoParam = (await searchParams).demo;
+  const isDemo = (Array.isArray(demoParam) ? demoParam[0] : demoParam) === "1";
+  return <RoomView roomId={id} demo={isDemo} />;
 }

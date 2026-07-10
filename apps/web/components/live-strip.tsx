@@ -14,10 +14,10 @@ export function LiveStrip() {
       <div className="flex items-center justify-between">
         <p className="inline-flex items-center gap-2 font-mono text-caption uppercase tracking-[0.12em] text-graphite">
           <span className="size-1.5 animate-pulse rounded-full bg-crimson" aria-hidden />
-          Live now
+          Live fixtures
         </p>
         <Link href="/matches" className="font-mono text-caption uppercase tracking-[0.1em] text-smoke hover:text-off-black">
-          All matches →
+          Pick a fixture →
         </Link>
       </div>
 
@@ -39,7 +39,13 @@ export function LiveStrip() {
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {fixtures.data.map((card) => (
-            <FixtureCard key={card.roomId} card={card} />
+            <FixtureCard
+              key={card.roomId}
+              card={card}
+              href={`/matches?fixture=${encodeURIComponent(String(card.fixture.id))}`}
+              callToAction="Create a private room"
+              hideCrowd
+            />
           ))}
         </div>
       )}

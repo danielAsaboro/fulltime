@@ -9,7 +9,8 @@ import { Container, Logo } from "@/components/ui/primitives";
 import { SignInModal } from "@/components/sign-in-modal";
 
 const LINKS = [
-  { href: "/matches", label: "Matches" },
+  { href: "/matches", label: "Create room" },
+  { href: "/join", label: "Join with code" },
   { href: "/replay/9001", label: "Replay" },
   { href: "/record", label: "Record" },
 ];
@@ -20,15 +21,15 @@ export function SiteNav({ border = false }: { border?: boolean }) {
 
   return (
     <header className={border ? "border-b border-ash" : undefined}>
-      <Container className="flex h-[96px] items-center justify-between gap-6 lg:h-[112px]">
+      <Container className="flex h-[96px] items-center justify-between gap-6 xl:h-[112px]">
         <div className="flex items-center gap-10">
           <Logo />
-          <nav className="hidden items-center gap-8 lg:flex">
+          <nav className="hidden items-center gap-8 xl:flex">
             {LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="nav-link font-mono text-body uppercase tracking-[0.02em] text-off-black"
+                className="nav-link whitespace-nowrap font-mono text-body uppercase tracking-[0.02em] text-off-black"
               >
                 {link.label}
               </Link>
@@ -50,7 +51,7 @@ export function SiteNav({ border = false }: { border?: boolean }) {
             </span>
           )}
           <Button href="/matches" variant="primary" size="sm" withArrow className="hidden sm:inline-flex">
-            Enter a room
+            Create a room
           </Button>
         </div>
       </Container>
