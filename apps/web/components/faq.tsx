@@ -6,24 +6,24 @@ import { cn } from "@/lib/cn";
 
 const FAQS = [
   {
-    q: "Is this betting?",
-    a: "No. Calls are points-only — you play for Fan IQ and bragging rights, never money. No stakes, no sportsbook flow. That keeps it mainstream and honest.",
+    q: "Where are room messages stored?",
+    a: "Each room is an encrypted Autobase replicated through Corestore. Members exchange the room data over Hyperswarm instead of posting it to a central chat database.",
   },
   {
-    q: "How does it not spoil me?",
-    a: "You tell FullTime your stream delay once. Every event, call, reaction, and receipt releases at feed-time plus your delay — so nothing ever lands before your own screen shows it.",
+    q: "Who can join?",
+    a: "Only someone with an active signed invite can complete blind pairing and become a room writer. The creator can revoke or replace the invite and remove members.",
   },
   {
-    q: "What's a receipt?",
-    a: "Proof that a call settled from verified match data. It reads in plain language first; a checkmark only appears once the data is anchored. Until then it honestly says “proof pending”.",
+    q: "What can we do in a room?",
+    a: "Members can send text messages, create and vote in polls, react to messages, reply in threads, and see who is online or typing.",
   },
   {
-    q: "Do I need crypto to play?",
-    a: "No. You sign in with a name. Verification happens quietly in the background — there's no wallet, no jargon, and no crypto furniture anywhere in the room.",
+    q: "Do I need an account server?",
+    a: "No. Choosing a display name creates or unlocks a local Pear identity on this device. That identity signs your room membership and operations.",
   },
   {
-    q: "Can my group have a private room?",
-    a: "Yes. Share an invite link for a private room with its own leaderboard, riding the same live match feed. Global tallies still show as ambient crowd so five friends feel like a full stadium.",
+    q: "How large can a room be?",
+    a: "A room admits up to 256 members. Invitees are non-indexer writers, so membership does not turn every device into an Autobase indexer.",
   },
 ];
 

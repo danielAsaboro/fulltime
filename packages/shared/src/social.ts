@@ -1,9 +1,8 @@
 /**
  * Event-tied social layer. FullTime is reaction-first: every reaction, note, and
  * poll is anchored to a match moment (feed event, call, minute, odds swing, or
- * receipt) rather than floating in a generic feed. Anchoring carries the feed time
- * so the client release queue can hold social items until `feed_ts + D` too — the
- * room reacts at the right moment for each viewer.
+ * receipt) rather than floating in a generic feed. Anchoring carries the signed
+ * feed time of the referenced moment.
  */
 
 import type {
@@ -31,7 +30,7 @@ export interface Reaction {
   userId: UserId;
   emoji: string;
   anchor: SocialAnchor;
-  /** Feed time of the anchored moment, for release scheduling. */
+  /** Signed feed time of the anchored moment. */
   feedTs: FeedTimestamp;
   createdAt: WallClock;
 }

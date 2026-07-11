@@ -1,31 +1,30 @@
 "use client";
 
-/* Room media can be browser-local blob URLs in mock mode. */
-/* eslint-disable @next/next/no-img-element */
-
 import {
-  Bell,
-  BellRing,
   Check,
-  Copy,
+  Bell,
   Crown,
-  Gauge,
-  ImageIcon,
+  Flag,
   Link2,
   LoaderCircle,
   LockKeyhole,
   LogOut,
   RefreshCw,
   Shield,
-  ShieldAlert,
   SlidersHorizontal,
   UserMinus,
   Users,
 } from "lucide-react";
-import { QRCodeSVG } from "qrcode.react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import type { FullTimeData, RoomDetailsView, RoomMemberView, RoomNotificationSettings } from "@/lib/data";
+import type {
+  FullTimeData,
+  ModerationReportReason,
+  ModerationReportView,
+  RoomDetailsView,
+  RoomMemberView,
+  RoomNotificationSettings,
+} from "@/lib/data";
 import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/primitives";
@@ -35,32 +34,48 @@ export function RoomDetails({
   details,
   client,
   onReload,
-  onCalibrate,
   onOpenInvite,
-  onOpenImage,
 }: {
   roomId: string;
   details: RoomDetailsView | null;
   client: FullTimeData;
   onReload: () => Promise<void>;
-  onCalibrate: () => void;
   onOpenInvite: () => void;
-  onOpenImage: (url: string, alt: string) => void;
 }) {
   const [rename, setRename] = useState("");
   const [slowMode, setSlowMode] = useState<string | null>(null);
-  const [reportReason, setReportReason] = useState("");
   const [busy, setBusy] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [notificationState, setNotificationState] = useState<{
+    roomId: string;
+    settings: RoomNotificationSettings | null;
+    error: string | null;
+  } | null>(null);
+  const notificationSettings = notificationState?.roomId === roomId ? notificationState.settings : null;
+  const notificationError = notificationState?.roomId === roomId ? notificationState.error : null;
+
+  useEffect(() => {
+    let alive = true;
+    void client.getNotificationSettings(roomId).then((settings) => {
+      if (alive) setNotificationState({ roomId, settings, error: null });
+    }).catch((reason: unknown) => {
+      if (alive) setNotificationState({
+        roomId,
+        settings: null,
+        error: reason instanceof Error ? reason.message : "Message notification settings are unavailable.",
+      });
+    });
+    return () => { alive = false; };
+  }, [client, roomId]);
 
   if (!details) return <DetailsSkeleton />;
 
-  const run = async (key: string, action: () => Promise<unknown>, success: string, reload = true): Promise<boolean> => {
+  const run = async (key: string, action: () => Promise<unknown>, success: string): Promise<boolean> => {
     setBusy(key);
     setFeedback(null);
     try {
       await action();
-      if (reload) await onReload();
+      await onReload();
       setFeedback(success);
       return true;
     } catch (reason) {
@@ -71,13 +86,7 @@ export function RoomDetails({
     }
   };
 
-  const notificationToggle = (key: keyof RoomNotificationSettings) => {
-    void run(
-      `notification-${key}`,
-      () => client.updateNotificationSettings(roomId, { [key]: !details.notificationSettings[key] }),
-      "Notification settings updated.",
-    );
-  };
+  const currentMember = details.members.find((member) => member.isCurrentUser);
 
   return (
     <div className="mx-auto w-full max-w-4xl space-y-5 px-3 py-5 sm:px-6 sm:py-6">
@@ -88,211 +97,327 @@ export function RoomDetails({
         </div>
       ) : null}
 
-      <section className="grid gap-px border border-ash bg-ash sm:grid-cols-3">
-        <StatBlock label="Room rank" value={details.fanIq.roomRank ? `#${details.fanIq.roomRank}` : "—"} sub={`of ${details.fanIq.roomSize}`} />
-        <StatBlock label="Fan IQ" value={details.fanIq.fanIq} sub="Prediction performance" />
-        <StatBlock label="Influence" value={details.influence.score} sub={`Level ${details.influence.level}`} />
-      </section>
-
       <section className="border border-ash bg-white/35 p-5 sm:p-6">
         <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <p className="text-caption uppercase tracking-[0.1em] text-smoke">Invite-only room</p>
-            <h2 className="mt-1 text-heading-sm">{details.room.name}</h2>
+            <p className="inline-flex items-center gap-1.5 text-caption uppercase tracking-[0.1em] text-smoke">
+              <LockKeyhole className="size-3.5" /> Encrypted invite-only room
+            </p>
+            <h2 className="mt-2 text-heading-sm">{details.room.name}</h2>
             <p className="mt-2 text-body-sm text-smoke">
               {details.fixture.competition} · {details.fixture.home.name} vs {details.fixture.away.name}
             </p>
           </div>
-          <Button type="button" variant="ghost" size="sm" onClick={onOpenInvite} disabled={details.isClosed || !details.permissions.canInvite}>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={onOpenInvite}
+            disabled={details.isClosed || !(details.permissions.canInvite || details.permissions.canRegenerateInvite)}
+          >
             <Link2 className="size-3.5" /> Invite
           </Button>
         </div>
-        <dl className="mt-6 grid gap-4 border-t border-ash pt-5 text-body-sm sm:grid-cols-3">
-          <div>
-            <dt className="text-caption uppercase tracking-[0.08em] text-smoke">Created</dt>
-            <dd className="mt-1">{new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(new Date(Number(details.room.createdAt)))}</dd>
-          </div>
-          <div>
-            <dt className="text-caption uppercase tracking-[0.08em] text-smoke">Privacy</dt>
-            <dd className="mt-1 inline-flex items-center gap-1.5"><LockKeyhole className="size-3.5" /> Invite only</dd>
-          </div>
-          <div>
-            <dt className="text-caption uppercase tracking-[0.08em] text-smoke">Slow mode</dt>
-            <dd className="mt-1">{details.slowModeSeconds ? `${details.slowModeSeconds} seconds` : "Off"}</dd>
-          </div>
+        <dl className="mt-6 grid gap-px border border-ash bg-ash sm:grid-cols-3">
+          <StatBlock label="Members" value={details.members.length} />
+          <StatBlock label="Slow mode" value={details.slowModeSeconds ? `${details.slowModeSeconds}s` : "Off"} />
+          <StatBlock label="Invite joins" value={details.influence.successfulJoins} />
         </dl>
+        {details.isClosed ? <p className="mt-4 bg-gold/25 px-3 py-2 text-caption">This room is closed and read-only.</p> : null}
       </section>
 
-      <section className="grid gap-5 lg:grid-cols-2">
-        <div className="border border-ash bg-white/35 p-5">
-          <SectionTitle icon={<Gauge className="size-4" />} title="MatchSync" />
-          <p className="mt-3 text-body-sm text-graphite">
-            Calibrate FullTime to your stream. TxLINE feed time remains authoritative; your delay changes when match-anchored items appear for you.
-          </p>
-          <button type="button" onClick={onCalibrate} className="mt-4 text-caption uppercase tracking-[0.08em] text-lake-blue hover:underline">
-            Calibrate stream delay →
-          </button>
-        </div>
+      {details.invite?.status === "active" && !details.isClosed ? (
+        <CompactInviteCard details={details} onOpen={onOpenInvite} />
+      ) : null}
 
-        <div className="border border-ash bg-white/35 p-5">
-          <SectionTitle icon={<Crown className="size-4" />} title="Your influence" />
-          <div className="mt-3 flex items-end justify-between gap-4">
-            <div>
-              <p className="text-heading-sm tabular">{details.influence.successfulJoins}</p>
-              <p className="text-caption text-smoke">unique successful joins</p>
-            </div>
-            <p className="text-right text-caption text-smoke">
-              {details.influence.nextLevelAt == null ? "Top level" : `${details.influence.nextLevelAt - details.influence.successfulJoins} to next level`}
-            </p>
-          </div>
-          <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-ash/50" aria-label={`${Math.round(details.influence.progress * 100)}% to next Influence level`}>
-            <span className="block h-full bg-lake-blue" style={{ width: `${Math.round(details.influence.progress * 100)}%` }} />
-          </div>
-          <p className="mt-3 text-[11px] text-smoke">Influence counts unique joins—not link copies or repeat invites. Fan IQ remains prediction-only.</p>
-        </div>
-      </section>
-
-      <section className="border border-ash bg-white/35 p-5 sm:p-6">
-        <div className="flex items-center justify-between gap-4">
-          <SectionTitle icon={<Users className="size-4" />} title={`Members · ${details.members.length}`} />
-          <span className="text-caption text-smoke">{details.members.filter((member) => member.isOnline).length} online</span>
+      <section className="border border-ash bg-white/35">
+        <div className="flex items-center gap-2 border-b border-ash px-5 py-4">
+          <Users className="size-4 text-smoke" />
+          <h3 className="text-caption uppercase tracking-[0.09em]">Members · {details.members.length}</h3>
         </div>
         <RoomMemberList
           members={details.members}
           canModerate={details.permissions.canModerateMembers}
           busy={busy}
-          onRemove={(member) => {
-            if (!window.confirm(`Remove ${member.displayName} from the room?`)) return;
-            void run(`remove-${member.userId}`, () => client.removeMember(roomId, String(member.userId)), `${member.displayName} was removed.`);
-          }}
           onToggleModerator={(member) => {
             const role = member.role === "moderator" ? "member" : "moderator";
-            void run(`role-${member.userId}`, () => client.setMemberRole(roomId, String(member.userId), role), `${member.displayName} is now a ${role}.`);
+            void run(`role-${member.userId}`, () => client.setMemberRole(roomId, String(member.userId), role), `${member.displayName}'s role was updated.`);
+          }}
+          onRemove={(member) => {
+            void run(`remove-${member.userId}`, () => client.removeMember(roomId, String(member.userId)), `${member.displayName} was removed.`);
           }}
         />
       </section>
 
-      <section className="grid gap-5 lg:grid-cols-2">
-        <div className="border border-ash bg-white/35 p-5">
-          <SectionTitle icon={<BellRing className="size-4" />} title="Notifications" />
-          <div className="mt-3 divide-y divide-ash">
-            {(Object.keys(details.notificationSettings) as Array<keyof RoomNotificationSettings>).map((key) => (
-              <label key={key} className="flex cursor-pointer items-center justify-between gap-4 py-3 text-body-sm capitalize">
-                <span className="inline-flex items-center gap-2"><Bell className="size-3.5 text-smoke" /> {key.replace(/([A-Z])/g, " $1")}</span>
+      {(details.permissions.canRename || details.permissions.canSetSlowMode || details.permissions.canCloseRoom) ? (
+        <details className="group border border-ash bg-white/35">
+          <summary className="flex cursor-pointer list-none items-center gap-2 px-5 py-4 sm:px-6">
+            <SlidersHorizontal className="size-4 text-smoke" />
+            <h3 className="flex-1 text-caption uppercase tracking-[0.09em]">Creator controls</h3><span className="text-smoke group-open:rotate-45">+</span>
+          </summary><div className="space-y-5 border-t border-ash p-5 sm:p-6">
+          {details.permissions.canRename ? (
+            <div>
+              <label htmlFor="room-rename" className="text-caption text-smoke">Room name</label>
+              <div className="mt-2 flex gap-2">
                 <input
-                  type="checkbox"
-                  checked={details.notificationSettings[key]}
-                  disabled={busy === `notification-${key}`}
-                  onChange={() => notificationToggle(key)}
-                  className="size-4 accent-lake-blue"
+                  id="room-rename"
+                  value={rename}
+                  onChange={(event) => setRename(event.target.value)}
+                  maxLength={48}
+                  placeholder={details.room.name}
+                  className="min-w-0 flex-1 border border-ash bg-parchment px-3 py-2 text-body-sm outline-none focus:border-off-black"
                 />
-              </label>
-            ))}
-          </div>
-        </div>
-
-        <div className="border border-ash bg-white/35 p-5">
-          <SectionTitle icon={<ImageIcon className="size-4" />} title={`Media · ${details.media.length}`} />
-          {details.media.length ? (
-            <div className="mt-4 grid grid-cols-3 gap-2">
-              {details.media.slice(0, 9).map((attachment) => (
-                <button key={attachment.id} type="button" onClick={() => onOpenImage(attachment.url, attachment.name)} className="aspect-square overflow-hidden bg-ash/25">
-                  <img src={attachment.url} alt={attachment.name} className="size-full object-cover transition-transform hover:scale-105" />
-                </button>
-              ))}
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  disabled={!rename.trim() || busy === "rename"}
+                  onClick={() => void run("rename", () => client.renameRoom(roomId, rename.trim()), "Room renamed.").then((ok) => { if (ok) setRename(""); })}
+                >
+                  Save
+                </Button>
+              </div>
             </div>
-          ) : (
-            <p className="mt-4 text-body-sm text-smoke">Images shared in Chat collect here.</p>
-          )}
-        </div>
-      </section>
-
-      {!details.isClosed && (details.permissions.canRename || details.permissions.canSetSlowMode || details.permissions.canCloseRoom) ? (
-        <section className="border border-off-black bg-white/35 p-5 sm:p-6">
-          <SectionTitle icon={<SlidersHorizontal className="size-4" />} title="Creator controls" />
-          <div className="mt-5 grid gap-5 lg:grid-cols-2">
-            {details.permissions.canRename ? (
-              <label className="block">
-                <span className="text-caption text-smoke">Rename room</span>
-                <div className="mt-1 flex gap-2">
-                  <input value={rename} onChange={(event) => setRename(event.target.value)} maxLength={80} placeholder={details.room.name} className="min-w-0 flex-1 border border-ash bg-parchment px-3 py-2 text-body-sm outline-none focus:border-off-black" />
-                  <button type="button" disabled={!rename.trim() || busy === "rename"} onClick={() => void run("rename", () => client.renameRoom(roomId, rename.trim()), "Room renamed.").then((ok) => { if (ok) setRename(""); })} className="border border-off-black px-3 text-caption uppercase disabled:opacity-35">Save</button>
-                </div>
-              </label>
-            ) : null}
-            {details.permissions.canSetSlowMode ? (
-              <label className="block">
-                <span className="text-caption text-smoke">Slow mode</span>
-                <div className="mt-1 flex gap-2">
-                  <select value={slowMode ?? String(details.slowModeSeconds)} onChange={(event) => setSlowMode(event.target.value)} className="min-w-0 flex-1 border border-ash bg-parchment px-3 py-2 text-body-sm outline-none">
-                    <option value="0">Off</option><option value="5">5 seconds</option><option value="15">15 seconds</option><option value="30">30 seconds</option><option value="60">1 minute</option>
-                  </select>
-                  <button type="button" disabled={busy === "slow"} onClick={() => void run("slow", () => client.setSlowMode(roomId, Number(slowMode ?? details.slowModeSeconds)), "Slow mode updated.").then((ok) => { if (ok) setSlowMode(null); })} className="border border-off-black px-3 text-caption uppercase disabled:opacity-35">Apply</button>
-                </div>
-              </label>
-            ) : null}
-          </div>
-          <div className="mt-5 flex flex-wrap gap-2 border-t border-ash pt-5">
-            {details.permissions.canRegenerateInvite ? <Button type="button" variant="ghost" size="sm" disabled={busy === "regenerate"} onClick={() => void run("regenerate", () => client.regenerateInvite(roomId), "A new invite link is active.")}><RefreshCw className="size-3.5" /> Regenerate invite</Button> : null}
-            {details.permissions.canRevokeInvite ? <Button type="button" variant="ghost" size="sm" disabled={!details.invite || busy === "revoke"} onClick={() => { if (window.confirm("Revoke the active invite? Existing members will keep access.")) void run("revoke", () => client.revokeInvite(roomId), "Invite revoked."); }}>Revoke invite</Button> : null}
-            {details.permissions.canCloseRoom ? <Button type="button" variant="secondary" size="sm" disabled={details.isClosed || busy === "close"} onClick={() => { if (window.confirm("Close this room? Members will no longer be able to post.")) void run("close", () => client.closeRoom(roomId), "Room closed."); }}><LockKeyhole className="size-3.5" /> Close room</Button> : null}
-          </div>
-        </section>
+          ) : null}
+          {details.permissions.canSetSlowMode ? (
+            <div>
+              <label htmlFor="room-slow-mode" className="text-caption text-smoke">Slow mode, 0–60 seconds</label>
+              <div className="mt-2 flex gap-2">
+                <input
+                  id="room-slow-mode"
+                  type="number"
+                  min={0}
+                  max={60}
+                  value={slowMode ?? details.slowModeSeconds}
+                  onChange={(event) => setSlowMode(event.target.value)}
+                  className="min-w-0 flex-1 border border-ash bg-parchment px-3 py-2 text-body-sm outline-none focus:border-off-black"
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  disabled={busy === "slow"}
+                  onClick={() => void run("slow", () => client.setSlowMode(roomId, Number(slowMode ?? details.slowModeSeconds)), "Slow mode updated.").then((ok) => { if (ok) setSlowMode(null); })}
+                >
+                  Apply
+                </Button>
+              </div>
+            </div>
+          ) : null}
+          {details.permissions.canCloseRoom ? (
+            <Button type="button" variant="ghost" size="sm" disabled={busy === "close"} onClick={() => void run("close", () => client.closeRoom(roomId), "Room closed.")}>Close room</Button>
+          ) : null}
+          </div></details>
       ) : null}
 
-      <section className="border border-ash p-5 sm:p-6">
-        <SectionTitle icon={<ShieldAlert className="size-4" />} title="Safety & access" />
-        <label className="mt-4 block">
-          <span className="text-caption text-smoke">Report this room</span>
-          <div className="mt-1 flex flex-col gap-2 sm:flex-row">
-            <input value={reportReason} onChange={(event) => setReportReason(event.target.value)} placeholder="Tell us what happened" className="min-w-0 flex-1 border border-ash bg-white/40 px-3 py-2 text-body-sm outline-none focus:border-off-black" />
-            <Button type="button" variant="ghost" size="sm" disabled={!reportReason.trim() || busy === "report"} onClick={() => void run("report", () => client.reportRoom(roomId, reportReason.trim()), "Report received. Thank you.", false).then((ok) => { if (ok) setReportReason(""); })}>Report</Button>
-          </div>
-        </label>
-        {details.members.find((member) => member.isCurrentUser)?.role === "creator" && !details.isClosed ? (
-          <p className="mt-5 text-caption text-smoke">Creators must close the room before leaving it.</p>
-        ) : (
-          <button type="button" onClick={() => { if (window.confirm("Leave this room? You will need a valid invite to return.")) void run("leave", () => client.leaveRoom(roomId), "You left the room.", false).then((ok) => { if (ok) window.location.href = "/matches"; }); }} className="mt-5 inline-flex items-center gap-2 text-caption uppercase tracking-[0.08em] text-crimson">
+      {currentMember ? (
+        <details className="group border border-ash bg-white/35">
+          <summary className="flex cursor-pointer list-none items-center gap-2 px-5 py-4 sm:px-6">
+            <Bell className="size-4 text-smoke" />
+            <h3 className="flex-1 text-caption uppercase tracking-[0.09em]">Notifications</h3><span className="text-smoke group-open:rotate-45">+</span>
+          </summary><div className="border-t border-ash p-5 sm:p-6">
+          <p className="mt-2 text-body-sm text-smoke">Show a native desktop alert when another room member sends a new message.</p>
+          {notificationError ? <p className="mt-3 text-caption text-crimson">{notificationError}</p> : null}
+          {notificationSettings ? (
+            <label className="mt-4 flex cursor-pointer items-center justify-between gap-4 border border-ash bg-parchment px-3 py-3 text-body-sm">
+              <span>Message alerts</span>
+              <input
+                type="checkbox"
+                checked={notificationSettings.messages}
+                disabled={busy === "notifications-messages"}
+                onChange={(event) => {
+                  const messages = event.target.checked;
+                  setBusy("notifications-messages");
+                  setNotificationState({ roomId, settings: notificationSettings, error: null });
+                  void client.updateNotificationSettings(roomId, { messages }).then((next) => {
+                    setNotificationState({ roomId, settings: next, error: null });
+                  }).catch((reason: unknown) => {
+                    setNotificationState({
+                      roomId,
+                      settings: notificationSettings,
+                      error: reason instanceof Error ? reason.message : "Message notification settings could not be saved.",
+                    });
+                  }).finally(() => setBusy(null));
+                }}
+                className="size-4 accent-lake-blue"
+              />
+            </label>
+          ) : !notificationError ? <p className="mt-3 text-caption text-smoke">Loading notification settings…</p> : null}
+          </div></details>
+      ) : null}
+
+      {currentMember ? <ReportMemberForm roomId={roomId} members={details.members} client={client} /> : null}
+
+      {currentMember?.role === "creator" || currentMember?.role === "moderator" ? (
+        <ModerationInbox roomId={roomId} members={details.members} client={client} />
+      ) : null}
+
+      {currentMember ? (
+        <details className="group border border-crimson/25 bg-white/35">
+          <summary className="flex cursor-pointer list-none items-center px-5 py-4 text-caption uppercase tracking-[0.09em] text-crimson sm:px-6"><span className="flex-1">Leave room</span><span className="group-open:rotate-45">+</span></summary><div className="border-t border-crimson/20 p-5 sm:p-6">
+          <Button
+            type="button"
+            variant="quiet"
+            size="sm"
+            disabled={busy === "leave"}
+            onClick={() => void run("leave", () => client.leaveRoom(roomId), "You left the room.").then((ok) => {
+              if (ok) window.location.assign("/matches");
+            })}
+          >
             <LogOut className="size-3.5" /> Leave room
-          </button>
-        )}
-      </section>
+          </Button>
+          </div></details>
+      ) : null}
     </div>
+  );
+}
+
+const REPORT_REASONS: readonly ModerationReportReason[] = [
+  "harassment",
+  "hate",
+  "misinformation",
+  "sexual-content",
+  "spam",
+  "threats",
+  "other",
+];
+
+function ReportMemberForm({ roomId, members, client }: { roomId: string; members: RoomMemberView[]; client: FullTimeData }) {
+  const candidates = members.filter((member) => !member.isCurrentUser);
+  const [target, setTarget] = useState("");
+  const [reason, setReason] = useState<ModerationReportReason>("harassment");
+  const [note, setNote] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [feedback, setFeedback] = useState<string | null>(null);
+
+  if (!candidates.length) return null;
+
+  const submit = async () => {
+    if (!target || busy) return;
+    setBusy(true);
+    setFeedback(null);
+    try {
+      await client.reportRoomTarget(roomId, { kind: "member", id: target }, reason, note);
+      setTarget("");
+      setReason("harassment");
+      setNote("");
+      setFeedback("Encrypted report sent to this room’s creator and moderators.");
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : "The encrypted report could not be sent.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <details className="group border border-ash bg-white/35"><summary className="flex cursor-pointer list-none items-center gap-2 px-5 py-4 sm:px-6"><Flag className="size-4 text-smoke" /><h3 className="flex-1 text-caption uppercase tracking-[0.09em]">Safety and reporting</h3><span className="text-smoke group-open:rotate-45">+</span></summary><div className="border-t border-ash p-5 sm:p-6">
+      <p className="mt-2 text-body-sm text-smoke">The report is encrypted for the current creator and moderators. It is not posted to chat.</p>
+      <div className="mt-4 grid gap-3 sm:grid-cols-2">
+        <label className="text-caption text-smoke">Member
+          <select value={target} onChange={(event) => setTarget(event.target.value)} className="mt-1 w-full border border-ash bg-parchment px-3 py-2 text-body-sm text-off-black">
+            <option value="">Choose a member</option>
+            {candidates.map((member) => <option key={String(member.userId)} value={String(member.userId)}>{member.displayName}</option>)}
+          </select>
+        </label>
+        <label className="text-caption text-smoke">Reason
+          <select value={reason} onChange={(event) => setReason(event.target.value as ModerationReportReason)} className="mt-1 w-full border border-ash bg-parchment px-3 py-2 text-body-sm text-off-black">
+            {REPORT_REASONS.map((value) => <option key={value} value={value}>{value.replace(/-/g, " ")}</option>)}
+          </select>
+        </label>
+      </div>
+      <label className="mt-3 block text-caption text-smoke">Optional note
+        <textarea value={note} onChange={(event) => setNote(event.target.value)} maxLength={1000} rows={3} className="mt-1 w-full resize-y border border-ash bg-parchment px-3 py-2 text-body-sm text-off-black outline-none focus:border-off-black" />
+      </label>
+      <div className="mt-3 flex items-center justify-between gap-3">
+        {feedback ? <p className={cn("text-caption", feedback.startsWith("Encrypted") ? "text-lake-blue" : "text-crimson")}>{feedback}</p> : <span />}
+        <Button type="button" variant="ghost" size="sm" disabled={!target || busy} onClick={() => void submit()}>{busy ? "Encrypting…" : "Send report"}</Button>
+      </div>
+    </div></details>
+  );
+}
+
+function ModerationInbox({ roomId, members, client }: { roomId: string; members: RoomMemberView[]; client: FullTimeData }) {
+  const [reports, setReports] = useState<ModerationReportView[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const memberNames = new Map(members.map((member) => [String(member.userId), member.displayName]));
+  const load = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      setReports(await client.listModerationReports(roomId));
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "Moderation reports could not be opened.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    let alive = true;
+    void client.listModerationReports(roomId).then((next) => {
+      if (!alive) return;
+      setReports(next);
+      setError(null);
+    }).catch((reason: unknown) => {
+      if (!alive) return;
+      setError(reason instanceof Error ? reason.message : "Moderation reports could not be opened.");
+    });
+    return () => { alive = false; };
+  }, [roomId, client]);
+  return (
+    <details className="group border border-ash bg-white/35"><summary className="flex cursor-pointer list-none items-center gap-2 px-5 py-4 sm:px-6"><Shield className="size-4 text-lake-blue" /><h3 className="flex-1 text-caption uppercase tracking-[0.09em]">Moderation inbox</h3><span className="text-smoke group-open:rotate-45">+</span></summary><div className="border-t border-ash p-5 sm:p-6"><div className="flex justify-end"><Button type="button" variant="ghost" size="sm" disabled={loading} onClick={() => void load()}>{loading ? "Opening…" : "Refresh"}</Button></div>
+      {error ? <p className="mt-3 text-caption text-crimson">{error}</p> : null}
+      {reports ? reports.length ? <ul className="mt-4 divide-y divide-ash border-y border-ash">{reports.map((report) => <li key={report.reportId} className="py-3 text-body-sm"><p><strong>{memberNames.get(String(report.reporterId)) ?? "Former member"}</strong> reported {memberNames.get(report.target.id) ?? report.target.id} for {report.reason.replace(/-/g, " ")}.</p>{report.note ? <p className="mt-1 whitespace-pre-wrap text-smoke">{report.note}</p> : null}<p className="mt-1 text-[10px] text-smoke">{new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(Number(report.createdAt)))}</p></li>)}</ul> : <p className="mt-3 text-body-sm text-smoke">No reports addressed to your current moderator key.</p> : <p className="mt-3 text-body-sm text-smoke">Opening encrypted reports…</p>}
+    </div></details>
+  );
+}
+
+export function CompactInviteCard({ details, onOpen }: { details: RoomDetailsView; onOpen: () => void }) {
+  return (
+    <section className="border border-lake-blue/25 bg-periwinkle-mist/35 p-5">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className="text-caption uppercase tracking-[0.09em] text-smoke">Active invite</p>
+          <p className="mt-1 text-body-sm">{details.invite?.viewerSuccessfulJoins ?? 0} people joined through your invite.</p>
+        </div>
+        <Button type="button" variant="ghost" size="sm" onClick={onOpen}><Link2 className="size-3.5" /> Share</Button>
+      </div>
+    </section>
   );
 }
 
 export function RoomMemberList({
   members,
   canModerate = false,
-  busy,
-  onRemove,
+  busy = null,
   onToggleModerator,
+  onRemove,
 }: {
   members: RoomMemberView[];
   canModerate?: boolean;
   busy?: string | null;
-  onRemove?: (member: RoomMemberView) => void;
   onToggleModerator?: (member: RoomMemberView) => void;
+  onRemove?: (member: RoomMemberView) => void;
 }) {
   return (
-    <ul className="mt-3 divide-y divide-ash">
+    <ul className="divide-y divide-ash px-5">
       {members.map((member) => (
         <li key={String(member.userId)} className="flex items-center gap-3 py-3">
-          <span className="relative grid size-8 shrink-0 place-items-center rounded-full border border-ash bg-parchment text-[10px] font-medium">
-            {member.displayName.slice(0, 2).toUpperCase()}
-            <span className={cn("absolute bottom-0 right-0 size-2 rounded-full border border-parchment", member.isOnline ? "bg-mint" : "bg-ash")} aria-label={member.isOnline ? "Online" : "Offline"} />
+          <span className={cn("size-2 rounded-full", member.isOnline ? "bg-mint" : "bg-ash")} aria-label={member.isOnline ? "Online" : "Offline"} />
+          <span className="min-w-0 flex-1">
+            <span className="flex items-center gap-1.5 text-body-sm">
+              <span className="truncate">{member.displayName}</span>
+              {member.isCurrentUser ? <span className="text-[10px] text-smoke">You</span> : null}
+            </span>
+            <span className="mt-0.5 block text-[10px] uppercase tracking-[0.06em] text-smoke">{member.role}</span>
           </span>
-          <div className="min-w-0 flex-1">
-            <p className="truncate text-body-sm font-medium">{member.displayName} {member.isCurrentUser ? <span className="font-normal text-smoke">(you)</span> : null}</p>
-            <p className="mt-0.5 text-[10px] uppercase tracking-[0.08em] text-smoke">{member.role} · {member.successfulInvites} joins</p>
-          </div>
           {member.role === "creator" ? <Crown className="size-4 text-gold" aria-label="Creator" /> : member.role === "moderator" ? <Shield className="size-4 text-lake-blue" aria-label="Moderator" /> : null}
           {canModerate && !member.isCurrentUser && member.role !== "creator" ? (
-            <div className="flex items-center gap-1">
-              <button type="button" disabled={busy === `role-${member.userId}`} onClick={() => onToggleModerator?.(member)} className="grid size-8 place-items-center text-smoke hover:bg-parchment hover:text-off-black" aria-label={member.role === "moderator" ? `Remove ${member.displayName} as moderator` : `Make ${member.displayName} a moderator`}>
-                <Shield className="size-3.5" />
+            <div className="flex gap-1">
+              <button type="button" disabled={busy === `role-${member.userId}`} onClick={() => onToggleModerator?.(member)} className="grid size-8 place-items-center text-smoke hover:bg-parchment" aria-label={member.role === "moderator" ? `Remove ${member.displayName} as moderator` : `Make ${member.displayName} a moderator`}>
+                <RefreshCw className="size-3.5" />
               </button>
-              <button type="button" disabled={busy === `remove-${member.userId}`} onClick={() => onRemove?.(member)} className="grid size-8 place-items-center text-smoke hover:bg-coral/15 hover:text-crimson" aria-label={`Remove ${member.displayName}`}>
+              <button type="button" disabled={busy === `remove-${member.userId}`} onClick={() => onRemove?.(member)} className="grid size-8 place-items-center text-smoke hover:bg-coral/10" aria-label={`Remove ${member.displayName}`}>
                 <UserMinus className="size-3.5" />
               </button>
             </div>
@@ -303,46 +428,10 @@ export function RoomMemberList({
   );
 }
 
-function SectionTitle({ icon, title }: { icon: React.ReactNode; title: string }) {
-  return <h2 className="flex items-center gap-2 text-label">{icon}{title}</h2>;
-}
-
-function StatBlock({ label, value, sub }: { label: string; value: React.ReactNode; sub: string }) {
-  return (
-    <div className="bg-parchment p-5">
-      <p className="text-caption uppercase tracking-[0.1em] text-smoke">{label}</p>
-      <p className="mt-2 text-heading-sm font-medium tabular">{value}</p>
-      <p className="mt-1 text-[11px] text-smoke">{sub}</p>
-    </div>
-  );
+function StatBlock({ label, value }: { label: string; value: React.ReactNode }) {
+  return <div className="bg-parchment px-4 py-4"><dt className="text-caption uppercase tracking-[0.08em] text-smoke">{label}</dt><dd className="mt-1 text-subheading tabular">{value}</dd></div>;
 }
 
 function DetailsSkeleton() {
-  return (
-    <div className="mx-auto w-full max-w-4xl space-y-5 px-3 py-5 sm:px-6">
-      <Skeleton className="h-28 w-full" />
-      <Skeleton className="h-52 w-full" />
-      <div className="grid gap-5 sm:grid-cols-2"><Skeleton className="h-40" /><Skeleton className="h-40" /></div>
-      <Skeleton className="h-64 w-full" />
-    </div>
-  );
-}
-
-export function CompactInviteCard({ details, onOpen }: { details: RoomDetailsView; onOpen: () => void }) {
-  const relative = details.invite?.url ?? "";
-  const url = typeof window === "undefined" || !relative ? relative : new URL(relative, window.location.origin).toString();
-  return (
-    <button type="button" onClick={onOpen} className="flex w-full items-center gap-3 border border-ash bg-white/35 p-3 text-left hover:border-off-black">
-      <span className="grid size-12 shrink-0 place-items-center bg-white">
-        {url ? <QRCodeSVG value={url} size={38} level="L" /> : <LockKeyhole className="size-4 text-smoke" />}
-      </span>
-      <span className="min-w-0 flex-1">
-        <span className="block text-caption font-medium">Invite your people</span>
-        <span className="mt-0.5 block truncate text-[10px] text-smoke">
-          {details.invite ? `${details.invite.viewerSuccessfulJoins} friends joined through you` : "Create a new invite link"}
-        </span>
-      </span>
-      <Copy className="size-3.5 text-smoke" />
-    </button>
-  );
+  return <div className="space-y-4 p-5"><Skeleton className="h-40" /><Skeleton className="h-64" /></div>;
 }

@@ -4,13 +4,18 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "start": "tsx src/index.ts",
-    "record": "tsx src/index.ts --record",
+    "operator:dev": "tsx watch src/index.ts",
+    "operator:start": "tsx src/index.ts",
+    "operator:local-config": "tsx src/local-development.ts",
+    "operator:local-live": "node scripts/start-local-live.cjs",
+    "manifest:sign": "tsx src/manifest-cli.ts",
+    "manifest:verify": "tsx src/manifest-verify.ts",
     "typecheck": "tsc --noEmit",
     "test": "node --import tsx --test test/*.test.ts"
   },
   "dependencies": {
-    "@fulltime/shared": "*"
+    "@fulltime/shared": "*",
+    "corestore": "^7.11.0",
+    "hyperswarm": "^4.17.0"
   }
 }

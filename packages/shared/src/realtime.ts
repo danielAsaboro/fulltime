@@ -1,8 +1,7 @@
 /**
  * Realtime transport. Room channels are per-room and send diffs, not full
- * snapshots. Every message carries the feed time of the moment it represents, so
- * the client release queue can hold it until `feed_ts + D` — this is how one
- * server broadcast reaches every viewer spoiler-safe on their own clock.
+ * snapshots. Every message carries the feed time of the moment it represents so
+ * receivers can preserve signed chronology.
  */
 
 import type { CallId, PollId, RoomId } from "./ids";
@@ -30,9 +29,9 @@ export type RoomDiff =
 
 export interface RoomChannelMessage {
   roomId: RoomId;
-  /** Feed time this diff belongs to; null ⇒ release immediately (not spoiler-bearing). */
+  /** Feed time this diff belongs to; null for room-only activity. */
   feedTs: FeedTimestamp | null;
-  /** Server send time, for latency compensation in the release queue. */
+  /** Server send time for transport diagnostics. */
   sentAt: WallClock;
   diff: RoomDiff;
 }

@@ -3,6 +3,9 @@ import assert from "node:assert/strict";
 
 import { normalizeScore } from "../src/txline/scores.js";
 import { normalizeOdds } from "../src/txline/odds.js";
+import { ingestScore } from "../src/ingest.js";
+import type { Logger } from "../src/logger.js";
+import type { CorpusRecorder } from "../src/recorder/recorder.js";
 import { FixtureMachine } from "../src/state/fixture-machine.js";
 import type { TxScores } from "../src/txline/types.js";
 import type { OddsPayload } from "../src/txline/types.js";
@@ -24,6 +27,8 @@ function scores(partial: Partial<TxScores> & Pick<TxScores, "seq" | "ts">): TxSc
     ...partial,
   };
 }
+
+const quiet: Logger = { debug() {}, info() {}, warn() {}, error() {} };
 
 test("normalizeScore maps a home goal and its scoreline", () => {
   const norm = normalizeScore(
@@ -99,6 +104,24 @@ test("FixtureMachine records a feed gap when the sequence jumps", () => {
   assert.equal(m.snapshot.gaps.length, 1);
 });
 
+test("FixtureMachine resumes from a signed checkpoint without replaying a phase transition", () => {
+  const fixtureId = "900001" as never;
+  const checkpoint = new FixtureMachine(fixtureId);
+  const first = normalizeScore(scores({ seq: 10, ts: 1000, dataSoccer: { StatusId: 2, Minutes: 20 } }));
+  checkpoint.step(first);
+  const resumed = new FixtureMachine(fixtureId, {
+    state: checkpoint.snapshot,
+    lastSeq: first.seq,
+    lastStatusCode: first.statusCode,
+  });
+  const next = resumed.step(
+    normalizeScore(scores({ seq: 11, ts: 1100, dataSoccer: { StatusId: 2, Minutes: 21 } })),
+  );
+  assert.equal(next.gap, null);
+  assert.equal(next.events.some((event) => event.kind === "kickoff"), false);
+  assert.equal(next.state.minute, 21);
+});
+
 test("a status-only update does not clobber the scoreline", () => {
   const m = new FixtureMachine("900001" as never);
   m.step(
@@ -117,6 +140,36 @@ test("a status-only update does not clobber the scoreline", () => {
   m.step(normalizeScore(scores({ seq: 2, ts: 200, dataSoccer: { StatusId: 3, Minutes: 45 } })));
   assert.deepEqual(m.snapshot.score, { home: 1, away: 0 });
   assert.equal(m.snapshot.status, "half-time");
+});
+
+test("ingest exposes the canonical score/state/events record for signed publication", () => {
+  const raw: unknown[] = [];
+  const snapshots: unknown[] = [];
+  const recorder = {
+    recordRaw(value: unknown) { raw.push(value); },
+    recordSnapshot(value: unknown) { snapshots.push(value); },
+  } as unknown as CorpusRecorder;
+  const result = ingestScore(
+    scores({
+      seq: 1,
+      ts: 1_800_000_000_000,
+      dataSoccer: { StatusId: 2, Minutes: 0 },
+      scoreSoccer: {
+        Participant1: { Total: { Goals: 0, YellowCards: 0, RedCards: 0, Corners: 0 } },
+        Participant2: { Total: { Goals: 0, YellowCards: 0, RedCards: 0, Corners: 0 } },
+      },
+    }),
+    new Map(),
+    recorder,
+    quiet,
+  );
+  assert.ok(result);
+  assert.equal(result.update.fixtureId, "900001");
+  assert.equal(result.update.messageId, "900001:1");
+  assert.equal(result.state.lastMessageId, result.update.messageId);
+  assert.equal(result.events.some((event) => event.kind === "kickoff"), true);
+  assert.equal(raw.length, 1);
+  assert.equal(snapshots.length, 1);
 });
 
 function odds(partial: Partial<OddsPayload>): OddsPayload {

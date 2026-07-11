@@ -3,7 +3,8 @@
 import { ArrowRight, LoaderCircle, MessageCircle, Send, X } from "lucide-react";
 import { useEffect, useId, useMemo, useRef, useState, useSyncExternalStore } from "react";
 
-import type { RoomFeedItem } from "@/lib/data";
+import type { RoomFeedItem, ThreadReply } from "@/lib/data";
+import { useRoomThread } from "@/lib/data";
 import { cn } from "@/lib/cn";
 import { FeedKindIcon } from "@/components/room-feed";
 import { Sheet } from "@/components/ui/sheet";
@@ -23,7 +24,7 @@ export function RoomThreadOverlays({
   roomClosed?: boolean;
   onClose: () => void;
   onRequireSignIn: () => void;
-  onSend: (itemId: string, text: string) => Promise<void>;
+  onSend: (itemId: string, text: string) => Promise<ThreadReply>;
 }) {
   const desktop = useSyncExternalStore(subscribeDesktop, getDesktopSnapshot, getServerDesktopSnapshot);
   if (!item) return null;
@@ -82,7 +83,7 @@ function DesktopThread({
   roomClosed: boolean;
   onClose: () => void;
   onRequireSignIn: () => void;
-  onSend: (itemId: string, text: string) => Promise<void>;
+  onSend: (itemId: string, text: string) => Promise<ThreadReply>;
 }) {
   const panelRef = useRef<HTMLElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
@@ -162,17 +163,18 @@ function ThreadContent({
   canParticipate: boolean;
   roomClosed?: boolean;
   onRequireSignIn: () => void;
-  onSend: (itemId: string, text: string) => Promise<void>;
+  onSend: (itemId: string, text: string) => Promise<ThreadReply>;
 }) {
   const [text, setText] = useState("");
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const thread = useRoomThread(String(item.roomId), String(item.id), item.replies);
   const replies = useMemo(
     () =>
-      [...item.replies].sort(
+      [...thread.replies].sort(
         (a, b) => Number(a.createdAt) - Number(b.createdAt) || String(a.id).localeCompare(String(b.id)),
       ),
-    [item.replies],
+    [thread.replies],
   );
 
   const send = async () => {
@@ -185,7 +187,8 @@ function ThreadContent({
     setSending(true);
     setError(null);
     try {
-      await onSend(String(item.id), clean);
+      const reply = await onSend(String(item.id), clean);
+      thread.addReply(reply);
       setText("");
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "Reply could not be sent.");
@@ -198,6 +201,20 @@ function ThreadContent({
     <>
       <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
         <ThreadSource item={item} />
+        {thread.hasMore ? (
+          <div className="border-b border-ash px-5 py-3 text-center">
+            <button
+              type="button"
+              onClick={() => void thread.loadOlder()}
+              disabled={thread.loadingOlder}
+              className="inline-flex items-center gap-2 rounded-full border border-ash bg-white/45 px-3 py-1.5 text-caption text-smoke hover:text-off-black disabled:opacity-50"
+            >
+              {thread.loadingOlder ? <LoaderCircle className="size-3.5 animate-spin" aria-hidden /> : null}
+              {thread.loadingOlder ? "Loading replies" : "Load older replies"}
+            </button>
+          </div>
+        ) : null}
+        {thread.error ? <p className="border-b border-ash px-5 py-2 text-caption text-crimson">{thread.error}</p> : null}
         <ol className="divide-y divide-ash/70 px-5">
           {replies.length ? (
             replies.map((reply) => (
@@ -292,7 +309,7 @@ function ThreadSource({ item }: { item: RoomFeedItem }) {
         <p className="line-clamp-3 text-body-sm text-off-black">{label}</p>
       </div>
       <p className="mt-2 text-[10px] text-smoke">
-        {item.author?.displayName ?? "FullTime"} · {item.matchMinute != null ? `${item.matchMinute}'` : "room time"}
+        {item.author?.displayName ?? "Room"} · {new Intl.DateTimeFormat(undefined, { hour: "numeric", minute: "2-digit" }).format(new Date(Number(item.createdAt)))}
       </p>
     </div>
   );
@@ -302,18 +319,8 @@ function sourceLabel(item: RoomFeedItem): string {
   switch (item.kind) {
     case "text":
       return item.text;
-    case "image":
-      return item.caption ?? item.attachment.name;
-    case "event":
-      return item.label;
     case "poll":
       return item.poll.question;
-    case "call":
-      return item.call.call.prompt;
-    case "odds":
-      return item.marketSays.text;
-    case "receipt":
-      return item.receipt.headline;
     case "system":
       return item.text;
   }

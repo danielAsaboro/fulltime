@@ -1,225 +1,353 @@
-/**
- * Live adapter — STUBS for the backend engineer (Codex) to fill. Each method names
- * the Supabase table / realtime channel / worker bridge it should read or write.
- * Until wired, every method throws, so live mode renders the UI's error states
- * honestly rather than pretending. See BACKEND-REMAINING.md for the full checklist.
- *
- * Hard rule: this file is the ONLY place Supabase (or any transport) may be
- * imported. Components never see it.
- */
-
-import type { CalibrationMethod } from "@fulltime/shared";
+/** Pear-backed implementation of the renderer data contract. */
 
 import type {
-  CalibrationView,
   ChatMessage,
   CreatePollInput,
   CreateRoomInput,
-  DemoRoomEntry,
-  FanReportView,
   FixtureCard,
+  FixtureIntelligence,
   FixturesFilter,
   FullTimeData,
   InviteView,
+  ModerationReportReason,
+  ModerationReportView,
   PollFeedItem,
-  RecordView,
-  ReceiptView,
-  ReplayView,
-  RoomLiveState,
+  RoomCursorPage,
   RoomDetailsView,
+  RoomFeedItem,
+  RoomLiveState,
+  RoomMediaDownload,
+  RoomModerationTarget,
   RoomNotificationSettings,
+  RoomPageOptions,
   RoomView,
+  RoomReceiptView,
+  RoomReplay,
+  LocalRecordView,
   SendMessageInput,
   SendReplyInput,
   Session,
   ThreadReply,
 } from "../types";
-
-function notImplemented(method: string): never {
-  throw new Error(`live.${method} not implemented — see BACKEND-REMAINING.md (TODO(codex))`);
-}
+import { getPeerBridge } from "./peer-bridge";
 
 export class LiveDataClient implements FullTimeData {
-  // TODO(codex): read `fixtures` table (worker fixtures loader → DB bridge),
-  // join the provisioned global `rooms`, compute phase from status. Filter by phase.
-  async listFixtures(_filter?: FixturesFilter): Promise<FixtureCard[]> {
-    return notImplemented("listFixtures");
+  async listFixtures(filter: FixturesFilter = {}): Promise<FixtureCard[]> {
+    return getPeerBridge().request("fixture.list", filter);
   }
 
-  // TODO(codex): select one fixture + its global room by fixtureId.
-  async getFixtureCard(_fixtureId: string): Promise<FixtureCard | null> {
-    return notImplemented("getFixtureCard");
+  async getFixtureCard(fixtureId: string): Promise<FixtureCard | null> {
+    return getPeerBridge().request("fixture.get", { fixtureId });
   }
 
-  // TODO(codex): provision or resolve the production guided-demo room + viewer.
-  async enterDemoRoom(): Promise<DemoRoomEntry> {
-    return notImplemented("enterDemoRoom");
+  async getFixtureIntelligence(fixtureId: string): Promise<FixtureIntelligence | null> {
+    return getPeerBridge().request("fixture.intelligence", { fixtureId });
   }
 
-  // TODO(codex): read `rooms` + `room_members` count; join `fixtures`.
-  async getRoom(_roomId: string): Promise<RoomView | null> {
-    return notImplemented("getRoom");
+  subscribeFixtures(onFixture: (card: FixtureCard) => void): () => void {
+    return getPeerBridge().subscribe((event) => {
+      if (event.version === 2 && event.type === "fixture.updated") onFixture(event.card);
+    });
   }
 
-  // TODO(codex): resolve `rooms.invite_code` → room (private room join).
-  async getRoomByInvite(_code: string): Promise<RoomView | null> {
-    return notImplemented("getRoomByInvite");
+  async listRooms(): Promise<RoomView[]> {
+    return getPeerBridge().request("room.list", null);
   }
 
-  async createRoom(_input: CreateRoomInput): Promise<RoomDetailsView> {
-    return notImplemented("createRoom");
+  async getRoom(roomId: string): Promise<RoomView | null> {
+    return getPeerBridge().request("room.get", { roomId });
   }
 
-  async joinRoom(_code: string, _referrerUserId?: string): Promise<RoomView> {
-    return notImplemented("joinRoom");
+  async getRoomByInvite(code: string): Promise<RoomView | null> {
+    return getPeerBridge().request("room.preview-invite", { code });
   }
 
-  async getRoomDetails(_roomId: string): Promise<RoomDetailsView | null> {
-    return notImplemented("getRoomDetails");
+  async createRoom(input: CreateRoomInput): Promise<RoomDetailsView> {
+    return getPeerBridge().request("room.create", input);
   }
 
-  // TODO(codex): hydrate room from `events`/`calls`/`answers`/`settlements`/
-  // `receipts`/`market_says`/`polls`/`notes` + the viewer's scoring row.
-  async getRoomState(_roomId: string): Promise<RoomLiveState> {
-    return notImplemented("getRoomState");
+  async joinRoom(code: string): Promise<RoomView> {
+    return getPeerBridge().request("room.join", { code });
   }
 
-  // TODO(codex): subscribe to Supabase Realtime channel `room:{roomId}` (diff
-  // payloads). Map each diff into a fresh RoomLiveState and call onState.
-  // Return the channel unsubscribe.
-  subscribeRoomState(_roomId: string, _onState: (s: RoomLiveState) => void): () => void {
-    notImplemented("subscribeRoomState");
+  async getRoomDetails(roomId: string): Promise<RoomDetailsView | null> {
+    return getPeerBridge().request("room.details", { roomId });
   }
 
-  // TODO(codex): insert into `answers` (wall-clock + feed-time stamped, delay claim).
-  async submitAnswer(_roomId: string, _callId: string, _option: string): Promise<void> {
-    return notImplemented("submitAnswer");
+  async getRoomState(roomId: string): Promise<RoomLiveState> {
+    return getPeerBridge().request("room.state", { roomId });
   }
 
-  // TODO(codex): insert into `reactions` anchored to the event; fan-out via realtime.
-  async sendReaction(_roomId: string, _emoji: string, _anchorId: string): Promise<void> {
-    return notImplemented("sendReaction");
+  async submitAnswer(roomId: string, callId: string, optionId: string): Promise<RoomReceiptView> {
+    return getPeerBridge().request("room.answer.submit", { roomId, callId, optionId });
   }
 
-  // TODO(codex): insert into `notes` (<=120 chars, rate-limited) anchored to the moment.
-  async sendNote(_roomId: string, _text: string, _anchorId: string): Promise<void> {
-    return notImplemented("sendNote");
+  async getRoomReceipt(roomId: string, receiptId: string): Promise<RoomReceiptView> {
+    return getPeerBridge().request("room.receipt.get", { roomId, receiptId });
   }
 
-  // TODO(codex): upsert `poll_votes`; return updated tally via realtime.
-  async votePoll(_roomId: string, _pollId: string, _option: string): Promise<void> {
-    return notImplemented("votePoll");
+  async getRoomReplay(roomId: string): Promise<RoomReplay> {
+    return getPeerBridge().request("room.replay", { roomId });
   }
 
-  async sendMessage(_roomId: string, _input: SendMessageInput): Promise<ChatMessage> {
-    return notImplemented("sendMessage");
+  async getRecord(): Promise<LocalRecordView> {
+    return getPeerBridge().request("record.get", null);
   }
 
-  async createPoll(_roomId: string, _input: CreatePollInput): Promise<PollFeedItem> {
-    return notImplemented("createPoll");
+  subscribeRoomState(roomId: string, onState: (state: RoomLiveState) => void): () => void {
+    return getPeerBridge().subscribe((event) => {
+      if (event.version === 2 && event.type === "room.state" && event.roomId === roomId) {
+        onState(event.state);
+      }
+    });
   }
 
-  async reactToItem(_roomId: string, _itemId: string, _emoji: string): Promise<void> {
-    return notImplemented("reactToItem");
+  async getRoomHistoryPage(
+    roomId: string,
+    options: RoomPageOptions = {},
+  ): Promise<RoomCursorPage<RoomFeedItem>> {
+    return getPeerBridge().request("room.history.page", pagePayload({ roomId }, options));
   }
 
-  async sendReply(_roomId: string, _itemId: string, _input: SendReplyInput): Promise<ThreadReply> {
-    return notImplemented("sendReply");
+  async getRoomThreadPage(
+    roomId: string,
+    itemId: string,
+    options: RoomPageOptions = {},
+  ): Promise<RoomCursorPage<ThreadReply>> {
+    return getPeerBridge().request("room.thread.page", pagePayload({ roomId, itemId }, options));
   }
 
-  async markRoomRead(_roomId: string, _itemId: string): Promise<void> {
-    return notImplemented("markRoomRead");
+  async votePoll(roomId: string, pollId: string, option: string): Promise<void> {
+    await getPeerBridge().request("room.poll.vote", { roomId, pollId, option });
   }
 
-  async createInvite(_roomId: string): Promise<InviteView> {
-    return notImplemented("createInvite");
+  async sendMessage(roomId: string, input: SendMessageInput): Promise<ChatMessage> {
+    return getPeerBridge().request("room.message.send", { roomId, input });
   }
 
-  async regenerateInvite(_roomId: string): Promise<InviteView> {
-    return notImplemented("regenerateInvite");
+  async uploadAttachment(roomId: string, file: File, text: string): Promise<ChatMessage> {
+    if (!file || typeof file.name !== "string" || !Number.isSafeInteger(file.size) || file.size < 1) {
+      throw new TypeError("Choose a non-empty file to attach.");
+    }
+    if (typeof file.stream !== "function") throw new TypeError("The selected file cannot be read safely.");
+    const bridge = getPeerBridge();
+    const started = await bridge.request("room.media.upload.begin", {
+      roomId,
+      name: file.name,
+      sizeBytes: file.size,
+    });
+    let committed = false;
+    let reader: ReadableStreamDefaultReader<Uint8Array> | null = null;
+    try {
+      reader = file.stream().getReader();
+      let index = 0;
+      while (true) {
+        const next = await reader.read();
+        if (next.done) break;
+        if (!(next.value instanceof Uint8Array)) throw new TypeError("The selected file returned invalid bytes.");
+        for (let offset = 0; offset < next.value.byteLength; offset += started.chunkBytes) {
+          const chunk = next.value.subarray(offset, Math.min(next.value.byteLength, offset + started.chunkBytes));
+          await bridge.request("room.media.upload.chunk", {
+            roomId,
+            uploadId: started.uploadId,
+            index,
+            data: base64UrlEncode(chunk),
+          });
+          index++;
+        }
+      }
+      const message = await bridge.request("room.media.upload.commit", {
+        roomId,
+        uploadId: started.uploadId,
+        text,
+      });
+      committed = true;
+      return message;
+    } finally {
+      reader?.releaseLock();
+      if (!committed) {
+        await bridge.request("room.media.upload.abort", { roomId, uploadId: started.uploadId }).catch(() => undefined);
+      }
+    }
   }
 
-  async revokeInvite(_roomId: string): Promise<void> {
-    return notImplemented("revokeInvite");
+  async downloadAttachment(roomId: string, itemId: string): Promise<RoomMediaDownload> {
+    const bridge = getPeerBridge();
+    const started = await bridge.request("room.media.download.begin", { roomId, itemId });
+    if (!isRoomMediaMime(started.mimeType) || !Number.isSafeInteger(started.sizeBytes) || started.sizeBytes < 1 ||
+        !Number.isSafeInteger(started.chunks) || started.chunks < 1) {
+      throw new Error("The encrypted attachment metadata is invalid.");
+    }
+    const output = new Uint8Array(started.sizeBytes);
+    let offset = 0;
+    let index = 0;
+    let complete = false;
+    try {
+      while (true) {
+        const chunk = await bridge.request("room.media.download.chunk", {
+          roomId,
+          downloadId: started.downloadId,
+          index,
+        });
+        if (chunk.index !== index) throw new Error("The encrypted attachment returned chunks out of order.");
+        const bytes = base64UrlDecode(chunk.data);
+        if (!bytes.byteLength || bytes.byteLength > started.chunkBytes || offset + bytes.byteLength > output.byteLength) {
+          bytes.fill(0);
+          throw new Error("The encrypted attachment returned an invalid chunk.");
+        }
+        output.set(bytes, offset);
+        bytes.fill(0);
+        offset += bytes.byteLength;
+        index++;
+        if (!chunk.hasMore) {
+          complete = true;
+          break;
+        }
+      }
+      if (offset !== output.byteLength || index !== started.chunks) {
+        throw new Error("The encrypted attachment ended at an invalid byte length.");
+      }
+      return { name: started.name, mimeType: started.mimeType, bytes: output };
+    } catch (error) {
+      output.fill(0);
+      throw error;
+    } finally {
+      if (!complete) {
+        await bridge.request("room.media.download.close", { roomId, downloadId: started.downloadId }).catch(() => undefined);
+      }
+    }
   }
 
-  async renameRoom(_roomId: string, _name: string): Promise<void> {
-    return notImplemented("renameRoom");
-  }
-
-  async removeMember(_roomId: string, _userId: string): Promise<void> {
-    return notImplemented("removeMember");
-  }
-
-  async setMemberRole(_roomId: string, _userId: string, _role: "member" | "moderator"): Promise<void> {
-    return notImplemented("setMemberRole");
-  }
-
-  async setSlowMode(_roomId: string, _seconds: number): Promise<void> {
-    return notImplemented("setSlowMode");
-  }
-
-  async closeRoom(_roomId: string): Promise<void> {
-    return notImplemented("closeRoom");
+  async getNotificationSettings(roomId: string): Promise<RoomNotificationSettings> {
+    return getPeerBridge().request("room.notification.settings", { roomId });
   }
 
   async updateNotificationSettings(
-    _roomId: string,
-    _settings: Partial<RoomNotificationSettings>,
-  ): Promise<void> {
-    return notImplemented("updateNotificationSettings");
+    roomId: string,
+    settings: Partial<RoomNotificationSettings>,
+  ): Promise<RoomNotificationSettings> {
+    return getPeerBridge().request("room.notification.settings.update", { roomId, settings });
   }
 
-  async leaveRoom(_roomId: string): Promise<void> {
-    return notImplemented("leaveRoom");
+  async reportRoomTarget(
+    roomId: string,
+    target: RoomModerationTarget,
+    reason: ModerationReportReason,
+    note: string,
+  ): Promise<{ reportId: string }> {
+    return getPeerBridge().request("room.report", { roomId, target, reason, note });
   }
 
-  async reportRoom(_roomId: string, _reason: string): Promise<void> {
-    return notImplemented("reportRoom");
+  async listModerationReports(roomId: string): Promise<ModerationReportView[]> {
+    return getPeerBridge().request("room.reports.list", { roomId });
   }
 
-  // TODO(codex): read `receipts` + linked proof artifact (stat-validation + anchor).
-  async getReceipt(_receiptId: string): Promise<ReceiptView | null> {
-    return notImplemented("getReceipt");
+  async createPoll(roomId: string, input: CreatePollInput): Promise<PollFeedItem> {
+    return getPeerBridge().request("room.poll.create", { roomId, input });
   }
 
-  // TODO(codex): read `records`/`settlements` for this room+user → Fan Report.
-  async getReport(_roomId: string): Promise<FanReportView | null> {
-    return notImplemented("getReport");
+  async reactToItem(roomId: string, itemId: string, emoji: string): Promise<void> {
+    await getPeerBridge().request("room.item.react", { roomId, itemId, emoji });
   }
 
-  // TODO(codex): read the tournament `records` for the signed-in user.
-  async getRecord(): Promise<RecordView | null> {
-    return notImplemented("getRecord");
+  async sendReply(roomId: string, itemId: string, input: SendReplyInput): Promise<ThreadReply> {
+    return getPeerBridge().request("room.reply.send", { roomId, itemId, input });
   }
 
-  // TODO(codex): read `replay_events` corpus for the fixture; build ordered beats.
-  async getReplay(_fixtureId: string): Promise<ReplayView | null> {
-    return notImplemented("getReplay");
+  async setTyping(roomId: string, typing: boolean): Promise<void> {
+    await getPeerBridge().request("room.typing.set", { roomId, typing });
   }
 
-  // TODO(codex): read the SIWS session cookie/JWT → `users` row.
+  async markRoomRead(roomId: string, itemId: string): Promise<void> {
+    await getPeerBridge().request("room.read.mark", { roomId, itemId });
+  }
+
+  async createInvite(roomId: string): Promise<InviteView> {
+    return getPeerBridge().request("room.invite.create", { roomId });
+  }
+
+  async regenerateInvite(roomId: string): Promise<InviteView> {
+    return getPeerBridge().request("room.invite.regenerate", { roomId });
+  }
+
+  async revokeInvite(roomId: string): Promise<void> {
+    await getPeerBridge().request("room.invite.revoke", { roomId });
+  }
+
+  async renameRoom(roomId: string, name: string): Promise<void> {
+    await getPeerBridge().request("room.rename", { roomId, name });
+  }
+
+  async removeMember(roomId: string, userId: string): Promise<void> {
+    await getPeerBridge().request("room.member.remove", { roomId, userId });
+  }
+
+  async setMemberRole(roomId: string, userId: string, role: "member" | "moderator"): Promise<void> {
+    await getPeerBridge().request("room.member.role", { roomId, userId, role });
+  }
+
+  async setSlowMode(roomId: string, seconds: number): Promise<void> {
+    await getPeerBridge().request("room.slow-mode", { roomId, seconds });
+  }
+
+  async closeRoom(roomId: string): Promise<void> {
+    await getPeerBridge().request("room.close", { roomId });
+  }
+
+  async leaveRoom(roomId: string): Promise<void> {
+    await getPeerBridge().request("room.leave", { roomId });
+  }
+
   async getSession(): Promise<Session | null> {
-    return notImplemented("getSession");
+    return getPeerBridge().request("session.get", null);
   }
 
-  // TODO(codex): SIWS challenge → wallet sign → server verify → session; upsert `users`.
-  async signIn(_displayName: string): Promise<Session> {
-    return notImplemented("signIn");
+  async signIn(displayName: string): Promise<Session> {
+    return getPeerBridge().request("session.sign-in", { displayName });
   }
 
-  // TODO(codex): clear the SIWS session.
   async signOut(): Promise<void> {
-    return notImplemented("signOut");
+    await getPeerBridge().request("session.sign-out", null);
   }
+}
 
-  // TODO(codex): read `match_sync_profiles` for user+room.
-  async getCalibration(_roomId: string): Promise<CalibrationView | null> {
-    return notImplemented("getCalibration");
-  }
+function pagePayload<T extends { roomId: string }>(
+  base: T,
+  options: RoomPageOptions,
+): T & RoomPageOptions {
+  return {
+    ...base,
+    ...(options.limit === undefined ? {} : { limit: options.limit }),
+    ...(options.cursor === undefined ? {} : { cursor: options.cursor }),
+  };
+}
 
-  // TODO(codex): upsert `match_sync_profiles` (presentation-only; never settlement).
-  async setCalibration(_roomId: string, _delaySeconds: number, _method: CalibrationMethod): Promise<void> {
-    return notImplemented("setCalibration");
+function base64UrlEncode(bytes: Uint8Array): string {
+  let binary = "";
+  for (let offset = 0; offset < bytes.byteLength; offset += 0x8000) {
+    binary += String.fromCharCode(...bytes.subarray(offset, Math.min(bytes.byteLength, offset + 0x8000)));
   }
+  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+}
+
+function base64UrlDecode(value: string): Uint8Array {
+  if (typeof value !== "string" || !/^[A-Za-z0-9_-]+$/.test(value)) throw new Error("Attachment chunk is not canonical base64url.");
+  const padded = `${value}${"=".repeat((4 - value.length % 4) % 4)}`;
+  let binary: string;
+  try {
+    binary = atob(padded);
+  } catch {
+    throw new Error("Attachment chunk is not valid base64url.");
+  }
+  const bytes = new Uint8Array(binary.length);
+  for (let index = 0; index < binary.length; index++) bytes[index] = binary.charCodeAt(index);
+  if (base64UrlEncode(bytes) !== value) {
+    bytes.fill(0);
+    throw new Error("Attachment chunk is not canonical base64url.");
+  }
+  return bytes;
+}
+
+function isRoomMediaMime(value: string): value is RoomMediaDownload["mimeType"] {
+  return ["image/jpeg", "image/png", "image/webp", "image/gif", "application/pdf", "text/plain"].includes(value);
 }

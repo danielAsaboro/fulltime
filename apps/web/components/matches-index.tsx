@@ -459,9 +459,7 @@ function InviteReady({
                   {details.fixture.home.name} vs {details.fixture.away.name}
                 </p>
               </div>
-              <span className="shrink-0 rounded-pill bg-periwinkle-mist px-3 py-2 font-mono text-caption uppercase tracking-[0.08em] text-off-black">
-                {invite.code}
-              </span>
+              <span className="shrink-0 rounded-pill bg-periwinkle-mist px-3 py-2 font-mono text-caption uppercase tracking-[0.08em] text-off-black">Active</span>
             </div>
             <div className="mt-5 flex items-center gap-2 border-t border-ash pt-4 font-mono text-caption text-smoke">
               <Users size={14} strokeWidth={1.8} aria-hidden />
@@ -508,18 +506,15 @@ function InviteReady({
           <div className="rounded-lg bg-white p-3">
             <QRCodeSVG
               value={shareUrl}
-              size={220}
-              level="M"
-              marginSize={2}
+              size={320}
+              level="L"
+              marginSize={4}
               bgColor="#ffffff"
               fgColor="#242424"
               title={`Join ${details.room.name}`}
-              className="h-auto w-full max-w-[220px]"
+              className="h-auto w-full max-w-[320px]"
             />
           </div>
-          <p className="mt-5 font-mono text-caption text-parchment/60">
-            Invite code<br /><span className="mt-1 inline-block text-body tracking-[0.16em] text-parchment">{invite.code}</span>
-          </p>
         </div>
       </div>
 

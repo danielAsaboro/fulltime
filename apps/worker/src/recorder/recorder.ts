@@ -1,9 +1,9 @@
 /**
  * Corpus recorder. Appends the raw feed and normalized state snapshots to
  * `corpus/{net}/{fixtureId}.jsonl`, one JSON record per line. This corpus is the
- * spine of everything downstream: settle-engine tests, replay mode, and the demo
- * video. Raw records keep both feed time and local receipt time so replay can
- * reconstruct MatchSync exactly.
+ * spine of everything downstream: settle-engine tests and deterministic recovery
+ * video. Raw records keep both feed time and local receipt time for signed
+ * chronology and recovery.
  */
 
 import fs from "node:fs";

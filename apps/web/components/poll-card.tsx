@@ -33,7 +33,7 @@ export function PollCard({
 
   return (
     <div className={cn("rounded-card border border-ash bg-parchment p-6", className)}>
-      <p className="mb-1 font-mono text-caption uppercase tracking-[0.12em] text-smoke">Room poll · not scored</p>
+      <p className="mb-1 font-mono text-caption uppercase tracking-[0.12em] text-smoke">Room poll</p>
       <h3 className="text-subheading text-off-black">{poll.question}</h3>
       <div className="mt-4 space-y-2">
         {poll.options.map((option) => {

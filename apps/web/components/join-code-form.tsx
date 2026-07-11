@@ -9,7 +9,7 @@ import { Container, Logo } from "@/components/ui/primitives";
 import { TextField } from "@/components/ui/field";
 
 function normalizeCode(value: string): string {
-  return value.trim().replace(/\s+/g, "").toUpperCase();
+  return value.trim().replace(/\s+/g, "");
 }
 
 export function JoinCodeForm() {
@@ -27,7 +27,7 @@ export function JoinCodeForm() {
     <div className="min-h-dvh">
       <header className="border-b border-ash">
         <Container className="flex h-[72px] items-center justify-between">
-          <Logo />
+          <Logo href="/app" />
           <Button variant="quiet" size="sm" href="/matches">
             Create a room
           </Button>
@@ -49,14 +49,14 @@ export function JoinCodeForm() {
             <TextField
               id="room-code"
               label="Invite code"
-              placeholder="e.g. AZZURRI"
+              placeholder="Paste the full invite code"
               value={code}
-              autoCapitalize="characters"
+              autoCapitalize="none"
               autoComplete="off"
               spellCheck={false}
-              maxLength={32}
+              maxLength={2_048}
               autoFocus
-              className="uppercase tracking-[0.12em]"
+              className="font-mono text-caption"
               onChange={(event) => setCode(event.target.value)}
             />
             <Button type="submit" variant="primary" fullWidth disabled={!normalized}>

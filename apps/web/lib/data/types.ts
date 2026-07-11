@@ -1,43 +1,33 @@
 /**
- * The data seam. Every read/write the UI needs is expressed here as typed view
- * models over `@fulltime/shared`. Components consume ONLY `FullTimeData` — there
- * are no Supabase (or any transport) imports anywhere in the web app. Two
- * implementations satisfy this contract: `mock/` (default) and `live/` (stubs the
- * backend engineer fills). Odds arrive already de-vigged upstream (TxLINE `Pct[]`);
- * nothing here does de-vig math.
+ * Renderer-facing data contract. Native Pear modules stay in the desktop worker;
+ * the web app receives bounded, serializable room projections through preload.
  */
 
 import type {
+  AcceptedReceiptState,
   Call,
-  CallOptionId,
-  CalibrationMethod,
+  CallStatus,
   Fixture,
-  FixtureState,
   FixtureStatus,
-  FeedTimestamp,
   InviteId,
   MarketSaysCard,
-  MatchEvent,
   MessageId,
-  Note,
+  MatchEvent,
+  OddsSnapshot,
   Poll,
-  Receipt,
-  ReceiptState,
+  PressureProjection,
   Room,
   RoomId,
   RoomItemId,
   RoomMemberRole,
   Settlement,
-  StreamDelayProfile,
   UserId,
   WallClock,
 } from "@fulltime/shared";
 
 export type RoomPhase = "upcoming" | "live" | "finished";
-
 export type AsyncStatus = "loading" | "ready" | "empty" | "error";
 
-/** Uniform async envelope every UI hook returns, with explicit empty/error states. */
 export interface Async<T> {
   status: AsyncStatus;
   data: T | null;
@@ -45,85 +35,21 @@ export interface Async<T> {
   reload: () => void;
 }
 
+/** A signed fixture-feed projection. It never implies that a room exists. */
 export interface FixtureCard {
   fixture: Fixture;
-  roomId: string;
   phase: RoomPhase;
   status: FixtureStatus;
   score: { home: number; away: number } | null;
   minute: number | null;
-  /** Ambient crowd size — global tally rendered even in small rooms. */
-  crowd: number;
 }
 
 export interface RoomView {
   room: Room;
   fixture: Fixture;
   phase: RoomPhase;
-  crowd: number;
   members: number;
-  /** Present for private rooms accessed by invite. */
   inviteCode?: string;
-}
-
-export type CallOutcome = "correct" | "incorrect" | "void";
-
-export interface CallView {
-  call: Call;
-  /** option id → crowd count. */
-  tally: Record<CallOptionId, number>;
-  total: number;
-  myAnswer?: CallOptionId;
-  settlement?: Settlement;
-  outcome?: CallOutcome;
-  points?: number;
-  receiptId?: string;
-}
-
-export type TimelineKind = "phase" | "event" | "settlement" | "market-says" | "eruption";
-
-export interface TimelineItem {
-  id: string;
-  /** Feed time — the client release queue holds items until `feedTs + delay`. */
-  feedTs: number;
-  kind: TimelineKind;
-  label: string;
-  detail?: string;
-  event?: MatchEvent;
-  marketSays?: MarketSaysCard;
-  settlement?: { callId: string; prompt: string; outcome: CallOutcome; winningOptionLabel: string };
-  /** For eruptions: aggregate reaction emojis + counts. */
-  reactions?: ReactionBurst[];
-}
-
-export interface ReactionBurst {
-  emoji: string;
-  count: number;
-}
-
-export interface FanIqView {
-  fanIq: number;
-  accuracy: number;
-  scoredCalls: number;
-  correctCalls: number;
-  roomRank: number;
-  roomSize: number;
-}
-
-export interface ReceiptView {
-  receipt: Receipt;
-  /** Fan-readable first line, no crypto vocabulary. */
-  headline: string;
-  callPrompt?: string;
-  minute: number | null;
-  /** Expandable technical layer for the proof drawer. */
-  technical: {
-    seq?: number;
-    statKey?: string;
-    statValidationRef?: string;
-    anchorRef?: string;
-    anchorUrl?: string;
-  };
 }
 
 export interface RoomItemAuthor {
@@ -137,19 +63,6 @@ export interface ReactionSummary {
   emoji: string;
   count: number;
   reactedByMe: boolean;
-}
-
-export interface MessageAttachment {
-  id: string;
-  type: "image";
-  name: string;
-  mimeType: string;
-  sizeBytes: number;
-  /** Browser-local object/data URL in mock mode; a durable URL in live mode. */
-  url: string;
-  status: "uploading" | "ready" | "failed" | "cancelled";
-  progress: number;
-  error?: string;
 }
 
 export interface ThreadReply {
@@ -166,15 +79,9 @@ export interface ThreadReply {
 interface RoomFeedItemBase {
   id: RoomItemId;
   roomId: RoomId;
-  /** Viewer-safe presentation instant. This, then id, is the canonical feed order. */
-  releaseAt: WallClock;
   createdAt: WallClock;
-  /** Authoritative TxLINE time for match-anchored items. */
-  feedTs?: FeedTimestamp;
-  matchMinute?: number | null;
   author?: RoomItemAuthor;
   reactions: ReactionSummary[];
-  /** Complete in mock mode; a backend adapter may hydrate this on thread open. */
   replies: ThreadReply[];
   replyCount: number;
   permalink: string;
@@ -185,21 +92,43 @@ export interface TextMessage extends RoomFeedItemBase {
   kind: "text";
   messageId: MessageId;
   text: string;
+  attachment?: RoomAttachment;
 }
 
-export interface ImageMessage extends RoomFeedItemBase {
-  kind: "image";
-  messageId: MessageId;
-  caption?: string;
-  attachment: MessageAttachment;
+export type ChatMessage = TextMessage;
+
+/** Authenticated descriptor for bytes stored in a room member's encrypted Hypercore. */
+export interface RoomAttachment {
+  version: 1;
+  epoch: number;
+  mediaId: string;
+  authorId: UserId;
+  coreKey: string;
+  blob: {
+    blockOffset: number;
+    blockLength: number;
+    byteOffset: number;
+    byteLength: number;
+  };
+  encryption: {
+    algorithm: "xsalsa20-poly1305-chunked-v1";
+    noncePrefix: string;
+    plaintextChunkBytes: number;
+  };
+  plaintextHash: string;
+  hashAlgorithm: "blake2b-256";
+  mimeType: "image/jpeg" | "image/png" | "image/webp" | "image/gif" | "application/pdf" | "text/plain";
+  name: string;
+  sizeBytes: number;
+  width?: number;
+  height?: number;
 }
 
-export type ChatMessage = TextMessage | ImageMessage;
-
-export interface MatchEventFeedItem extends RoomFeedItemBase {
-  kind: "event";
-  event: MatchEvent;
-  label: string;
+/** Bytes returned only after the worker pins, decrypts, and verifies an attachment. */
+export interface RoomMediaDownload {
+  name: string;
+  mimeType: RoomAttachment["mimeType"];
+  bytes: Uint8Array;
 }
 
 export interface PollFeedItem extends RoomFeedItemBase {
@@ -208,37 +137,14 @@ export interface PollFeedItem extends RoomFeedItemBase {
   myVote?: string;
 }
 
-export interface CallFeedItem extends RoomFeedItemBase {
-  kind: "call";
-  call: CallView;
-}
-
-export interface OddsFeedItem extends RoomFeedItemBase {
-  kind: "odds";
-  marketSays: MarketSaysCard;
-}
-
-export interface ReceiptFeedItem extends RoomFeedItemBase {
-  kind: "receipt";
-  receipt: ReceiptView;
-}
-
 export interface SystemFeedItem extends RoomFeedItemBase {
   kind: "system";
   text: string;
   tone: "info" | "warning" | "success";
-  /** Identifies ambient presence notices for passive presentation. */
   noticeType?: "member-joined";
 }
 
-export type RoomFeedItem =
-  | ChatMessage
-  | MatchEventFeedItem
-  | PollFeedItem
-  | CallFeedItem
-  | OddsFeedItem
-  | ReceiptFeedItem
-  | SystemFeedItem;
+export type RoomFeedItem = TextMessage | PollFeedItem | SystemFeedItem;
 
 export interface RoomMemberView {
   userId: UserId;
@@ -256,7 +162,6 @@ export interface InviteView {
   id: InviteId;
   roomId: RoomId;
   code: string;
-  /** Referral URL for the current viewer. Copying it does not itself add Influence. */
   url: string;
   createdBy: UserId;
   createdAt: WallClock;
@@ -272,15 +177,7 @@ export interface InfluenceView {
   level: number;
   successfulJoins: number;
   nextLevelAt: number | null;
-  /** 0..1 progress within the current Influence level. */
   progress: number;
-}
-
-export interface RoomNotificationSettings {
-  messages: boolean;
-  mentions: boolean;
-  matchEvents: boolean;
-  receipts: boolean;
 }
 
 export interface RoomPermissions {
@@ -299,12 +196,40 @@ export interface RoomDetailsView {
   members: RoomMemberView[];
   invite: InviteView | null;
   influence: InfluenceView;
-  fanIq: FanIqView;
-  notificationSettings: RoomNotificationSettings;
   slowModeSeconds: number;
   isClosed: boolean;
-  media: MessageAttachment[];
   permissions: RoomPermissions;
+}
+
+export interface RoomNotificationSettings {
+  calls: boolean;
+  messages: boolean;
+  moderation: boolean;
+}
+
+export type ModerationReportReason =
+  | "harassment"
+  | "hate"
+  | "misinformation"
+  | "sexual-content"
+  | "spam"
+  | "threats"
+  | "other";
+
+export interface RoomModerationTarget {
+  kind: "item" | "member";
+  id: string;
+}
+
+export interface ModerationReportView {
+  version: 1;
+  roomId: RoomId;
+  reportId: string;
+  reporterId: UserId;
+  target: RoomModerationTarget;
+  reason: ModerationReportReason;
+  note: string;
+  createdAt: WallClock;
 }
 
 export interface RoomUnreadState {
@@ -314,91 +239,141 @@ export interface RoomUnreadState {
   isAtLiveEdge: boolean;
 }
 
-/** The composite the room subscribes to. Everything anchored in feed time. */
-export interface RoomLiveState {
-  fixtureState: FixtureState;
-  phase: RoomPhase;
-  crowd: number;
-  timeline: TimelineItem[];
-  calls: CallView[];
-  marketSays: MarketSaysCard[];
-  polls: Poll[];
-  notes: Note[];
-  receipts: ReceiptView[];
-  fanIq: FanIqView;
-  /** Chronological, spoiler-safe room feed across chat and match primitives. */
-  items: RoomFeedItem[];
-  members: RoomMemberView[];
-  typingUsers: RoomMemberView[];
-  unreadState: RoomUnreadState;
-  /** 0..1 room pressure — drives the ambient pressure indicator. */
-  pressure: number;
-  /** Latest event id, so the UI can flash an eruption exactly once. */
-  lastEventId: string | null;
+export interface RoomAnswerView {
+  receiptId: string;
+  tokenId: string;
+  receiptFeedKey: string;
+  receiptIndex: number;
+  servicePublicKey: string;
+  userId: UserId;
+  answerId: string;
+  callId: string;
+  optionId: string;
+  submittedAt: WallClock;
+  acceptedAt: WallClock;
+  locksAt: number;
+  fixtureFeedKey: string;
+  fixtureFeedFork: number;
+  fixtureFeedLength: number;
+  fixtureFeedTreeHash: string;
+  callFeedIndex: number;
+  outcome: "accepted" | "correct" | "incorrect" | "void";
+  points: number;
+  receiptState: AcceptedReceiptState;
+  scored: boolean;
 }
 
-export interface Session {
-  userId: string;
-  displayName: string;
-  /** Wallet address is an identifier only; never surfaced in the main flow. */
-  walletAddress: string;
+export interface RoomCallView {
+  call: Call;
+  callFeedIndex: number | null;
+  settlement: Settlement | null;
+  settlementFeedIndex: number | null;
+  status: CallStatus;
+  tally: Record<string, number>;
+  total: number;
+  answers: RoomAnswerView[];
+  myAnswer: RoomAnswerView | null;
+  outcome: RoomAnswerView["outcome"] | null;
+  points: number;
+  receiptId: string | null;
 }
 
-/** A ready-to-enter guided room, including the viewer session it prepared. */
-export interface DemoRoomEntry {
-  room: RoomView;
-  session: Session;
-}
-
-export interface CalibrationView {
-  delaySeconds: number;
-  profile?: StreamDelayProfile;
-  method: CalibrationMethod;
-}
-
-export interface ReplayViewerState {
-  delaySeconds: number;
-  label: string;
-  live: RoomLiveState;
-}
-
-export interface ReplayView {
-  fixture: Fixture;
-  /** Total corpus duration in feed ms, for the scrubber. */
-  durationMs: number;
-  startFeedTs: number;
-  /** Ordered beats; the replay clock advances through them. */
-  beats: RoomLiveState[];
-}
-
-export interface FanReportView {
-  displayName: string;
-  fixture: Fixture;
-  finalScore: { home: number; away: number };
+export interface FanIqView {
   fanIq: number;
   accuracy: number;
-  rank: number;
-  roomSize: number;
-  percentile: number;
+  correctCalls: number;
   scoredCalls: number;
-  bestRead?: ReportCall;
-  highestDifficultyHit?: ReportCall;
-  biggestMiss?: ReportCall;
-  calls: ReportCall[];
+  roomRank: number;
+  roomSize: number;
+  leaderboard: Array<{
+    userId: UserId;
+    displayName: string;
+    fanIq: number;
+    accuracy: number;
+    correctCalls: number;
+    scoredCalls: number;
+  }>;
 }
 
-export interface ReportCall {
+export interface RoomReceiptView {
+  id: string;
+  roomId: RoomId;
+  fixtureId: string;
+  userId: UserId;
+  answerId: string;
   callId: string;
-  prompt: string;
-  chosenLabel: string;
-  outcome: CallOutcome;
+  optionId: string;
+  optionLabel: string;
+  callPrompt: string;
+  state: AcceptedReceiptState;
+  outcome: RoomAnswerView["outcome"];
   points: number;
-  receiptState: ReceiptState;
-  receiptId?: string;
-  difficultyPct?: number;
+  scored: boolean;
+  acceptedAt: WallClock;
+  submittedAt: WallClock;
+  locksAt: number;
+  settlement: Settlement | null;
+  technical: {
+    tokenId: string;
+    servicePublicKey: string;
+    receiptFeedKey: string;
+    receiptIndex: number;
+    fixtureFeedKey: string;
+    fixtureFeedFork: number;
+    fixtureFeedLength: number;
+    fixtureFeedTreeHash: string;
+    callFeedIndex: number;
+    anchor: null;
+  };
 }
 
-export interface RecordView {
+export interface FixtureIntelligence {
+  card: FixtureCard;
+  timeline: MatchEvent[];
+  oddsHistory: OddsSnapshot[];
+  marketSays: MarketSaysCard[];
+  pressure: PressureProjection;
+  calls: Array<{
+    call: Call;
+    callFeedIndex: number | null;
+    settlement: Settlement | null;
+    settlementFeedIndex: number | null;
+  }>;
+  frontierFeedTs: number | null;
+}
+
+export interface RoomReplay {
+  room: Room;
+  fixture: Fixture;
+  fixtureCard: FixtureCard;
+  timeline: MatchEvent[];
+  oddsHistory: OddsSnapshot[];
+  marketSays: MarketSaysCard[];
+  pressure: PressureProjection;
+  calls: RoomCallView[];
+  receipts: RoomReceiptView[];
+  frontierFeedTs: number | null;
+}
+
+export interface RecordEntry {
+  receiptId: string;
+  roomId: RoomId;
+  fixtureId: string;
+  fixtureLabel: string;
+  homeCode: string | null;
+  awayCode: string | null;
+  prompt: string;
+  chosenOption: string;
+  chosenLabel: string;
+  acceptedAt: WallClock;
+  outcome: RoomAnswerView["outcome"];
+  points: number;
+  receiptState: AcceptedReceiptState;
+  scored: boolean;
+}
+
+export interface LocalRecordView {
+  userId: UserId;
   displayName: string;
   fanIq: number;
   accuracy: number;
@@ -407,19 +382,30 @@ export interface RecordView {
   entries: RecordEntry[];
 }
 
-export interface RecordEntry {
-  callId: string;
-  fixtureLabel: string;
-  /** ISO-2 country codes for the two teams, for flag rendering. */
-  homeCode?: string;
-  awayCode?: string;
-  prompt: string;
-  chosenLabel: string;
-  outcome: CallOutcome;
-  points: number;
-  receiptState: ReceiptState;
-  receiptId?: string;
-  minute: number | null;
+export interface RoomLiveState {
+  fixture: FixtureCard;
+  timeline: MatchEvent[];
+  oddsHistory: OddsSnapshot[];
+  marketSays: MarketSaysCard[];
+  pressure: PressureProjection;
+  frontierFeedTs: number | null;
+  calls: RoomCallView[];
+  fanIq: FanIqView;
+  receipts: RoomReceiptView[];
+  unverifiedAnswerReferences: number;
+  receiptVerificationErrors: Array<{ receiptId: string | null; code: string }>;
+  attestationAvailable: boolean;
+  items: RoomFeedItem[];
+  polls: Poll[];
+  members: RoomMemberView[];
+  typingUsers: RoomMemberView[];
+  unreadState: RoomUnreadState;
+}
+
+export interface Session {
+  userId: string;
+  displayName: string;
+  peerPublicKey?: string;
 }
 
 export interface FixturesFilter {
@@ -432,9 +418,9 @@ export interface CreateRoomInput {
   displayName: string;
 }
 
-export type SendMessageInput =
-  | { text: string; attachment?: never }
-  | { text?: string; attachment: MessageAttachment };
+export interface SendMessageInput {
+  text: string;
+}
 
 export interface CreatePollInput {
   question: string;
@@ -445,31 +431,52 @@ export interface SendReplyInput {
   text: string;
 }
 
+export interface RoomPageOptions {
+  limit?: number;
+  cursor?: string | null;
+}
+
+export interface RoomCursorPage<T> {
+  items: T[];
+  nextCursor: string | null;
+  hasMore: boolean;
+  epoch: number;
+  revision: number;
+}
+
 export interface FullTimeData {
   listFixtures(filter?: FixturesFilter): Promise<FixtureCard[]>;
   getFixtureCard(fixtureId: string): Promise<FixtureCard | null>;
+  getFixtureIntelligence(fixtureId: string): Promise<FixtureIntelligence | null>;
+  subscribeFixtures(onFixture: (card: FixtureCard) => void): () => void;
 
-  /** Prepare the guided full-match room at pre-match and return its signed-in viewer. */
-  enterDemoRoom(): Promise<DemoRoomEntry>;
-
+  listRooms(): Promise<RoomView[]>;
   getRoom(roomId: string): Promise<RoomView | null>;
   getRoomByInvite(code: string): Promise<RoomView | null>;
   createRoom(input: CreateRoomInput): Promise<RoomDetailsView>;
-  joinRoom(code: string, referrerUserId?: string): Promise<RoomView>;
+  joinRoom(code: string): Promise<RoomView>;
   getRoomDetails(roomId: string): Promise<RoomDetailsView | null>;
-
   getRoomState(roomId: string): Promise<RoomLiveState>;
-  /** Push updates as the match progresses. Returns an unsubscribe function. */
+  submitAnswer(roomId: string, callId: string, optionId: string): Promise<RoomReceiptView>;
+  getRoomReceipt(roomId: string, receiptId: string): Promise<RoomReceiptView>;
+  getRoomReplay(roomId: string): Promise<RoomReplay>;
+  getRecord(): Promise<LocalRecordView>;
   subscribeRoomState(roomId: string, onState: (state: RoomLiveState) => void): () => void;
+  getRoomHistoryPage(roomId: string, options?: RoomPageOptions): Promise<RoomCursorPage<RoomFeedItem>>;
+  getRoomThreadPage(roomId: string, itemId: string, options?: RoomPageOptions): Promise<RoomCursorPage<ThreadReply>>;
 
-  submitAnswer(roomId: string, callId: string, option: string): Promise<void>;
-  sendReaction(roomId: string, emoji: string, anchorId: string): Promise<void>;
-  sendNote(roomId: string, text: string, anchorId: string): Promise<void>;
   votePoll(roomId: string, pollId: string, option: string): Promise<void>;
   sendMessage(roomId: string, input: SendMessageInput): Promise<ChatMessage>;
+  uploadAttachment(roomId: string, file: File, text: string): Promise<ChatMessage>;
+  downloadAttachment(roomId: string, itemId: string): Promise<RoomMediaDownload>;
+  getNotificationSettings(roomId: string): Promise<RoomNotificationSettings>;
+  updateNotificationSettings(roomId: string, settings: Partial<RoomNotificationSettings>): Promise<RoomNotificationSettings>;
+  reportRoomTarget(roomId: string, target: RoomModerationTarget, reason: ModerationReportReason, note: string): Promise<{ reportId: string }>;
+  listModerationReports(roomId: string): Promise<ModerationReportView[]>;
   createPoll(roomId: string, input: CreatePollInput): Promise<PollFeedItem>;
   reactToItem(roomId: string, itemId: string, emoji: string): Promise<void>;
   sendReply(roomId: string, itemId: string, input: SendReplyInput): Promise<ThreadReply>;
+  setTyping(roomId: string, typing: boolean): Promise<void>;
   markRoomRead(roomId: string, itemId: string): Promise<void>;
 
   createInvite(roomId: string): Promise<InviteView>;
@@ -480,19 +487,9 @@ export interface FullTimeData {
   setMemberRole(roomId: string, userId: string, role: "member" | "moderator"): Promise<void>;
   setSlowMode(roomId: string, seconds: number): Promise<void>;
   closeRoom(roomId: string): Promise<void>;
-  updateNotificationSettings(roomId: string, settings: Partial<RoomNotificationSettings>): Promise<void>;
   leaveRoom(roomId: string): Promise<void>;
-  reportRoom(roomId: string, reason: string): Promise<void>;
-
-  getReceipt(receiptId: string): Promise<ReceiptView | null>;
-  getReport(roomId: string): Promise<FanReportView | null>;
-  getRecord(): Promise<RecordView | null>;
-  getReplay(fixtureId: string): Promise<ReplayView | null>;
 
   getSession(): Promise<Session | null>;
   signIn(displayName: string): Promise<Session>;
   signOut(): Promise<void>;
-
-  getCalibration(roomId: string): Promise<CalibrationView | null>;
-  setCalibration(roomId: string, delaySeconds: number, method: CalibrationMethod): Promise<void>;
 }

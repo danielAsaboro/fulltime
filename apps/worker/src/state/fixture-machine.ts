@@ -41,6 +41,12 @@ export interface FixtureStepResult {
   gap: FeedGap | null;
 }
 
+export interface FixtureMachineCheckpoint {
+  state: FixtureState;
+  lastSeq: number;
+  lastStatusCode: number | null;
+}
+
 function initialState(fixtureId: FixtureId): FixtureState {
   return {
     fixtureId,
@@ -58,8 +64,21 @@ export class FixtureMachine {
   private lastSeq: number | null = null;
   private lastStatusCode: number | null = null;
 
-  constructor(fixtureId: FixtureId) {
-    this.state = initialState(fixtureId);
+  constructor(fixtureId: FixtureId, checkpoint?: FixtureMachineCheckpoint) {
+    if (checkpoint) {
+      if (checkpoint.state.fixtureId !== fixtureId) throw new Error("Fixture checkpoint ID does not match");
+      if (!Number.isSafeInteger(checkpoint.lastSeq) || checkpoint.lastSeq < 0) {
+        throw new Error("Fixture checkpoint sequence is invalid");
+      }
+      if (checkpoint.lastStatusCode !== null && !Number.isSafeInteger(checkpoint.lastStatusCode)) {
+        throw new Error("Fixture checkpoint status is invalid");
+      }
+      this.state = { ...checkpoint.state, gaps: [...checkpoint.state.gaps] };
+      this.lastSeq = checkpoint.lastSeq;
+      this.lastStatusCode = checkpoint.lastStatusCode;
+    } else {
+      this.state = initialState(fixtureId);
+    }
   }
 
   get snapshot(): FixtureState {

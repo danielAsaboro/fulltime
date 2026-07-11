@@ -1,14 +1,10 @@
 /**
- * The data seam — the only surface components import for data. Swappable mock/live
- * implementations sit behind it; no transport (Supabase etc.) leaks past this line.
+ * The data seam — the only surface components import for data. The Pear transport
+ * remains behind this line so native protocol details do not leak into components.
  */
 
 export * from "./types";
 export * from "./room-feed";
 export * from "./hooks";
 export { DataProvider, useData } from "./provider";
-export type { ForcedState } from "./provider";
-export { DATA_MODE } from "./client";
-export { FM_FIXTURE_ID, FM_ROOM_ID, FM_INVITE_CODE } from "./mock/corpus";
-export { SCENARIO_LABELS } from "./mock/scenario";
-export type { ScenarioLabel } from "./mock/scenario";
+export { isDesktopPeerBridgeAvailable } from "./live/peer-bridge";

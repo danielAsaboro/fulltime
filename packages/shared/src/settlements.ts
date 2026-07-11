@@ -30,10 +30,22 @@ export interface SettleContext {
   odds?: readonly OddsSnapshot[];
   gaps: readonly FeedGap[];
   fixtureStatus: FixtureStatus;
+  /** Latest signed feed time folded into this context. */
+  frontierFeedTs: FeedTimestamp;
+  fixtureMinute: number | null;
+  /** Required only for room-scoped, unscored crowd calls. */
+  crowdTallies?: Readonly<Record<CallOptionId, number>>;
 }
 
 /** The compiled form of a call template: pure, total, idempotent. */
 export type SettleFn = (call: Call, ctx: SettleContext) => SettleOutcome;
+
+export type SettlementDecision =
+  | { status: "pending" }
+  | {
+      status: "decided";
+      settlement: Settlement;
+    };
 
 export interface Settlement {
   id: SettlementId;

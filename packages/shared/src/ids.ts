@@ -58,8 +58,14 @@ export const newInviteId = (): InviteId => createId("inv");
 
 export const asFixtureId = (raw: string): FixtureId => raw as FixtureId;
 export const asUserId = (raw: string): UserId => raw as UserId;
+export const asRoomId = (raw: string): RoomId => raw as RoomId;
 export const asFeedMessageId = (raw: string): FeedMessageId => raw as FeedMessageId;
 export const asMatchEventId = (raw: string): MatchEventId => raw as MatchEventId;
+export const asCallId = (raw: string): CallId => raw as CallId;
+export const asAnswerId = (raw: string): AnswerId => raw as AnswerId;
+export const asSettlementId = (raw: string): SettlementId => raw as SettlementId;
+export const asReceiptId = (raw: string): ReceiptId => raw as ReceiptId;
+export const asRecordId = (raw: string): RecordId => raw as RecordId;
 export const asRoomItemId = (raw: string): RoomItemId => raw as RoomItemId;
 export const asMessageId = (raw: string): MessageId => raw as MessageId;
 export const asInviteId = (raw: string): InviteId => raw as InviteId;

@@ -8,7 +8,7 @@
  * the wallet's ed25519 key (Node-native — matches Solana's detached signature),
  * and hand the base64 signature to `/api/token/activate`.
  *
- * For the demo, prefer the token fast-path (seed TXLINE_JWT + TXLINE_API_TOKEN) and
+ * For direct streaming, prefer the token fast-path (seed TXLINE_JWT + TXLINE_API_TOKEN) and
  * skip this entirely.
  */
 

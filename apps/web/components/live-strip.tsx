@@ -29,22 +29,20 @@ export function LiveStrip() {
         </div>
       ) : fixtures.status === "error" ? (
         <p className="font-mono text-body-sm text-smoke">
-          Couldn&apos;t reach the fixtures feed. The replay shows the full loop.
+          Couldn&apos;t reach the signed fixtures feed. Try again when the Pear host reconnects.
         </p>
       ) : fixtures.status === "empty" || !fixtures.data ? (
         <p className="font-mono text-body-sm text-smoke">
-          No live matches right now — <Link href="/replay/9001" className="text-lake-blue hover:underline">watch the replay</Link> to
-          see the whole room in action.
+          No live fixtures right now. You can still create a room for an upcoming match.
         </p>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {fixtures.data.map((card) => (
             <FixtureCard
-              key={card.roomId}
+              key={String(card.fixture.id)}
               card={card}
               href={`/matches?fixture=${encodeURIComponent(String(card.fixture.id))}`}
               callToAction="Create a private room"
-              hideCrowd
             />
           ))}
         </div>

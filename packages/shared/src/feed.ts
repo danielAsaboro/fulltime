@@ -4,7 +4,7 @@
  *
  * The recorder writes exact wire payloads (`RawFeedRecord`) alongside normalized
  * state snapshots (`SnapshotFeedRecord`); the same corpus drives settle-engine
- * tests, replay mode, and the demo. Ordering and dedupe are pure so the worker,
+ * tests and room-scoped replay. Ordering and dedupe are pure so the worker,
  * the tests, and replay all agree on message order.
  */
 

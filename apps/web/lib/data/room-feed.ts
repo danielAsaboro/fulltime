@@ -1,12 +1,12 @@
 import type { RoomFeedItem, ThreadReply } from "./types";
 
-/** Canonical spoiler-safe order for the mixed room feed. */
+/** Canonical chronological order for the mixed room feed. */
 export function compareRoomFeedItems(a: RoomFeedItem, b: RoomFeedItem): number {
-  if (a.releaseAt !== b.releaseAt) return a.releaseAt - b.releaseAt;
+  if (a.createdAt !== b.createdAt) return a.createdAt - b.createdAt;
   return String(a.id).localeCompare(String(b.id));
 }
 
-/** Dedupe by stable item ID, then order by viewer-safe release time. */
+/** Dedupe by stable item ID, then order by creation time. */
 export function orderRoomFeedItems(items: readonly RoomFeedItem[]): RoomFeedItem[] {
   const seen = new Set<string>();
   return items

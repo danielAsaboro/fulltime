@@ -5,7 +5,7 @@
  * → wallet-signed activation (`/api/token/activate`) → long-lived API token. Every
  * data request then carries `Authorization: Bearer <jwt>` + `X-Api-Token`.
  *
- * Fast path for the demo: if a JWT and API token are already available (obtained via
+ * Fast path for live ingest: if a JWT and API token are already available (obtained via
  * the affiliate site or a prior activation), seed them and skip on-chain work.
  * The store caches the activation payload so a 401 can transparently re-acquire both.
  */

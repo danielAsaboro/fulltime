@@ -6,16 +6,33 @@
   "license": "UNLICENSED",
   "type": "module",
   "engines": {
-    "node": ">=20"
+    "node": ">=22.17.0"
   },
   "workspaces": [
     "packages/*",
     "apps/*"
   ],
   "scripts": {
-    "worker": "npm --workspace @fulltime/worker run dev",
-    "worker:record": "npm --workspace @fulltime/worker run record",
-    "web": "npm --workspace @fulltime/web run dev",
+    "desktop": "npm --workspace @fulltime/desktop run start --",
+    "desktop:dev": "npm --workspace @fulltime/desktop run start --",
+    "desktop:local-config": "npm --workspace @fulltime/desktop run start:local-config",
+    "desktop:package:web": "npm --workspace @fulltime/web run build && npm --workspace @fulltime/desktop run package:web",
+    "desktop:package": "npm --workspace @fulltime/desktop run package",
+    "desktop:smoke": "npm --workspace @fulltime/desktop run smoke",
+    "desktop:smoke:public": "npm --workspace @fulltime/desktop run smoke:public",
+    "desktop:test": "npm --workspace @fulltime/desktop run test",
+    "desktop:test:integration": "npm --workspace @fulltime/desktop run test:integration",
+    "mobile:configure:local": "npm --workspace @fulltime/mobile run configure:local",
+    "mobile:bundle:ios": "npm --workspace @fulltime/mobile run bundle:ios",
+    "mobile:ios": "npm --workspace @fulltime/mobile run ios:device",
+    "mobile:test": "npm --workspace @fulltime/mobile run test",
+    "operator:publisher": "npm --workspace @fulltime/worker run operator:start",
+    "operator:publisher:dev": "npm --workspace @fulltime/worker run operator:dev",
+    "operator:local-config": "npm --workspace @fulltime/worker run operator:local-config",
+    "operator:local-live": "npm --workspace @fulltime/worker run operator:local-live",
+    "operator:manifest:sign": "npm --workspace @fulltime/worker run manifest:sign",
+    "operator:manifest:verify": "npm --workspace @fulltime/worker run manifest:verify",
+    "web:ui": "npm --workspace @fulltime/web run ui:dev",
     "build": "npm run build --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",

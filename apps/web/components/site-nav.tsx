@@ -7,12 +7,12 @@ import { useData } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { Container, Logo } from "@/components/ui/primitives";
 import { SignInModal } from "@/components/sign-in-modal";
+import { AccountSettingsButton } from "@/components/account-settings";
 
 const LINKS = [
   { href: "/matches", label: "Create room" },
   { href: "/join", label: "Join with code" },
-  { href: "/replay/9001", label: "Replay" },
-  { href: "/record", label: "Record" },
+  { href: "/record", label: "My record" },
 ];
 
 export function SiteNav({ border = false }: { border?: boolean }) {
@@ -38,6 +38,7 @@ export function SiteNav({ border = false }: { border?: boolean }) {
         </div>
 
         <div className="flex items-center gap-3">
+          <AccountSettingsButton />
           {session ? (
             <div className="flex items-center gap-2">
               <span className="size-2 rounded-full bg-mint" aria-hidden />

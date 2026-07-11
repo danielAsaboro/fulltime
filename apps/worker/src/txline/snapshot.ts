@@ -13,7 +13,7 @@ async function fetchScores(http: TxlineHttp, path: string): Promise<TxScores[]> 
   const body = await http.getJson<unknown>(path);
   if (Array.isArray(body)) return body as TxScores[];
   if (body && typeof body === "object") return [body as TxScores];
-  return [];
+  throw new TypeError(`TxLINE ${path} returned neither a score object nor an array`);
 }
 
 export function fetchScoresSnapshot(http: TxlineHttp, fixtureId: string): Promise<TxScores[]> {

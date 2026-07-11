@@ -1,0 +1,636 @@
+import Constants from "expo-constants";
+import { CameraView, useCameraPermissions, type BarcodeScanningResult } from "expo-camera";
+import * as Crypto from "expo-crypto";
+import * as FileSystem from "expo-file-system/legacy";
+import * as SecureStore from "expo-secure-store";
+import { StatusBar } from "expo-status-bar";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  ActivityIndicator,
+  Alert,
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  Pressable,
+  RefreshControl,
+  SafeAreaView,
+  ScrollView,
+  Share,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+
+import { downloadAndShareAttachment, pickAndUploadAttachment } from "../src/media-transfer";
+import { MobilePeerController, MobilePeerError, type PeerEvent } from "../src/peer-controller";
+import {
+  MobileNetworkManifestError,
+  resolveNetworkManifest,
+  type MobileNetworkConfig,
+  type NetworkResolution,
+} from "../src/network-manifest";
+import { chronologicalPage } from "../src/room-order";
+import { countryFlag } from "../src/country-flags";
+
+type Json = Record<string, any>;
+type RoomTab = "match" | "chat" | "polls" | "details";
+type Screen = { kind: "home" } | { kind: "room"; roomId: string };
+
+const CONFIG_CACHE_KEY = "fulltime.network-manifest.v1";
+const DEVICE_SECRET_KEY = "fulltime.device-secret.v1";
+const DEFAULT_DISPLAY_NAME = "FullTime Fan";
+const QUICK_REACTIONS = ["🔥", "⚽", "👏", "😮"];
+const BRAND_DOTS = ["#2A7656", "#3457D5", "#D29B36", "#B62931", "#3457D5", "#2A7656", "#D29B36", "#B62931"];
+
+function BrandMark({ size = 38 }: { size?: number }) {
+  const center = size / 2;
+  const orbit = size * 0.39;
+  const dot = Math.max(4, Math.round(size * 0.13));
+  return (
+    <View style={{ width: size, height: size }} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
+      {BRAND_DOTS.map((color, index) => {
+        const angle = (index / BRAND_DOTS.length) * Math.PI * 2;
+        return <View key={`${color}-${index}`} style={{ position: "absolute", width: dot, height: dot, borderRadius: dot / 2, backgroundColor: color, left: center + Math.sin(angle) * orbit - dot / 2, top: center - Math.cos(angle) * orbit - dot / 2, borderWidth: 1, borderColor: colors.parchment }} />;
+      })}
+      <View style={{ position: "absolute", left: size * 0.24, top: size * 0.24, width: size * 0.52, height: size * 0.52, borderRadius: size * 0.26, borderWidth: 1.5, borderColor: colors.ink, backgroundColor: colors.parchment, alignItems: "center", justifyContent: "center" }}>
+        <View style={{ width: size * 0.17, height: size * 0.17, backgroundColor: colors.ink, transform: [{ rotate: "45deg" }] }} />
+      </View>
+    </View>
+  );
+}
+
+function Wordmark() {
+  return <View style={styles.brand}><BrandMark /><Text style={styles.wordmark}>FullTime.</Text></View>;
+}
+
+function CountryFlag({ country, teamName, size = 34 }: { country?: string | null; teamName?: string | null; size?: number }) {
+  const flag = countryFlag(country, teamName);
+  if (!flag) return <View style={[styles.countryFlag, { width: size, height: size, borderRadius: size / 2 }]} />;
+  return <View accessibilityLabel={`${teamName ?? country ?? "Country"} flag`} style={[styles.countryFlag, { width: size, height: size, borderRadius: size / 2 }]}><Text style={{ fontSize: Math.round(size * 0.72), lineHeight: size }}>{flag}</Text></View>;
+}
+
+function message(error: unknown): string {
+  return error instanceof Error ? error.message : "Something went wrong.";
+}
+
+function storagePath(): string {
+  const uri = FileSystem.documentDirectory;
+  if (!uri) throw new Error("FullTime cannot access protected app storage on this device.");
+  return decodeURIComponent(uri.replace(/^file:\/\//, "")) + "fulltime-peer";
+}
+
+async function deviceSecret(): Promise<Uint8Array> {
+  const stored = await SecureStore.getItemAsync(DEVICE_SECRET_KEY);
+  if (stored && /^[a-f0-9]{64}$/.test(stored)) {
+    return Uint8Array.from(stored.match(/../g)!.map((value) => Number.parseInt(value, 16)));
+  }
+  const bytes = await Crypto.getRandomBytesAsync(32);
+  const hex = [...bytes].map((value) => value.toString(16).padStart(2, "0")).join("");
+  await SecureStore.setItemAsync(DEVICE_SECRET_KEY, hex, {
+    keychainAccessible: SecureStore.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
+  });
+  return bytes;
+}
+
+function networkConfig(): MobileNetworkConfig {
+  const value = Constants.expoConfig?.extra?.fullTimeNetwork as Partial<MobileNetworkConfig> | undefined;
+  return {
+    endpoint: typeof value?.endpoint === "string" ? value.endpoint : null,
+    publicKey: typeof value?.publicKey === "string" ? value.publicKey : null,
+    initialManifest: value?.initialManifest && typeof value.initialManifest === "object"
+      ? value.initialManifest
+      : null,
+  };
+}
+
+function usePeer(epoch: number) {
+  const controller = useRef<MobilePeerController | null>(null);
+  const [stage, setStage] = useState<"starting" | "ready" | "error">("starting");
+  const [error, setError] = useState<string | null>(null);
+  const [resolution, setResolution] = useState<NetworkResolution | null>(null);
+  const [transport, setTransport] = useState<Json>({ status: "starting", peerCount: 0 });
+  const [revision, setRevision] = useState(0);
+
+  useEffect(() => {
+    let active = true;
+    const peer = new MobilePeerController();
+    controller.current = peer;
+    const unsubscribe = peer.subscribe((event: PeerEvent) => {
+      if (!active) return;
+      if (event.type === "transport.status") setTransport(event);
+      if (["fixture.updated", "room.state", "room.details"].includes(event.type)) setRevision((value) => value + 1);
+      if (event.type === "room.error" && event.recoverable === false) setError(String(event.message));
+    });
+
+    void (async () => {
+      try {
+        const next = await resolveNetworkManifest(networkConfig(), {
+          read: () => SecureStore.getItemAsync(CONFIG_CACHE_KEY),
+          write: (value) => SecureStore.setItemAsync(CONFIG_CACHE_KEY, value, {
+            keychainAccessible: SecureStore.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
+          }),
+        });
+        if (!active) return;
+        setResolution(next);
+        await peer.start({
+          storagePath: storagePath(),
+          displayName: DEFAULT_DISPLAY_NAME,
+          deviceSecret: await deviceSecret(),
+          manifest: next.manifest,
+        });
+        if (active) setStage("ready");
+      } catch (reason) {
+        if (!active) return;
+        setError(message(reason));
+        setStage("error");
+      }
+    })();
+
+    return () => {
+      active = false;
+      unsubscribe();
+      void peer.close();
+      controller.current = null;
+    };
+  }, [epoch]);
+
+  const request = useCallback(<T,>(action: string, payload: unknown = null) => {
+    if (!controller.current) return Promise.reject(new MobilePeerError("WORKER_UNAVAILABLE", "Peer worker is not ready", false));
+    return controller.current.request<T>(action, payload);
+  }, []);
+
+  return { stage, error, resolution, transport, revision, request };
+}
+
+export default function App() {
+  const [peerEpoch, setPeerEpoch] = useState(0);
+  const peer = usePeer(peerEpoch);
+  const [screen, setScreen] = useState<Screen>({ kind: "home" });
+  const [session, setSession] = useState<Json | null>(null);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+
+  const resetAccount = async () => {
+    const source = storagePath();
+    const info = await FileSystem.getInfoAsync(source);
+    if (info.exists) await FileSystem.moveAsync({ from: source, to: `${source}-archive-${Date.now()}` });
+    await SecureStore.deleteItemAsync(DEVICE_SECRET_KEY);
+    setSession(null); setScreen({ kind: "home" }); setSettingsOpen(false); setPeerEpoch((value) => value + 1);
+  };
+
+  const refreshSession = useCallback(async () => {
+    if (peer.stage === "ready") setSession(await peer.request<Json | null>("session.get"));
+  }, [peer.request, peer.stage]);
+
+  useEffect(() => { void refreshSession(); }, [refreshSession]);
+
+  if (peer.stage !== "ready") {
+    return (
+      <SafeAreaView style={styles.safe}>
+        <StatusBar style="dark" />
+        <View style={styles.center}>
+          <Text style={styles.eyebrow}>{peer.stage === "error" ? "CONFIGURATION UNAVAILABLE" : "PRIVATE PEER STARTING"}</Text>
+          <Text style={styles.hero}>{peer.stage === "error" ? "FullTime cannot open peer rooms yet." : "Opening your mobile peer."}</Text>
+          {peer.stage === "starting" ? <ActivityIndicator color={colors.ink} style={styles.spinner} /> : null}
+          {peer.error ? <Text style={styles.centerCopy}>{peer.error}</Text> : null}
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  return (
+    <SafeAreaView style={styles.safe}>
+      <StatusBar style="dark" />
+      {screen.kind === "home" ? (
+        <Home peer={peer} session={session} onSession={setSession} onSettings={() => setSettingsOpen(true)} onOpenRoom={(roomId) => setScreen({ kind: "room", roomId })} />
+      ) : (
+        <RoomScreen peer={peer} roomId={screen.roomId} session={session} onSession={setSession} onSettings={() => setSettingsOpen(true)} onBack={() => setScreen({ kind: "home" })} />
+      )}
+      <AccountSettings open={settingsOpen} session={session} request={peer.request} onSession={setSession} onClose={() => setSettingsOpen(false)} onReset={resetAccount} />
+    </SafeAreaView>
+  );
+}
+
+function Home({ peer, session, onSession, onSettings, onOpenRoom }: { peer: ReturnType<typeof usePeer>; session: Json | null; onSession(value: Json | null): void; onSettings(): void; onOpenRoom(roomId: string): void }) {
+  const [mode, setMode] = useState<"home" | "join" | "create">("home");
+  const [fixtures, setFixtures] = useState<Json[]>([]);
+  const [rooms, setRooms] = useState<Json[]>([]);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [displayName, setDisplayName] = useState("");
+  const [invite, setInvite] = useState("");
+  const [invitePreview, setInvitePreview] = useState<Json | null>(null);
+  const [scannerOpen, setScannerOpen] = useState(false);
+  const [roomName, setRoomName] = useState("");
+  const [selectedFixture, setSelectedFixture] = useState<string | null>(null);
+
+  const load = useCallback(async () => {
+    setError(null);
+    try {
+      const [nextFixtures, nextRooms] = await Promise.all([
+        peer.request<Json[]>("fixture.list", {}),
+        peer.request<Json[]>("room.list", null),
+      ]);
+      setFixtures(nextFixtures);
+      setRooms(nextRooms);
+    } catch (reason) { setError(message(reason)); }
+  }, [peer.request]);
+
+  useEffect(() => { void load(); }, [load, peer.revision]);
+
+  const run = async (action: () => Promise<void>) => {
+    if (busy) return;
+    setBusy(true); setError(null);
+    try { await action(); } catch (reason) { setError(message(reason)); } finally { setBusy(false); }
+  };
+
+  if (!session) {
+    return (
+      <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === "ios" ? "padding" : undefined}>
+        <ScrollView contentContainerStyle={styles.onboarding} keyboardShouldPersistTaps="handled">
+          <Wordmark />
+          <Text style={styles.eyebrow}>YOUR DEVICE · YOUR IDENTITY</Text>
+          <Text style={styles.hero}>The match room that belongs to the people in it.</Text>
+          <Text style={styles.bodyMuted}>Your identity, encrypted room history, and peer connections stay in this iPhone’s Bare worker.</Text>
+          <Field value={displayName} onChangeText={setDisplayName} placeholder="Display name" maxLength={48} />
+          <Button label={busy ? "Opening identity…" : "Enter FullTime"} disabled={!displayName.trim() || busy} onPress={() => void run(async () => {
+            const next = await peer.request<Json>("session.sign-in", { displayName: displayName.trim() });
+            onSession(next);
+          })} />
+          {error ? <ErrorText text={error} /> : null}
+        </ScrollView>
+      </KeyboardAvoidingView>
+    );
+  }
+
+  const create = () => run(async () => {
+    if (!selectedFixture || !roomName.trim()) return;
+    const details = await peer.request<Json>("room.create", { fixtureId: selectedFixture, roomName: roomName.trim(), displayName: session.displayName });
+    onOpenRoom(String(details.room.id));
+  });
+  const join = () => run(async () => {
+    const room = await peer.request<Json>("room.join", { code: invite.trim() });
+    onOpenRoom(String(room.room.id));
+  });
+
+  if (mode === "join") {
+    return <ScrollView contentContainerStyle={styles.focusFlow} keyboardShouldPersistTaps="handled">
+      <FlowHeader eyebrow="JOIN A ROOM" title={invitePreview ? "Room found." : "Bring the invite."} onBack={() => { setMode("home"); setError(null); }} />
+      {invitePreview ? (
+        <Card>
+          <View style={styles.invitePreview}>
+            <Text style={styles.cardEyebrow}>INVITE VERIFIED</Text>
+            <Text style={styles.detailsTitle}>{invitePreview.room?.name}</Text>
+            <Text style={styles.bodyMuted}>{invitePreview.fixture?.competition}</Text>
+            <Text style={styles.cardTitle}>{invitePreview.fixture?.home?.name} vs {invitePreview.fixture?.away?.name}</Text>
+            <Text style={styles.bodyMuted}>{invitePreview.members} {Number(invitePreview.members) === 1 ? "member" : "members"} in the room</Text>
+          </View>
+          <Button label={busy ? "Joining…" : "Join room"} disabled={busy} onPress={join} />
+          <Button quiet label="Scan a different room" disabled={busy} onPress={() => { setInvite(""); setInvitePreview(null); setScannerOpen(true); }} />
+        </Card>
+      ) : (
+        <>
+          <Text style={styles.bodyMuted}>Scan the room QR or paste its invite. FullTime verifies the invite before joining.</Text>
+          <Card>
+            <Button label="Scan QR code" disabled={busy} onPress={() => setScannerOpen(true)} />
+            <Text style={styles.cardEyebrow}>OR PASTE AN INVITE</Text>
+            <Field value={invite} onChangeText={setInvite} placeholder="Paste room invite" multiline />
+            <Button quiet label={busy ? "Checking…" : "Join with pasted invite"} disabled={!invite.trim() || busy} onPress={join} />
+          </Card>
+        </>
+      )}
+      {scannerOpen ? <InviteScanner request={peer.request} onClose={() => setScannerOpen(false)} onInvite={(code, preview) => { setInvite(code); setInvitePreview(preview); setScannerOpen(false); }} /> : null}
+      {error ? <ErrorText text={error} /> : null}
+    </ScrollView>;
+  }
+
+  if (mode === "create") {
+    const selected = fixtures.find((card) => String(card.fixture.id) === selectedFixture);
+    return <ScrollView contentContainerStyle={styles.focusFlow} keyboardShouldPersistTaps="handled"><FlowHeader eyebrow={selected ? "STEP 2 OF 2" : "STEP 1 OF 2"} title={selected ? "Make it your room." : "Pick the match."} onBack={() => { if (selected) { setSelectedFixture(null); setRoomName(""); } else setMode("home"); setError(null); }} />{selected ? <><FixtureCard card={selected} selected onPress={() => undefined} /><Card><Text style={styles.cardEyebrow}>ROOM NAME</Text><Field value={roomName} onChangeText={setRoomName} placeholder="e.g. The Away End" maxLength={48} /><Button label={busy ? "Creating…" : "Create private room"} disabled={!roomName.trim() || busy} onPress={create} /><Text style={styles.hint}>Only people you invite can enter.</Text></Card></> : <>{fixtures.length === 0 ? <Empty text="Waiting for the match schedule." /> : fixtures.map((card) => { const id = String(card.fixture.id); return <FixtureCard key={id} card={card} selected={false} onPress={() => { setSelectedFixture(id); setRoomName(`${card.fixture.home.name} × ${card.fixture.away.name}`); }} />; })}</>}{error ? <ErrorText text={error} /> : null}</ScrollView>;
+  }
+
+  return (
+    <ScrollView refreshControl={<RefreshControl refreshing={false} onRefresh={load} tintColor={colors.ink} />} contentContainerStyle={styles.home} keyboardShouldPersistTaps="handled">
+      <View style={styles.topRow}>
+        <Wordmark />
+        <View style={styles.headerActions}><View style={styles.transport}><View style={[styles.dot, peer.transport.status === "online" && styles.dotOnline]} /><Text style={styles.transportText}>{String(peer.transport.status)} · {Number(peer.transport.peerCount || 0)} peers</Text></View><SettingsButton onPress={onSettings} /></View>
+      </View>
+      {peer.resolution?.stale ? <Banner text="SIGNED NETWORK CONFIG · CACHED" /> : null}
+      <Text style={styles.eyebrow}>WELCOME BACK</Text>
+      <Text style={styles.heading}>{session.displayName}</Text>
+
+      <View style={styles.homeActions}><Pressable onPress={() => setMode("create")} style={styles.homeActionPrimary}><Text style={[styles.homeActionEyebrow, styles.homeActionLight]}>START A ROOM</Text><Text style={[styles.homeActionTitle, styles.homeActionLight]}>Choose a match</Text><Text style={[styles.homeActionArrow, styles.homeActionLight]}>→</Text></Pressable><Pressable onPress={() => setMode("join")} style={styles.homeAction}><Text style={styles.homeActionEyebrow}>HAVE AN INVITE?</Text><Text style={styles.homeActionTitle}>Join a room</Text><Text style={styles.homeActionArrow}>→</Text></Pressable></View>
+      <SectionTitle eyebrow="YOUR ROOMS" title={rooms.length ? "Back to the match." : "No rooms yet."} />
+      {rooms.length ? rooms.map((room) => <RoomRow key={String(room.room.id)} room={room} onPress={() => onOpenRoom(String(room.room.id))} />) : <Empty text="Create a room for a fixture or join one with an invite." />}
+      {error ? <ErrorText text={error} /> : null}
+    </ScrollView>
+  );
+}
+
+function FlowHeader({ eyebrow, title, onBack }: { eyebrow: string; title: string; onBack(): void }) { return <View style={styles.flowHeader}><Pressable onPress={onBack} style={styles.flowBack}><Text style={styles.flowBackText}>‹</Text></Pressable><View style={styles.flex}><Text style={styles.eyebrow}>{eyebrow}</Text><Text style={styles.heading}>{title}</Text></View></View>; }
+
+function InviteScanner({ request, onClose, onInvite }: { request: ReturnType<typeof usePeer>["request"]; onClose(): void; onInvite(code: string, preview: Json): void }) {
+  const [permission, askPermission] = useCameraPermissions();
+  const [scanning, setScanning] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const scanned = async (result: BarcodeScanningResult) => {
+    if (!scanning) return;
+    setScanning(false); setError(null);
+    try {
+      const code = inviteCodeFromQr(result.data);
+      const preview = await request<Json>("room.preview-invite", { code });
+      onInvite(code, preview);
+    } catch (reason) {
+      setError(message(reason));
+    }
+  };
+
+  return <Modal animationType="slide" presentationStyle="fullScreen" onRequestClose={onClose}><SafeAreaView style={styles.scannerSafe}><View style={styles.scannerHeader}><View><Text style={styles.eyebrowLight}>ENCRYPTED ROOM INVITE</Text><Text style={styles.scannerTitle}>Scan to join.</Text></View><Pressable onPress={onClose} style={styles.threadClose}><Text style={styles.scannerClose}>×</Text></Pressable></View>{!permission ? <View style={styles.scannerCenter}><ActivityIndicator color={colors.white} /></View> : !permission.granted ? <View style={styles.scannerCenter}><Text style={styles.scannerCopy}>FullTime needs camera access only to read the room invite QR code.</Text><Button label="Allow camera" onPress={() => void askPermission()} /><Button quiet label="Cancel" onPress={onClose} /></View> : <View style={styles.cameraFrame}><CameraView style={StyleSheet.absoluteFill} facing="back" barcodeScannerSettings={{ barcodeTypes: ["qr"] }} onBarcodeScanned={scanning ? (result) => void scanned(result) : undefined} /><View pointerEvents="none" style={styles.scanTarget}><View style={styles.scanCorners} /></View></View>}{error ? <View style={styles.scannerError}><ErrorText text={error} /><Button label="Scan again" onPress={() => { setError(null); setScanning(true); }} /></View> : null}<Text style={styles.scannerHint}>Point the camera at a FullTime invite QR. The worker verifies the signed invite before join is enabled.</Text></SafeAreaView></Modal>;
+}
+
+function inviteCodeFromQr(value: string): string {
+  const clean = value.trim();
+  if (clean.startsWith("ft2.")) {
+    if (clean.split(".").length !== 4 && clean.split(".").length !== 7) throw new Error("The invite QR was only partially read. Hold the phone steady, fill the scan frame, and try again.");
+    return clean;
+  }
+  try {
+    const url = new URL(clean);
+    const query = url.searchParams.get("invite") ?? url.searchParams.get("code");
+    if (query?.startsWith("ft2.")) return query;
+    const parts = url.pathname.split("/").filter(Boolean);
+    const join = parts.lastIndexOf("join");
+    if (join >= 0 && parts[join + 1]) {
+      const code = decodeURIComponent(parts[join + 1]);
+      if (code.startsWith("ft2.")) {
+        if (code.split(".").length !== 4 && code.split(".").length !== 7) throw new Error("The invite QR was only partially read. Hold the phone steady, fill the scan frame, and try again.");
+        return code;
+      }
+    }
+  } catch { /* worker-backed invite validation reports the final error */ }
+  throw new Error("This QR code does not contain a FullTime room invite.");
+}
+
+function RoomScreen({ peer, roomId, session, onSession, onSettings, onBack }: { peer: ReturnType<typeof usePeer>; roomId: string; session: Json | null; onSession(value: Json | null): void; onSettings(): void; onBack(): void }) {
+  const [tab, setTab] = useState<RoomTab>("chat");
+  const [room, setRoom] = useState<Json | null>(null);
+  const [state, setState] = useState<Json | null>(null);
+  const [details, setDetails] = useState<Json | null>(null);
+  const [history, setHistory] = useState<Json[]>([]);
+  const [busy, setBusy] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const load = useCallback(async () => {
+    setRefreshing(true); setError(null);
+    try {
+      const [nextRoom, nextState, nextDetails, page] = await Promise.all([
+        peer.request<Json | null>("room.get", { roomId }),
+        peer.request<Json>("room.state", { roomId }),
+        peer.request<Json | null>("room.details", { roomId }),
+        peer.request<Json>("room.history.page", { roomId, limit: 100 }),
+      ]);
+      setRoom(nextRoom); setState(nextState); setDetails(nextDetails); setHistory(chronologicalPage(page.items));
+    } catch (reason) { setError(message(reason)); }
+    finally { setRefreshing(false); }
+  }, [peer.request, roomId]);
+
+  useEffect(() => { void load(); }, [load, peer.revision]);
+
+  const run = async (action: () => Promise<void>) => {
+    if (busy) return;
+    setBusy(true); setError(null);
+    try { await action(); await load(); } catch (reason) { setError(message(reason)); } finally { setBusy(false); }
+  };
+
+  if (!room || !state || !details) {
+    return <View style={styles.flex}><RoomHeader room={room} state={state} onBack={onBack} onSettings={onSettings} /><View style={styles.center}>{refreshing ? <ActivityIndicator color={colors.ink} /> : <ErrorText text={error ?? "This room is unavailable on this device."} />}</View></View>;
+  }
+
+  const fixture = state.fixture?.fixture ?? room.fixture;
+  const polls = history.filter((item) => item.kind === "poll");
+  return (
+    <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === "ios" ? "padding" : undefined} keyboardVerticalOffset={4}>
+      <RoomHeader room={room} state={state} onBack={onBack} onSettings={onSettings} onInvite={() => setTab("details")} />
+      <View style={styles.fixtureBar}>
+        <Text numberOfLines={1} style={styles.fixtureBarText}>{fixture.home.shortName ?? fixture.home.name}  <Text style={styles.fixtureBarScore}>{state.fixture?.score ? `${state.fixture.score.home}–${state.fixture.score.away}` : "vs"}</Text>  {fixture.away.shortName ?? fixture.away.name}</Text>
+        <Text style={[styles.fixtureBarMeta, state.fixture?.phase === "live" && styles.live]}>{state.fixture?.minute != null ? `${state.fixture.minute}′` : String(state.fixture?.status ?? fixture.competition).replace(/-/g, " ").toUpperCase()}</Text>
+      </View>
+      <View style={styles.tabs}>
+        {(["chat", "polls", "match", "details"] as RoomTab[]).map((value) => (
+          <Pressable key={value} onPress={() => setTab(value)} style={[styles.tab, tab === value && styles.tabActive]}>
+            <Text style={[styles.tabText, tab === value && styles.tabTextActive]}>{value === "details" ? "ROOM" : value.toUpperCase()}{value === "chat" && state.unreadState?.count ? ` ${state.unreadState.count}` : value === "polls" && polls.length ? ` ${polls.length}` : ""}</Text>
+          </Pressable>
+        ))}
+      </View>
+      {error ? <ErrorText text={error} compact /> : null}
+      {tab === "match" ? <MatchTab state={state} busy={busy} onAnswer={(callId, optionId) => run(async () => { await peer.request("room.answer.submit", { roomId, callId, optionId }); })} onRefresh={load} refreshing={refreshing} /> : null}
+      {tab === "chat" ? <ChatTab roomId={roomId} items={history} state={state} closed={details.isClosed} busy={busy} onRun={run} request={peer.request} onRefresh={load} refreshing={refreshing} /> : null}
+      {tab === "polls" ? <PollTab roomId={roomId} items={polls} busy={busy} onRun={run} request={peer.request} onRefresh={load} refreshing={refreshing} /> : null}
+      {tab === "details" ? <DetailsTab roomId={roomId} details={details} busy={busy} onRun={run} request={peer.request} onBack={onBack} onSession={onSession} onRefresh={load} refreshing={refreshing} /> : null}
+    </KeyboardAvoidingView>
+  );
+}
+
+function RoomHeader({ room, state, onBack, onSettings, onInvite }: { room: Json | null; state: Json | null; onBack(): void; onSettings(): void; onInvite?: () => void }) {
+  const name = room?.room?.name ?? "Private room";
+  return <View style={styles.roomHeader}>
+    <Pressable onPress={onBack} style={styles.roundButton}><Text style={styles.roundButtonText}>‹</Text></Pressable>
+    <View style={styles.roomHeaderTitle}><Text numberOfLines={1} style={styles.roomName}>🔒 {name}</Text><Text style={styles.roomMeta}>ENCRYPTED PEAR ROOM</Text></View>
+    <View style={styles.memberPill}><Text style={styles.memberPillText}>♙ {state?.members?.length ?? room?.members ?? 0}</Text></View>
+    <SettingsButton onPress={onSettings} />
+    {onInvite ? <Pressable onPress={onInvite} style={styles.inviteButton}><Text style={styles.inviteButtonText}>INVITE</Text></Pressable> : null}
+  </View>;
+}
+
+function SettingsButton({ onPress }: { onPress(): void }) {
+  return <Pressable onPress={onPress} style={styles.settingsButton} accessibilityRole="button" accessibilityLabel="Account settings"><Text style={styles.settingsGlyph}>⚙</Text></Pressable>;
+}
+
+function AccountSettings({ open, session, request, onSession, onClose, onReset }: { open: boolean; session: Json | null; request: ReturnType<typeof usePeer>["request"]; onSession(value: Json | null): void; onClose(): void; onReset(): Promise<void> }) {
+  const [name, setName] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => { if (open) { setName(String(session?.displayName ?? "")); setError(null); } }, [open, session?.displayName]);
+  const run = async (action: () => Promise<void>) => { if (busy) return; setBusy(true); setError(null); try { await action(); } catch (reason) { setError(message(reason)); } finally { setBusy(false); } };
+  return <Modal visible={open} animationType="slide" presentationStyle="pageSheet" onRequestClose={onClose}>
+    <SafeAreaView style={styles.safe}>
+      <View style={styles.settingsHeader}><View><Text style={styles.eyebrow}>ACCOUNT</Text><Text style={styles.heading}>Settings</Text></View><Pressable onPress={onClose} style={styles.threadClose}><Text style={styles.threadCloseText}>×</Text></Pressable></View>
+      <ScrollView contentContainerStyle={styles.settingsContent} keyboardShouldPersistTaps="handled">
+        {session ? <>
+          <Card><Text style={styles.cardEyebrow}>DISPLAY NAME</Text><Field value={name} onChangeText={setName} placeholder="Display name" maxLength={48} /><Button label={busy ? "Saving…" : "Save name"} disabled={busy || !name.trim() || name.trim() === session.displayName} onPress={() => void run(async () => onSession(await request<Json>("session.sign-in", { displayName: name.trim() })))} /></Card>
+          <Card><Text style={styles.cardEyebrow}>ACCOUNT ID</Text><Text selectable style={styles.accountId}>{session.userId}</Text></Card>
+          <Button quiet label="Sign out" disabled={busy} onPress={() => void run(async () => { await request("session.sign-out", null); onSession(null); onClose(); })} />
+          <Card><Text style={[styles.cardEyebrow, styles.dangerText]}>DANGER ZONE</Text><Text style={styles.bodyMuted}>Archives this iPhone’s peer store and creates a new device identity.</Text><Button quiet label="Reset account" disabled={busy} onPress={() => Alert.alert("Reset this account?", "The existing peer store will be archived. FullTime will create a new identity on this iPhone.", [{ text: "Cancel", style: "cancel" }, { text: "Reset", style: "destructive", onPress: () => void run(onReset) }])} /></Card>
+        </> : <><Empty text="Sign in to manage this device identity." /><Button label="Close" onPress={onClose} /></>}
+        {error ? <ErrorText text={error} /> : null}
+      </ScrollView>
+    </SafeAreaView>
+  </Modal>;
+}
+
+function MatchTab({ state, busy, onAnswer, onRefresh, refreshing }: { state: Json; busy: boolean; onAnswer(callId: string, optionId: string): Promise<void>; onRefresh(): Promise<void>; refreshing: boolean }) {
+  const [showAllCalls, setShowAllCalls] = useState(false);
+  const [showTimeline, setShowTimeline] = useState(false);
+  const card = state.fixture;
+  const fixture = card.fixture;
+  const calls = state.calls ?? [];
+  const featuredCalls = showAllCalls ? calls : calls.filter((view: Json) => view.status === "open").slice(0, 1).concat(calls.filter((view: Json) => view.status !== "open").slice(-1));
+  const timeline = state.timeline ?? [];
+  const visibleTimeline = showTimeline ? timeline : timeline.slice(-3);
+  return <ScrollView style={styles.flex} contentContainerStyle={styles.tabContent} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.ink} />}>
+    <View style={styles.scoreCard}>
+      <View style={styles.team}><CountryFlag country={fixture.home.country} teamName={fixture.home.name} /><Text style={styles.teamCode}>{fixture.home.shortName ?? fixture.home.country ?? fixture.home.name.slice(0, 3).toUpperCase()}</Text><Text style={styles.teamName}>{fixture.home.name}</Text></View>
+      <View style={styles.scoreCenter}><Text style={styles.score}>{card.score ? `${card.score.home} — ${card.score.away}` : "—"}</Text><Text style={styles.liveState}>{card.phase === "live" ? `● ${card.minute != null ? `${card.minute}′` : "LIVE"}` : String(card.status).replace(/-/g, " ").toUpperCase()}</Text></View>
+      <View style={styles.team}><CountryFlag country={fixture.away.country} teamName={fixture.away.name} /><Text style={styles.teamCode}>{fixture.away.shortName ?? fixture.away.country ?? fixture.away.name.slice(0, 3).toUpperCase()}</Text><Text style={styles.teamName}>{fixture.away.name}</Text></View>
+      <View style={styles.iqStrip}><View style={styles.iqCell}><Text style={styles.iqLabel}>FAN IQ</Text><Text style={styles.iqValue}>{state.fanIq?.scoredCalls ? Number(state.fanIq.fanIq) : "—"}</Text></View><View style={styles.iqCell}><Text style={styles.iqLabel}>ACCURACY</Text><Text style={styles.iqValue}>{state.fanIq?.scoredCalls ? `${Math.round(Number(state.fanIq.accuracy) * 100)}%` : "—"}</Text></View><View style={styles.iqCell}><Text style={styles.iqLabel}>ROOM RANK</Text><Text style={styles.iqValue}>{state.fanIq?.roomRank ? `#${state.fanIq.roomRank}` : "—"}</Text></View></View>
+    </View>
+
+    <SectionTitle eyebrow="SIGNED CALLS" title="Make the read." />
+    {!state.attestationAvailable ? <Banner text="CALLS ARE VERIFIED · ANSWERS NEED A PINNED ATTESTOR" /> : null}
+    {calls.length === 0 ? <Empty text="Calls appear when the match opens one." /> : null}
+    {featuredCalls.map((view: Json) => <CallCard key={String(view.call.id)} view={view} disabled={busy} attestationAvailable={Boolean(state.attestationAvailable)} onSelect={(optionId) => onAnswer(String(view.call.id), optionId)} />)}
+    {calls.length > featuredCalls.length ? <Button quiet label={`View all ${calls.length} calls`} onPress={() => setShowAllCalls(true)} /> : showAllCalls && calls.length > 1 ? <Button quiet label="Show current calls" onPress={() => setShowAllCalls(false)} /> : null}
+
+    <SectionTitle eyebrow="FIXTURE TIMELINE" title="What actually happened." />
+    <Card>
+      {timeline.length === 0 ? <Text style={styles.bodyMuted}>No match events yet.</Text> : visibleTimeline.map((event: Json, index: number) => (
+        <View key={String(event.id ?? index)} style={styles.timelineRow}><Text style={styles.timelineMinute}>{event.minute != null ? `${event.minute}′` : "•"}</Text><View style={styles.timelineCopy}><Text style={styles.timelineType}>{String(event.type ?? event.kind ?? "event").replace(/[-_.]/g, " ").toUpperCase()}</Text><Text style={styles.body}>{event.label ?? event.description ?? event.player?.name ?? "Verified fixture event"}</Text></View></View>
+      ))}
+    </Card>
+    {timeline.length > 3 ? <Button quiet label={showTimeline ? "Show latest events" : `View full timeline · ${timeline.length}`} onPress={() => setShowTimeline((open) => !open)} /> : null}
+    {state.pressure ? <Card><View style={styles.pressureTop}><Text style={styles.cardEyebrow}>MATCH PRESSURE</Text><Text style={styles.pressureValue}>{Math.round(Number(state.pressure.value ?? 0) * 100)}%</Text></View><View style={styles.pressureTrack}><View style={[styles.pressureFill, { width: `${Math.round(Number(state.pressure.value ?? 0) * 100)}%` }]} /></View><Text style={styles.hint}>SIGNED INCIDENTS {Number(state.pressure.eventCount ?? 0)} · SIGNED ODDS {Number(state.pressure.oddsSnapshotCount ?? 0)}</Text></Card> : null}
+    {(state.marketSays ?? []).map((item: Json) => <Card key={String(item.id)}><Text style={styles.cardEyebrow}>MARKET SAYS</Text><Text style={styles.cardTitle}>{item.text}</Text><Text style={styles.bodyMuted}>Verified odds movement · context, not betting advice.</Text></Card>)}
+  </ScrollView>;
+}
+
+function CallCard({ view, disabled, attestationAvailable, onSelect }: { view: Json; disabled: boolean; attestationAvailable: boolean; onSelect(optionId: string): Promise<void> }) {
+  const winning = view.settlement?.outcome?.status === "settled" ? view.settlement.outcome.winningOption : null;
+  const selectable = view.status === "open" && !view.myAnswer && attestationAvailable && !disabled;
+  return <Card strong={view.status === "settled"}>
+    <View style={styles.callTop}><View style={styles.callCopy}><Text style={styles.pill}>{String(view.status).toUpperCase()}</Text><Text style={styles.callPrompt}>{view.call.prompt}</Text></View><Text style={styles.callTimer}>{view.status === "open" ? `${Math.max(0, Math.ceil((Number(view.call.locksAt) - Date.now()) / 1000))}s` : "◉"}</Text></View>
+    {(view.call.options ?? []).map((option: Json) => {
+      const total = Number(view.total || 0); const count = Number(view.tally?.[option.id] || 0); const share = total ? Math.round((count / total) * 100) : 0;
+      const mine = view.myAnswer?.optionId === option.id; const won = winning === option.id;
+      return <Pressable key={String(option.id)} disabled={!selectable} onPress={() => void onSelect(String(option.id))} style={[styles.option, (mine || won) && styles.optionActive]}>
+        <View style={[styles.optionFill, { width: `${share}%` }]} /><Text style={styles.optionText}>{mine ? "● " : won ? "✓ " : ""}{option.label}</Text><Text style={styles.optionShare}>{share}%</Text>
+      </Pressable>;
+    })}
+    {view.myAnswer ? <Text style={styles.receipt}>✓ SIGNED RECEIPT · {String(view.myAnswer.receiptState ?? "accepted").toUpperCase()}{view.points ? ` · +${view.points} IQ` : ""}</Text> : null}
+    {view.status === "open" && !view.myAnswer ? <Text style={styles.hint}>{attestationAvailable ? "The signed feed lock is authoritative; this countdown is presentation only." : "Answer controls stay hidden until the manifest pins an attestor."}</Text> : null}
+  </Card>;
+}
+
+function ChatTab({ roomId, items, state, closed, busy, onRun, request, onRefresh, refreshing }: { roomId: string; items: Json[]; state: Json; closed: boolean; busy: boolean; onRun(action: () => Promise<void>): Promise<void>; request: ReturnType<typeof usePeer>["request"]; onRefresh(): Promise<void>; refreshing: boolean }) {
+  const [text, setText] = useState("");
+  const [actionsOpen, setActionsOpen] = useState(false);
+  const [pollMode, setPollMode] = useState(false);
+  const [pollQuestion, setPollQuestion] = useState("");
+  const [pollOptions, setPollOptions] = useState(["", ""]);
+  const [threadItem, setThreadItem] = useState<Json | null>(null);
+  const send = () => onRun(async () => { await request("room.message.send", { roomId, input: { text: text.trim() } }); setText(""); });
+  const createPoll = () => onRun(async () => {
+    const options = pollOptions.map((value) => value.trim()).filter(Boolean);
+    await request("room.poll.create", { roomId, input: { question: pollQuestion.trim(), options } });
+    setPollQuestion(""); setPollOptions(["", ""]); setPollMode(false);
+  });
+  return <View style={styles.flex}>
+    <ScrollView style={styles.flex} contentContainerStyle={styles.chatContent} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.ink} />}>
+      {items.length === 0 ? <Empty text="No messages yet. Set the tone." /> : items.map((item) => <FeedItem key={String(item.id)} item={item} onThread={() => setThreadItem(item)} onDownload={() => onRun(() => downloadAndShareAttachment(request, roomId, String(item.id)))} onReact={(emoji) => onRun(async () => { await request("room.item.react", { roomId, itemId: String(item.id), emoji }); })} onVote={(option) => onRun(async () => { await request("room.poll.vote", { roomId, pollId: String(item.poll.id), option }); })} />)}
+      {(state.typingUsers ?? []).length ? <Text style={styles.typing}>{state.typingUsers.map((member: Json) => member.displayName).join(", ")} typing…</Text> : null}
+    </ScrollView>
+    {!closed ? <View style={styles.composer}>
+      {pollMode ? <View style={styles.pollComposer}><View style={styles.pollComposerTop}><Text style={styles.cardEyebrow}>NEW ROOM POLL</Text><Pressable onPress={() => setPollMode(false)}><Text style={styles.smallAction}>CANCEL</Text></Pressable></View><Field value={pollQuestion} onChangeText={setPollQuestion} placeholder="Ask the room…" />{pollOptions.map((option, index) => <Field key={index} value={option} onChangeText={(value) => setPollOptions((current) => current.map((item, itemIndex) => itemIndex === index ? value : item))} placeholder={`Option ${index + 1}`} maxLength={80} />)}{pollOptions.length < 6 ? <Pressable onPress={() => setPollOptions((current) => [...current, ""])}><Text style={styles.smallAction}>+ ADD OPTION</Text></Pressable> : null}<Button label="Post poll" disabled={busy || !pollQuestion.trim() || pollOptions.filter((value) => value.trim()).length < 2} onPress={createPoll} /></View> : <>{actionsOpen ? <View style={styles.composerActions}><Pressable disabled={busy} style={styles.composerAction} onPress={() => { setActionsOpen(false); void onRun(async () => { await pickAndUploadAttachment(request, roomId, text); setText(""); }); }}><Text style={styles.composerActionTitle}>Attach a file</Text><Text style={styles.hint}>Encrypted before it enters room history</Text></Pressable><Pressable style={styles.composerAction} onPress={() => { setActionsOpen(false); setPollMode(true); }}><Text style={styles.composerActionTitle}>Create a poll</Text><Text style={styles.hint}>Ask the room and collect one answer each</Text></Pressable></View> : null}<View style={styles.composerRow}><Pressable style={styles.plusButton} onPress={() => setActionsOpen((open) => !open)}><Text style={styles.plus}>{actionsOpen ? "×" : "+"}</Text></Pressable><TextInput style={styles.composerInput} value={text} onChangeText={setText} placeholder="Say it to the room…" placeholderTextColor={colors.smoke} multiline maxLength={4000} /><Pressable disabled={!text.trim() || busy} onPress={() => void send()} style={[styles.sendButton, (!text.trim() || busy) && styles.disabled]}><Text style={styles.sendText}>↑</Text></Pressable></View></>}
+    </View> : <Banner text="THIS ROOM IS CLOSED · HISTORY IS READ-ONLY" />}
+    {threadItem ? <ThreadOverlay roomId={roomId} item={threadItem} closed={closed} request={request} onRun={onRun} onClose={() => setThreadItem(null)} /> : null}
+  </View>;
+}
+
+function FeedItem({ item, onReact, onVote, onThread, onDownload }: { item: Json; onReact(emoji: string): Promise<void>; onVote(option: string): Promise<void>; onThread?(): void; onDownload?(): Promise<void> }) {
+  if (item.kind === "system") return <View style={styles.systemMessage}><Text style={styles.systemText}>{item.text}</Text></View>;
+  if (item.kind === "poll") return <Card><Text style={styles.cardEyebrow}>{item.author?.displayName ?? "ROOM POLL"}</Text><Text style={styles.cardTitle}>{item.poll.question}</Text>{(item.poll.options ?? []).map((option: Json | string) => {
+    const id = typeof option === "string" ? option : String(option.id); const label = typeof option === "string" ? option : option.label;
+    return <Pressable key={id} onPress={() => void onVote(id)} style={[styles.option, item.myVote === id && styles.optionActive]}><Text style={styles.optionText}>{item.myVote === id ? "● " : ""}{label}</Text></Pressable>;
+  })}</Card>;
+  const mine = Boolean(item.author?.isCurrentUser);
+  const name = String(item.author?.displayName ?? "Room member");
+  return <View style={[styles.messageRow, mine && styles.messageRowMine]}><View style={[styles.avatar, mine && styles.avatarMine]}><Text style={[styles.avatarText, mine && styles.avatarTextMine]}>{name.split(/\s+/).map((part) => part[0]).join("").slice(0, 2).toUpperCase()}</Text></View><View style={[styles.messageColumn, mine && styles.messageColumnMine]}><View style={[styles.messageTop, mine && styles.messageTopMine]}><Text style={styles.messageAuthor}>{name}{item.author?.role === "creator" ? " · CREATOR" : item.author?.role === "moderator" ? " · MOD" : ""}</Text><Text style={styles.messageTime}>{new Date(Number(item.createdAt)).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</Text></View><View style={[styles.message, mine && styles.messageMine]}>{item.text ? <Text style={styles.messageText}>{item.text}</Text> : null}{item.attachment ? <Pressable onPress={() => void onDownload?.()} style={styles.attachment}><Text style={styles.attachmentName}>▣ {item.attachment.name}</Text><Text style={styles.bodyMuted}>{item.attachment.mimeType} · {formatBytes(Number(item.attachment.sizeBytes))}</Text><Text style={styles.attachmentAction}>OPEN VERIFIED COPY</Text></Pressable> : null}</View><View style={[styles.reactions, mine && styles.reactionsMine]}>{QUICK_REACTIONS.map((emoji) => <Pressable key={emoji} onPress={() => void onReact(emoji)} style={styles.reaction}><Text>{emoji}</Text></Pressable>)}{(item.reactions ?? []).filter((reaction: Json) => reaction.count).map((reaction: Json) => <Text key={reaction.emoji} style={styles.reactionCount}>{reaction.emoji} {reaction.count}</Text>)}{onThread ? <Pressable onPress={onThread} style={styles.threadAction}><Text style={styles.threadActionText}>↳ {Number(item.replyCount ?? 0)} REPLIES</Text></Pressable> : null}</View></View></View>;
+}
+
+function ThreadOverlay({ roomId, item, closed, request, onRun, onClose }: { roomId: string; item: Json; closed: boolean; request: ReturnType<typeof usePeer>["request"]; onRun(action: () => Promise<void>): Promise<void>; onClose(): void }) {
+  const [replies, setReplies] = useState<Json[]>([]);
+  const [text, setText] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const load = useCallback(async () => { try { setLoading(true); const page = await request<Json>("room.thread.page", { roomId, itemId: String(item.id), limit: 100 }); setReplies(chronologicalPage(page.items)); setError(null); } catch (reason) { setError(message(reason)); } finally { setLoading(false); } }, [item.id, request, roomId]);
+  useEffect(() => { void load(); }, [load]);
+  const send = () => onRun(async () => { await request("room.reply.send", { roomId, itemId: String(item.id), input: { text: text.trim() } }); setText(""); await load(); });
+  return <Modal animationType="slide" presentationStyle="pageSheet" onRequestClose={onClose}><SafeAreaView style={styles.safe}><View style={styles.threadHeader}><View><Text style={styles.eyebrow}>THREAD</Text><Text style={styles.cardTitle}>{replies.length} {replies.length === 1 ? "reply" : "replies"}</Text></View><Pressable onPress={onClose} style={styles.threadClose}><Text style={styles.threadCloseText}>×</Text></Pressable></View><ScrollView style={styles.flex} contentContainerStyle={styles.chatContent}><FeedItem item={item} onReact={async () => undefined} onVote={async () => undefined} />{loading ? <ActivityIndicator /> : null}{error ? <ErrorText text={error} /> : null}{replies.map((reply) => <View key={String(reply.id)} style={styles.message}><View style={styles.messageTop}><Text style={styles.messageAuthor}>{reply.author?.displayName ?? "Room member"}</Text><Text style={styles.messageTime}>{new Date(Number(reply.createdAt)).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</Text></View><Text style={styles.messageText}>{reply.text}</Text></View>)}</ScrollView>{!closed ? <View style={styles.composerRow}><TextInput style={styles.composerInput} value={text} onChangeText={setText} placeholder="Reply…" placeholderTextColor={colors.smoke} multiline maxLength={4000} /><Pressable disabled={!text.trim()} onPress={() => void send()} style={[styles.sendButton, !text.trim() && styles.disabled]}><Text style={styles.sendText}>↑</Text></Pressable></View> : null}</SafeAreaView></Modal>;
+}
+
+function formatBytes(bytes: number): string { if (bytes < 1024) return `${bytes} B`; if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KiB`; return `${(bytes / (1024 * 1024)).toFixed(1)} MiB`; }
+
+function PollTab({ roomId, items, busy, onRun, request, onRefresh, refreshing }: { roomId: string; items: Json[]; busy: boolean; onRun(action: () => Promise<void>): Promise<void>; request: ReturnType<typeof usePeer>["request"]; onRefresh(): Promise<void>; refreshing: boolean }) {
+  return <ScrollView style={styles.flex} contentContainerStyle={styles.tabContent} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.ink} />}>
+    <SectionTitle eyebrow="ROOM POLLS" title="What does the room think?" />
+    {items.length === 0 ? <Empty text="Create a poll from the chat composer." /> : items.map((item) => <FeedItem key={String(item.id)} item={item} onReact={async () => undefined} onVote={(option) => onRun(async () => { if (!busy) await request("room.poll.vote", { roomId, pollId: String(item.poll.id), option }); })} />)}
+  </ScrollView>;
+}
+
+function DetailsTab({ roomId, details, busy, onRun, request, onBack, onSession, onRefresh, refreshing }: { roomId: string; details: Json; busy: boolean; onRun(action: () => Promise<void>): Promise<void>; request: ReturnType<typeof usePeer>["request"]; onBack(): void; onSession(value: Json | null): void; onRefresh(): Promise<void>; refreshing: boolean }) {
+  const [rename, setRename] = useState("");
+  const [slow, setSlow] = useState(String(details.slowModeSeconds ?? 0));
+  const [reportMember, setReportMember] = useState<Json | null>(null);
+  const [reportReason, setReportReason] = useState("harassment");
+  const [reportNote, setReportNote] = useState("");
+  const [reports, setReports] = useState<Json[] | null>(null);
+  const [moderationOpen, setModerationOpen] = useState(false);
+  const [controlsOpen, setControlsOpen] = useState(false);
+  const [dangerOpen, setDangerOpen] = useState(false);
+  const invite = details.invite;
+  const shareInvite = async () => {
+    if (!invite?.code) return;
+    await Share.share({ title: details.room.name, message: `Join my encrypted FullTime room:\n${invite.code}` });
+  };
+  return <ScrollView style={styles.flex} contentContainerStyle={styles.tabContent} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.ink} />}>
+    <Card><Text style={styles.cardEyebrow}>🔒 ENCRYPTED INVITE-ONLY ROOM</Text><Text style={styles.detailsTitle}>{details.room.name}</Text><Text style={styles.bodyMuted}>{details.fixture.competition} · {details.fixture.home.name} vs {details.fixture.away.name}</Text><View style={styles.stats}><Stat label="MEMBERS" value={details.members.length} /><Stat label="SLOW MODE" value={details.slowModeSeconds ? `${details.slowModeSeconds}s` : "OFF"} /><Stat label="INVITE JOINS" value={details.influence?.successfulJoins ?? 0} /></View></Card>
+    {invite?.status === "active" && !details.isClosed ? <Card><Text style={styles.cardEyebrow}>ACTIVE INVITE</Text><Text style={styles.cardTitle}>Bring your people.</Text><Text style={styles.bodyMuted}>{invite.viewerSuccessfulJoins ?? 0} successful joins through your invite.</Text><Button label="Share invite" onPress={() => void shareInvite()} /></Card> : null}
+    {!invite && details.permissions.canInvite ? <Button label="Create invite" disabled={busy} onPress={() => void onRun(async () => { await request("room.invite.create", { roomId }); })} /> : null}
+    <SectionTitle eyebrow="MEMBERS" title={`${details.members.length} in the room`} />
+    <Card>{details.members.map((member: Json) => <View key={String(member.userId)} style={styles.memberRow}><View style={styles.memberCopy}><Text style={styles.memberName}>{member.displayName}{member.isCurrentUser ? " · you" : ""}</Text><Text style={styles.memberRole}>{String(member.role).toUpperCase()}</Text></View>{!member.isCurrentUser ? <View style={styles.memberActions}><Pressable onPress={() => setReportMember(member)}><Text style={styles.smallAction}>REPORT</Text></Pressable>{details.permissions.canModerateMembers ? <><Pressable onPress={() => void onRun(async () => { await request("room.member.role", { roomId, userId: String(member.userId), role: member.role === "moderator" ? "member" : "moderator" }); await onRefresh(); })}><Text style={styles.smallAction}>{member.role === "moderator" ? "DEMOTE" : "MOD"}</Text></Pressable><Pressable onPress={() => Alert.alert("Remove member?", `${member.displayName} will lose room access.`, [{ text: "Cancel", style: "cancel" }, { text: "Remove", style: "destructive", onPress: () => void onRun(async () => { await request("room.member.remove", { roomId, userId: String(member.userId) }); await onRefresh(); }) }])}><Text style={[styles.smallAction, styles.dangerText]}>REMOVE</Text></Pressable></> : null}</View> : <View style={[styles.presence, member.isOnline && styles.presenceOnline]} />}</View>)}</Card>
+    {reportMember ? <Card><Text style={styles.cardEyebrow}>REPORT {String(reportMember.displayName).toUpperCase()}</Text><View style={styles.reasonGrid}>{["harassment", "hate", "misinformation", "sexual-content", "spam", "threats", "other"].map((reason) => <Pressable key={reason} onPress={() => setReportReason(reason)} style={[styles.reason, reportReason === reason && styles.reasonActive]}><Text style={styles.reasonText}>{reason.replace("-", " ").toUpperCase()}</Text></Pressable>)}</View><Field value={reportNote} onChangeText={setReportNote} placeholder="Optional context for room moderators" multiline maxLength={1000} /><View style={styles.inline}><Button quiet label="Cancel" onPress={() => setReportMember(null)} /><Button label="Submit report" disabled={busy} onPress={() => void onRun(async () => { await request("room.report", { roomId, target: { kind: "member", id: String(reportMember.userId) }, reason: reportReason, note: reportNote.trim() }); setReportMember(null); setReportNote(""); })} /></View></Card> : null}
+    {details.permissions.canModerateMembers ? <><DisclosureButton label="Moderation inbox" meta={reports ? `${reports.length} reports` : "Private reports"} open={moderationOpen} onPress={() => setModerationOpen((open) => !open)} />{moderationOpen ? <><Button quiet label={reports ? "Refresh reports" : "Load reports"} disabled={busy} onPress={() => void onRun(async () => setReports(await request<Json[]>("room.reports.list", { roomId })))} />{reports?.length === 0 ? <Empty text="No reports in this room." /> : reports?.map((report) => <Card key={String(report.reportId)}><Text style={styles.cardEyebrow}>{String(report.reason).replace("-", " ").toUpperCase()}</Text><Text style={styles.body}>Target: {report.target?.kind} · {report.target?.id}</Text>{report.note ? <Text style={styles.bodyMuted}>{report.note}</Text> : null}<Text style={styles.messageTime}>{new Date(Number(report.createdAt)).toLocaleString()}</Text></Card>)}</> : null}</> : null}
+    {details.permissions.canRename || details.permissions.canSetSlowMode ? <><DisclosureButton label="Creator controls" meta="Name and slow mode" open={controlsOpen} onPress={() => setControlsOpen((open) => !open)} />{controlsOpen ? <Card>{details.permissions.canRename ? <><Field value={rename} onChangeText={setRename} placeholder={details.room.name} maxLength={48} /><Button quiet label="Rename room" disabled={busy || !rename.trim()} onPress={() => void onRun(async () => { await request("room.rename", { roomId, name: rename.trim() }); setRename(""); })} /></> : null}{details.permissions.canSetSlowMode ? <><Field value={slow} onChangeText={setSlow} placeholder="Slow mode seconds (0–60)" keyboardType="number-pad" /><Button quiet label="Apply slow mode" disabled={busy || !/^\d+$/.test(slow) || Number(slow) > 60} onPress={() => void onRun(async () => { await request("room.slow-mode", { roomId, seconds: Number(slow) }); })} /></> : null}</Card> : null}</> : null}
+    <DisclosureButton label="Room and account" meta="Invite and exit controls" open={dangerOpen} danger onPress={() => setDangerOpen((open) => !open)} />
+    {dangerOpen ? <Card>{details.permissions.canRegenerateInvite ? <Button quiet label="Regenerate invite" disabled={busy} onPress={() => Alert.alert("Regenerate invite?", "The current invite stops admitting new members.", [{ text: "Cancel", style: "cancel" }, { text: "Regenerate", style: "destructive", onPress: () => void onRun(async () => { await request("room.invite.regenerate", { roomId }); }) }])} /> : null}{invite && details.permissions.canRevokeInvite ? <Button quiet label="Revoke invite" disabled={busy} onPress={() => Alert.alert("Revoke invite?", "The current invite stops admitting new members.", [{ text: "Cancel", style: "cancel" }, { text: "Revoke", style: "destructive", onPress: () => void onRun(async () => { await request("room.invite.revoke", { roomId }); await onRefresh(); }) }])} /> : null}{details.permissions.canCloseRoom ? <Button quiet label="Close room" disabled={busy || details.isClosed} onPress={() => Alert.alert("Close room?", "The durable history remains, but the room becomes read-only.", [{ text: "Cancel", style: "cancel" }, { text: "Close", style: "destructive", onPress: () => void onRun(async () => { await request("room.close", { roomId }); }) }])} /> : null}<Button quiet label="Leave room" disabled={busy} onPress={() => Alert.alert("Leave room?", "You will need a new active invite to rejoin.", [{ text: "Cancel", style: "cancel" }, { text: "Leave", style: "destructive", onPress: () => void onRun(async () => { await request("room.leave", { roomId }); onBack(); }) }])} /><Button quiet label="Sign out on this iPhone" disabled={busy} onPress={() => void onRun(async () => { await request("session.sign-out", null); onSession(null); onBack(); })} /></Card> : null}
+  </ScrollView>;
+}
+
+function RoomRow({ room, onPress }: { room: Json; onPress(): void }) { return <Pressable onPress={onPress} style={styles.roomRow}><View style={styles.roomRowMain}><Text style={styles.roomRowName}>🔒 {room.room.name}</Text><Text style={styles.bodyMuted}>{room.fixture.home.name} vs {room.fixture.away.name}</Text></View><Text style={styles.chevron}>›</Text></Pressable>; }
+function FixtureCard({ card, selected, onPress }: { card: Json; selected: boolean; onPress(): void }) { const fixture = card.fixture; return <Pressable onPress={onPress} style={[styles.fixtureCard, selected && styles.fixtureSelected]}><View style={styles.fixtureTop}><Text style={styles.cardEyebrow}>{fixture.competition}</Text><Text style={[styles.fixtureStatus, card.phase === "live" && styles.live]}>{card.phase === "live" ? `● LIVE ${card.minute ?? ""}′` : String(card.status).replace(/-/g, " ").toUpperCase()}</Text></View><View style={styles.fixtureTeamsRow}><CountryFlag country={fixture.home.country} teamName={fixture.home.name} size={24} /><Text style={styles.fixtureTeams}>{fixture.home.name}</Text><Text style={styles.bodyMuted}>vs</Text><CountryFlag country={fixture.away.country} teamName={fixture.away.name} size={24} /><Text style={styles.fixtureTeams}>{fixture.away.name}</Text></View><Text style={styles.fixtureScore}>{card.score ? `${card.score.home} — ${card.score.away}` : new Date(Number(fixture.kickoff)).toLocaleString()}</Text></Pressable>; }
+function SectionTitle({ eyebrow, title }: { eyebrow: string; title: string }) { return <View style={styles.sectionTitle}><Text style={styles.eyebrow}>{eyebrow}</Text><Text style={styles.subheading}>{title}</Text></View>; }
+function Card({ children, strong = false }: { children: React.ReactNode; strong?: boolean }) { return <View style={[styles.card, strong && styles.cardStrong]}>{children}</View>; }
+function Button({ label, onPress, disabled = false, quiet = false }: { label: string; onPress(): void; disabled?: boolean; quiet?: boolean }) { return <Pressable disabled={disabled} onPress={onPress} style={[styles.button, quiet && styles.buttonQuiet, disabled && styles.disabled]}><Text style={[styles.buttonText, quiet && styles.buttonQuietText]}>{label}</Text></Pressable>; }
+function Field(props: React.ComponentProps<typeof TextInput>) { return <TextInput placeholderTextColor={colors.smoke} {...props} style={[styles.field, props.multiline && styles.fieldMultiline, props.style]} />; }
+function Banner({ text }: { text: string }) { return <View style={styles.banner}><Text style={styles.bannerText}>{text}</Text></View>; }
+function ErrorText({ text, compact = false }: { text: string; compact?: boolean }) { return <View style={[styles.error, compact && styles.errorCompact]}><Text style={styles.errorText}>{text}</Text></View>; }
+function Empty({ text }: { text: string }) { return <View style={styles.empty}><Text style={styles.bodyMuted}>{text}</Text></View>; }
+function Stat({ label, value }: { label: string; value: string | number }) { return <View style={styles.stat}><Text style={styles.statValue}>{value}</Text><Text style={styles.statLabel}>{label}</Text></View>; }
+function DisclosureButton({ label, meta, open, danger = false, onPress }: { label: string; meta: string; open: boolean; danger?: boolean; onPress(): void }) { return <Pressable onPress={onPress} style={[styles.disclosure, danger && styles.disclosureDanger]}><View style={styles.flex}><Text style={[styles.disclosureLabel, danger && styles.dangerText]}>{label}</Text><Text style={styles.hint}>{meta}</Text></View><Text style={[styles.disclosureMark, danger && styles.dangerText]}>{open ? "×" : "+"}</Text></Pressable>; }
+
+const colors = { parchment: "#F4F0E9", white: "#FBFAF7", ink: "#232221", graphite: "#555250", smoke: "#807C78", ash: "#D0CBC4", mist: "#DDE4FF", blue: "#3457D5", crimson: "#B62931", gold: "#D29B36", green: "#2A7656" };
+const mono = Platform.select({ ios: "Menlo", android: "monospace" });
+const serif = Platform.select({ ios: "New York", android: "serif" });
+const styles = StyleSheet.create({
+  safe: { flex: 1, backgroundColor: colors.parchment }, flex: { flex: 1 }, center: { flex: 1, alignItems: "center", justifyContent: "center", padding: 28 }, spinner: { marginTop: 28 }, centerCopy: { marginTop: 20, maxWidth: 540, textAlign: "center", color: colors.graphite, fontFamily: mono, fontSize: 14, lineHeight: 21 },
+  onboarding: { flexGrow: 1, justifyContent: "center", padding: 28, gap: 18 }, home: { padding: 20, paddingBottom: 60, gap: 14 }, focusFlow: { padding: 20, paddingBottom: 60, gap: 16 }, flowHeader: { flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 8 }, flowBack: { width: 38, height: 38, alignItems: "center", justifyContent: "center", borderRadius: 19, borderWidth: 1, borderColor: colors.ash }, flowBackText: { color: colors.ink, fontSize: 28, lineHeight: 30 }, homeActions: { gap: 10, marginTop: 10 }, homeActionPrimary: { minHeight: 118, borderRadius: 20, backgroundColor: colors.ink, padding: 18, justifyContent: "center" }, homeAction: { minHeight: 104, borderRadius: 20, borderWidth: 1, borderColor: colors.ash, backgroundColor: "rgba(251,250,247,0.62)", padding: 18, justifyContent: "center" }, homeActionEyebrow: { color: colors.smoke, fontFamily: mono, fontSize: 8, letterSpacing: 1.2 }, homeActionTitle: { color: colors.ink, fontFamily: serif, fontSize: 25, marginTop: 4 }, homeActionArrow: { position: "absolute", right: 18, bottom: 16, color: colors.blue, fontSize: 20 }, homeActionLight: { color: colors.white }, topRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }, headerActions: { flexDirection: "row", alignItems: "center", gap: 7 }, settingsButton: { width: 36, height: 36, borderRadius: 18, borderWidth: 1, borderColor: colors.ash, alignItems: "center", justifyContent: "center" }, settingsGlyph: { color: colors.ink, fontSize: 17 }, settingsHeader: { minHeight: 86, paddingHorizontal: 20, flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: colors.ash }, settingsContent: { padding: 20, paddingBottom: 60, gap: 14 }, accountId: { color: colors.graphite, fontFamily: mono, fontSize: 10, lineHeight: 16 }, brand: { flexDirection: "row", alignItems: "center", gap: 8 }, wordmark: { color: colors.ink, fontFamily: serif, fontSize: 30, fontWeight: "700" }, eyebrow: { color: colors.smoke, fontFamily: mono, fontSize: 10, letterSpacing: 1.7 }, hero: { color: colors.ink, fontFamily: serif, fontSize: 42, lineHeight: 45, textAlign: "center" }, heading: { color: colors.ink, fontFamily: serif, fontSize: 34 }, subheading: { color: colors.ink, fontFamily: serif, fontSize: 25, marginTop: 3 }, body: { color: colors.ink, fontSize: 14, lineHeight: 21 }, bodyMuted: { color: colors.smoke, fontSize: 13, lineHeight: 19 }, transport: { flexDirection: "row", alignItems: "center", borderWidth: 1, borderColor: colors.ash, borderRadius: 20, paddingHorizontal: 10, paddingVertical: 6 }, transportText: { color: colors.graphite, fontFamily: mono, fontSize: 9, textTransform: "uppercase" }, dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: colors.gold, marginRight: 6 }, dotOnline: { backgroundColor: colors.green },
+  sectionTitle: { marginTop: 18, marginBottom: 5 }, card: { borderWidth: 1, borderColor: colors.ash, borderRadius: 18, backgroundColor: "rgba(251,250,247,0.62)", padding: 17, gap: 12 }, cardStrong: { borderColor: colors.ink }, cardEyebrow: { color: colors.smoke, fontFamily: mono, fontSize: 10, letterSpacing: 1.2 }, cardTitle: { color: colors.ink, fontFamily: serif, fontSize: 21 }, detailsTitle: { color: colors.ink, fontFamily: serif, fontSize: 29 }, field: { minHeight: 48, borderWidth: 1, borderColor: colors.ash, borderRadius: 13, backgroundColor: colors.white, color: colors.ink, paddingHorizontal: 14, paddingVertical: 12, fontSize: 15 }, fieldMultiline: { minHeight: 74, textAlignVertical: "top" }, button: { minHeight: 47, borderRadius: 24, alignItems: "center", justifyContent: "center", paddingHorizontal: 18, backgroundColor: colors.ink }, buttonQuiet: { backgroundColor: "transparent", borderWidth: 1, borderColor: colors.ash }, buttonText: { color: colors.white, fontFamily: mono, fontSize: 11, letterSpacing: 1, textTransform: "uppercase" }, buttonQuietText: { color: colors.ink }, disabled: { opacity: 0.4 }, inline: { flexDirection: "row", justifyContent: "flex-end", gap: 8 }, banner: { backgroundColor: colors.mist, borderWidth: 1, borderColor: colors.ash, borderRadius: 12, padding: 11 }, bannerText: { color: colors.graphite, fontFamily: mono, fontSize: 9, letterSpacing: 1, textAlign: "center" }, error: { borderWidth: 1, borderColor: colors.crimson, borderRadius: 12, padding: 13, backgroundColor: "#F9E9E8" }, errorCompact: { marginHorizontal: 12, marginTop: 8 }, errorText: { color: colors.crimson, fontFamily: mono, fontSize: 11, lineHeight: 17 }, empty: { borderWidth: 1, borderColor: colors.ash, borderRadius: 18, borderStyle: "dashed", padding: 22, alignItems: "center" },
+  invitePreview: { borderLeftWidth: 2, borderLeftColor: colors.green, paddingLeft: 12, gap: 4 }, scannerSafe: { flex: 1, backgroundColor: colors.ink }, scannerHeader: { minHeight: 86, paddingHorizontal: 20, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }, eyebrowLight: { color: colors.ash, fontFamily: mono, fontSize: 9, letterSpacing: 1.5 }, scannerTitle: { color: colors.white, fontFamily: serif, fontSize: 29, marginTop: 3 }, scannerClose: { color: colors.white, fontSize: 30 }, scannerCenter: { flex: 1, justifyContent: "center", padding: 28, gap: 14 }, scannerCopy: { color: colors.white, fontSize: 16, lineHeight: 24, textAlign: "center" }, cameraFrame: { flex: 1, overflow: "hidden", marginHorizontal: 18, borderWidth: 1, borderColor: colors.ash }, scanTarget: { position: "absolute", left: "12%", right: "12%", top: "23%", aspectRatio: 1, borderWidth: 1, borderColor: "rgba(255,255,255,0.65)", padding: 9 }, scanCorners: { flex: 1, borderWidth: 3, borderColor: colors.white }, scannerHint: { color: colors.ash, fontFamily: mono, fontSize: 9, lineHeight: 15, textAlign: "center", padding: 20 }, scannerError: { position: "absolute", left: 18, right: 18, bottom: 70, backgroundColor: colors.parchment, padding: 12, gap: 9 },
+  roomRow: { flexDirection: "row", alignItems: "center", borderWidth: 1, borderColor: colors.ash, borderRadius: 16, backgroundColor: "rgba(251,250,247,0.5)", padding: 16 }, roomRowMain: { flex: 1, gap: 4 }, roomRowName: { color: colors.ink, fontFamily: mono, fontSize: 13 }, chevron: { color: colors.ink, fontSize: 28 }, fixtureCard: { borderWidth: 1, borderColor: colors.ash, borderRadius: 18, backgroundColor: "rgba(251,250,247,0.45)", padding: 17, gap: 12 }, fixtureSelected: { borderColor: colors.ink, backgroundColor: colors.white }, fixtureTop: { flexDirection: "row", justifyContent: "space-between" }, fixtureStatus: { color: colors.smoke, fontFamily: mono, fontSize: 9 }, live: { color: colors.crimson }, fixtureTeamsRow: { flexDirection: "row", alignItems: "center", flexWrap: "wrap", gap: 7 }, fixtureTeams: { color: colors.ink, fontFamily: serif, fontSize: 18 }, fixtureScore: { color: colors.graphite, fontFamily: mono, fontSize: 12 },
+  roomHeader: { height: 55, flexDirection: "row", alignItems: "center", gap: 9, borderBottomWidth: 1, borderBottomColor: colors.ash, paddingHorizontal: 10 }, roundButton: { width: 35, height: 35, borderRadius: 18, alignItems: "center", justifyContent: "center" }, roundButtonText: { fontSize: 30, lineHeight: 32, color: colors.ink }, roomHeaderTitle: { flex: 1 }, roomName: { color: colors.ink, fontFamily: mono, fontSize: 12 }, roomMeta: { color: colors.smoke, fontFamily: mono, fontSize: 7, letterSpacing: 0.7, marginTop: 2 }, memberPill: { borderWidth: 1, borderColor: colors.ash, borderRadius: 20, paddingHorizontal: 9, paddingVertical: 6 }, memberPillText: { color: colors.graphite, fontFamily: mono, fontSize: 10 }, inviteButton: { backgroundColor: colors.ink, paddingHorizontal: 10, paddingVertical: 8 }, inviteButtonText: { color: colors.white, fontFamily: mono, fontSize: 8, letterSpacing: 0.7 }, fixtureBar: { height: 49, flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 10, paddingHorizontal: 15, borderBottomWidth: 1, borderBottomColor: colors.ash }, fixtureBarText: { flex: 1, color: colors.ink, fontFamily: mono, fontSize: 11 }, fixtureBarScore: { fontWeight: "700" }, fixtureBarMeta: { color: colors.smoke, fontFamily: mono, fontSize: 8 }, tabs: { height: 48, flexDirection: "row", borderBottomWidth: 1, borderBottomColor: colors.ash }, tab: { flex: 1, alignItems: "center", justifyContent: "center", borderBottomWidth: 2, borderBottomColor: "transparent" }, tabActive: { borderBottomColor: colors.ink }, tabText: { color: colors.smoke, fontFamily: mono, fontSize: 8, letterSpacing: 0.7 }, tabTextActive: { color: colors.ink }, tabContent: { padding: 13, paddingBottom: 50, gap: 13 },
+  scoreCard: { borderWidth: 1, borderColor: colors.ash, borderRadius: 20, backgroundColor: "rgba(251,250,247,0.58)", padding: 18, flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center" }, team: { width: "28%", alignItems: "center", gap: 5 }, countryFlag: { overflow: "hidden", alignItems: "center", justifyContent: "center", borderWidth: StyleSheet.hairlineWidth, borderColor: colors.ash, backgroundColor: colors.mist }, teamCode: { color: colors.ink, fontFamily: mono, fontSize: 12, fontWeight: "700" }, teamName: { color: colors.graphite, fontSize: 11, textAlign: "center" }, scoreCenter: { width: "40%", alignItems: "center" }, score: { color: colors.ink, fontFamily: mono, fontSize: 27, fontWeight: "700" }, liveState: { color: colors.crimson, fontFamily: mono, fontSize: 9, marginTop: 6 }, iqStrip: { width: "100%", marginTop: 18, paddingTop: 13, borderTopWidth: 1, borderTopColor: colors.ash, flexDirection: "row" }, iqCell: { flex: 1, gap: 4 }, iqLabel: { color: colors.smoke, fontFamily: mono, fontSize: 7, letterSpacing: 0.7 }, iqValue: { color: colors.ink, fontFamily: mono, fontWeight: "700" }, callTop: { flexDirection: "row", justifyContent: "space-between", gap: 10 }, callCopy: { flex: 1, gap: 8 }, pill: { alignSelf: "flex-start", borderWidth: 1, borderColor: colors.ash, borderRadius: 12, paddingHorizontal: 8, paddingVertical: 4, color: colors.smoke, fontFamily: mono, fontSize: 8 }, callPrompt: { color: colors.ink, fontFamily: serif, fontSize: 21, lineHeight: 26 }, callTimer: { color: colors.ink, fontFamily: mono, fontSize: 18 }, option: { minHeight: 46, overflow: "hidden", borderWidth: 1, borderColor: colors.ash, borderRadius: 13, paddingHorizontal: 13, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }, optionActive: { borderColor: colors.ink }, optionFill: { position: "absolute", inset: 0, right: undefined, backgroundColor: colors.mist, opacity: 0.65 }, optionText: { zIndex: 1, flex: 1, color: colors.ink, fontFamily: mono, fontSize: 12 }, optionShare: { zIndex: 1, color: colors.graphite, fontFamily: mono, fontSize: 11 }, receipt: { borderTopWidth: 1, borderTopColor: colors.ash, paddingTop: 11, color: colors.blue, fontFamily: mono, fontSize: 9 }, hint: { color: colors.smoke, fontFamily: mono, fontSize: 9, lineHeight: 14 }, timelineRow: { flexDirection: "row", gap: 12, paddingVertical: 10, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.ash }, timelineMinute: { width: 32, color: colors.ink, fontFamily: mono, fontSize: 11 }, timelineCopy: { flex: 1 }, timelineType: { color: colors.smoke, fontFamily: mono, fontSize: 8, letterSpacing: 0.7 }, pressureTop: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" }, pressureValue: { color: colors.ink, fontFamily: mono, fontSize: 13, fontWeight: "700" }, pressureTrack: { height: 7, borderRadius: 4, overflow: "hidden", backgroundColor: colors.mist }, pressureFill: { height: "100%", borderRadius: 4, backgroundColor: colors.crimson },
+  chatContent: { padding: 15, paddingBottom: 28, gap: 15 }, messageRow: { flexDirection: "row", alignItems: "flex-start", gap: 10 }, messageRowMine: { flexDirection: "row-reverse" }, avatar: { width: 34, height: 34, borderRadius: 17, borderWidth: 1, borderColor: colors.ash, backgroundColor: "rgba(251,250,247,0.7)", alignItems: "center", justifyContent: "center" }, avatarMine: { borderColor: colors.blue, backgroundColor: colors.blue }, avatarText: { color: colors.graphite, fontFamily: mono, fontSize: 9, fontWeight: "700" }, avatarTextMine: { color: colors.white }, messageColumn: { flex: 1, alignItems: "flex-start" }, messageColumnMine: { alignItems: "flex-end" }, message: { maxWidth: "94%", borderRadius: 18, backgroundColor: "rgba(251,250,247,0.9)", paddingHorizontal: 15, paddingVertical: 12, gap: 7 }, messageMine: { backgroundColor: colors.mist }, messageTop: { maxWidth: "94%", flexDirection: "row", alignItems: "center", gap: 8, marginBottom: 5 }, messageTopMine: { flexDirection: "row-reverse" }, messageAuthor: { color: colors.ink, fontFamily: mono, fontSize: 9, fontWeight: "700" }, messageTime: { color: colors.smoke, fontFamily: mono, fontSize: 8 }, messageText: { color: colors.ink, fontSize: 15, lineHeight: 21 }, reactions: { maxWidth: "96%", flexDirection: "row", flexWrap: "wrap", gap: 5, marginTop: 7 }, reactionsMine: { justifyContent: "flex-end" }, reaction: { borderWidth: 1, borderColor: colors.ash, borderRadius: 14, backgroundColor: "rgba(251,250,247,0.72)", paddingHorizontal: 7, paddingVertical: 4 }, reactionCount: { borderWidth: 1, borderColor: colors.ash, borderRadius: 14, paddingHorizontal: 7, paddingVertical: 4, color: colors.graphite, fontSize: 11 }, systemMessage: { alignSelf: "center", borderRadius: 14, backgroundColor: "rgba(221,228,255,0.5)", paddingHorizontal: 12, paddingVertical: 7 }, systemText: { color: colors.smoke, fontFamily: mono, fontSize: 9, textAlign: "center" }, typing: { color: colors.smoke, fontFamily: mono, fontSize: 9 }, composer: { borderTopWidth: 1, borderTopColor: colors.ash, backgroundColor: colors.parchment, padding: 10 }, composerRow: { flexDirection: "row", alignItems: "flex-end", gap: 8 }, composerActions: { gap: 1, marginBottom: 9, overflow: "hidden", borderRadius: 16, borderWidth: 1, borderColor: colors.ash }, composerAction: { backgroundColor: colors.white, paddingHorizontal: 15, paddingVertical: 12 }, composerActionTitle: { color: colors.ink, fontSize: 14, fontWeight: "600" }, composerInput: { flex: 1, maxHeight: 110, minHeight: 43, borderWidth: 1, borderColor: colors.ash, borderRadius: 22, backgroundColor: colors.white, paddingHorizontal: 14, paddingVertical: 10, color: colors.ink }, plusButton: { width: 43, height: 43, borderRadius: 22, borderWidth: 1, borderColor: colors.ash, alignItems: "center", justifyContent: "center" }, plus: { color: colors.ink, fontSize: 20 }, sendButton: { width: 43, height: 43, borderRadius: 22, backgroundColor: colors.blue, alignItems: "center", justifyContent: "center" }, sendText: { color: colors.white, fontSize: 22 }, pollComposer: { gap: 8 }, pollComposerTop: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
+  attachment: { borderWidth: 1, borderColor: colors.ash, padding: 10, gap: 3 }, attachmentName: { color: colors.ink, fontFamily: mono, fontSize: 11 }, attachmentAction: { color: colors.blue, fontFamily: mono, fontSize: 8, marginTop: 5 }, threadAction: { borderWidth: 1, borderColor: colors.ash, borderRadius: 14, paddingHorizontal: 8, paddingVertical: 5 }, threadActionText: { color: colors.graphite, fontFamily: mono, fontSize: 8 }, threadHeader: { minHeight: 70, borderBottomWidth: 1, borderBottomColor: colors.ash, paddingHorizontal: 18, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }, threadClose: { width: 40, height: 40, alignItems: "center", justifyContent: "center" }, threadCloseText: { color: colors.ink, fontSize: 30 },
+  stats: { flexDirection: "row", borderWidth: 1, borderColor: colors.ash, marginTop: 10 }, stat: { flex: 1, alignItems: "center", paddingVertical: 12, borderRightWidth: StyleSheet.hairlineWidth, borderRightColor: colors.ash }, statValue: { color: colors.ink, fontFamily: mono, fontSize: 16 }, statLabel: { color: colors.smoke, fontFamily: mono, fontSize: 7, marginTop: 4 }, disclosure: { minHeight: 64, flexDirection: "row", alignItems: "center", borderWidth: 1, borderColor: colors.ash, borderRadius: 16, backgroundColor: "rgba(251,250,247,0.5)", paddingHorizontal: 16, paddingVertical: 12 }, disclosureDanger: { borderColor: "rgba(182,41,49,0.35)" }, disclosureLabel: { color: colors.ink, fontSize: 14, fontWeight: "600" }, disclosureMark: { color: colors.smoke, fontSize: 20 }, memberRow: { minHeight: 58, flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.ash }, memberCopy: { flex: 1 }, memberActions: { flexDirection: "row", alignItems: "center", gap: 10 }, smallAction: { color: colors.blue, fontFamily: mono, fontSize: 8 }, dangerText: { color: colors.crimson }, memberName: { color: colors.ink, fontSize: 14 }, memberRole: { color: colors.smoke, fontFamily: mono, fontSize: 8, marginTop: 3 }, presence: { width: 8, height: 8, borderRadius: 4, backgroundColor: colors.ash }, presenceOnline: { backgroundColor: colors.green }, reasonGrid: { flexDirection: "row", flexWrap: "wrap", gap: 6 }, reason: { borderWidth: 1, borderColor: colors.ash, paddingHorizontal: 8, paddingVertical: 6 }, reasonActive: { borderColor: colors.ink, backgroundColor: colors.mist }, reasonText: { color: colors.graphite, fontFamily: mono, fontSize: 7 },
+});

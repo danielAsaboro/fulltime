@@ -12,10 +12,6 @@ function kickoffLabel(ms: number): string {
   return `${hh}:${mm} UTC`;
 }
 
-function crowdLabel(n: number): string {
-  return n >= 1000 ? `${(n / 1000).toFixed(1)}k` : String(n);
-}
-
 function TeamRow({
   code,
   name,
@@ -46,21 +42,19 @@ export function FixtureCard({
   className,
   href,
   callToAction,
-  hideCrowd = false,
 }: {
   card: FixtureCardModel;
   className?: string;
   href?: string;
   callToAction?: string;
-  hideCrowd?: boolean;
 }) {
-  const { fixture, phase, score, minute, crowd, roomId } = card;
+  const { fixture, phase, score, minute } = card;
   const home = fixture.home.shortName ?? fixture.home.name.slice(0, 3).toUpperCase();
   const away = fixture.away.shortName ?? fixture.away.name.slice(0, 3).toUpperCase();
 
   return (
     <Link
-      href={href ?? `/room/${roomId}`}
+      href={href ?? `/matches?fixture=${encodeURIComponent(String(fixture.id))}`}
       className={cn(
         "group flex flex-col justify-between gap-4 rounded-card border border-ash bg-parchment p-6 transition-colors hover:border-off-black",
         className,
@@ -76,11 +70,7 @@ export function FixtureCard({
         ) : (
           <Tag>{kickoffLabel(Number(fixture.kickoff))}</Tag>
         )}
-        {hideCrowd ? null : (
-          <span className="font-mono text-caption uppercase tracking-[0.08em] text-smoke">
-            {crowdLabel(crowd)} in
-          </span>
-        )}
+        <span className="font-mono text-caption uppercase tracking-[0.08em] text-smoke">{fixture.competition}</span>
       </div>
 
       <div className="space-y-2">
@@ -90,7 +80,7 @@ export function FixtureCard({
 
       <div className="flex items-center justify-between border-t border-ash pt-3">
         <span className="font-mono text-caption uppercase tracking-[0.08em] text-smoke">
-          {callToAction ?? (phase === "upcoming" ? "Room open" : phase === "live" ? "Join the room" : "Match memory")}
+          {callToAction ?? "Create a private room"}
         </span>
         <span className="font-mono text-body-sm text-off-black transition-transform group-hover:translate-x-0.5" aria-hidden>
           →

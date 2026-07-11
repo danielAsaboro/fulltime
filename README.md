@@ -1,55 +1,38 @@
 # FullTime
 
-Spoiler-safe, verified second-screen match rooms for the World Cup — powered by TxLINE.
+FullTime is an invite-only match-room application. Its rooms replicate through
+Pear/Holepunch, encrypted Hypercore storage, Autobase, Hyperswarm discovery,
+and BlindPairing admission. Fixture facts come from one operator-owned signed
+publisher; room writers cannot mint fixtures, calls, settlements, or receipts.
 
-> TxLINE turns live sports into verifiable state. FullTime plays it.
+## Use FullTime
 
-Every fixture gets a live room where fans watch together, react together, make
-rapid-fire predictions ("calls") that settle deterministically from TxLINE feed
-data, and leave with a Fan Report backed by verifiable receipts. The signature
-feature, **MatchSync**, releases every room moment on each fan's own stream delay
-so nobody gets spoiled.
+Install and start the desktop app:
 
-Full product spec lives in `internal/fulltime-prd.md` (gitignored, private).
+    npm install
+    npm run desktop
 
-## Monorepo layout
+The Electron app starts one local Pear worker, fetches and verifies FullTime's
+public signed network manifest, and opens its local UI. Choose **FullTime →
+Open in browser** to use the same local account and rooms in Chrome or another
+browser on this machine.
 
-```
-fulltime/
-├─ apps/
-│  ├─ web/        Next.js (App Router, TS) — the match room UI + replay route
-│  └─ worker/     TypeScript worker (tsx) — TxLINE spine: auth, SSE ingest,
-│                 fixture state machines, settle engine, corpus recorder
-├─ packages/
-│  └─ shared/     Framework-free domain types + pure logic shared by web & worker
-├─ .env.example   Required environment variables
-├─ feedback.md    TxLINE integration friction log (scored submission component)
-└─ HANDOFF.md     Living state doc — read this first when resuming cold
-```
+There is no consumer setup for TxLINE, fixture feed keys, gateway secrets, or
+publisher credentials. If FullTime cannot obtain a fresh manifest and has no
+verified local cache, it shows a configuration-unavailable state and does not
+start a room worker. A verified cached manifest remains usable offline and is
+marked stale in the UI.
 
-## Getting started
+`npm run web:ui` is only a Next UI-development tool. It does not create a
+publisher, a browser identity, or a consumer room service; peer access exists
+only through the Electron-owned loopback host.
 
-Requires Node >= 20 (developed on Node 24). Uses npm workspaces.
+## Development checks
 
-```bash
-npm install                 # install all workspaces
-cp .env.example .env        # then fill in Supabase + TxLINE + keypair values
+    npm --workspace @fulltime/shared test
+    npm --workspace @fulltime/web run typecheck
+    npm --workspace @fulltime/desktop test
 
-npm run worker              # start the TxLINE ingest worker
-npm run web                 # start the Next.js app (http://localhost:3000)
-npm run typecheck           # typecheck every workspace
-npm run test                # run workspace tests
-```
-
-## Architecture (one line each)
-
-- **Worker** owns TxLINE: guest auth → subscribe/activate → scores + odds SSE →
-  message-id-ordered fixture state machines → pure settle engine → corpus recorder.
-  Feed time is authoritative; all settlement is pure and idempotent.
-- **Web** is a mobile-first room: calibrate stream delay, answer call cards,
-  react to verified moments, watch the timeline, collect receipts, get a Fan Report.
-  A per-user release queue keyed to `feed_ts + delay` makes it spoiler-safe.
-- **Shared** holds the domain model (rooms, calls, answers, settlements, receipts,
-  records) and the pure functions both sides rely on, so logic can't drift.
-
-See `HANDOFF.md` for current build state and what's next.
+Read [PEAR-ROOMS-HANDOFF.md](PEAR-ROOMS-HANDOFF.md) before changing peer-room
+code. Operators should use [operator deployment documentation](docs/operator-deployment.md),
+not consumer startup instructions.

@@ -1,0 +1,47 @@
+{
+  "name": "@fulltime/mobile",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FullTime native mobile shell with a device-owned Bare peer worker.",
+  "license": "UNLICENSED",
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start --dev-client",
+    "configure:local": "node scripts/configure-local.cjs",
+    "bundle:ios": "node scripts/bundle-worker.cjs ios",
+    "link:ios": "node scripts/link-ios-addons.cjs",
+    "prebuild:ios": "expo prebuild --platform ios",
+    "ios:device": "node scripts/run-ios-device.cjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit",
+    "test": "node --import tsx --test test/*.test.ts"
+  },
+  "dependencies": {
+    "b4a": "^1.6.7",
+    "expo": "~55.0.23",
+    "expo-build-properties": "~55.0.9",
+    "expo-camera": "~55.0.20",
+    "expo-constants": "~55.0.7",
+    "expo-crypto": "~55.0.8",
+    "expo-document-picker": "~55.0.14",
+    "expo-file-system": "~55.0.10",
+    "expo-secure-store": "~55.0.8",
+    "expo-sharing": "~55.0.21",
+    "expo-status-bar": "~55.0.4",
+    "framed-stream": "^1.0.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "react-native": "0.83.6",
+    "react-native-b4a": "^0.0.4",
+    "react-native-bare-kit": "^0.15.0",
+    "react-native-safe-area-context": "~5.6.0",
+    "react-native-screens": "~4.23.0",
+    "tweetnacl": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/react": "~19.2.10",
+    "bare-link": "^3.0.1",
+    "bare-pack": "^2.2.0",
+    "typescript": "^5.7.2"
+  }
+}

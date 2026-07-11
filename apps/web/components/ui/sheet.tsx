@@ -7,7 +7,7 @@ import { cn } from "@/lib/cn";
 
 /**
  * Bottom sheet on mobile, centered dialog on desktop. Used for the quiet
- * calibration settings and the "Sign in" modal. Lightweight — no dependency.
+ * invite controls and the sign-in modal. Lightweight — no dependency.
  */
 export function Sheet({
   open,

@@ -6,6 +6,7 @@
 # Recorded TxLINE corpora (feed replay material, can be large / spoiler-bearing)
 /corpus/
 corpus/
+/fixture-plane/
 
 # Secrets
 .env
@@ -34,6 +35,14 @@ npm-debug.log*
 coverage/
 .turbo/
 .vercel/
+apps/desktop/dist/
+release/
+/apps/desktop/.local-development/
+/apps/worker/.local-development/
+/apps/mobile/.local-development/
+/apps/mobile/generated/
+/apps/mobile/ios/
+/apps/mobile/android/
 
 # Editors
 .idea/

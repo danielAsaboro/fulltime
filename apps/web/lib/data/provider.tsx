@@ -2,25 +2,22 @@
 
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 
-import { cn } from "@/lib/cn";
-import { DATA_MODE, getDataClient } from "./client";
-import { MockDataClient } from "./mock/index";
-import { SCENARIO_LABELS, type ScenarioLabel } from "./mock/scenario";
-import type { FullTimeData, RoomView, Session } from "./types";
+import { getDataClient } from "./client";
+import { getPeerBridge, type PeerBridgeConfig } from "./live/peer-bridge";
+import type { FullTimeData, Session } from "./types";
 
-export type ForcedState = "loading" | "empty" | "error" | null;
+type NetworkConfigurationState =
+  | { status: "loading" }
+  | { status: "ready"; config: PeerBridgeConfig }
+  | { status: "stale"; config: PeerBridgeConfig }
+  | { status: "unavailable"; message: string };
 
 interface DataContextValue {
   client: FullTimeData;
-  mode: "mock" | "live";
   session: Session | null;
+  networkConfiguration: NetworkConfigurationState;
   signIn: (displayName: string) => Promise<void>;
   signOut: () => Promise<void>;
-  enterDemoRoom: () => Promise<RoomView>;
-  forcedState: ForcedState;
-  setForcedState: (s: ForcedState) => void;
-  scenario: ScenarioLabel | null;
-  setScenario: (s: ScenarioLabel) => void;
 }
 
 const DataContext = createContext<DataContextValue | null>(null);
@@ -28,25 +25,29 @@ const DataContext = createContext<DataContextValue | null>(null);
 export function DataProvider({ children }: { children: ReactNode }) {
   const [client] = useState(getDataClient);
   const [session, setSession] = useState<Session | null>(null);
-  const [forcedState, setForcedState] = useState<ForcedState>(null);
-  const [scenario, setScenarioState] = useState<ScenarioLabel | null>(null);
+  const [networkConfiguration, setNetworkConfiguration] = useState<NetworkConfigurationState>({ status: "loading" });
 
   useEffect(() => {
     let alive = true;
-    client.getSession().then((s) => {
-      if (alive) setSession(s);
+    void getPeerBridge().getConfig().then((config) => {
+      if (!alive) return;
+      setNetworkConfiguration(config.networkConfig === "stale" ? { status: "stale", config } : { status: "ready", config });
+      void client.getSession().then((s) => {
+        if (alive) setSession(s);
+      }).catch(() => {
+        if (alive) setSession(null);
+      });
+    }).catch((reason: unknown) => {
+      if (!alive) return;
+      setSession(null);
+      setNetworkConfiguration({
+        status: "unavailable",
+        message: reason instanceof Error ? reason.message : "The local FullTime peer bridge is unavailable.",
+      });
     });
     return () => {
       alive = false;
     };
-  }, [client]);
-
-  useEffect(() => {
-    if (!(client instanceof MockDataClient)) return;
-    const syncScenario = () => setScenarioState(client.scenarioLabel);
-    syncScenario();
-    const timer = window.setInterval(syncScenario, 500);
-    return () => window.clearInterval(timer);
   }, [client]);
 
   const signIn = useCallback(
@@ -62,40 +63,80 @@ export function DataProvider({ children }: { children: ReactNode }) {
     setSession(null);
   }, [client]);
 
-  const enterDemoRoom = useCallback(async () => {
-    setForcedState(null);
-    const entry = await client.enterDemoRoom();
-    setSession(entry.session);
-    setScenarioState("prematch");
-    return entry.room;
-  }, [client]);
-
-  const setScenario = useCallback(
-    (label: ScenarioLabel) => {
-      setScenarioState(label);
-      if (client instanceof MockDataClient) client.jumpTo(label);
-    },
-    [client],
-  );
-
   const value: DataContextValue = {
     client,
-    mode: DATA_MODE,
     session,
+    networkConfiguration,
     signIn,
     signOut,
-    enterDemoRoom,
-    forcedState,
-    setForcedState,
-    scenario,
-    setScenario,
   };
 
   return (
     <DataContext.Provider value={value}>
-      {children}
-      {DATA_MODE === "mock" ? <MockControls /> : null}
+      {networkConfiguration.status === "unavailable" ? (
+        <ConfigurationUnavailable message={networkConfiguration.message} />
+      ) : (
+        <>
+          {networkConfiguration.status === "stale" ? <StaleConfigurationNotice /> : null}
+          {children}
+        </>
+      )}
     </DataContext.Provider>
+  );
+}
+
+function StaleConfigurationNotice() {
+  return (
+    <div className="border-b border-gold/60 bg-gold/20 px-5 py-2 text-center font-mono text-caption text-off-black" role="status">
+      Using the last verified FullTime network configuration while this device is offline. Rooms remain local and will refresh when FullTime reconnects.
+    </div>
+  );
+}
+
+function ConfigurationUnavailable({ message }: { message: string }) {
+  const identityLocked = message.toLowerCase().includes("protected identity") || message.toLowerCase().includes("decrypt");
+  const [resetting, setResetting] = useState(false);
+  const [resetError, setResetError] = useState<string | null>(null);
+  const resetIdentity = async () => {
+    const reset = window.fullTimePeers?.resetIdentity;
+    if (!reset) {
+      setResetError("Open this recovery screen in the FullTime desktop window to reset the device identity.");
+      return;
+    }
+    setResetting(true);
+    setResetError(null);
+    try {
+      await reset();
+    } catch (reason) {
+      setResetting(false);
+      setResetError(reason instanceof Error ? reason.message : "FullTime could not reset this device identity.");
+    }
+  };
+  return (
+    <main className="flex min-h-dvh items-center justify-center bg-parchment px-5 py-12">
+      <section className="max-w-xl border border-ash bg-white/60 p-7 text-center sm:p-10">
+        <p className="font-mono text-caption uppercase tracking-[0.12em] text-smoke">{identityLocked ? "Identity locked" : "Configuration unavailable"}</p>
+        <h1 className="mt-3 text-heading-sm text-off-black">{identityLocked ? "FullTime cannot unlock this device." : "FullTime cannot open peer rooms yet."}</h1>
+        <p className="mt-4 font-mono text-body-sm text-graphite">{message}</p>
+        <p className="mt-4 font-mono text-body-sm text-graphite">
+          {identityLocked ? "The existing encrypted identity has been preserved. Open FullTime from the macOS account that created it; resetting it would create a different peer identity and is never done automatically." : "Connect this device so FullTime can verify its network configuration, then restart the desktop app."}
+        </p>
+        {identityLocked ? (
+          <div className="mt-6">
+            <button
+              type="button"
+              className="border border-off-black bg-off-black px-5 py-3 font-mono text-caption uppercase tracking-[0.08em] text-white disabled:cursor-wait disabled:opacity-60"
+              disabled={resetting}
+              onClick={() => void resetIdentity()}
+            >
+              {resetting ? "Archiving and restarting…" : "Reset this device"}
+            </button>
+            <p className="mt-3 font-mono text-caption text-smoke">The copied identity will be archived, not deleted. FullTime will restart with a new identity for this Mac.</p>
+            {resetError ? <p className="mt-3 font-mono text-caption text-red" role="alert">{resetError}</p> : null}
+          </div>
+        ) : null}
+      </section>
+    </main>
   );
 }
 
@@ -103,70 +144,4 @@ export function useData(): DataContextValue {
   const value = useContext(DataContext);
   if (!value) throw new Error("useData must be used within <DataProvider>");
   return value;
-}
-
-/** Mock-only affordance: jump the scripted room and force loading/empty/error. */
-function MockControls() {
-  const { forcedState, setForcedState, scenario, setScenario } = useData();
-  const [open, setOpen] = useState(false);
-
-  if (!open) {
-    return (
-      <button
-        onClick={() => setOpen(true)}
-        className="fixed bottom-24 right-4 z-40 rounded-pill border border-ash bg-parchment px-3 py-2 font-mono text-caption uppercase tracking-[0.1em] text-smoke shadow-[var(--shadow-md)] hover:text-off-black lg:bottom-4"
-      >
-        ● Mock
-      </button>
-    );
-  }
-
-  const forced: ForcedState[] = [null, "loading", "empty", "error"];
-
-  return (
-    <div className="fixed bottom-24 right-4 z-40 w-64 space-y-3 rounded-lg border border-ash bg-parchment p-4 shadow-[var(--shadow-md)] lg:bottom-4">
-      <div className="flex items-center justify-between">
-        <span className="font-mono text-caption uppercase tracking-[0.12em] text-smoke">Mock controls</span>
-        <button onClick={() => setOpen(false)} className="font-mono text-body-sm text-smoke hover:text-off-black">
-          ×
-        </button>
-      </div>
-
-      <div className="space-y-1.5">
-        <span className="font-mono text-caption uppercase tracking-[0.1em] text-smoke">Scenario</span>
-        <div className="flex flex-wrap gap-1">
-          {SCENARIO_LABELS.map((label) => (
-            <button
-              key={label}
-              onClick={() => setScenario(label)}
-              className={cn(
-                "rounded-pill border px-2 py-1 font-mono text-[10px] uppercase tracking-[0.06em]",
-                scenario === label ? "border-off-black bg-off-black text-parchment" : "border-ash text-graphite",
-              )}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="space-y-1.5">
-        <span className="font-mono text-caption uppercase tracking-[0.1em] text-smoke">Force state</span>
-        <div className="flex gap-1">
-          {forced.map((f) => (
-            <button
-              key={f ?? "live"}
-              onClick={() => setForcedState(f)}
-              className={cn(
-                "rounded-pill border px-2 py-1 font-mono text-[10px] uppercase tracking-[0.06em]",
-                forcedState === f ? "border-off-black bg-off-black text-parchment" : "border-ash text-graphite",
-              )}
-            >
-              {f ?? "live"}
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
 }

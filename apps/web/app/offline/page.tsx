@@ -16,11 +16,11 @@ export default function OfflinePage() {
         </Container>
       </header>
       <Container className="flex min-h-[60dvh] flex-col items-center justify-center gap-5 py-20 text-center">
-        <Eyebrow>Feed reconnecting</Eyebrow>
+        <Eyebrow>Peers reconnecting</Eyebrow>
         <h1 className="text-heading text-off-black">You&apos;re offline.</h1>
         <p className="max-w-md font-mono text-body-lg text-graphite">
-          FullTime needs a connection for live match data. Your calls and receipts are safe — reconnect
-          and the room picks up right where it left off.
+          FullTime needs a connection to discover peers and refresh signed fixtures. Your local room data
+          remains on this device and resumes syncing when peers reconnect.
         </p>
         <Button href="/matches" variant="primary" withArrow>
           Try again

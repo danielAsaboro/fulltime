@@ -8,10 +8,10 @@ import { useData, useRoomByInvite } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { Container, EmptyState, ErrorState, Logo, Skeleton } from "@/components/ui/primitives";
 import { TextField } from "@/components/ui/field";
+import { Flag } from "@/components/ui/flag";
 import { Tag } from "@/components/ui/tag";
-import { Scoreline } from "@/components/scoreline";
 
-export function JoinView({ code, referrerUserId }: { code: string; referrerUserId?: string }) {
+export function JoinView({ code }: { code: string }) {
   const invite = useRoomByInvite(code);
   const { client, session, signIn } = useData();
   const router = useRouter();
@@ -25,7 +25,7 @@ export function JoinView({ code, referrerUserId }: { code: string; referrerUserI
     setJoinError(null);
     try {
       if (!session) await signIn(displayName.trim());
-      const joined = await client.joinRoom(code, referrerUserId);
+      const joined = await client.joinRoom(code);
       router.push(`/room/${joined.room.id}`);
     } catch (error) {
       setJoinError(error instanceof Error ? error.message : "That invite could not be used.");
@@ -37,7 +37,7 @@ export function JoinView({ code, referrerUserId }: { code: string; referrerUserI
     <div className="min-h-dvh">
       <header className="border-b border-ash">
         <Container className="flex h-[72px] items-center justify-between">
-          <Logo />
+          <Logo href="/app" />
           <Button variant="quiet" size="sm" href="/join" className="px-2.5 sm:px-5">
             New code
           </Button>
@@ -102,21 +102,28 @@ function InvitePreview({
         <span className="inline-flex justify-center"><Tag tone="muted">Invite-only room</Tag></span>
         <h1 className="text-heading text-off-black">You&apos;re invited to {roomName}</h1>
         <p className="font-mono text-body-lg text-graphite">
-          Watch along, make calls, and share the receipts with the group.
+          Join the encrypted Pear chat for this fixture.
         </p>
       </div>
 
       <div className="rounded-[28px] border border-ash bg-parchment p-6">
-        <Scoreline
-          home={fixture.home}
-          away={fixture.away}
-          score={fixture.score ?? null}
-          status={fixture.status}
-          minute={fixture.minute ?? null}
-        />
+        <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
+          <div className="min-w-0 text-center">
+            <Flag code={fixture.home.country} size={28} className="mx-auto" />
+            <p className="mt-2 truncate font-mono text-body-sm font-medium uppercase">{fixture.home.name}</p>
+          </div>
+          <span className="font-mono text-caption uppercase text-smoke">vs</span>
+          <div className="min-w-0 text-center">
+            <Flag code={fixture.away.country} size={28} className="mx-auto" />
+            <p className="mt-2 truncate font-mono text-body-sm font-medium uppercase">{fixture.away.name}</p>
+          </div>
+        </div>
+        <p className="mt-5 text-center font-mono text-caption text-smoke">
+          {fixture.competition} · {new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(Number(fixture.kickoff)))}
+        </p>
         <p className="mt-5 flex items-center gap-2 border-t border-ash pt-4 font-mono text-caption uppercase tracking-[0.1em] text-smoke">
           <Users size={14} strokeWidth={1.8} aria-hidden />
-          {members.toLocaleString()} {members === 1 ? "member" : "members"} · reactions and calls anchored to the match
+          {members.toLocaleString()} {members === 1 ? "member" : "members"} · encrypted room history
         </p>
       </div>
 

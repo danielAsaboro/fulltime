@@ -21,6 +21,13 @@ export const FLAG_GRADIENTS: Record<string, string> = {
   MX: "linear-gradient(90deg, #006847 34%, #ffffff 34% 66%, #ce1126 66%)",
   CA: "linear-gradient(90deg, #d80621 22%, #ffffff 22% 78%, #d80621 78%)",
   IT: "linear-gradient(90deg, #008c45 34%, #ffffff 34% 66%, #cd212a 66%)",
+  NO: "linear-gradient(#00205b, #00205b) 36% 50% / 10% 100% no-repeat, linear-gradient(#00205b, #00205b) 30% 50% / 100% 13% no-repeat, linear-gradient(#ffffff, #ffffff) 36% 50% / 22% 100% no-repeat, linear-gradient(#ffffff, #ffffff) 30% 50% / 100% 28% no-repeat, #ba0c2f",
+  NOR: "linear-gradient(#00205b, #00205b) 36% 50% / 10% 100% no-repeat, linear-gradient(#00205b, #00205b) 30% 50% / 100% 13% no-repeat, linear-gradient(#ffffff, #ffffff) 36% 50% / 22% 100% no-repeat, linear-gradient(#ffffff, #ffffff) 30% 50% / 100% 28% no-repeat, #ba0c2f",
+  NORWAY: "linear-gradient(#00205b, #00205b) 36% 50% / 10% 100% no-repeat, linear-gradient(#00205b, #00205b) 30% 50% / 100% 13% no-repeat, linear-gradient(#ffffff, #ffffff) 36% 50% / 22% 100% no-repeat, linear-gradient(#ffffff, #ffffff) 30% 50% / 100% 28% no-repeat, #ba0c2f",
+  ENG: "linear-gradient(#c8102e, #c8102e) 50% 50% / 100% 24% no-repeat, linear-gradient(#c8102e, #c8102e) 50% 50% / 24% 100% no-repeat, #ffffff",
+  EN: "linear-gradient(#c8102e, #c8102e) 50% 50% / 100% 24% no-repeat, linear-gradient(#c8102e, #c8102e) 50% 50% / 24% 100% no-repeat, #ffffff",
+  "GB-ENG": "linear-gradient(#c8102e, #c8102e) 50% 50% / 100% 24% no-repeat, linear-gradient(#c8102e, #c8102e) 50% 50% / 24% 100% no-repeat, #ffffff",
+  ENGLAND: "linear-gradient(#c8102e, #c8102e) 50% 50% / 100% 24% no-repeat, linear-gradient(#c8102e, #c8102e) 50% 50% / 24% 100% no-repeat, #ffffff",
 };
 
 export function flagGradient(code?: string | null): string | null {

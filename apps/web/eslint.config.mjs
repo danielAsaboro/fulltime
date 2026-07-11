@@ -7,7 +7,7 @@ const eslintConfig = defineConfig([
   ...nextTs,
   {
     rules: {
-      // Underscore-prefixed args are intentional (e.g. live/ stub signatures).
+      // Underscore-prefixed args are intentional for interface-compatible signatures.
       "@typescript-eslint/no-unused-vars": [
         "warn",
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_", caughtErrorsIgnorePattern: "^_" },

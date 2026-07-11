@@ -10,8 +10,7 @@ export function SiteFooter() {
         <nav className="flex flex-wrap gap-x-6 gap-y-2">
           {[
             { href: "/matches", label: "Matches" },
-            { href: "/record", label: "Record" },
-            { href: "/replay/9001", label: "Replay" },
+            { href: "/join", label: "Join a room" },
           ].map((l) => (
             <Link
               key={l.href}
@@ -22,7 +21,7 @@ export function SiteFooter() {
             </Link>
           ))}
         </nav>
-        <p className="font-mono text-caption text-smoke">Powered by TxLINE · World Cup 2026</p>
+        <p className="font-mono text-caption text-smoke">Encrypted rooms powered by Pear</p>
       </Container>
     </footer>
   );

@@ -1,28 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Newsreader, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { DataProvider } from "@/lib/data";
 import { PwaRegister } from "@/components/pwa-register";
 
-const newsreader = Newsreader({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
-  variable: "--font-newsreader",
-  display: "swap",
-});
-
-const jetbrains = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-jetbrains",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  title: "FullTime — spoiler-safe World Cup rooms",
+  title: "FullTime — encrypted peer-to-peer match rooms",
   description:
-    "Watch the World Cup together on your own clock. Make calls that settle from verified data, react to the moments, and leave with a Fan Report nobody can fake.",
+    "Create an invite-only Pear room for a signed fixture, then chat, poll, reply, and react directly with your group.",
   applicationName: "FullTime",
   manifest: "/manifest.webmanifest",
   appleWebApp: { capable: true, statusBarStyle: "default", title: "FullTime" },
@@ -41,7 +25,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${newsreader.variable} ${jetbrains.variable} h-full antialiased`}>
+    <html lang="en" className="h-full antialiased">
       <body className="min-h-full">
         <DataProvider>{children}</DataProvider>
         <PwaRegister />

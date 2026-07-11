@@ -8,15 +8,11 @@ const toneColor: Record<Tone, string> = {
   urgent: "var(--color-crimson)",
 };
 
-/**
- * Countdown ring. Presentational — parent passes `progress` (0 remaining → 1 full)
- * from a clock. Fixed box so it never resizes the card it sits in (PRD: rings
- * must not resize cards).
- */
+/** Presentational clock only; attestor and signed feed time decide eligibility. */
 export function CountdownRing({
   progress,
   center,
-  size = 64,
+  size = 58,
   stroke = 4,
   tone = "ink",
   className,
@@ -31,22 +27,10 @@ export function CountdownRing({
   const clamped = Math.max(0, Math.min(1, progress));
   const radius = (size - stroke) / 2;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference * (1 - clamped);
-
   return (
-    <span
-      className={cn("relative inline-flex shrink-0 items-center justify-center", className)}
-      style={{ width: size, height: size }}
-    >
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="-rotate-90">
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          fill="none"
-          stroke="var(--color-ash)"
-          strokeWidth={stroke}
-        />
+    <span className={cn("relative inline-flex shrink-0 items-center justify-center", className)} style={{ width: size, height: size }}>
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="-rotate-90" aria-hidden>
+        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="var(--color-ash)" strokeWidth={stroke} />
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -56,15 +40,11 @@ export function CountdownRing({
           strokeWidth={stroke}
           strokeLinecap="round"
           strokeDasharray={circumference}
-          strokeDashoffset={offset}
+          strokeDashoffset={circumference * (1 - clamped)}
           style={{ transition: "stroke-dashoffset 240ms linear" }}
         />
       </svg>
-      {center !== undefined ? (
-        <span className="absolute font-mono text-body-sm font-medium tabular text-off-black">
-          {center}
-        </span>
-      ) : null}
+      {center !== undefined ? <span className="absolute font-mono text-body-sm font-medium tabular text-off-black">{center}</span> : null}
     </span>
   );
 }

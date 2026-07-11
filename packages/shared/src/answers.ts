@@ -3,7 +3,7 @@
  * fan tapped) and the feed time in force for them. Locking is decided in feed
  * time: an answer that lands after the settling feed event plus a small grace
  * window is void-scored, and answer-time patterns feed global-leaderboard
- * deweighting (PRD §4.2). A viewer's stream delay never changes settlement.
+ * deweighting (PRD §4.2).
  */
 
 import type { AnswerId, CallId, UserId } from "./ids";
@@ -17,8 +17,6 @@ export interface Answer {
   option: CallOptionId;
   /** Real time the fan submitted. */
   submittedAt: WallClock;
-  /** Feed time in force for this viewer when they answered (their release frontier). */
+  /** Signed feed time in force when the answer was accepted. */
   feedTsAtAnswer: FeedTimestamp;
-  /** Delay claimed at answer time, retained for anti-cheat weighting. */
-  claimedDelaySeconds: number;
 }

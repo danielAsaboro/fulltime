@@ -8,8 +8,7 @@ import { TextField } from "@/components/ui/field";
 import { Sheet } from "@/components/ui/sheet";
 
 /**
- * "Sign in" — SIWS under the hood, but zero crypto vocabulary anywhere in copy.
- * Pick a name; that's the whole flow the fan sees.
+ * A display name unlocks the local Pear identity used to sign room operations.
  */
 export function SignInModal({
   open,
@@ -23,14 +22,18 @@ export function SignInModal({
   const { signIn } = useData();
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const submit = async () => {
     if (!name.trim() || busy) return;
     setBusy(true);
+    setError(null);
     try {
       await signIn(name);
       onSignedIn?.();
       onClose();
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "FullTime could not open your identity.");
     } finally {
       setBusy(false);
     }
@@ -40,8 +43,7 @@ export function SignInModal({
     <Sheet open={open} onClose={onClose} eyebrow="Join the room" title="Sign in">
       <div className="space-y-5">
         <p className="font-mono text-body-sm text-graphite">
-          Pick a name for the room. We&apos;ll remember the calls you make and build your Fan Report
-          around them.
+          Pick a display name for this device. Your local Pear identity signs the room operations you send.
         </p>
         <TextField
           id="display-name"
@@ -58,8 +60,9 @@ export function SignInModal({
         <Button variant="primary" fullWidth withArrow onClick={submit} disabled={!name.trim() || busy}>
           {busy ? "Signing in…" : "Sign in"}
         </Button>
+        {error ? <p className="rounded-lg bg-coral/15 px-3 py-2 font-mono text-body-sm text-crimson" role="alert">{error}</p> : null}
         <p className="text-center font-mono text-caption text-smoke">
-          You can watch without signing in — sign in to make calls that count.
+          You can read an available room without signing in. Sign in to post, vote, react, or reply.
         </p>
       </div>
     </Sheet>
