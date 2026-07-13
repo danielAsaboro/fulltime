@@ -1,14 +1,12 @@
 import Image from "next/image";
-import { Plus, Ticket } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Container, Eyebrow } from "@/components/ui/primitives";
 import { AnnouncementBar } from "@/components/announcement-bar";
 import { Faq } from "@/components/faq";
-import { LiveStrip } from "@/components/live-strip";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteNav } from "@/components/site-nav";
+import { MarketingSiteFooter } from "@/components/marketing-site-footer";
+import { MarketingSiteNav } from "@/components/marketing-site-nav";
 
 const BUILT_ON = ["Pear", "Hyperswarm", "Autobase", "Hypercore", "Next.js"];
 
@@ -41,7 +39,7 @@ export default function Home() {
   return (
     <>
       <AnnouncementBar />
-      <SiteNav />
+      <MarketingSiteNav />
 
       <main>
         {/* Hero artwork is an original FullTime asset generated for this product. */}
@@ -72,17 +70,15 @@ export default function Home() {
                   beside you. Messages, polls, replies, and reactions replicate directly between members.
                 </p>
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                  <Button href="/matches" variant="primary" className="sm:min-w-48">
-                    <Plus size={17} strokeWidth={1.8} aria-hidden />
-                    Create a room
+                  <Button href="#how-it-works" variant="primary" className="sm:min-w-48">
+                    How it works
                   </Button>
                   <Button
-                    href="/join"
+                    href="https://github.com/winsznx/fulltime"
                     variant="ghost"
                     className="border-parchment text-parchment hover:bg-parchment hover:text-off-black sm:min-w-48"
                   >
-                    <Ticket size={17} strokeWidth={1.8} aria-hidden />
-                    Join with code
+                    View source
                   </Button>
                 </div>
               </div>
@@ -104,15 +100,8 @@ export default function Home() {
           </Container>
         </section>
 
-        {/* Live fixtures — private rooms are created from this public schedule. */}
-        <section className="border-t border-ash">
-          <Container className="py-14">
-            <LiveStrip />
-          </Container>
-        </section>
-
         {/* Why it's different */}
-        <section className="border-t border-ash">
+        <section id="why-fulltime" className="scroll-mt-6 border-t border-ash">
           <Container className="py-16 sm:py-20">
             <div className="max-w-2xl space-y-3">
               <Eyebrow>Why FullTime</Eyebrow>
@@ -134,12 +123,75 @@ export default function Home() {
           </Container>
         </section>
 
-        {/* How it works */}
-        <section className="border-t border-ash">
+        {/* Real product proof captured from the connected desktop, iPhone, and Android apps. */}
+        <section id="room-in-action" className="scroll-mt-6 border-t border-ash bg-off-black text-parchment">
           <Container className="py-16 sm:py-20">
-            <div className="max-w-2xl space-y-3">
-              <Eyebrow>One loop, start to finish</Eyebrow>
-              <h2 className="text-heading-sm text-off-black">Pick, create, invite, chat.</h2>
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-end">
+              <div className="max-w-3xl space-y-3">
+                <Eyebrow className="text-parchment/60">The room in action</Eyebrow>
+                <h2 className="text-heading-sm text-parchment">One encrypted room. Every screen.</h2>
+              </div>
+              <p className="font-mono text-body-sm text-parchment/70">
+                A real Norway–England room replicated across three admitted peers—with durable chat, a
+                room poll, votes, and reactions visible on desktop, iPhone, and Android.
+              </p>
+            </div>
+
+            <div className="relative mt-10 lg:pb-20 lg:pr-52">
+              <div className="overflow-hidden rounded-[24px] border border-parchment/20 bg-parchment shadow-[0_32px_90px_rgba(0,0,0,.42)]">
+                <Image
+                  src="/images/fulltime-desktop-room.png"
+                  alt="FullTime desktop room for Norway versus England with three members and a voted first-scorer poll"
+                  width={1152}
+                  height={768}
+                  sizes="(max-width: 1023px) 100vw, 1100px"
+                  className="h-auto w-full"
+                />
+              </div>
+              <div className="mt-7 grid grid-cols-2 items-end gap-3 lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:flex lg:items-end">
+                <div className="overflow-hidden rounded-[30px] border-[5px] border-parchment bg-parchment shadow-[0_28px_70px_rgba(0,0,0,.5)] lg:w-[190px]">
+                  <Image
+                    src="/images/fulltime-mobile-room.png"
+                    alt="The Norway versus England FullTime room on iPhone with chat, reactions, and the poll"
+                    width={346}
+                    height={760}
+                    sizes="(max-width: 1023px) 45vw, 190px"
+                    className="h-auto w-full"
+                  />
+                </div>
+                <div className="overflow-hidden rounded-[26px] border-[5px] border-parchment bg-parchment shadow-[0_28px_70px_rgba(0,0,0,.5)] lg:w-[210px]">
+                  <Image
+                    src="/images/fulltime-android-room.png"
+                    alt="The same FullTime room on Android with three peers, chat messages, and reactions"
+                    width={720}
+                    height={1640}
+                    sizes="(max-width: 1023px) 45vw, 210px"
+                    className="h-auto w-full"
+                  />
+                </div>
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* How it works */}
+        <section id="how-it-works" className="scroll-mt-6 border-t border-ash">
+          <Container className="py-16 sm:py-20">
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,520px)_1fr] lg:items-end">
+              <div className="space-y-3">
+                <Eyebrow>One loop, start to finish</Eyebrow>
+                <h2 className="text-heading-sm text-off-black">Pick, create, invite, chat.</h2>
+              </div>
+              <div className="relative aspect-[16/7] overflow-hidden rounded-card bg-off-black">
+                <Image
+                  src="/images/fulltime-matchday-friends.png"
+                  alt="Friends reacting together to a football match beneath the stadium lights"
+                  fill
+                  sizes="(max-width: 1023px) 100vw, 720px"
+                  className="object-cover grayscale"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,.28),transparent_55%)]" aria-hidden />
+              </div>
             </div>
             <ol className="mt-10 grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
               {STEPS.map((s) => (
@@ -154,7 +206,7 @@ export default function Home() {
         </section>
 
         {/* FAQ */}
-        <section className="border-t border-ash">
+        <section id="questions" className="scroll-mt-6 border-t border-ash">
           <Container className="py-16 sm:py-20">
             <div className="grid gap-10 lg:grid-cols-[320px_1fr]">
               <div className="space-y-3">
@@ -169,21 +221,34 @@ export default function Home() {
         {/* Closing */}
         <section className="border-t border-ash">
           <Container className="py-20">
-            <div className="rounded-card bg-off-black px-8 py-14 text-parchment sm:px-14">
-              <h2 className="max-w-3xl text-heading-sm text-parchment">
-                Bring the group chat to the match — and keep the room on your peers.
-              </h2>
-              <div className="mt-8">
-                <Button href="/matches" variant="primary" withArrow>
-                  Create a room
-                </Button>
+            <div className="relative min-h-80 overflow-hidden rounded-card bg-off-black px-8 py-14 text-parchment sm:px-14 sm:py-16">
+              <Image
+                src="/images/fulltime-closing-stadium.png"
+                alt=""
+                fill
+                sizes="(max-width: 767px) 100vw, 1432px"
+                className="object-cover object-[72%_center] sm:object-center"
+              />
+              <div
+                className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,.92)_0%,rgba(0,0,0,.78)_42%,rgba(0,0,0,.18)_78%),linear-gradient(0deg,rgba(0,0,0,.42)_0%,transparent_70%)]"
+                aria-hidden
+              />
+              <div className="relative z-10 max-w-3xl">
+                <h2 className="text-heading-sm text-parchment">
+                  Bring the group chat to the match — and keep the room on your peers.
+                </h2>
+                <div className="mt-8">
+                  <Button href="https://github.com/winsznx/fulltime" variant="primary" withArrow>
+                    View source
+                  </Button>
+                </div>
               </div>
             </div>
           </Container>
         </section>
       </main>
 
-      <SiteFooter />
+      <MarketingSiteFooter />
     </>
   );
 }

@@ -15,15 +15,15 @@ export function AnnouncementBar() {
           <span className="text-parchment/60">World Cup 2026 ·</span> Pick a fixture and bring your people.
         </p>
         <Link
-          href="/matches"
-          className="hidden shrink-0 rounded-pill border border-parchment/50 px-3 py-0.5 font-mono text-caption uppercase tracking-[0.08em] hover:bg-parchment hover:text-ink sm:inline-flex"
+          href="#how-it-works"
+          className="hidden min-h-10 shrink-0 items-center rounded-pill border border-parchment/50 px-3 font-mono text-caption uppercase tracking-[0.08em] hover:bg-parchment hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-parchment sm:inline-flex"
         >
-          Create room
+          How it works
         </Link>
         <button
           onClick={() => setOpen(false)}
           aria-label="Dismiss"
-          className="shrink-0 px-1 font-mono text-body-lg leading-none text-parchment/60 hover:text-parchment"
+          className="grid size-10 shrink-0 place-items-center rounded-full font-mono text-body-lg leading-none text-parchment/60 hover:text-parchment focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-parchment"
         >
           ×
         </button>

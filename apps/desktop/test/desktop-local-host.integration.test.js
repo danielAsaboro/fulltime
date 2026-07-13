@@ -129,6 +129,7 @@ test('one Electron-owned peer identity serves preload IPC and a capability-autho
     const capability = host.issueBrowserCapabilityUrl()
     const exchanged = await fetch(capability, { redirect: 'manual' })
     assert.equal(exchanged.status, 303)
+    assert.equal(exchanged.headers.get('location'), '/app')
     const cookie = exchanged.headers.get('set-cookie').split(';', 1)[0]
 
     const preloadSession = await dispatch(controller, 'session.get', null)

@@ -230,7 +230,7 @@ class DesktopLocalHost {
     const id = crypto.randomBytes(32).toString('base64url')
     this.browserSessions.set(id, { sse: new Set() })
     response.writeHead(303, {
-      Location: '/',
+      Location: '/app',
       'Set-Cookie': `${SESSION_COOKIE}=${id}; Path=/api/peer; HttpOnly; SameSite=Strict`,
       'Cache-Control': 'no-store',
       'Content-Length': '0'

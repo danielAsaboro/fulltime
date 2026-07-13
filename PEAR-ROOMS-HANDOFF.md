@@ -216,6 +216,10 @@ consumer trust root) rather than the verified local operator manifest.
 
 Product-surface logos in the Electron/local-host experience link to `/app`, not
 the public marketing `/` route. The public site navigation keeps `/` as its home.
+The root layout leaves `/` outside the peer data provider, so the deployed
+marketing homepage never probes or gates on the desktop-only peer bridge.
+Electron's one-use **Open in browser** capability redirects authenticated local
+browser sessions to `/app`; it never drops them onto the marketing homepage.
 
 The desktop preload request allowlist includes `room.list`, matching the v2
 worker protocol used by `/app`; dashboard room loading must not be rejected as

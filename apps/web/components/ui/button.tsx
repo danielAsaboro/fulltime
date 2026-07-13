@@ -8,7 +8,8 @@ type Size = "sm" | "md";
 
 const base =
   "inline-flex items-center justify-center gap-2 rounded-btn font-mono uppercase " +
-  "tracking-[0.06em] transition-colors select-none whitespace-nowrap " +
+  "min-h-10 tracking-[0.06em] transition-colors select-none whitespace-nowrap " +
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lake-blue motion-reduce:transition-none " +
   "disabled:opacity-40 disabled:pointer-events-none";
 
 const sizes: Record<Size, string> = {

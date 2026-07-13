@@ -1,14 +1,17 @@
 # FullTime web UI
 
-This package is the Next UI bundled by the desktop app. It is not a public
-standalone FullTime service and it never starts a fixture publisher or a Pear
-worker.
+This package serves two deliberately separate surfaces: `/` is the public
+marketing site, while `/app`, `/matches`, `/join`, `/record`, and `/room/*` are
+the product UI bundled by the desktop app. The public homepage does not mount
+the peer data provider or expose room controls. This package never starts a
+fixture publisher or a Pear worker.
 
 In the supported product path, Electron starts a private Next upstream and
 places a loopback-only host in front of it. That host owns `/api/peer/*` and
 forwards validated browser requests to the same `DesktopPeerController` used by
 Electron preload IPC. A browser must be opened from Electron's one-time local
-capability URL first.
+capability URL first; that exchange lands on `/app`, not on the public
+marketing homepage.
 
 ## UI development only
 

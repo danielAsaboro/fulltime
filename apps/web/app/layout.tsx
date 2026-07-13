@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { DataProvider } from "@/lib/data";
-import { PwaRegister } from "@/components/pwa-register";
+import { RuntimeBoundary } from "@/components/runtime-boundary";
 
 export const metadata: Metadata = {
   title: "FullTime — encrypted peer-to-peer match rooms",
@@ -27,8 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full">
-        <DataProvider>{children}</DataProvider>
-        <PwaRegister />
+        <RuntimeBoundary>{children}</RuntimeBoundary>
       </body>
     </html>
   );

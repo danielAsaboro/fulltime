@@ -35,6 +35,7 @@ test('bundled standalone UI serves Electron-hosted and normal-browser loopback p
 
     const capability = host.issueBrowserCapabilityUrl()
     const admitted = await fetch(capability, { redirect: 'manual' })
+    assert.equal(admitted.headers.get('location'), '/app')
     const cookie = admitted.headers.get('set-cookie').split(';', 1)[0]
     const config = await fetch(`${url}/api/peer/config`, { headers: { origin: url, cookie } })
     assert.equal(config.status, 503)

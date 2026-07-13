@@ -27,7 +27,11 @@ export function Logo({ href = "/", className }: { href?: string | null; classNam
   );
   if (href === null) return mark;
   return (
-    <Link href={href} aria-label="FullTime home">
+    <Link
+      href={href}
+      aria-label="FullTime home"
+      className="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lake-blue"
+    >
       {mark}
     </Link>
   );

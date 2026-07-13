@@ -70,7 +70,7 @@ async function exchange (host, url) {
   const capability = host.issueBrowserCapabilityUrl()
   const response = await fetch(capability, { redirect: 'manual' })
   assert.equal(response.status, 303)
-  assert.equal(response.headers.get('location'), '/')
+  assert.equal(response.headers.get('location'), '/app')
   assert.match(response.headers.get('set-cookie') || '', new RegExp(`^${SESSION_COOKIE}=[A-Za-z0-9_-]{43}; Path=/api/peer; HttpOnly; SameSite=Strict$`))
   return response.headers.get('set-cookie').split(';', 1)[0]
 }
@@ -101,6 +101,7 @@ test('desktop local host exchanges a one-use capability for a strict memory-only
   const exchanged = await fetch(capability, { redirect: 'manual' })
   const cookie = exchanged.headers.get('set-cookie').split(';', 1)[0]
   assert.equal(exchanged.status, 303)
+  assert.equal(exchanged.headers.get('location'), '/app')
   const reused = await fetch(capability, { redirect: 'manual' })
   assert.equal(reused.status, 403)
 
