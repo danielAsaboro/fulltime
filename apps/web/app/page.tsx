@@ -124,21 +124,21 @@ export default function Home() {
         </section>
 
         {/* Real product proof captured from the connected desktop, iPhone, and Android apps. */}
-        <section id="room-in-action" className="scroll-mt-6 border-t border-ash bg-off-black text-parchment">
+        <section id="room-in-action" className="scroll-mt-6 border-t border-ash">
           <Container className="py-16 sm:py-20">
             <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-end">
               <div className="max-w-3xl space-y-3">
-                <Eyebrow className="text-parchment/60">The room in action</Eyebrow>
-                <h2 className="text-heading-sm text-parchment">One encrypted room. Every screen.</h2>
+                <Eyebrow>The room in action</Eyebrow>
+                <h2 className="text-heading-sm text-off-black">One encrypted room. Every screen.</h2>
               </div>
-              <p className="font-mono text-body-sm text-parchment/70">
+              <p className="font-mono text-body-sm text-graphite">
                 A real Norway–England room replicated across three admitted peers—with durable chat, a
                 room poll, votes, and reactions visible on desktop, iPhone, and Android.
               </p>
             </div>
 
             <div className="relative mt-10 lg:pb-20 lg:pr-52">
-              <div className="overflow-hidden rounded-[24px] border border-parchment/20 bg-parchment shadow-[0_32px_90px_rgba(0,0,0,.42)]">
+              <div className="overflow-hidden rounded-card border border-ash bg-parchment">
                 <Image
                   src="/images/fulltime-desktop-room.png"
                   alt="FullTime desktop room for Norway versus England with three members and a voted first-scorer poll"
@@ -149,7 +149,7 @@ export default function Home() {
                 />
               </div>
               <div className="mt-7 grid grid-cols-2 items-end gap-3 lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:flex lg:items-end">
-                <div className="overflow-hidden rounded-[30px] border-[5px] border-parchment bg-parchment shadow-[0_28px_70px_rgba(0,0,0,.5)] lg:w-[190px]">
+                <div className="overflow-hidden rounded-[36px] shadow-lg lg:w-[190px]">
                   <Image
                     src="/images/fulltime-mobile-room.png"
                     alt="The Norway versus England FullTime room on iPhone with chat, reactions, and the poll"
@@ -159,7 +159,7 @@ export default function Home() {
                     className="h-auto w-full"
                   />
                 </div>
-                <div className="overflow-hidden rounded-[26px] border-[5px] border-parchment bg-parchment shadow-[0_28px_70px_rgba(0,0,0,.5)] lg:w-[210px]">
+                <div className="overflow-hidden rounded-[24px] shadow-lg lg:w-[210px]">
                   <Image
                     src="/images/fulltime-android-room.png"
                     alt="The same FullTime room on Android with three peers, chat messages, and reactions"
