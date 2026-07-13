@@ -214,6 +214,23 @@ Local Release builds must run
 otherwise Expo embeds the release configuration (which intentionally has no
 consumer trust root) rather than the verified local operator manifest.
 
+Local Android verification follows the same trust-root rule. `mobile:android`
+bundles the worker for Android, links the actual room worker addons for arm64,
+arm, x86, and x86_64, and builds a self-contained Release APK. The build checks
+that the APK contains its Hermes bundle, Bare Kit runtime, and linked RocksDB
+addon before copying it to the ignored local-development directory. Android 10
+support pins `react-native-bare-kit` 0.14.5, the final official runtime compiled
+for API 29 before 0.15.0 raised its native minimum to API 31. The build fails if
+the runtime version or manifest changes and verifies that the final APK still
+declares API 29. Device verification must exercise the real worker startup and
+room boundary on the connected Infinix X683 rather than treating installation
+alone as success.
+
+Android renders edge to edge. The mobile root now provides
+`react-native-safe-area-context`, and its normal, room, settings, thread, and QR
+scanner surfaces consume those insets. Device verification must confirm visible
+controls remain below the status bar and above the navigation area.
+
 Product-surface logos in the Electron/local-host experience link to `/app`, not
 the public marketing `/` route. The public site navigation keeps `/` as its home.
 The root layout leaves `/` outside the peer data provider, so the deployed

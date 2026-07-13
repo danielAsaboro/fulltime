@@ -23,6 +23,8 @@
     "desktop:test": "npm --workspace @fulltime/desktop run test",
     "desktop:test:integration": "npm --workspace @fulltime/desktop run test:integration",
     "mobile:configure:local": "npm --workspace @fulltime/mobile run configure:local",
+    "mobile:android": "npm --workspace @fulltime/mobile run android:local",
+    "mobile:bundle:android": "npm --workspace @fulltime/mobile run bundle:android",
     "mobile:bundle:ios": "npm --workspace @fulltime/mobile run bundle:ios",
     "mobile:ios": "npm --workspace @fulltime/mobile run ios:device",
     "mobile:test": "npm --workspace @fulltime/mobile run test",

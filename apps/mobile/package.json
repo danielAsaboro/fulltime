@@ -8,9 +8,13 @@
   "scripts": {
     "start": "expo start --dev-client",
     "configure:local": "node scripts/configure-local.cjs",
+    "bundle:android": "node scripts/bundle-worker.cjs android",
     "bundle:ios": "node scripts/bundle-worker.cjs ios",
+    "link:android": "node scripts/link-android-addons.cjs",
     "link:ios": "node scripts/link-ios-addons.cjs",
+    "prebuild:android": "expo prebuild --platform android",
     "prebuild:ios": "expo prebuild --platform ios",
+    "android:local": "node scripts/build-android-local.cjs",
     "ios:device": "node scripts/run-ios-device.cjs",
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit",
@@ -33,7 +37,7 @@
     "react-dom": "19.2.0",
     "react-native": "0.83.6",
     "react-native-b4a": "^0.0.4",
-    "react-native-bare-kit": "^0.15.0",
+    "react-native-bare-kit": "0.14.5",
     "react-native-safe-area-context": "~5.6.0",
     "react-native-screens": "~4.23.0",
     "tweetnacl": "^1.0.3"

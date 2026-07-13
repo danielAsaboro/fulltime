@@ -41,6 +41,8 @@ release/
 /apps/worker/.local-development/
 /apps/mobile/.local-development/
 /apps/mobile/generated/
+/apps/mobile/.expo/web/cache/production/images/android-adaptive-foreground/
+/apps/mobile/.expo/web/cache/production/images/android-standard-square/
 /apps/mobile/ios/
 /apps/mobile/android/
 
