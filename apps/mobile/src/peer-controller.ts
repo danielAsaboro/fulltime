@@ -44,6 +44,7 @@ export class MobilePeerController {
     displayName: string;
     deviceSecret: Uint8Array;
     manifest: SignedNetworkManifest;
+    fixtureRelay?: { host: string; port: number };
   }): Promise<void> {
     if (this.worklet) throw new Error("Mobile peer worker is already started");
     if (options.deviceSecret.byteLength !== 32) throw new TypeError("Mobile peer device secret must be 32 bytes");
@@ -59,6 +60,9 @@ export class MobilePeerController {
         "--answer-attestor-public-key", options.manifest.answerAttestor.servicePublicKey,
         "--answer-receipt-feed-key", options.manifest.answerAttestor.receiptFeedKey,
       );
+    }
+    if (options.fixtureRelay) {
+      args.push("--fixture-relay", JSON.stringify(options.fixtureRelay));
     }
 
     const worklet = new Worklet("fulltime-room-peer", { memoryLimit: 256 * 1024 * 1024 });

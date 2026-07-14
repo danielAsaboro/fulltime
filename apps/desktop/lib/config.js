@@ -72,6 +72,17 @@ function parseBootstrap(value) {
   })
 }
 
+function parseRelay(value) {
+  if (typeof value !== 'string' || !value) throw new TypeError('--fixture-relay requires JSON')
+  let relay
+  try {
+    relay = JSON.parse(value)
+  } catch {
+    throw new TypeError('--fixture-relay must be valid JSON')
+  }
+  return parseBootstrap(JSON.stringify([relay]))[0]
+}
+
 function readFlag(args, flag) {
   let found
   for (let index = 0; index < args.length; index += 1) {
@@ -145,6 +156,7 @@ function parseRoomWorkerOptions(args) {
   const answerAttestorPublicKey = readFlag(args, '--answer-attestor-public-key')
   const answerReceiptFeedKey = readFlag(args, '--answer-receipt-feed-key')
   const bootstrapJson = readFlag(args, '--bootstrap')
+  const fixtureRelayJson = readFlag(args, '--fixture-relay')
   const notificationsDisabled = readSwitch(args, '--disable-notifications')
   if (!storagePath || !displayName || !fixtureFeedKey) {
     throw new TypeError('Room worker requires valid --storage, --name, and --fixture-feed-key values')
@@ -164,6 +176,7 @@ function parseRoomWorkerOptions(args) {
     }
   }
   if (bootstrapJson !== undefined) options.bootstrap = parseBootstrap(bootstrapJson)
+  if (fixtureRelayJson !== undefined) options.fixtureRelay = parseRelay(fixtureRelayJson)
   if (notificationsDisabled) options.notificationsEnabled = false
   return options
 }
@@ -175,6 +188,7 @@ module.exports = {
   normalizeRoomCode,
   normalizeStoragePath,
   parseBootstrap,
+  parseRelay,
   parseLaunchOptions,
   parseRoomWorkerOptions,
   parseWorkerOptions

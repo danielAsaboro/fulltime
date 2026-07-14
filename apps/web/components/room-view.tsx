@@ -126,6 +126,8 @@ export function RoomView({ roomId }: { roomId: string }) {
                   onReply={(item) => setThreadItemId(String(item.id))}
                   onVote={(pollId, optionId) => requireSession(() => perform(() => client.votePoll(roomId, pollId, optionId)))}
                   onDownloadAttachment={(itemId) => client.downloadAttachment(roomId, itemId)}
+                  fixture={state.fixture.fixture}
+                  onAttachMarket={(input) => client.attachMarketReference(roomId, input).then(() => undefined)}
                 />
                 <RoomComposer
                   canParticipate={canParticipate}
@@ -134,7 +136,9 @@ export function RoomView({ roomId }: { roomId: string }) {
                   onRequireSignIn={() => setSignInOpen(true)}
                   onSend={(input) => client.sendMessage(roomId, input).then(() => undefined)}
                   onSendAttachment={(file, text) => client.uploadAttachment(roomId, file, text).then(() => undefined)}
-                  onCreatePoll={(input) => client.createPoll(roomId, input).then(() => undefined)}
+                  onCreatePoll={(input) => client.createPoll(roomId, input)}
+                  fixture={state.fixture.fixture}
+                  onAttachMarket={(input) => client.attachMarketReference(roomId, input).then(() => undefined)}
                   onTypingChange={(typing) => { void client.setTyping(roomId, typing).catch(() => undefined); }}
                 />
               </>
@@ -147,6 +151,8 @@ export function RoomView({ roomId }: { roomId: string }) {
                 onStage={setPollStage}
                 canVote={canParticipate}
                 onVote={(pollId, option) => requireSession(() => perform(() => client.votePoll(roomId, pollId, option)))}
+                fixture={state.fixture.fixture}
+                onAttachMarket={(input) => client.attachMarketReference(roomId, input).then(() => undefined)}
               />
             ) : null}
 
@@ -275,7 +281,7 @@ function MobileRoomTools({ calls, timeline, receipts, members, onOpen }: { calls
 
 function ToolButton({ icon, label, count, onClick }: { icon: React.ReactNode; label: string; count: number; onClick: () => void }) { return <button type="button" onClick={onClick} className="inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] text-smoke hover:bg-white hover:text-off-black">{icon}{label}<span className="tabular">{count}</span></button>; }
 
-function PollIndex({ items, stage, onStage, canVote, onVote }: { items: Extract<RoomFeedItem, { kind: "poll" }>[]; stage: PollStage; onStage: (stage: PollStage) => void; canVote: boolean; onVote: (pollId: string, option: string) => void }) {
+function PollIndex({ items, stage, onStage, canVote, onVote, fixture, onAttachMarket }: { items: Extract<RoomFeedItem, { kind: "poll" }>[]; stage: PollStage; onStage: (stage: PollStage) => void; canVote: boolean; onVote: (pollId: string, option: string) => void; fixture: import("@fulltime/shared").Fixture; onAttachMarket: (input: import("@fulltime/shared").RoomMarketReference & { pollId: string }) => Promise<void> }) {
   const answered = (item: Extract<RoomFeedItem, { kind: "poll" }>) => Boolean(item.myVote);
   const visible = items.filter((item) => stage === "completed" ? answered(item) : !answered(item));
   const activeCount = items.filter((item) => !answered(item)).length;
@@ -286,7 +292,7 @@ function PollIndex({ items, stage, onStage, canVote, onVote }: { items: Extract<
         {visible.length ? visible.map((item) => (
           <div key={String(item.id)}>
             <p className="mb-1.5 text-caption text-smoke">{item.author?.displayName ?? "Room poll"}</p>
-            <PollCard key={`${item.id}:${item.myVote ?? "none"}`} poll={item.poll} myVote={item.myVote} canVote={canVote} onVote={(option) => onVote(String(item.poll.id), option)} className="rounded-[18px] bg-white/40 p-5" />
+            <PollCard key={`${item.id}:${item.myVote ?? "none"}`} poll={item.poll} myVote={item.myVote} canVote={canVote} onVote={(option) => onVote(String(item.poll.id), option)} className="rounded-[18px] bg-white/40 p-5" fixture={fixture} isAuthor={Boolean(item.author?.isCurrentUser)} onAttachMarket={onAttachMarket} />
           </div>
         )) : <EmptyState title={stage === "active" ? "No open polls" : "No answered polls"} hint={stage === "active" ? "Create a poll from the chat composer." : "Polls you answer collect here."} className="rounded-[18px]" />}
       </div>

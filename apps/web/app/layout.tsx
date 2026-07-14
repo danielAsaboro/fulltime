@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { RuntimeBoundary } from "@/components/runtime-boundary";
+import { FullTimeWalletProvider } from "@/lib/slip/privy-provider";
 
 export const metadata: Metadata = {
   title: "FullTime — encrypted peer-to-peer match rooms",
@@ -23,10 +24,20 @@ export const viewport: Viewport = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const configuredNetwork = process.env.NEXT_PUBLIC_SLIP_NETWORK;
+  const network = configuredNetwork === "devnet" || configuredNetwork === "mainnet-beta" ? configuredNetwork : "localnet";
   return (
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full">
-        <RuntimeBoundary>{children}</RuntimeBoundary>
+        <FullTimeWalletProvider configuration={{
+          appId: process.env.PRIVY_APP_ID?.trim() || process.env.NEXT_PUBLIC_PRIVY_APP_ID?.trim() || null,
+          clientId: process.env.PRIVY_CLIENT_ID?.trim() || process.env.NEXT_PUBLIC_PRIVY_CLIENT_ID?.trim() || null,
+          network,
+          rpcUrl: process.env.NEXT_PUBLIC_SLIP_RPC_URL?.trim() || null,
+          websocketUrl: process.env.NEXT_PUBLIC_SLIP_WEBSOCKET_URL?.trim() || null,
+        }}>
+          <RuntimeBoundary>{children}</RuntimeBoundary>
+        </FullTimeWalletProvider>
       </body>
     </html>
   );

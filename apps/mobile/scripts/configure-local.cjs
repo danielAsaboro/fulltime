@@ -6,7 +6,10 @@ const path = require('path')
 
 const appRoot = path.resolve(__dirname, '..')
 const repoRoot = path.resolve(appRoot, '..', '..')
-const runtimePath = path.join(repoRoot, 'apps', 'worker', '.local-development', 'runtime.json')
+const runtimePaths = [
+  path.join(repoRoot, 'apps', 'worker', '.local-development', 'runtime.json'),
+  path.join(repoRoot, 'apps', 'worker', '.local-development', 'replay-runtime.json')
+]
 const { verifyNetworkManifest } = require('../../desktop/lib/network-manifest.js')
 
 function fetchManifest(endpoint, ca) {
@@ -35,12 +38,24 @@ function fetchManifest(endpoint, ca) {
 }
 
 async function main() {
-  if (!fs.existsSync(runtimePath)) throw new Error('Start the real operator first with npm run operator:local-live')
-  const runtime = JSON.parse(fs.readFileSync(runtimePath, 'utf8'))
-  if (runtime.kind !== 'txline-live' || !Number.isSafeInteger(runtime.pid)) {
-    throw new Error('Mobile device builds require the real TxLINE live operator runtime')
+  let runtime = null
+  for (const runtimePath of runtimePaths) {
+    if (!fs.existsSync(runtimePath)) continue
+    const candidate = JSON.parse(fs.readFileSync(runtimePath, 'utf8'))
+    if (!['txline-live', 'txline-replay'].includes(candidate.kind) || !Number.isSafeInteger(candidate.pid)) continue
+    try {
+      process.kill(candidate.pid, 0)
+      runtime = candidate
+      break
+    } catch (error) {
+      if (error && error.code === 'EPERM') {
+        runtime = candidate
+        break
+      }
+      /* stale runtime; try the next authenticated operator */
+    }
   }
-  try { process.kill(runtime.pid, 0) } catch { throw new Error('The recorded local operator process is not running') }
+  if (!runtime) throw new Error('Start the real live or archived-replay operator before building a mobile device app')
   if (typeof runtime.endpoint !== 'string' || typeof runtime.publicKey !== 'string' || typeof runtime.caCertificatePath !== 'string') {
     throw new Error('The local operator runtime does not expose a signed HTTPS manifest')
   }
@@ -53,7 +68,7 @@ async function main() {
     publicKey: runtime.publicKey,
     initialManifest: manifest
   }, null, 2), { mode: 0o600 })
-  console.log(`Wrote verified mobile network cache for fixture feed ${manifest.fixtureFeedKey}`)
+  console.log(`Wrote verified ${runtime.kind} mobile network cache for fixture feed ${manifest.fixtureFeedKey}`)
 }
 
 main().catch((error) => {

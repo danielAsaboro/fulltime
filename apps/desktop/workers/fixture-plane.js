@@ -2,11 +2,19 @@
 
 const EventEmitter = require('bare-events')
 const b4a = require('b4a')
+const Hypercore = require('hypercore')
+const tcp = require('#fulltime-tcp')
 
 const { decodeFixturePlaneRecord } = require('../lib/fixture-plane-record.js')
+const {
+  MAX_FIXTURE_PROOF_BYTES,
+  decodeFixtureProof,
+  encodeFixtureProofRequest
+} = require('../lib/fixture-proof-stream.js')
 const { projectMarketSays, projectPressure } = require('../lib/match-intelligence.js')
 
 const FEED_KEY_PATTERN = /^[a-f0-9]{64}$/
+const SNAPSHOT_SYNC_TIMEOUT_MS = 60_000
 
 class FixtureProjection {
   constructor () {
@@ -165,11 +173,15 @@ class FixtureProjection {
         }
       : { ...base }
     const status = state?.status || fixture.status
+    const score = state?.score || fixture.score || null
     return {
       fixture,
       phase: phaseOf(status),
       status,
-      score: state?.score || fixture.score || null,
+      // Room IPC rejects shared object identities even when JSON.stringify
+      // would silently duplicate them. Keep the summary score independent
+      // from fixture.score so a live/terminal fixture list remains encodable.
+      score: score ? { ...score } : null,
       minute: state?.minute ?? fixture.minute ?? null
     }
   }
@@ -210,7 +222,7 @@ class FixtureProjection {
 }
 
 class FixturePlane extends EventEmitter {
-  constructor ({ store, swarm, publicKey }) {
+  constructor ({ store, swarm, publicKey, relay = undefined }) {
     super()
     if (!store || !swarm) throw new TypeError('FixturePlane requires an open Corestore and Hyperswarm')
     if (typeof publicKey !== 'string' || !FEED_KEY_PATTERN.test(publicKey)) {
@@ -218,12 +230,20 @@ class FixturePlane extends EventEmitter {
     }
     this.store = store
     this.swarm = swarm
+    this.relay = relay
+    this.relaySocket = null
+    this.relayBuffer = b4a.alloc(0)
+    this.relayApply = Promise.resolve()
     this.publicKey = publicKey
     this.projection = new FixtureProjection()
     this.feed = null
     this.discovery = null
     this.reader = null
     this.readerIndex = 0
+    this.initialBlockRequest = null
+    this.lastSyncError = null
+    this.relaySyncError = null
+    this.relayStatus = this.relay ? 'connecting' : 'disabled'
     this.seenRecordIndexes = new Set()
     this.opened = false
     this.closed = false
@@ -244,18 +264,34 @@ class FixturePlane extends EventEmitter {
       if (block) this._applyBlock(block, index)
       else streamStart = Math.min(streamStart, index)
     }
+    if (this.relay) this._openProofRelay(streamStart)
     // Consumers dial the pinned publisher but do not advertise themselves as
     // fixture-feed servers. Keeping this topic client-only prevents a shared
     // public topic connection from displacing private-room peer discovery.
     this.discovery = this.swarm.join(this.feed.discoveryKey, { server: false, client: true, limit: 64 })
-    await this.discovery.flushed()
+    // DHT discovery can legitimately take close to a minute on a freshly
+    // installed mobile peer. The authenticated local feed is already open at
+    // this point, so do not hold the entire room UI behind the first network
+    // lookup. Replication remains live and a failed lookup is surfaced through
+    // the existing fixture-plane error boundary.
+    void this.discovery.flushed().catch((error) => {
+      if (!this.closed) this.emit('error', error)
+    })
     this.reader = this.feed.createReadStream({ start: streamStart, live: true, wait: true })
     this.readerIndex = streamStart
     this.reader.on('data', (block) => this._applyBlock(block, this.readerIndex++))
     this.reader.on('error', (error) => this.emit('error', error))
     this.opened = true
-    void this.feed.update().catch((error) => {
-      if (!this.closed) this.emit('error', error)
+    // A fresh sparse Hypercore has no local length yet. update() can discover
+    // the publisher without requesting block zero, leaving the verified
+    // fixture projection empty indefinitely. Prime the first publisher-signed
+    // block explicitly; Hypercore verifies its Merkle proof against the pinned
+    // feed key before returning it.
+    void this._primeInitialBlock(SNAPSHOT_SYNC_TIMEOUT_MS).catch((error) => {
+      if (!this.closed) {
+        this.lastSyncError = error
+        this.emit('error', error)
+      }
     })
   }
 
@@ -336,23 +372,67 @@ class FixturePlane extends EventEmitter {
 
   assertVerifiedSnapshot (fixture) {
     if (!this.hasVerifiedSnapshot(fixture)) {
-      const error = new Error(`Fixture ${String(fixture?.id || 'unknown')} is not an exact snapshot from the verified publisher`)
-      error.code = 'FIXTURE_SNAPSHOT_UNVERIFIED'
+      const fixtureId = String(fixture?.id || 'unknown')
+      const snapshots = this.projection.verifiedSnapshots.get(fixtureId)
+      const syncError = this.relaySyncError || this.lastSyncError ||
+        (this.relay && this.relayStatus === 'connected'
+          ? new Error('Fixture proof relay connected but did not deliver a verified block')
+          : null)
+      const error = snapshots?.size
+        ? new Error(`Fixture ${fixtureId} is not an exact snapshot from the verified publisher`)
+        : new Error(syncError
+            ? `Fixture ${fixtureId} has not synchronized from the verified publisher: ${syncError.message}`
+            : `Fixture ${fixtureId} has not synchronized from the verified publisher`,
+          syncError ? { cause: syncError } : undefined)
+      error.code = snapshots?.size ? 'FIXTURE_SNAPSHOT_UNVERIFIED' : 'FIXTURE_SNAPSHOT_UNAVAILABLE'
       throw error
     }
     return fixture
+  }
+
+  async assertVerifiedSnapshotAfterSync (fixture, timeoutMs = SNAPSHOT_SYNC_TIMEOUT_MS) {
+    this._assertOpen()
+    if (this.hasVerifiedSnapshot(fixture)) return fixture
+    if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 60_000) {
+      throw new TypeError('Fixture snapshot sync timeout is invalid')
+    }
+
+    await new Promise((resolve) => {
+      let settled = false
+      const finish = () => {
+        if (settled) return
+        settled = true
+        clearTimeout(timer)
+        this.removeListener('update', onUpdate)
+        resolve()
+      }
+      const onUpdate = () => {
+        if (this.hasVerifiedSnapshot(fixture)) finish()
+      }
+      const timer = setTimeout(finish, timeoutMs)
+      timer.unref?.()
+      this.on('update', onUpdate)
+      void this._primeInitialBlock(timeoutMs).then(onUpdate, finish)
+    })
+    return this.assertVerifiedSnapshot(fixture)
   }
 
   async close () {
     if (this.closed) return
     this.closed = true
     this.opened = false
+    this.relaySocket?.destroy()
+    await this.relayApply.catch(() => {})
     if (this.reader) this.reader.destroy()
     if (this.discovery) await this.discovery.destroy().catch(() => {})
     if (this.feed) await this.feed.close().catch(() => {})
     this.reader = null
     this.discovery = null
     this.feed = null
+    this.relaySocket = null
+    this.relayBuffer = b4a.alloc(0)
+    this.relayApply = Promise.resolve()
+    this.initialBlockRequest = null
     this.seenRecordIndexes.clear()
     this.removeAllListeners()
   }
@@ -373,9 +453,90 @@ class FixturePlane extends EventEmitter {
     }
   }
 
+  _primeInitialBlock (timeoutMs) {
+    if (this.seenRecordIndexes.has(0)) return Promise.resolve()
+    if (this.initialBlockRequest) return this.initialBlockRequest
+    const request = this.feed.get(0, { timeout: timeoutMs }).then((block) => {
+      if (block) this._applyBlock(block, 0)
+    })
+    this.initialBlockRequest = request.finally(() => {
+      this.initialBlockRequest = null
+    })
+    return this.initialBlockRequest
+  }
+
+  _openProofRelay (start) {
+    this.relaySocket = tcp.createConnection(this.relay.port, this.relay.host, () => {
+      if (this.closed) return
+      this.relayStatus = 'connected'
+      this.relaySocket.write(encodeFixtureProofRequest({ length: this.feed.length, start }))
+    })
+    this.relaySocket.setTimeout?.(10_000, () => {
+      if (this.closed || this.seenRecordIndexes.has(0)) return
+      this.relaySocket.destroy(new Error('Fixture proof relay connection or first proof timed out'))
+    })
+    this.relaySocket.on('data', (chunk) => this._consumeProofRelay(chunk))
+    this.relaySocket.on('error', (error) => {
+      if (!this.closed) {
+        this.relayStatus = 'failed'
+        this.relaySyncError = error
+        this.emit('error', error)
+      }
+    })
+  }
+
+  _consumeProofRelay (chunk) {
+    if (this.closed) return
+    this.relayBuffer = b4a.concat([this.relayBuffer, chunk])
+    while (this.relayBuffer.byteLength >= 4) {
+      const length = readUInt32BE(this.relayBuffer, 0)
+      if (length < 2 || length > MAX_FIXTURE_PROOF_BYTES) {
+        this.relaySocket.destroy(new RangeError('Fixture proof relay declared an invalid frame size'))
+        return
+      }
+      if (this.relayBuffer.byteLength < 4 + length) return
+      const payload = this.relayBuffer.subarray(4, 4 + length)
+      this.relayBuffer = this.relayBuffer.subarray(4 + length)
+      this.relayApply = this.relayApply.then(async () => {
+        const { index, proof } = decodeFixtureProof(payload)
+        if (proof.manifest) {
+          const manifestKey = Hypercore.key(proof.manifest)
+          const manifestKeyHex = b4a.toString(manifestKey, 'hex')
+          if (manifestKeyHex !== this.publicKey) {
+            throw new Error(`Fixture proof manifest resolves to ${b4a.toString(manifestKey, 'hex')} instead of the pinned feed key`)
+          }
+          if (!this.feed.manifest) await this.feed.core.setManifest(proof.manifest)
+        }
+        await this.feed.applyProof(this.feed.manifest && proof.manifest ? { ...proof, manifest: null } : proof)
+        const block = await this.feed.get(index, { wait: false })
+        if (!block) throw new Error(`Verified fixture proof did not persist block ${index}`)
+        this._applyBlock(block, index)
+        this.relayStatus = 'verified'
+        if (!this.closed && !this.relaySocket.destroyed) this.relaySocket.write(b4a.from([0x06]))
+      }).catch((error) => {
+        if (!this.closed) {
+          this.relayStatus = 'failed'
+          this.relaySyncError = error
+          this.emit('error', error)
+        }
+        this.relaySocket?.destroy()
+      })
+    }
+    if (this.relayBuffer.byteLength > MAX_FIXTURE_PROOF_BYTES + 4) {
+      this.relaySocket.destroy(new RangeError('Fixture proof relay exceeded the receive buffer limit'))
+    }
+  }
+
   _assertOpen () {
     if (!this.opened || this.closed) throw new Error('Fixture plane is not open')
   }
+}
+
+function readUInt32BE (buffer, offset) {
+  return ((buffer[offset] * 0x1000000) +
+    (buffer[offset + 1] << 16) +
+    (buffer[offset + 2] << 8) +
+    buffer[offset + 3]) >>> 0
 }
 
 function indexOrNull (value) {

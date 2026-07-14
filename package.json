@@ -16,12 +16,15 @@
     "desktop": "npm --workspace @fulltime/desktop run start --",
     "desktop:dev": "npm --workspace @fulltime/desktop run start --",
     "desktop:local-config": "npm --workspace @fulltime/desktop run start:local-config",
+    "desktop:replay": "npm --workspace @fulltime/desktop run start:replay-config",
     "desktop:package:web": "npm --workspace @fulltime/web run build && npm --workspace @fulltime/desktop run package:web",
     "desktop:package": "npm --workspace @fulltime/desktop run package",
     "desktop:smoke": "npm --workspace @fulltime/desktop run smoke",
     "desktop:smoke:public": "npm --workspace @fulltime/desktop run smoke:public",
     "desktop:test": "npm --workspace @fulltime/desktop run test",
     "desktop:test:integration": "npm --workspace @fulltime/desktop run test:integration",
+    "test:slip:surfpool": "node --import tsx --test apps/web/test/slip-sdk-surfpool.integration.ts",
+    "slip:play-runtime": "node apps/web/scripts/start-slip-play-runtime.mjs",
     "mobile:configure:local": "npm --workspace @fulltime/mobile run configure:local",
     "mobile:android": "npm --workspace @fulltime/mobile run android:local",
     "mobile:bundle:android": "npm --workspace @fulltime/mobile run bundle:android",
@@ -32,6 +35,8 @@
     "operator:publisher:dev": "npm --workspace @fulltime/worker run operator:dev",
     "operator:local-config": "npm --workspace @fulltime/worker run operator:local-config",
     "operator:local-live": "npm --workspace @fulltime/worker run operator:local-live",
+    "operator:replay": "npm --workspace @fulltime/worker run operator:replay",
+    "operator:replay:start": "npm --workspace @fulltime/worker run operator:replay:start",
     "operator:manifest:sign": "npm --workspace @fulltime/worker run manifest:sign",
     "operator:manifest:verify": "npm --workspace @fulltime/worker run manifest:verify",
     "web:ui": "npm --workspace @fulltime/web run ui:dev",
@@ -41,8 +46,14 @@
     "lint": "npm run lint --workspaces --if-present"
   },
   "devDependencies": {
+    "@solana/surfpool": "1.4.0",
     "@types/node": "^22.10.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@slip/sdk": "file:vendor/slip-sdk-0.2.0.tgz",
+    "@solana/kit": "^6.10.0",
+    "@wallet-standard/app": "^1.1.0"
   }
 }

@@ -32,6 +32,7 @@ class RoomManager extends EventEmitter {
     fixtureFeedKey,
     deviceSecret,
     bootstrap = undefined,
+    fixtureRelay = undefined,
     answerAttestor = null,
     notificationsEnabled = true
   }) {
@@ -44,6 +45,7 @@ class RoomManager extends EventEmitter {
     }
     this.deviceSecret = b4a.from(deviceSecret)
     this.bootstrap = bootstrap
+    this.fixtureRelay = fixtureRelay
     if (answerAttestor !== null && (!answerAttestor || typeof answerAttestor !== 'object' ||
         typeof answerAttestor.servicePublicKey !== 'string' || typeof answerAttestor.receiptFeedKey !== 'string')) {
       throw new TypeError('Room manager answer attestor configuration is invalid')
@@ -93,13 +95,17 @@ class RoomManager extends EventEmitter {
     this.fixturePlane = new FixturePlane({
       store: this.store,
       swarm: this.swarm,
-      publicKey: this.fixtureFeedKey
+      publicKey: this.fixtureFeedKey,
+      relay: this.fixtureRelay
     })
     this.fixturePlane.on('update', (card) => {
       this._emit({
         type: 'fixture.updated',
         fixtureId: String(card.fixture.id),
-        card,
+        // Fixture projections deliberately reuse immutable objects internally.
+        // IPC is a JSON boundary, so materialize an independent tree before
+        // the strict validator rejects those shared references.
+        card: JSON.parse(JSON.stringify(card)),
         at: Date.now()
       })
       void this._refreshRoomIntelligence()
@@ -263,6 +269,9 @@ class RoomManager extends EventEmitter {
           requiredString(payload, 'option')
         )
         return null
+      case 'room.market.reference':
+        this.account.requireSession()
+        return this.requireRoom(requiredString(payload, 'roomId')).attachMarketReference(requiredObject(payload, 'input'))
       case 'room.item.react':
         this.account.requireSession()
         await this.requireRoom(requiredString(payload, 'roomId')).reactToItem(
@@ -580,7 +589,7 @@ class RoomManager extends EventEmitter {
   async joinRoom (code) {
     const session = this.account.requireSession()
     const parsed = parseInviteCode(code)
-    this.fixturePlane.assertVerifiedSnapshot(parsed.preview.fixture)
+    await this.fixturePlane.assertVerifiedSnapshotAfterSync(parsed.preview.fixture)
     const roomId = parsed.preview.roomId
     const existing = this.rooms.get(roomId)
     if (existing) {
@@ -684,7 +693,7 @@ class RoomManager extends EventEmitter {
     try {
       await room.open({ waitForUpdate: false })
       const projection = await room.project()
-      this.fixturePlane.assertVerifiedSnapshot(projection.roomView.fixture)
+      await this.fixturePlane.assertVerifiedSnapshotAfterSync(projection.roomView.fixture)
       await this.presence.addRoom(room)
       return room
     } catch (error) {

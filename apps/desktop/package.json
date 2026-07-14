@@ -6,11 +6,18 @@
   "types": "renderer/fulltime-peers.d.ts",
   "license": "UNLICENSED",
   "type": "commonjs",
+  "imports": {
+    "#fulltime-tcp": {
+      "bare": "bare-tcp",
+      "default": "./lib/node-tcp.js"
+    }
+  },
   "main": "electron/main.js",
   "scripts": {
     "start": "electron .",
     "start:local-config": "node scripts/start-local-config.js",
-    "check": "node --check electron/main.js && node --check electron/preload.js && node --check electron/device-secret.js && node --check electron/notification-presenter.js && node --check lib/account-seal.js && node --check lib/admission-claim.js && node --check lib/config.js && node --check lib/desktop-peer-controller.js && node --check lib/encrypted-media.js && node --check lib/fixture-plane-record.js && node --check lib/invite-code.js && node --check lib/local-host.js && node --check lib/match-intelligence.js && node --check lib/member-crypto.js && node --check lib/moderation-report.js && node --check lib/network-manifest.js && node --check lib/peer-frame.js && node --check lib/protocol.js && node --check lib/release-config.js && node --check lib/room-constants.js && node --check lib/room-identity.js && node --check lib/room-operations.js && node --check lib/room-presence.js && node --check lib/room-protocol.js && node --check lib/topic.js && node --check lib/web-upstream.js && node --check lib/worker-bootstrap.js && node --check scripts/package-electron.js && node --check scripts/package-web.js && node --check scripts/start-local-config.js && node --check scripts/smoke.js && node --check workers/account-store.js && node --check workers/answer-attestor-client.js && node --check workers/fixture-plane.js && node --check workers/media-transfer.js && node --check workers/notification-store.js && node --check workers/room-intelligence.js && node --check workers/room-manager.js && node --check workers/room-view.js && node --check workers/room.js && node --check workers/rooms.js && node --check workers/transport.js",
+    "start:replay-config": "node scripts/start-replay-config.js",
+    "check": "node --check electron/main.js && node --check electron/preload.js && node --check electron/device-secret.js && node --check electron/notification-presenter.js && node --check lib/account-seal.js && node --check lib/admission-claim.js && node --check lib/config.js && node --check lib/desktop-peer-controller.js && node --check lib/encrypted-media.js && node --check lib/fixture-plane-record.js && node --check lib/invite-code.js && node --check lib/local-host.js && node --check lib/match-intelligence.js && node --check lib/member-crypto.js && node --check lib/moderation-report.js && node --check lib/network-manifest.js && node --check lib/peer-frame.js && node --check lib/protocol.js && node --check lib/release-config.js && node --check lib/room-constants.js && node --check lib/room-identity.js && node --check lib/room-operations.js && node --check lib/room-presence.js && node --check lib/room-protocol.js && node --check lib/topic.js && node --check lib/web-upstream.js && node --check lib/worker-bootstrap.js && node --check scripts/package-electron.js && node --check scripts/package-web.js && node --check scripts/start-local-config.js && node --check scripts/start-replay-config.js && node --check scripts/smoke.js && node --check workers/account-store.js && node --check workers/answer-attestor-client.js && node --check workers/fixture-plane.js && node --check workers/media-transfer.js && node --check workers/notification-store.js && node --check workers/room-intelligence.js && node --check workers/room-manager.js && node --check workers/room-view.js && node --check workers/room.js && node --check workers/rooms.js && node --check workers/transport.js",
     "lint": "npm run check",
     "smoke": "node scripts/smoke.js --local",
     "smoke:public": "node scripts/smoke.js --public",
@@ -27,6 +34,7 @@
     "b4a": "^1.6.7",
     "bare-events": "^2.9.1",
     "bare-path": "^3.1.1",
+    "bare-tcp": "^2.5.2",
     "blind-pairing": "^2.3.1",
     "compact-encoding": "^3.3.0",
     "corestore": "^7.11.0",

@@ -2,6 +2,7 @@
 
 import type {
   ChatMessage,
+  AttachMarketReferenceInput,
   CreatePollInput,
   CreateRoomInput,
   FixtureCard,
@@ -117,6 +118,7 @@ export interface PeerRoomRequestMap {
   };
   "room.reports.list": { payload: { roomId: string }; result: ModerationReportView[] };
   "room.poll.create": { payload: { roomId: string; input: CreatePollInput }; result: PollFeedItem };
+  "room.market.reference": { payload: { roomId: string; input: AttachMarketReferenceInput }; result: PollFeedItem };
   "room.item.react": { payload: { roomId: string; itemId: string; emoji: string }; result: null };
   "room.reply.send": {
     payload: { roomId: string; itemId: string; input: SendReplyInput };
@@ -255,6 +257,7 @@ const REQUEST_ACTIONS: ReadonlySet<string> = new Set<PeerRequestAction>([
   "room.report",
   "room.reports.list",
   "room.poll.create",
+  "room.market.reference",
   "room.item.react",
   "room.reply.send",
   "room.typing.set",

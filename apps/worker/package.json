@@ -8,6 +8,8 @@
     "operator:start": "tsx src/index.ts",
     "operator:local-config": "tsx src/local-development.ts",
     "operator:local-live": "node scripts/start-local-live.cjs",
+    "operator:replay": "node scripts/start-replay.cjs",
+    "operator:replay:start": "node scripts/control-replay.cjs start",
     "manifest:sign": "tsx src/manifest-cli.ts",
     "manifest:verify": "tsx src/manifest-verify.ts",
     "typecheck": "tsc --noEmit",

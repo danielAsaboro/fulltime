@@ -17,13 +17,14 @@ const { SignedFixturePublisher } = require('./signed-fixture-publisher.js')
 
 const enabled = process.env.FULLTIME_RUN_PEAR_INTEGRATION === '1'
 
-test('two encrypted room peers pair, replicate, chat, poll, and enforce removal', {
+test('three encrypted room peers pair, replicate chat, replies, reactions, polls, and a market reference', {
   skip: enabled ? false : 'set FULLTIME_RUN_PEAR_INTEGRATION=1 to bind a local DHT testnet',
   timeout: 150_000
 }, async () => {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'fulltime-room-integration-'))
   const creatorDeviceSecret = crypto.randomBytes(32)
   const memberDeviceSecret = crypto.randomBytes(32)
+  const thirdDeviceSecret = crypto.randomBytes(32)
   const offlineDeviceSecret = crypto.randomBytes(32)
   const lateDeviceSecret = crypto.randomBytes(32)
   const testnet = await createTestnet(3, { host: '127.0.0.1' })
@@ -55,6 +56,13 @@ test('two encrypted room peers pair, replicate, chat, poll, and enforce removal'
     deviceSecret: memberDeviceSecret,
     bootstrap: testnet.bootstrap
   })
+  const third = new RoomManager({
+    storagePath: path.join(root, 'third'),
+    displayName: 'Third',
+    fixtureFeedKey: publisher.key,
+    deviceSecret: thirdDeviceSecret,
+    bootstrap: testnet.bootstrap
+  })
   let restartedCreator = null
   let offlineMember = null
   let lateMember = null
@@ -64,9 +72,12 @@ test('two encrypted room peers pair, replicate, chat, poll, and enforce removal'
   member.on('event', (event) => {
     if (event.type === 'room.error') console.error('[member room error]', event)
   })
+  third.on('event', (event) => {
+    if (event.type === 'room.error') console.error('[third room error]', event)
+  })
 
   try {
-    await Promise.all([creator.open(), member.open()])
+    await Promise.all([creator.open(), member.open(), third.open()])
     await waitFor(async () => Boolean(await creator.dispatch('fixture.get', { fixtureId: fixture.id })), 'verified fixture replication')
     const forgedPreview = previewBytes({
       roomId: 'room_forged_fixture',
@@ -131,6 +142,9 @@ test('two encrypted room peers pair, replicate, chat, poll, and enforce removal'
     // after the publisher advances because historical verified snapshots are kept.
     const joined = await member.dispatch('room.join', { code: details.invite.code })
     assert.equal(joined.room.id, details.room.id)
+    const thirdJoined = await third.dispatch('room.join', { code: details.invite.code })
+    assert.equal(thirdJoined.room.id, details.room.id)
+    await waitFor(async () => (await creator.dispatch('room.state', { roomId: details.room.id })).members.length === 3, 'three concurrent room members')
 
     const memberSession = await member.dispatch('session.get', null)
     await member.dispatch('room.typing.set', { roomId: details.room.id, typing: true })
@@ -147,9 +161,24 @@ test('two encrypted room peers pair, replicate, chat, poll, and enforce removal'
     assert.equal(sent.kind, 'text')
 
     await waitFor(async () => {
-      const state = await creator.dispatch('room.state', { roomId: details.room.id })
-      return state.items.some((item) => item.kind === 'text' && item.text === 'hello over Autobase')
-    }, 'replicated message')
+      const states = await Promise.all([creator, third].map((manager) => manager.dispatch('room.state', { roomId: details.room.id })))
+      return states.every((state) => state.items.some((item) => item.kind === 'text' && item.text === 'hello over Autobase'))
+    }, 'message replication to creator and third peer')
+    await third.dispatch('room.reply.send', {
+      roomId: details.room.id,
+      itemId: sent.id,
+      input: { text: 'reply from the third peer' }
+    })
+    await third.dispatch('room.item.react', { roomId: details.room.id, itemId: sent.id, emoji: '🔥' })
+    await waitFor(async () => {
+      const [thread, state] = await Promise.all([
+        creator.dispatch('room.thread.page', { roomId: details.room.id, itemId: sent.id, limit: 10 }),
+        creator.dispatch('room.state', { roomId: details.room.id })
+      ])
+      const message = state.items.find((item) => item.id === sent.id)
+      return thread.items.some((reply) => reply.text === 'reply from the third peer') &&
+        message?.reactions?.some((reaction) => reaction.emoji === '🔥' && reaction.count === 1)
+    }, 'third-peer reply and reaction replication')
 
     const attachmentBytes = b4a.from('Encrypted room attachment replicated through a pinned Hypercore.\n'.repeat(1_200))
     const upload = await member.dispatch('room.media.upload.begin', {
@@ -191,13 +220,40 @@ test('two encrypted room peers pair, replicate, chat, poll, and enforce removal'
 
     const poll = await creator.dispatch('room.poll.create', {
       roomId: details.room.id,
-      input: { question: 'Next goal?', options: ['Home', 'Away'] }
+      input: { question: 'Total goals?', options: ['0', '1', '2', '3', '4+'] }
     })
+    const reference = {
+      pollId: poll.poll.id,
+      network: 'localnet',
+      program: '8VNZ5VseAcFaYhAZxetgE5N8eiD17ZZNchGhoatYUUXw',
+      mint: 'ELWTKspHKCnCfCiCiqYw1EDH77k8VCP74dK9qytG2Ujh',
+      market: '11111111111111111111111111111111',
+      fixtureId: 'fixture-1',
+      rulebookHash: 'a'.repeat(64),
+      creationSignature: '2'.repeat(88)
+    }
+    await assert.rejects(member.dispatch('room.market.reference', { roomId: details.room.id, input: reference }), /projected|rejected/i)
+    await assert.rejects(third.dispatch('room.market.reference', { roomId: details.room.id, input: reference }), /projected|rejected/i)
+    await creator.dispatch('room.market.reference', { roomId: details.room.id, input: reference })
+    await waitFor(async () => {
+      const states = await Promise.all([member, third].map((manager) => manager.dispatch('room.state', { roomId: details.room.id })))
+      return states.every((state) => state.items.some((item) => item.kind === 'poll' && item.poll.marketReference?.market === reference.market))
+    }, 'authenticated market reference replication to both remote peers')
     await member.dispatch('room.poll.vote', {
       roomId: details.room.id,
       pollId: poll.poll.id,
       option: poll.poll.options[0].id
     })
+    await third.dispatch('room.poll.vote', {
+      roomId: details.room.id,
+      pollId: poll.poll.id,
+      option: poll.poll.options[3].id
+    })
+    await waitFor(async () => {
+      const state = await creator.dispatch('room.state', { roomId: details.room.id })
+      const projected = state.items.find((item) => item.kind === 'poll' && item.poll.id === poll.poll.id)
+      return projected?.poll.options[0].votes === 1 && projected.poll.options[3].votes === 1
+    }, 'opposing votes from two remote peers')
     await assert.rejects(
       member.dispatch('room.poll.vote', {
         roomId: details.room.id,
@@ -365,6 +421,7 @@ test('two encrypted room peers pair, replicate, chat, poll, and enforce removal'
     await Promise.allSettled([
       creator.close(),
       member.close(),
+      third.close(),
       restartedCreator?.close(),
       offlineMember?.close(),
       lateMember?.close()
@@ -374,6 +431,7 @@ test('two encrypted room peers pair, replicate, chat, poll, and enforce removal'
     await fs.rm(root, { recursive: true, force: true })
     creatorDeviceSecret.fill(0)
     memberDeviceSecret.fill(0)
+    thirdDeviceSecret.fill(0)
     offlineDeviceSecret.fill(0)
     lateDeviceSecret.fill(0)
   }

@@ -21,6 +21,7 @@ export interface MobileNetworkConfig {
   endpoint: string | null;
   publicKey: string | null;
   initialManifest: unknown | null;
+  fixtureRelay?: { host: string; port: number };
 }
 
 export interface NetworkResolution {

@@ -133,6 +133,30 @@ test('deterministic room view authenticates invites/admissions and materializes 
     emoji: '🔥'
   }, inviteTime + 6))
 
+  const fiveOptionPoll = createOperation('poll.create', {
+    id: 'item-market-poll-1',
+    pollId: 'poll-market-1',
+    question: 'How many total goals?',
+    options: ['0', '1', '2', '3', '4+'].map((label, index) => ({ id: `option-goals-${index}`, label }))
+  }, inviteTime + 7)
+  await apply(view, host, creatorWriter, fiveOptionPoll)
+  const marketReference = {
+    pollId: 'poll-market-1',
+    network: 'devnet',
+    program: '8VNZ5VseAcFaYhAZxetgE5N8eiD17ZZNchGhoatYUUXw',
+    mint: 'ELWTKspHKCnCfCiCiqYw1EDH77k8VCP74dK9qytG2Ujh',
+    market: '11111111111111111111111111111111',
+    fixtureId: 'fixture-9001',
+    rulebookHash: 'a'.repeat(64),
+    creationSignature: '2'.repeat(88)
+  }
+  const forgedReference = createOperation('market.reference', marketReference, inviteTime + 8)
+  await apply(view, host, joinerWriter, forgedReference)
+  assert.equal((await valueAt(view, `operation/${forgedReference.id}`)).applied, false)
+  const authoredReference = createOperation('market.reference', marketReference, inviteTime + 9)
+  await apply(view, host, creatorWriter, authoredReference)
+  assert.equal((await valueAt(view, `operation/${authoredReference.id}`)).applied, true)
+
   const projection = await projectRoom(view, {
     identityKeyPair: creator,
     personal: {},
@@ -143,6 +167,9 @@ test('deterministic room view authenticates invites/admissions and materializes 
   assert.equal(projectedMessage.replies.length, 1)
   assert.deepEqual(projectedMessage.reactions, [{ emoji: '🔥', count: 1, reactedByMe: true }])
   assert.equal(projectedMessage.author.displayName, 'Grace Hopper')
+  const projectedPoll = projection.state.items.find((item) => item.id === 'item-market-poll-1')
+  assert.equal(projectedPoll.poll.options.length, 5)
+  assert.equal(projectedPoll.poll.marketReference.rulebookHash, marketReference.rulebookHash)
   assert.equal(projection.state.typingUsers[0].displayName, 'Grace Hopper')
   assert.doesNotThrow(() => encodeRoomFrame({
     version: ROOM_IPC_VERSION,

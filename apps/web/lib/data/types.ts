@@ -20,6 +20,7 @@ import type {
   RoomId,
   RoomItemId,
   RoomMemberRole,
+  RoomMarketReference,
   Settlement,
   UserId,
   WallClock,
@@ -136,6 +137,8 @@ export interface PollFeedItem extends RoomFeedItemBase {
   poll: Poll;
   myVote?: string;
 }
+
+export type AttachMarketReferenceInput = RoomMarketReference & { pollId: string };
 
 export interface SystemFeedItem extends RoomFeedItemBase {
   kind: "system";
@@ -474,6 +477,7 @@ export interface FullTimeData {
   reportRoomTarget(roomId: string, target: RoomModerationTarget, reason: ModerationReportReason, note: string): Promise<{ reportId: string }>;
   listModerationReports(roomId: string): Promise<ModerationReportView[]>;
   createPoll(roomId: string, input: CreatePollInput): Promise<PollFeedItem>;
+  attachMarketReference(roomId: string, input: AttachMarketReferenceInput): Promise<PollFeedItem>;
   reactToItem(roomId: string, itemId: string, emoji: string): Promise<void>;
   sendReply(roomId: string, itemId: string, input: SendReplyInput): Promise<ThreadReply>;
   setTyping(roomId: string, typing: boolean): Promise<void>;

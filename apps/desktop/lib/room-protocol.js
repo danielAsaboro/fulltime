@@ -45,6 +45,7 @@ const ROOM_ACTIONS = new Set([
   'room.reports.list',
   'room.poll.create',
   'room.poll.vote',
+  'room.market.reference',
   'room.item.react',
   'room.reply.send',
   'room.read.mark',

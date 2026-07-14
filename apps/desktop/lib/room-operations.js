@@ -39,6 +39,7 @@ const OPERATION_TYPES = new Set([
   'moderation.report',
   'poll.create',
   'poll.vote',
+  'market.reference',
   'answer.reference',
   'reaction.add',
   'reply.add'
@@ -133,6 +134,9 @@ function validateRoomOperation (operation) {
     case 'poll.vote':
       identifier(operation.payload.pollId, 'Poll ID')
       identifier(operation.payload.optionId, 'Poll option ID')
+      break
+    case 'market.reference':
+      validateMarketReference(operation.payload)
       break
     case 'answer.reference':
       validateAnswerReference(operation.payload)
@@ -246,6 +250,22 @@ function validatePoll (payload) {
     const normalized = label.toLowerCase()
     if (labels.has(normalized)) throw new TypeError('Poll options must be unique')
     labels.add(normalized)
+  }
+}
+
+function validateMarketReference (payload) {
+  onlyFields(payload, ['pollId', 'network', 'program', 'mint', 'market', 'fixtureId', 'rulebookHash', 'creationSignature'], 'Market reference')
+  identifier(payload.pollId, 'Market poll ID')
+  if (payload.network !== 'localnet' && payload.network !== 'devnet' && payload.network !== 'mainnet-beta') {
+    throw new TypeError('Market network is unsupported')
+  }
+  for (const [name, value] of [['program', payload.program], ['mint', payload.mint], ['market', payload.market]]) {
+    if (typeof value !== 'string' || !/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(value)) throw new TypeError(`Market ${name} address is invalid`)
+  }
+  identifier(payload.fixtureId, 'Market fixture ID')
+  hex(payload.rulebookHash, 'Market Rulebook hash', HEX_32_PATTERN)
+  if (typeof payload.creationSignature !== 'string' || !/^[1-9A-HJ-NP-Za-km-z]{64,96}$/.test(payload.creationSignature)) {
+    throw new TypeError('Market creation signature is invalid')
   }
 }
 

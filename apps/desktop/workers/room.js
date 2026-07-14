@@ -557,6 +557,14 @@ class Room extends EventEmitter {
     await this.append('poll.vote', { pollId, optionId })
   }
 
+  async attachMarketReference (input) {
+    const operation = await this.append('market.reference', input)
+    const projection = await this.project()
+    const item = projection.state.items.find((candidate) => candidate.kind === 'poll' && candidate.poll.id === input.pollId)
+    if (!item?.poll.marketReference) throw new Error(`Market reference ${operation.id} was not projected`)
+    return item
+  }
+
   async reactToItem (itemId, emoji) {
     await this.append('reaction.add', { itemId, emoji })
   }

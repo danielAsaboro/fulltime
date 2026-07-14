@@ -1,3 +1,7 @@
+import "fast-text-encoding";
+import "react-native-get-random-values";
+import "@ethersproject/shims";
+
 import Constants from "expo-constants";
 import { CameraView, useCameraPermissions, type BarcodeScanningResult } from "expo-camera";
 import * as Crypto from "expo-crypto";
@@ -21,6 +25,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { formatAmount, parseAmount, type MarketReferenceV1, type MarketSnapshot, type TicketSnapshot } from "@slip/sdk";
 
 import { downloadAndShareAttachment, pickAndUploadAttachment } from "../src/media-transfer";
 import { MobilePeerController, MobilePeerError, type PeerEvent } from "../src/peer-controller";
@@ -32,6 +37,8 @@ import {
 } from "../src/network-manifest";
 import { chronologicalPage } from "../src/room-order";
 import { countryFlag } from "../src/country-flags";
+import { inviteCodeFromInput } from "../src/invite-code";
+import { buyMobileTicket, claimMobileTicket, getMobileMarketPosition, loadMobileSlipWallet, verifyMobileMarketReference, type MobileSlipConfiguration, type MobileSlipWallet } from "../src/slip-wallet";
 
 type Json = Record<string, any>;
 type RoomTab = "match" | "chat" | "polls" | "details";
@@ -40,6 +47,8 @@ type Screen = { kind: "home" } | { kind: "room"; roomId: string };
 const CONFIG_CACHE_KEY = "fulltime.network-manifest.v1";
 const DEVICE_SECRET_KEY = "fulltime.device-secret.v1";
 const DEFAULT_DISPLAY_NAME = "FullTime Fan";
+// Privy packages and native configuration stay installed, but its runtime import
+// remains out of the mobile bundle until that signing path is resumed.
 const QUICK_REACTIONS = ["🔥", "⚽", "👏", "😮"];
 const BRAND_DOTS = ["#2A7656", "#3457D5", "#D29B36", "#B62931", "#3457D5", "#2A7656", "#D29B36", "#B62931"];
 
@@ -102,6 +111,9 @@ function networkConfig(): MobileNetworkConfig {
     initialManifest: value?.initialManifest && typeof value.initialManifest === "object"
       ? value.initialManifest
       : null,
+    fixtureRelay: value?.fixtureRelay && typeof value.fixtureRelay === "object"
+      ? value.fixtureRelay as { host: string; port: number }
+      : undefined,
   };
 }
 
@@ -126,7 +138,8 @@ function usePeer(epoch: number) {
 
     void (async () => {
       try {
-        const next = await resolveNetworkManifest(networkConfig(), {
+        const config = networkConfig();
+        const next = await resolveNetworkManifest(config, {
           read: () => SecureStore.getItemAsync(CONFIG_CACHE_KEY),
           write: (value) => SecureStore.setItemAsync(CONFIG_CACHE_KEY, value, {
             keychainAccessible: SecureStore.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
@@ -139,6 +152,7 @@ function usePeer(epoch: number) {
           displayName: DEFAULT_DISPLAY_NAME,
           deviceSecret: await deviceSecret(),
           manifest: next.manifest,
+          fixtureRelay: config.fixtureRelay,
         });
         if (active) setStage("ready");
       } catch (reason) {
@@ -231,14 +245,14 @@ function Home({ peer, session, onSession, onSettings, onOpenRoom }: { peer: Retu
 
   const load = useCallback(async () => {
     setError(null);
-    try {
-      const [nextFixtures, nextRooms] = await Promise.all([
-        peer.request<Json[]>("fixture.list", {}),
-        peer.request<Json[]>("room.list", null),
-      ]);
-      setFixtures(nextFixtures);
-      setRooms(nextRooms);
-    } catch (reason) { setError(message(reason)); }
+    const [fixtureResult, roomResult] = await Promise.allSettled([
+      peer.request<Json[]>("fixture.list", {}),
+      peer.request<Json[]>("room.list", null),
+    ]);
+    if (fixtureResult.status === "fulfilled") setFixtures(fixtureResult.value);
+    if (roomResult.status === "fulfilled") setRooms(roomResult.value);
+    if (roomResult.status === "rejected") setError(message(roomResult.reason));
+    else if (fixtureResult.status === "rejected") setError(`Match schedule unavailable: ${message(fixtureResult.reason)}`);
   }, [peer.request]);
 
   useEffect(() => { void load(); }, [load, peer.revision]);
@@ -274,7 +288,7 @@ function Home({ peer, session, onSession, onSettings, onOpenRoom }: { peer: Retu
     onOpenRoom(String(details.room.id));
   });
   const join = () => run(async () => {
-    const room = await peer.request<Json>("room.join", { code: invite.trim() });
+    const room = await peer.request<Json>("room.join", { code: inviteCodeFromInput(invite) });
     onOpenRoom(String(room.room.id));
   });
 
@@ -299,7 +313,7 @@ function Home({ peer, session, onSession, onSettings, onOpenRoom }: { peer: Retu
           <Card>
             <Button label="Scan QR code" disabled={busy} onPress={() => setScannerOpen(true)} />
             <Text style={styles.cardEyebrow}>OR PASTE AN INVITE</Text>
-            <Field value={invite} onChangeText={setInvite} placeholder="Paste room invite" multiline />
+            <Field value={invite} onChangeText={setInvite} placeholder="Paste room invite" multiline returnKeyType="done" submitBehavior="blurAndSubmit" />
             <Button quiet label={busy ? "Checking…" : "Join with pasted invite"} disabled={!invite.trim() || busy} onPress={join} />
           </Card>
         </>
@@ -343,7 +357,7 @@ function InviteScanner({ request, onClose, onInvite }: { request: ReturnType<typ
     if (!scanning) return;
     setScanning(false); setError(null);
     try {
-      const code = inviteCodeFromQr(result.data);
+      const code = inviteCodeFromInput(result.data);
       const preview = await request<Json>("room.preview-invite", { code });
       onInvite(code, preview);
     } catch (reason) {
@@ -352,29 +366,6 @@ function InviteScanner({ request, onClose, onInvite }: { request: ReturnType<typ
   };
 
   return <Modal animationType="slide" presentationStyle="fullScreen" onRequestClose={onClose}><SafeAreaView style={styles.scannerSafe}><View style={styles.scannerHeader}><View><Text style={styles.eyebrowLight}>ENCRYPTED ROOM INVITE</Text><Text style={styles.scannerTitle}>Scan to join.</Text></View><Pressable onPress={onClose} style={styles.threadClose}><Text style={styles.scannerClose}>×</Text></Pressable></View>{!permission ? <View style={styles.scannerCenter}><ActivityIndicator color={colors.white} /></View> : !permission.granted ? <View style={styles.scannerCenter}><Text style={styles.scannerCopy}>FullTime needs camera access only to read the room invite QR code.</Text><Button label="Allow camera" onPress={() => void askPermission()} /><Button quiet label="Cancel" onPress={onClose} /></View> : <View style={styles.cameraFrame}><CameraView style={StyleSheet.absoluteFill} facing="back" barcodeScannerSettings={{ barcodeTypes: ["qr"] }} onBarcodeScanned={scanning ? (result) => void scanned(result) : undefined} /><View pointerEvents="none" style={styles.scanTarget}><View style={styles.scanCorners} /></View></View>}{error ? <View style={styles.scannerError}><ErrorText text={error} /><Button label="Scan again" onPress={() => { setError(null); setScanning(true); }} /></View> : null}<Text style={styles.scannerHint}>Point the camera at a FullTime invite QR. The worker verifies the signed invite before join is enabled.</Text></SafeAreaView></Modal>;
-}
-
-function inviteCodeFromQr(value: string): string {
-  const clean = value.trim();
-  if (clean.startsWith("ft2.")) {
-    if (clean.split(".").length !== 4 && clean.split(".").length !== 7) throw new Error("The invite QR was only partially read. Hold the phone steady, fill the scan frame, and try again.");
-    return clean;
-  }
-  try {
-    const url = new URL(clean);
-    const query = url.searchParams.get("invite") ?? url.searchParams.get("code");
-    if (query?.startsWith("ft2.")) return query;
-    const parts = url.pathname.split("/").filter(Boolean);
-    const join = parts.lastIndexOf("join");
-    if (join >= 0 && parts[join + 1]) {
-      const code = decodeURIComponent(parts[join + 1]);
-      if (code.startsWith("ft2.")) {
-        if (code.split(".").length !== 4 && code.split(".").length !== 7) throw new Error("The invite QR was only partially read. Hold the phone steady, fill the scan frame, and try again.");
-        return code;
-      }
-    }
-  } catch { /* worker-backed invite validation reports the final error */ }
-  throw new Error("This QR code does not contain a FullTime room invite.");
 }
 
 function RoomScreen({ peer, roomId, session, onSession, onSettings, onBack }: { peer: ReturnType<typeof usePeer>; roomId: string; session: Json | null; onSession(value: Json | null): void; onSettings(): void; onBack(): void }) {
@@ -546,7 +537,7 @@ function ChatTab({ roomId, items, state, closed, busy, onRun, request, onRefresh
       {(state.typingUsers ?? []).length ? <Text style={styles.typing}>{state.typingUsers.map((member: Json) => member.displayName).join(", ")} typing…</Text> : null}
     </ScrollView>
     {!closed ? <View style={styles.composer}>
-      {pollMode ? <View style={styles.pollComposer}><View style={styles.pollComposerTop}><Text style={styles.cardEyebrow}>NEW ROOM POLL</Text><Pressable onPress={() => setPollMode(false)}><Text style={styles.smallAction}>CANCEL</Text></Pressable></View><Field value={pollQuestion} onChangeText={setPollQuestion} placeholder="Ask the room…" />{pollOptions.map((option, index) => <Field key={index} value={option} onChangeText={(value) => setPollOptions((current) => current.map((item, itemIndex) => itemIndex === index ? value : item))} placeholder={`Option ${index + 1}`} maxLength={80} />)}{pollOptions.length < 6 ? <Pressable onPress={() => setPollOptions((current) => [...current, ""])}><Text style={styles.smallAction}>+ ADD OPTION</Text></Pressable> : null}<Button label="Post poll" disabled={busy || !pollQuestion.trim() || pollOptions.filter((value) => value.trim()).length < 2} onPress={createPoll} /></View> : <>{actionsOpen ? <View style={styles.composerActions}><Pressable disabled={busy} style={styles.composerAction} onPress={() => { setActionsOpen(false); void onRun(async () => { await pickAndUploadAttachment(request, roomId, text); setText(""); }); }}><Text style={styles.composerActionTitle}>Attach a file</Text><Text style={styles.hint}>Encrypted before it enters room history</Text></Pressable><Pressable style={styles.composerAction} onPress={() => { setActionsOpen(false); setPollMode(true); }}><Text style={styles.composerActionTitle}>Create a poll</Text><Text style={styles.hint}>Ask the room and collect one answer each</Text></Pressable></View> : null}<View style={styles.composerRow}><Pressable style={styles.plusButton} onPress={() => setActionsOpen((open) => !open)}><Text style={styles.plus}>{actionsOpen ? "×" : "+"}</Text></Pressable><TextInput style={styles.composerInput} value={text} onChangeText={setText} placeholder="Say it to the room…" placeholderTextColor={colors.smoke} multiline maxLength={4000} /><Pressable disabled={!text.trim() || busy} onPress={() => void send()} style={[styles.sendButton, (!text.trim() || busy) && styles.disabled]}><Text style={styles.sendText}>↑</Text></Pressable></View></>}
+      {pollMode ? <View style={styles.pollComposer}><View style={styles.pollComposerTop}><Text style={styles.cardEyebrow}>NEW ROOM POLL</Text><Pressable onPress={() => setPollMode(false)}><Text style={styles.smallAction}>CANCEL</Text></Pressable></View><Field value={pollQuestion} onChangeText={setPollQuestion} placeholder="Ask the room…" />{pollOptions.map((option, index) => <Field key={index} value={option} onChangeText={(value) => setPollOptions((current) => current.map((item, itemIndex) => itemIndex === index ? value : item))} placeholder={`Option ${index + 1}`} maxLength={80} />)}{pollOptions.length < 5 ? <Pressable onPress={() => setPollOptions((current) => [...current, ""])}><Text style={styles.smallAction}>+ ADD OPTION</Text></Pressable> : null}<Button label="Post poll" disabled={busy || !pollQuestion.trim() || pollOptions.filter((value) => value.trim()).length < 2} onPress={createPoll} /></View> : <>{actionsOpen ? <View style={styles.composerActions}><Pressable disabled={busy} style={styles.composerAction} onPress={() => { setActionsOpen(false); void onRun(async () => { await pickAndUploadAttachment(request, roomId, text); setText(""); }); }}><Text style={styles.composerActionTitle}>Attach a file</Text><Text style={styles.hint}>Encrypted before it enters room history</Text></Pressable><Pressable style={styles.composerAction} onPress={() => { setActionsOpen(false); setPollMode(true); }}><Text style={styles.composerActionTitle}>Create a poll</Text><Text style={styles.hint}>Ask the room and collect one answer each</Text></Pressable></View> : null}<View style={styles.composerRow}><Pressable style={styles.plusButton} onPress={() => setActionsOpen((open) => !open)}><Text style={styles.plus}>{actionsOpen ? "×" : "+"}</Text></Pressable><TextInput style={styles.composerInput} value={text} onChangeText={setText} placeholder="Say it to the room…" placeholderTextColor={colors.smoke} multiline maxLength={4000} /><Pressable disabled={!text.trim() || busy} onPress={() => void send()} style={[styles.sendButton, (!text.trim() || busy) && styles.disabled]}><Text style={styles.sendText}>↑</Text></Pressable></View></>}
     </View> : <Banner text="THIS ROOM IS CLOSED · HISTORY IS READ-ONLY" />}
     {threadItem ? <ThreadOverlay roomId={roomId} item={threadItem} closed={closed} request={request} onRun={onRun} onClose={() => setThreadItem(null)} /> : null}
   </View>;
@@ -554,13 +545,112 @@ function ChatTab({ roomId, items, state, closed, busy, onRun, request, onRefresh
 
 function FeedItem({ item, onReact, onVote, onThread, onDownload }: { item: Json; onReact(emoji: string): Promise<void>; onVote(option: string): Promise<void>; onThread?(): void; onDownload?(): Promise<void> }) {
   if (item.kind === "system") return <View style={styles.systemMessage}><Text style={styles.systemText}>{item.text}</Text></View>;
-  if (item.kind === "poll") return <Card><Text style={styles.cardEyebrow}>{item.author?.displayName ?? "ROOM POLL"}</Text><Text style={styles.cardTitle}>{item.poll.question}</Text>{(item.poll.options ?? []).map((option: Json | string) => {
+  if (item.kind === "poll") {
+    const pollOptions = (item.poll.options ?? []) as Array<Json | string>;
+    const total = pollOptions.reduce((sum, option) => sum + (typeof option === "string" ? 0 : Number(option.votes ?? 0)), 0);
+    return <Card><Text style={styles.cardEyebrow}>ROOM POLL</Text><Text style={styles.pollQuestion}>{item.poll.question}</Text>{pollOptions.map((option) => {
     const id = typeof option === "string" ? option : String(option.id); const label = typeof option === "string" ? option : option.label;
-    return <Pressable key={id} onPress={() => void onVote(id)} style={[styles.option, item.myVote === id && styles.optionActive]}><Text style={styles.optionText}>{item.myVote === id ? "● " : ""}{label}</Text></Pressable>;
-  })}</Card>;
+    const count = typeof option === "string" ? 0 : Number(option.votes ?? 0); const share = total ? Math.round((count / total) * 100) : 0;
+    return <Pressable key={id} accessibilityRole="button" accessibilityState={{ selected: item.myVote === id }} onPress={() => void onVote(id)} style={[styles.pollOption, item.myVote === id && styles.pollOptionActive]}><View style={[styles.pollOptionFill, { width: `${share}%` }]} /><Text style={styles.pollOptionText}>{label}</Text><Text style={styles.pollOptionShare}>{share}%{item.myVote === id ? "  ✓" : ""}</Text></Pressable>;
+  })}{item.poll.marketReference ? <MobileWager poll={item.poll} /> : null}</Card>;
+  }
   const mine = Boolean(item.author?.isCurrentUser);
   const name = String(item.author?.displayName ?? "Room member");
   return <View style={[styles.messageRow, mine && styles.messageRowMine]}><View style={[styles.avatar, mine && styles.avatarMine]}><Text style={[styles.avatarText, mine && styles.avatarTextMine]}>{name.split(/\s+/).map((part) => part[0]).join("").slice(0, 2).toUpperCase()}</Text></View><View style={[styles.messageColumn, mine && styles.messageColumnMine]}><View style={[styles.messageTop, mine && styles.messageTopMine]}><Text style={styles.messageAuthor}>{name}{item.author?.role === "creator" ? " · CREATOR" : item.author?.role === "moderator" ? " · MOD" : ""}</Text><Text style={styles.messageTime}>{new Date(Number(item.createdAt)).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</Text></View><View style={[styles.message, mine && styles.messageMine]}>{item.text ? <Text style={styles.messageText}>{item.text}</Text> : null}{item.attachment ? <Pressable onPress={() => void onDownload?.()} style={styles.attachment}><Text style={styles.attachmentName}>▣ {item.attachment.name}</Text><Text style={styles.bodyMuted}>{item.attachment.mimeType} · {formatBytes(Number(item.attachment.sizeBytes))}</Text><Text style={styles.attachmentAction}>OPEN VERIFIED COPY</Text></Pressable> : null}</View><View style={[styles.reactions, mine && styles.reactionsMine]}>{QUICK_REACTIONS.map((emoji) => <Pressable key={emoji} onPress={() => void onReact(emoji)} style={styles.reaction}><Text>{emoji}</Text></Pressable>)}{(item.reactions ?? []).filter((reaction: Json) => reaction.count).map((reaction: Json) => <Text key={reaction.emoji} style={styles.reactionCount}>{reaction.emoji} {reaction.count}</Text>)}{onThread ? <Pressable onPress={onThread} style={styles.threadAction}><Text style={styles.threadActionText}>↳ {Number(item.replyCount ?? 0)} REPLIES</Text></Pressable> : null}</View></View></View>;
+}
+
+function mobileSlipConfiguration(): MobileSlipConfiguration | null {
+  const value = Constants.expoConfig?.extra?.slip as Partial<MobileSlipConfiguration> | null | undefined;
+  if (!value || value.network !== "localnet" || typeof value.rpcUrl !== "string" || typeof value.fundingUrl !== "string" || typeof value.program !== "string" || typeof value.mint !== "string") return null;
+  return value as MobileSlipConfiguration;
+}
+
+function MobileWager({ poll }: { poll: Json }) {
+  const config = useMemo(mobileSlipConfiguration, []);
+  const reference = poll.marketReference as MarketReferenceV1;
+  const [verification, setVerification] = useState<"checking" | "verified" | "error">("checking");
+  const [verificationRevision, setVerificationRevision] = useState(0);
+  const [showVerificationError, setShowVerificationError] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [step, setStep] = useState<"outcome" | "stake">("outcome");
+  const [outcome, setOutcome] = useState<number | null>(null);
+  const [preset, setPreset] = useState("10");
+  const [custom, setCustom] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [receipt, setReceipt] = useState<{ outcome: number; amount: bigint; signature: string } | null>(null);
+  const [market, setMarket] = useState<MarketSnapshot | null>(null);
+  const [tickets, setTickets] = useState<TicketSnapshot[]>([]);
+  const [wallet, setWallet] = useState<MobileSlipWallet | null>(null);
+  const [loadingMarket, setLoadingMarket] = useState(false);
+  useEffect(() => {
+    if (!config) return;
+    let alive = true;
+    setVerification("checking");
+    setError(null);
+    verifyMobileMarketReference(config, reference)
+      .then(() => { if (alive) { setVerification("verified"); setShowVerificationError(false); } })
+      .catch((reason) => { if (alive) { setError(message(reason)); setVerification("error"); } });
+    return () => { alive = false; };
+  }, [config, reference.creationSignature, reference.market, verificationRevision]);
+  if (!config) return null;
+  if (verification === "checking") return <View accessibilityLabel="Verifying Slip market" style={styles.marketVerification}><ActivityIndicator color={colors.ink} size="small" /></View>;
+  if (verification === "error") return <View style={styles.marketVerificationError}>
+    <Pressable accessibilityRole="button" accessibilityLabel="Market verification details" onPress={() => setShowVerificationError((shown) => !shown)} style={styles.marketInfoButton}><Text style={styles.marketInfoText}>i</Text></Pressable>
+    {showVerificationError ? <View style={styles.marketErrorCopy}><Text style={styles.hint}>{error}</Text><Pressable accessibilityRole="button" onPress={() => setVerificationRevision((value) => value + 1)} style={styles.marketRetry}><Text style={styles.smallAction}>RETRY</Text></Pressable></View> : null}
+  </View>;
+  const amountText = custom.trim() || preset;
+  let amount: bigint | null = null;
+  try { const parsed = parseAmount(amountText); amount = parsed >= 1_000_000n ? parsed : null; } catch { amount = null; }
+  const options = (poll.options ?? []) as Json[];
+  const refreshMarket = async () => {
+    if (!config) return null;
+    setLoadingMarket(true);
+    try {
+      const position = await getMobileMarketPosition({ config, reference });
+      setMarket(position.market);
+      setTickets(position.tickets);
+      setWallet(position.wallet);
+      return position;
+    } finally {
+      setLoadingMarket(false);
+    }
+  };
+  const showWager = async () => {
+    setError(null);
+    setOpen(true);
+    try {
+      const position = await refreshMarket();
+      if (position?.market.status === "open") setStep("outcome");
+    } catch (reason) { setError(message(reason)); }
+  };
+  const sign = async () => {
+    if (outcome === null || amount === null) return;
+    setBusy(true); setError(null);
+    try {
+      const wallet = await loadMobileSlipWallet(config);
+      const result = await buyMobileTicket({ config, wallet, reference, outcomeIndex: outcome, amount });
+      setReceipt({ outcome, amount, signature: result.signature });
+      await refreshMarket();
+      setOpen(false);
+    } catch (reason) { setError(message(reason)); } finally { setBusy(false); }
+  };
+  const claim = async (ticket: TicketSnapshot) => {
+    if (!wallet || !market || (market.status !== "resolved" && market.status !== "voided")) return;
+    setBusy(true); setError(null);
+    try {
+      await claimMobileTicket({ config, reference, wallet, ticket, refund: market.status === "voided" });
+      await refreshMarket();
+    } catch (reason) { setError(message(reason)); } finally { setBusy(false); }
+  };
+  const terminal = market?.status === "resolved" || market?.status === "voided";
+  return <>
+    <Pressable accessibilityRole="button" accessibilityLabel={terminal ? "View result" : receipt ? `Backed ${formatAmount(receipt.amount)} USDT on ${options[receipt.outcome]?.label}` : "Back my stand"} onPress={() => void showWager()} style={styles.wagerCta}><Text style={styles.wagerCtaText}>{terminal ? "VIEW RESULT" : receipt ? `✓ ${options[receipt.outcome]?.label} · ${formatAmount(receipt.amount)} USDT` : "◉  BACK MY STAND"}</Text></Pressable>
+    <Modal visible={open} transparent animationType="fade" onRequestClose={() => setOpen(false)}><SafeAreaView style={styles.wagerBackdrop}><KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : undefined} style={styles.wagerSheet}>
+      <View style={styles.wagerHeader}><View style={styles.flex}><Text style={styles.cardEyebrow}>{terminal ? "SETTLED" : step === "outcome" ? "CHOOSE YOUR STAND" : "SET YOUR STAKE"}</Text><Text style={styles.wagerQuestion}>{poll.question}</Text></View><Pressable accessibilityLabel="Close wager" onPress={() => setOpen(false)} style={styles.threadClose}><Text style={styles.threadCloseText}>×</Text></Pressable></View>
+      {loadingMarket ? <ActivityIndicator color={colors.ink} /> : terminal && market ? <View style={styles.wagerChoices}><Text style={styles.cardTitle}>{market.status === "voided" ? "Market refunded" : `${market.outcomeLabels[market.winningOutcome ?? 0]} won`}</Text>{tickets.length ? tickets.map((ticket) => { const eligible = !ticket.claimed && (market.status === "voided" || ticket.outcomeIndex === market.winningOutcome); return <View key={ticket.address} style={styles.wagerSelection}><View><Text style={styles.pollOptionText}>{market.outcomeLabels[ticket.outcomeIndex]} · {formatAmount(ticket.stake)} USDT</Text><Text style={styles.hint}>{ticket.claimed ? "Claimed" : eligible ? "Ready to claim" : "This stand did not win"}</Text></View>{eligible ? <Pressable disabled={busy} onPress={() => void claim(ticket)}><Text style={styles.smallAction}>{busy ? "SIGNING…" : market.status === "voided" ? "REFUND" : "CLAIM"}</Text></Pressable> : null}</View>; }) : <Text style={styles.hint}>No ticket from this device wallet.</Text>}{error ? <ErrorText text={error} /> : null}</View> : step === "outcome" ? <View style={styles.wagerChoices}>{options.map((option, index) => <Pressable key={String(option.id)} accessibilityRole="button" accessibilityState={{ selected: outcome === index }} onPress={() => setOutcome(index)} style={[styles.wagerChoice, outcome === index && styles.wagerChoiceActive]}><Text style={[styles.wagerChoiceText, outcome === index && styles.wagerChoiceTextActive]}>{option.label}</Text>{outcome === index ? <Text style={styles.wagerChoiceTextActive}>✓</Text> : null}</Pressable>)}<Button label={outcome === null ? "Choose your stand" : "Continue"} disabled={outcome === null} onPress={() => setStep("stake")} /></View> : <View style={styles.wagerChoices}><Pressable onPress={() => setStep("outcome")} style={styles.wagerSelection}><Text style={styles.pollOptionText}>{outcome === null ? "—" : options[outcome]?.label}</Text><Text style={styles.smallAction}>CHANGE</Text></Pressable><View style={styles.stakePresets}>{["5", "10", "25"].map((value) => <Pressable key={value} onPress={() => { setPreset(value); setCustom(""); }} style={[styles.stakePreset, !custom && preset === value && styles.wagerChoiceActive]}><Text style={[styles.pollOptionText, !custom && preset === value && styles.wagerChoiceTextActive]}>{value}</Text></Pressable>)}</View><Field value={custom} onChangeText={setCustom} placeholder="Custom USDT" keyboardType="decimal-pad" /><Button label={busy ? "Signing real stake…" : amount ? `Sign ${formatAmount(amount)} USDT` : "Enter at least 1 USDT"} disabled={busy || amount === null} onPress={() => void sign()} />{error ? <ErrorText text={error} /> : null}<Text style={styles.hint}>This device signs the Slip escrow transaction with its locally stored Solana key.</Text></View>}
+    </KeyboardAvoidingView></SafeAreaView></Modal>
+  </>;
 }
 
 function ThreadOverlay({ roomId, item, closed, request, onRun, onClose }: { roomId: string; item: Json; closed: boolean; request: ReturnType<typeof usePeer>["request"]; onRun(action: () => Promise<void>): Promise<void>; onClose(): void }) {
@@ -630,12 +720,13 @@ const serif = Platform.select({ ios: "New York", android: "serif" });
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.parchment }, flex: { flex: 1 }, center: { flex: 1, alignItems: "center", justifyContent: "center", padding: 28 }, spinner: { marginTop: 28 }, centerCopy: { marginTop: 20, maxWidth: 540, textAlign: "center", color: colors.graphite, fontFamily: mono, fontSize: 14, lineHeight: 21 },
   onboarding: { flexGrow: 1, justifyContent: "center", padding: 28, gap: 18 }, home: { padding: 20, paddingBottom: 60, gap: 14 }, focusFlow: { padding: 20, paddingBottom: 60, gap: 16 }, flowHeader: { flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 8 }, flowBack: { width: 38, height: 38, alignItems: "center", justifyContent: "center", borderRadius: 19, borderWidth: 1, borderColor: colors.ash }, flowBackText: { color: colors.ink, fontSize: 28, lineHeight: 30 }, homeActions: { gap: 10, marginTop: 10 }, homeActionPrimary: { minHeight: 118, borderRadius: 20, backgroundColor: colors.ink, padding: 18, justifyContent: "center" }, homeAction: { minHeight: 104, borderRadius: 20, borderWidth: 1, borderColor: colors.ash, backgroundColor: "rgba(251,250,247,0.62)", padding: 18, justifyContent: "center" }, homeActionEyebrow: { color: colors.smoke, fontFamily: mono, fontSize: 8, letterSpacing: 1.2 }, homeActionTitle: { color: colors.ink, fontFamily: serif, fontSize: 25, marginTop: 4 }, homeActionArrow: { position: "absolute", right: 18, bottom: 16, color: colors.blue, fontSize: 20 }, homeActionLight: { color: colors.white }, topRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }, headerActions: { flexDirection: "row", alignItems: "center", gap: 5 }, settingsButton: { width: 36, height: 36, borderRadius: 18, borderWidth: 1, borderColor: colors.ash, alignItems: "center", justifyContent: "center" }, settingsGlyph: { color: colors.ink, fontSize: 17 }, settingsHeader: { minHeight: 86, paddingHorizontal: 20, flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: colors.ash }, settingsContent: { padding: 20, paddingBottom: 60, gap: 14 }, accountId: { color: colors.graphite, fontFamily: mono, fontSize: 10, lineHeight: 16 }, brand: { flexDirection: "row", alignItems: "center", gap: 7, flexShrink: 1 }, wordmark: { color: colors.ink, fontFamily: serif, fontSize: Platform.OS === "android" ? 25 : 30, fontWeight: "700" }, eyebrow: { color: colors.smoke, fontFamily: mono, fontSize: 10, letterSpacing: 1.7 }, hero: { color: colors.ink, fontFamily: serif, fontSize: 42, lineHeight: 45, textAlign: "center" }, heading: { color: colors.ink, fontFamily: serif, fontSize: 34 }, subheading: { color: colors.ink, fontFamily: serif, fontSize: 25, marginTop: 3 }, body: { color: colors.ink, fontSize: 14, lineHeight: 21 }, bodyMuted: { color: colors.smoke, fontSize: 13, lineHeight: 19 }, transport: { flexDirection: "row", alignItems: "center", borderWidth: 1, borderColor: colors.ash, borderRadius: 20, paddingHorizontal: 8, paddingVertical: 6 }, transportText: { color: colors.graphite, fontFamily: mono, fontSize: 9, textTransform: "uppercase" }, dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: colors.gold, marginRight: 5 }, dotOnline: { backgroundColor: colors.green },
-  sectionTitle: { marginTop: 18, marginBottom: 5 }, card: { borderWidth: 1, borderColor: colors.ash, borderRadius: 18, backgroundColor: "rgba(251,250,247,0.62)", padding: 17, gap: 12 }, cardStrong: { borderColor: colors.ink }, cardEyebrow: { color: colors.smoke, fontFamily: mono, fontSize: 10, letterSpacing: 1.2 }, cardTitle: { color: colors.ink, fontFamily: serif, fontSize: 21 }, detailsTitle: { color: colors.ink, fontFamily: serif, fontSize: 29 }, field: { minHeight: 48, borderWidth: 1, borderColor: colors.ash, borderRadius: 13, backgroundColor: colors.white, color: colors.ink, paddingHorizontal: 14, paddingVertical: 12, fontSize: 15 }, fieldMultiline: { minHeight: 74, textAlignVertical: "top" }, button: { minHeight: 47, borderRadius: 24, alignItems: "center", justifyContent: "center", paddingHorizontal: 18, backgroundColor: colors.ink }, buttonQuiet: { backgroundColor: "transparent", borderWidth: 1, borderColor: colors.ash }, buttonText: { color: colors.white, fontFamily: mono, fontSize: 11, letterSpacing: 1, textTransform: "uppercase" }, buttonQuietText: { color: colors.ink }, disabled: { opacity: 0.4 }, inline: { flexDirection: "row", justifyContent: "flex-end", gap: 8 }, banner: { backgroundColor: colors.mist, borderWidth: 1, borderColor: colors.ash, borderRadius: 12, padding: 11 }, bannerText: { color: colors.graphite, fontFamily: mono, fontSize: 9, letterSpacing: 1, textAlign: "center" }, error: { borderWidth: 1, borderColor: colors.crimson, borderRadius: 12, padding: 13, backgroundColor: "#F9E9E8" }, errorCompact: { marginHorizontal: 12, marginTop: 8 }, errorText: { color: colors.crimson, fontFamily: mono, fontSize: 11, lineHeight: 17 }, empty: { borderWidth: 1, borderColor: colors.ash, borderRadius: 18, borderStyle: "dashed", padding: 22, alignItems: "center" },
+  sectionTitle: { marginTop: 18, marginBottom: 5 }, card: { borderWidth: 1, borderColor: colors.ash, borderRadius: 18, backgroundColor: "rgba(251,250,247,0.62)", padding: 17, gap: 12 }, cardStrong: { borderColor: colors.ink }, cardEyebrow: { color: colors.smoke, fontFamily: mono, fontSize: 10, letterSpacing: 1.2 }, cardTitle: { color: colors.ink, fontFamily: serif, fontSize: 21 }, pollQuestion: { color: colors.ink, fontFamily: serif, fontSize: 24, lineHeight: 29 }, detailsTitle: { color: colors.ink, fontFamily: serif, fontSize: 29 }, field: { minHeight: 48, borderWidth: 1, borderColor: colors.ash, borderRadius: 13, backgroundColor: colors.white, color: colors.ink, paddingHorizontal: 14, paddingVertical: 12, fontSize: 15 }, fieldMultiline: { minHeight: 74, textAlignVertical: "top" }, button: { minHeight: 47, borderRadius: 24, alignItems: "center", justifyContent: "center", paddingHorizontal: 18, backgroundColor: colors.ink }, buttonQuiet: { backgroundColor: "transparent", borderWidth: 1, borderColor: colors.ash }, buttonText: { color: colors.white, fontFamily: mono, fontSize: 11, letterSpacing: 1, textTransform: "uppercase" }, buttonQuietText: { color: colors.ink }, disabled: { opacity: 0.4 }, inline: { flexDirection: "row", justifyContent: "flex-end", gap: 8 }, banner: { backgroundColor: colors.mist, borderWidth: 1, borderColor: colors.ash, borderRadius: 12, padding: 11 }, bannerText: { color: colors.graphite, fontFamily: mono, fontSize: 9, letterSpacing: 1, textAlign: "center" }, error: { borderWidth: 1, borderColor: colors.crimson, borderRadius: 12, padding: 13, backgroundColor: "#F9E9E8" }, errorCompact: { marginHorizontal: 12, marginTop: 8 }, errorText: { color: colors.crimson, fontFamily: mono, fontSize: 11, lineHeight: 17 }, empty: { borderWidth: 1, borderColor: colors.ash, borderRadius: 18, borderStyle: "dashed", padding: 22, alignItems: "center" },
   invitePreview: { borderLeftWidth: 2, borderLeftColor: colors.green, paddingLeft: 12, gap: 4 }, scannerSafe: { flex: 1, backgroundColor: colors.ink }, scannerHeader: { minHeight: 86, paddingHorizontal: 20, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }, eyebrowLight: { color: colors.ash, fontFamily: mono, fontSize: 9, letterSpacing: 1.5 }, scannerTitle: { color: colors.white, fontFamily: serif, fontSize: 29, marginTop: 3 }, scannerClose: { color: colors.white, fontSize: 30 }, scannerCenter: { flex: 1, justifyContent: "center", padding: 28, gap: 14 }, scannerCopy: { color: colors.white, fontSize: 16, lineHeight: 24, textAlign: "center" }, cameraFrame: { flex: 1, overflow: "hidden", marginHorizontal: 18, borderWidth: 1, borderColor: colors.ash }, scanTarget: { position: "absolute", left: "12%", right: "12%", top: "23%", aspectRatio: 1, borderWidth: 1, borderColor: "rgba(255,255,255,0.65)", padding: 9 }, scanCorners: { flex: 1, borderWidth: 3, borderColor: colors.white }, scannerHint: { color: colors.ash, fontFamily: mono, fontSize: 9, lineHeight: 15, textAlign: "center", padding: 20 }, scannerError: { position: "absolute", left: 18, right: 18, bottom: 70, backgroundColor: colors.parchment, padding: 12, gap: 9 },
   roomRow: { flexDirection: "row", alignItems: "center", borderWidth: 1, borderColor: colors.ash, borderRadius: 16, backgroundColor: "rgba(251,250,247,0.5)", padding: 16 }, roomRowMain: { flex: 1, gap: 4 }, roomRowName: { color: colors.ink, fontFamily: mono, fontSize: 13 }, chevron: { color: colors.ink, fontSize: 28 }, fixtureCard: { borderWidth: 1, borderColor: colors.ash, borderRadius: 18, backgroundColor: "rgba(251,250,247,0.45)", padding: 17, gap: 12 }, fixtureSelected: { borderColor: colors.ink, backgroundColor: colors.white }, fixtureTop: { flexDirection: "row", justifyContent: "space-between" }, fixtureStatus: { color: colors.smoke, fontFamily: mono, fontSize: 9 }, live: { color: colors.crimson }, fixtureTeamsRow: { flexDirection: "row", alignItems: "center", flexWrap: "wrap", gap: 7 }, fixtureTeams: { color: colors.ink, fontFamily: serif, fontSize: 18 }, fixtureScore: { color: colors.graphite, fontFamily: mono, fontSize: 12 },
   roomHeader: { height: 55, flexDirection: "row", alignItems: "center", gap: 9, borderBottomWidth: 1, borderBottomColor: colors.ash, paddingHorizontal: 10 }, roundButton: { width: 35, height: 35, borderRadius: 18, alignItems: "center", justifyContent: "center" }, roundButtonText: { fontSize: 30, lineHeight: 32, color: colors.ink }, roomHeaderTitle: { flex: 1 }, roomName: { color: colors.ink, fontFamily: mono, fontSize: 12 }, roomMeta: { color: colors.smoke, fontFamily: mono, fontSize: 7, letterSpacing: 0.7, marginTop: 2 }, memberPill: { borderWidth: 1, borderColor: colors.ash, borderRadius: 20, paddingHorizontal: 9, paddingVertical: 6 }, memberPillText: { color: colors.graphite, fontFamily: mono, fontSize: 10 }, inviteButton: { backgroundColor: colors.ink, paddingHorizontal: 10, paddingVertical: 8 }, inviteButtonText: { color: colors.white, fontFamily: mono, fontSize: 8, letterSpacing: 0.7 }, fixtureBar: { height: 49, flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 10, paddingHorizontal: 15, borderBottomWidth: 1, borderBottomColor: colors.ash }, fixtureBarText: { flex: 1, color: colors.ink, fontFamily: mono, fontSize: 11 }, fixtureBarScore: { fontWeight: "700" }, fixtureBarMeta: { color: colors.smoke, fontFamily: mono, fontSize: 8 }, tabs: { height: 48, flexDirection: "row", borderBottomWidth: 1, borderBottomColor: colors.ash }, tab: { flex: 1, alignItems: "center", justifyContent: "center", borderBottomWidth: 2, borderBottomColor: "transparent" }, tabActive: { borderBottomColor: colors.ink }, tabText: { color: colors.smoke, fontFamily: mono, fontSize: 8, letterSpacing: 0.7 }, tabTextActive: { color: colors.ink }, tabContent: { padding: 13, paddingBottom: 50, gap: 13 },
-  scoreCard: { borderWidth: 1, borderColor: colors.ash, borderRadius: 20, backgroundColor: "rgba(251,250,247,0.58)", padding: 18, flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center" }, team: { width: "28%", alignItems: "center", gap: 5 }, countryFlag: { overflow: "hidden", alignItems: "center", justifyContent: "center", borderWidth: StyleSheet.hairlineWidth, borderColor: colors.ash, backgroundColor: colors.mist }, teamCode: { color: colors.ink, fontFamily: mono, fontSize: 12, fontWeight: "700" }, teamName: { color: colors.graphite, fontSize: 11, textAlign: "center" }, scoreCenter: { width: "40%", alignItems: "center" }, score: { color: colors.ink, fontFamily: mono, fontSize: 27, fontWeight: "700" }, liveState: { color: colors.crimson, fontFamily: mono, fontSize: 9, marginTop: 6 }, iqStrip: { width: "100%", marginTop: 18, paddingTop: 13, borderTopWidth: 1, borderTopColor: colors.ash, flexDirection: "row" }, iqCell: { flex: 1, gap: 4 }, iqLabel: { color: colors.smoke, fontFamily: mono, fontSize: 7, letterSpacing: 0.7 }, iqValue: { color: colors.ink, fontFamily: mono, fontWeight: "700" }, callTop: { flexDirection: "row", justifyContent: "space-between", gap: 10 }, callCopy: { flex: 1, gap: 8 }, pill: { alignSelf: "flex-start", borderWidth: 1, borderColor: colors.ash, borderRadius: 12, paddingHorizontal: 8, paddingVertical: 4, color: colors.smoke, fontFamily: mono, fontSize: 8 }, callPrompt: { color: colors.ink, fontFamily: serif, fontSize: 21, lineHeight: 26 }, callTimer: { color: colors.ink, fontFamily: mono, fontSize: 18 }, option: { minHeight: 46, overflow: "hidden", borderWidth: 1, borderColor: colors.ash, borderRadius: 13, paddingHorizontal: 13, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }, optionActive: { borderColor: colors.ink }, optionFill: { position: "absolute", inset: 0, right: undefined, backgroundColor: colors.mist, opacity: 0.65 }, optionText: { zIndex: 1, flex: 1, color: colors.ink, fontFamily: mono, fontSize: 12 }, optionShare: { zIndex: 1, color: colors.graphite, fontFamily: mono, fontSize: 11 }, receipt: { borderTopWidth: 1, borderTopColor: colors.ash, paddingTop: 11, color: colors.blue, fontFamily: mono, fontSize: 9 }, hint: { color: colors.smoke, fontFamily: mono, fontSize: 9, lineHeight: 14 }, timelineRow: { flexDirection: "row", gap: 12, paddingVertical: 10, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.ash }, timelineMinute: { width: 32, color: colors.ink, fontFamily: mono, fontSize: 11 }, timelineCopy: { flex: 1 }, timelineType: { color: colors.smoke, fontFamily: mono, fontSize: 8, letterSpacing: 0.7 }, pressureTop: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" }, pressureValue: { color: colors.ink, fontFamily: mono, fontSize: 13, fontWeight: "700" }, pressureTrack: { height: 7, borderRadius: 4, overflow: "hidden", backgroundColor: colors.mist }, pressureFill: { height: "100%", borderRadius: 4, backgroundColor: colors.crimson },
-  chatContent: { padding: 15, paddingBottom: 28, gap: 15 }, messageRow: { flexDirection: "row", alignItems: "flex-start", gap: 10 }, messageRowMine: { flexDirection: "row-reverse" }, avatar: { width: 34, height: 34, borderRadius: 17, borderWidth: 1, borderColor: colors.ash, backgroundColor: "rgba(251,250,247,0.7)", alignItems: "center", justifyContent: "center" }, avatarMine: { borderColor: colors.blue, backgroundColor: colors.blue }, avatarText: { color: colors.graphite, fontFamily: mono, fontSize: 9, fontWeight: "700" }, avatarTextMine: { color: colors.white }, messageColumn: { flex: 1, alignItems: "flex-start" }, messageColumnMine: { alignItems: "flex-end" }, message: { maxWidth: "94%", borderRadius: 18, backgroundColor: "rgba(251,250,247,0.9)", paddingHorizontal: 15, paddingVertical: 12, gap: 7 }, messageMine: { backgroundColor: colors.mist }, messageTop: { maxWidth: "94%", flexDirection: "row", alignItems: "center", gap: 8, marginBottom: 5 }, messageTopMine: { flexDirection: "row-reverse" }, messageAuthor: { color: colors.ink, fontFamily: mono, fontSize: 9, fontWeight: "700" }, messageTime: { color: colors.smoke, fontFamily: mono, fontSize: 8 }, messageText: { color: colors.ink, fontSize: 15, lineHeight: 21 }, reactions: { maxWidth: "96%", flexDirection: "row", flexWrap: "wrap", gap: 5, marginTop: 7 }, reactionsMine: { justifyContent: "flex-end" }, reaction: { borderWidth: 1, borderColor: colors.ash, borderRadius: 14, backgroundColor: "rgba(251,250,247,0.72)", paddingHorizontal: 7, paddingVertical: 4 }, reactionCount: { borderWidth: 1, borderColor: colors.ash, borderRadius: 14, paddingHorizontal: 7, paddingVertical: 4, color: colors.graphite, fontSize: 11 }, systemMessage: { alignSelf: "center", borderRadius: 14, backgroundColor: "rgba(221,228,255,0.5)", paddingHorizontal: 12, paddingVertical: 7 }, systemText: { color: colors.smoke, fontFamily: mono, fontSize: 9, textAlign: "center" }, typing: { color: colors.smoke, fontFamily: mono, fontSize: 9 }, composer: { borderTopWidth: 1, borderTopColor: colors.ash, backgroundColor: colors.parchment, padding: 10 }, composerRow: { flexDirection: "row", alignItems: "flex-end", gap: 8 }, composerActions: { gap: 1, marginBottom: 9, overflow: "hidden", borderRadius: 16, borderWidth: 1, borderColor: colors.ash }, composerAction: { backgroundColor: colors.white, paddingHorizontal: 15, paddingVertical: 12 }, composerActionTitle: { color: colors.ink, fontSize: 14, fontWeight: "600" }, composerInput: { flex: 1, maxHeight: 110, minHeight: 43, borderWidth: 1, borderColor: colors.ash, borderRadius: 22, backgroundColor: colors.white, paddingHorizontal: 14, paddingVertical: 10, color: colors.ink }, plusButton: { width: 43, height: 43, borderRadius: 22, borderWidth: 1, borderColor: colors.ash, alignItems: "center", justifyContent: "center" }, plus: { color: colors.ink, fontSize: 20 }, sendButton: { width: 43, height: 43, borderRadius: 22, backgroundColor: colors.blue, alignItems: "center", justifyContent: "center" }, sendText: { color: colors.white, fontSize: 22 }, pollComposer: { gap: 8 }, pollComposerTop: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
+  scoreCard: { borderWidth: 1, borderColor: colors.ash, borderRadius: 20, backgroundColor: "rgba(251,250,247,0.58)", padding: 18, flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center" }, team: { width: "28%", alignItems: "center", gap: 5 }, countryFlag: { overflow: "hidden", alignItems: "center", justifyContent: "center", borderWidth: StyleSheet.hairlineWidth, borderColor: colors.ash, backgroundColor: colors.mist }, teamCode: { color: colors.ink, fontFamily: mono, fontSize: 12, fontWeight: "700" }, teamName: { color: colors.graphite, fontSize: 11, textAlign: "center" }, scoreCenter: { width: "40%", alignItems: "center" }, score: { color: colors.ink, fontFamily: mono, fontSize: 27, fontWeight: "700" }, liveState: { color: colors.crimson, fontFamily: mono, fontSize: 9, marginTop: 6 }, iqStrip: { width: "100%", marginTop: 18, paddingTop: 13, borderTopWidth: 1, borderTopColor: colors.ash, flexDirection: "row" }, iqCell: { flex: 1, gap: 4 }, iqLabel: { color: colors.smoke, fontFamily: mono, fontSize: 7, letterSpacing: 0.7 }, iqValue: { color: colors.ink, fontFamily: mono, fontWeight: "700" }, callTop: { flexDirection: "row", justifyContent: "space-between", gap: 10 }, callCopy: { flex: 1, gap: 8 }, pill: { alignSelf: "flex-start", borderWidth: 1, borderColor: colors.ash, borderRadius: 12, paddingHorizontal: 8, paddingVertical: 4, color: colors.smoke, fontFamily: mono, fontSize: 8 }, callPrompt: { color: colors.ink, fontFamily: serif, fontSize: 21, lineHeight: 26 }, callTimer: { color: colors.ink, fontFamily: mono, fontSize: 18 }, option: { minHeight: 46, overflow: "hidden", borderWidth: 1, borderColor: colors.ash, borderRadius: 13, paddingHorizontal: 13, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }, optionActive: { borderColor: colors.ink }, optionFill: { position: "absolute", inset: 0, right: undefined, backgroundColor: colors.mist, opacity: 0.65 }, optionText: { zIndex: 1, flex: 1, color: colors.ink, fontFamily: mono, fontSize: 12 }, optionShare: { zIndex: 1, color: colors.graphite, fontFamily: mono, fontSize: 11 }, pollOption: { minHeight: 48, overflow: "hidden", borderWidth: 1, borderColor: colors.ash, borderRadius: 16, paddingHorizontal: 14, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }, pollOptionActive: { borderColor: colors.ink }, pollOptionFill: { position: "absolute", inset: 0, right: undefined, backgroundColor: colors.mist, opacity: 0.72 }, pollOptionText: { zIndex: 1, flex: 1, color: colors.ink, fontFamily: mono, fontSize: 13 }, pollOptionShare: { zIndex: 1, color: colors.graphite, fontFamily: mono, fontSize: 12 }, receipt: { borderTopWidth: 1, borderTopColor: colors.ash, paddingTop: 11, color: colors.blue, fontFamily: mono, fontSize: 9 }, hint: { color: colors.smoke, fontFamily: mono, fontSize: 9, lineHeight: 14 }, timelineRow: { flexDirection: "row", gap: 12, paddingVertical: 10, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.ash }, timelineMinute: { width: 32, color: colors.ink, fontFamily: mono, fontSize: 11 }, timelineCopy: { flex: 1 }, timelineType: { color: colors.smoke, fontFamily: mono, fontSize: 8, letterSpacing: 0.7 }, pressureTop: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" }, pressureValue: { color: colors.ink, fontFamily: mono, fontSize: 13, fontWeight: "700" }, pressureTrack: { height: 7, borderRadius: 4, overflow: "hidden", backgroundColor: colors.mist }, pressureFill: { height: "100%", borderRadius: 4, backgroundColor: colors.crimson },
+  chatContent: { padding: 15, paddingBottom: 28, gap: 15 }, messageRow: { flexDirection: "row", alignItems: "flex-start", gap: 10 }, messageRowMine: { flexDirection: "row-reverse" }, avatar: { width: 34, height: 34, borderRadius: 17, borderWidth: 1, borderColor: colors.ash, backgroundColor: "rgba(251,250,247,0.7)", alignItems: "center", justifyContent: "center" }, avatarMine: { borderColor: colors.blue, backgroundColor: colors.blue }, avatarText: { color: colors.graphite, fontFamily: mono, fontSize: 9, fontWeight: "700" }, avatarTextMine: { color: colors.white }, messageColumn: { flex: 1, alignItems: "flex-start" }, messageColumnMine: { alignItems: "flex-end" }, message: { maxWidth: "94%", borderRadius: 18, backgroundColor: "rgba(251,250,247,0.9)", paddingHorizontal: 15, paddingVertical: 12, gap: 7 }, messageMine: { backgroundColor: colors.mist }, messageTop: { maxWidth: "94%", flexDirection: "row", alignItems: "center", gap: 8, marginBottom: 5 }, messageTopMine: { flexDirection: "row-reverse" }, messageAuthor: { color: colors.ink, fontFamily: mono, fontSize: 9, fontWeight: "700" }, messageTime: { color: colors.smoke, fontFamily: mono, fontSize: 8 }, messageText: { color: colors.ink, fontSize: 15, lineHeight: 21 }, reactions: { maxWidth: "96%", flexDirection: "row", flexWrap: "wrap", gap: 5, marginTop: 7 }, reactionsMine: { justifyContent: "flex-end" }, reaction: { borderWidth: 1, borderColor: colors.ash, borderRadius: 14, backgroundColor: "rgba(251,250,247,0.72)", paddingHorizontal: 7, paddingVertical: 4 }, reactionCount: { borderWidth: 1, borderColor: colors.ash, borderRadius: 14, paddingHorizontal: 7, paddingVertical: 4, color: colors.graphite, fontSize: 11 }, systemMessage: { alignSelf: "center", borderRadius: 14, backgroundColor: "rgba(221,228,255,0.5)", paddingHorizontal: 12, paddingVertical: 7 }, systemText: { color: colors.smoke, fontFamily: mono, fontSize: 9, textAlign: "center" }, typing: { color: colors.smoke, fontFamily: mono, fontSize: 9 }, composer: { borderTopWidth: 1, borderTopColor: colors.ash, backgroundColor: colors.parchment, padding: 10 }, composerRow: { flexDirection: "row", alignItems: "flex-end", gap: 8 }, composerActions: { gap: 1, marginBottom: 9, overflow: "hidden", borderRadius: 16, borderWidth: 1, borderColor: colors.ash }, composerAction: { backgroundColor: colors.white, paddingHorizontal: 15, paddingVertical: 12 }, composerActionTitle: { color: colors.ink, fontSize: 14, fontWeight: "600" }, composerInput: { flex: 1, maxHeight: 110, minHeight: 43, borderWidth: 1, borderColor: colors.ash, borderRadius: 22, backgroundColor: colors.white, paddingHorizontal: 14, paddingVertical: 10, color: colors.ink }, plusButton: { width: 43, height: 43, borderRadius: 22, borderWidth: 1, borderColor: colors.ash, alignItems: "center", justifyContent: "center" }, plus: { color: colors.ink, fontSize: 20 }, sendButton: { width: 43, height: 43, borderRadius: 22, backgroundColor: colors.blue, alignItems: "center", justifyContent: "center" }, sendText: { color: colors.white, fontSize: 22 }, pollComposer: { gap: 8 }, pollComposerTop: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" }, wagerCta: { minHeight: 44, alignSelf: "flex-start", justifyContent: "center", borderRadius: 22, backgroundColor: colors.ink, paddingHorizontal: 17, marginTop: 2 }, wagerCtaText: { color: colors.white, fontFamily: mono, fontSize: 10, letterSpacing: 0.7 }, wagerBackdrop: { flex: 1, justifyContent: "flex-end", backgroundColor: "rgba(25,24,22,0.52)" }, wagerSheet: { maxHeight: "88%", backgroundColor: colors.parchment, padding: 20, gap: 18, borderTopLeftRadius: 24, borderTopRightRadius: 24 }, wagerHeader: { flexDirection: "row", alignItems: "flex-start", gap: 10 }, wagerQuestion: { color: colors.ink, fontFamily: serif, fontSize: 28, lineHeight: 33, marginTop: 5 }, wagerChoices: { gap: 10 }, wagerChoice: { minHeight: 54, borderWidth: 1, borderColor: colors.ash, backgroundColor: colors.white, paddingHorizontal: 15, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }, wagerChoiceActive: { borderColor: colors.ink, backgroundColor: colors.ink }, wagerChoiceText: { color: colors.ink, fontFamily: mono, fontSize: 13 }, wagerChoiceTextActive: { color: colors.white }, wagerSelection: { minHeight: 48, borderWidth: 1, borderColor: colors.ink, backgroundColor: colors.mist, paddingHorizontal: 14, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }, stakePresets: { flexDirection: "row", gap: 8 }, stakePreset: { flex: 1, minHeight: 48, borderWidth: 1, borderColor: colors.ash, alignItems: "center", justifyContent: "center" },
+  marketVerification: { width: 44, height: 44, alignItems: "center", justifyContent: "center" }, marketVerificationError: { alignItems: "flex-start", gap: 8 }, marketInfoButton: { width: 44, height: 44, borderRadius: 22, borderWidth: 1, borderColor: colors.ash, alignItems: "center", justifyContent: "center" }, marketInfoText: { color: colors.graphite, fontFamily: mono, fontSize: 14, fontWeight: "700" }, marketErrorCopy: { maxWidth: 310, gap: 8 }, marketRetry: { minHeight: 40, justifyContent: "center", alignSelf: "flex-start", paddingHorizontal: 4 },
   attachment: { borderWidth: 1, borderColor: colors.ash, padding: 10, gap: 3 }, attachmentName: { color: colors.ink, fontFamily: mono, fontSize: 11 }, attachmentAction: { color: colors.blue, fontFamily: mono, fontSize: 8, marginTop: 5 }, threadAction: { borderWidth: 1, borderColor: colors.ash, borderRadius: 14, paddingHorizontal: 8, paddingVertical: 5 }, threadActionText: { color: colors.graphite, fontFamily: mono, fontSize: 8 }, threadHeader: { minHeight: 70, borderBottomWidth: 1, borderBottomColor: colors.ash, paddingHorizontal: 18, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }, threadClose: { width: 40, height: 40, alignItems: "center", justifyContent: "center" }, threadCloseText: { color: colors.ink, fontSize: 30 },
   stats: { flexDirection: "row", borderWidth: 1, borderColor: colors.ash, marginTop: 10 }, stat: { flex: 1, alignItems: "center", paddingVertical: 12, borderRightWidth: StyleSheet.hairlineWidth, borderRightColor: colors.ash }, statValue: { color: colors.ink, fontFamily: mono, fontSize: 16 }, statLabel: { color: colors.smoke, fontFamily: mono, fontSize: 7, marginTop: 4 }, disclosure: { minHeight: 64, flexDirection: "row", alignItems: "center", borderWidth: 1, borderColor: colors.ash, borderRadius: 16, backgroundColor: "rgba(251,250,247,0.5)", paddingHorizontal: 16, paddingVertical: 12 }, disclosureDanger: { borderColor: "rgba(182,41,49,0.35)" }, disclosureLabel: { color: colors.ink, fontSize: 14, fontWeight: "600" }, disclosureMark: { color: colors.smoke, fontSize: 20 }, memberRow: { minHeight: 58, flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.ash }, memberCopy: { flex: 1 }, memberActions: { flexDirection: "row", alignItems: "center", gap: 10 }, smallAction: { color: colors.blue, fontFamily: mono, fontSize: 8 }, dangerText: { color: colors.crimson }, memberName: { color: colors.ink, fontSize: 14 }, memberRole: { color: colors.smoke, fontFamily: mono, fontSize: 8, marginTop: 3 }, presence: { width: 8, height: 8, borderRadius: 4, backgroundColor: colors.ash }, presenceOnline: { backgroundColor: colors.green }, reasonGrid: { flexDirection: "row", flexWrap: "wrap", gap: 6 }, reason: { borderWidth: 1, borderColor: colors.ash, paddingHorizontal: 8, paddingVertical: 6 }, reasonActive: { borderColor: colors.ink, backgroundColor: colors.mist }, reasonText: { color: colors.graphite, fontFamily: mono, fontSize: 7 },
 });

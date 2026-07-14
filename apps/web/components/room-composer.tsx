@@ -10,9 +10,11 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-
-import type { CreatePollInput, SendMessageInput } from "@/lib/data";
+import type { Fixture, RoomMarketReference } from "@fulltime/shared";
+import type { CreatePollInput, PollFeedItem, SendMessageInput } from "@/lib/data";
 import { cn } from "@/lib/cn";
+import { createFullTimeSlipClient, slipBrowserConfiguration } from "@/lib/slip/config";
+import { resolvePollRulebook } from "@/lib/slip/rulebook-cache";
 
 const MAX_MESSAGE_LENGTH = 1_000;
 const EMOJIS = ["⚽", "🔥", "👏", "😂", "😮", "❤️", "👀", "🏆"];
@@ -25,6 +27,8 @@ export function RoomComposer({
   onSend,
   onSendAttachment,
   onCreatePoll,
+  fixture,
+  onAttachMarket,
   onTypingChange,
 }: {
   canParticipate: boolean;
@@ -33,7 +37,9 @@ export function RoomComposer({
   onRequireSignIn: () => void;
   onSend: (input: SendMessageInput) => Promise<void>;
   onSendAttachment: (file: File, text: string) => Promise<void>;
-  onCreatePoll: (input: CreatePollInput) => Promise<void>;
+  onCreatePoll: (input: CreatePollInput) => Promise<PollFeedItem>;
+  fixture?: Fixture;
+  onAttachMarket?: (input: RoomMarketReference & { pollId: string }) => Promise<void>;
   onTypingChange?: (typing: boolean) => void;
 }) {
   const [text, setText] = useState("");
@@ -100,8 +106,20 @@ export function RoomComposer({
           onRequireSignIn={onRequireSignIn}
           canParticipate={canParticipate}
           onCreate={async (input) => {
-            await onCreatePoll(input);
+            const configuration = fixture && onAttachMarket ? slipBrowserConfiguration() : null;
+            const resolutionPromise = configuration && fixture
+              ? resolvePollRulebook({
+                client: createFullTimeSlipClient(),
+                configuration,
+                request: { fixtureId: String(fixture.id), question: input.question, outcomeLabels: [...input.options] },
+              }).catch((reason: unknown) => ({ status: "error" as const, reason }))
+              : Promise.resolve(null);
+            const [, resolution] = await Promise.all([onCreatePoll(input), resolutionPromise]);
             setPollOpen(false);
+            // A successful resolution is cached and consumed by PollMarket as soon
+            // as the durable poll projects. Market creation is automatic and does
+            // not interrupt poll creation with a second composer/review step.
+            if (resolution?.status === "error") setError(resolution.reason instanceof Error ? `Poll published. Market check failed: ${resolution.reason.message}` : "Poll published. Market check failed.");
           }}
         />
       ) : null}
@@ -318,7 +336,7 @@ function PollComposer({
           </div>
         ))}
       </div>
-      {options.length < 4 ? (
+      {options.length < 5 ? (
         <button type="button" onClick={() => setOptions((values) => [...values, ""])} className="mt-3 inline-flex items-center gap-1.5 text-caption text-lake-blue">
           <Plus className="size-3.5" /> Add option
         </button>
@@ -333,7 +351,7 @@ function PollComposer({
         {saving ? <LoaderCircle className="size-4 animate-spin" /> : <BarChart3 className="size-4" />}
         Publish poll
       </button>
-      <p className="mt-2 text-center text-[10px] text-smoke">2–4 options · first vote is final</p>
+      <p className="mt-2 text-center text-[10px] text-smoke">2–5 options · exact labels become the market terms · first vote is final</p>
     </section>
   );
 }

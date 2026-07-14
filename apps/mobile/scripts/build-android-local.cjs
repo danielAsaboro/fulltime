@@ -70,6 +70,10 @@ const minSdk = run(apkAnalyzer, ['manifest', 'min-sdk', builtApk], { capture: tr
 if (minSdk !== '29') {
   throw new Error(`Android Release APK must support the target Android 10 device at API 29; found minSdk ${minSdk}`)
 }
+const manifest = run(apkAnalyzer, ['manifest', 'print', builtApk], { capture: true })
+if (!/android:usesCleartextTraffic="true"/.test(manifest)) {
+  throw new Error('Android local Release APK must allow the configured LAN HTTP Slip gateway')
+}
 
 fs.mkdirSync(localRoot, { recursive: true, mode: 0o700 })
 const output = path.join(localRoot, 'FullTime-local-release.apk')

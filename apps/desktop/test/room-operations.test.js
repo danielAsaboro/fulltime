@@ -117,6 +117,13 @@ test('text, authenticated media descriptors, polls, reactions, and admission lim
     ]
   }), /options must be unique/)
 
+  assert.equal(createOperation('poll.create', {
+    id: 'item-poll-five',
+    pollId: 'poll-five',
+    question: 'Total goals?',
+    options: ['0', '1', '2', '3', '4+'].map((label, index) => ({ id: `option-five-${index}`, label }))
+  }).payload.options.length, 5)
+
   assert.equal(createOperation('reaction.add', { itemId: 'item-text-1', emoji: '🔥' }).type, 'reaction.add')
   assert.throws(
     () => createOperation('reaction.add', { itemId: 'item-text-1', emoji: 'not-an-emoji' }),

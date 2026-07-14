@@ -17,6 +17,7 @@ import {
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import type { RoomAttachment, RoomFeedItem, RoomMediaDownload, RoomMemberView, RoomUnreadState } from "@/lib/data";
+import type { Fixture, RoomMarketReference } from "@fulltime/shared";
 import { cn } from "@/lib/cn";
 import { PollCard } from "@/components/poll-card";
 
@@ -34,6 +35,8 @@ export interface RoomFeedProps {
   onReply: (item: RoomFeedItem) => void;
   onVote: (pollId: string, optionId: string) => void;
   onDownloadAttachment: (itemId: string) => Promise<RoomMediaDownload>;
+  fixture: Fixture;
+  onAttachMarket: (input: RoomMarketReference & { pollId: string }) => Promise<void>;
   hasOlder: boolean;
   loadingOlder: boolean;
   historyError: string | null;
@@ -73,6 +76,8 @@ export function RoomFeed({
   loadingOlder,
   historyError,
   onLoadOlder,
+  fixture,
+  onAttachMarket,
 }: RoomFeedProps) {
   const sortedItems = useMemo(() => ordered(items), [items]);
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -208,6 +213,8 @@ export function RoomFeed({
                 onReply={() => onReply(item)}
                 onVote={onVote}
                 onDownloadAttachment={onDownloadAttachment}
+                fixture={fixture}
+                onAttachMarket={onAttachMarket}
               />
             </li>
           ))}
@@ -238,6 +245,8 @@ function FeedItem({
   onReply,
   onVote,
   onDownloadAttachment,
+  fixture,
+  onAttachMarket,
 }: {
   item: RoomFeedItem;
   optimistic?: Record<string, boolean>;
@@ -247,6 +256,8 @@ function FeedItem({
   onReply: () => void;
   onVote: (pollId: string, optionId: string) => void;
   onDownloadAttachment: (itemId: string) => Promise<RoomMediaDownload>;
+  fixture: Fixture;
+  onAttachMarket: (input: RoomMarketReference & { pollId: string }) => Promise<void>;
 }) {
   if (item.kind === "system") {
     return (
@@ -256,7 +267,7 @@ function FeedItem({
           <span>{item.text}</span>
           <span className="text-smoke">· {localTime(Number(item.createdAt))}</span>
         </div>
-        <ReplyAction count={item.replyCount} onClick={onReply} />
+        <ReplyAction count={item.replyCount} onClick={onReply} className="mx-auto mt-2" />
       </article>
     );
   }
@@ -294,6 +305,9 @@ function FeedItem({
                 else onVote(String(item.poll.id), option);
               }}
               className="rounded-[18px] bg-white/45 p-4 sm:p-5"
+              fixture={fixture}
+              isAuthor={Boolean(item.author?.isCurrentUser)}
+              onAttachMarket={onAttachMarket}
             />
           )}
           <ItemActions
@@ -418,20 +432,20 @@ function ItemActions({
   }, [item.reactions, optimistic]);
 
   return (
-    <div className="relative mt-2 flex flex-wrap items-center gap-1.5">
+    <div className={cn("relative mt-1.5 flex flex-wrap items-center gap-1", item.author?.isCurrentUser && "justify-end")}>
       {canReact ? reactions.map((reaction) => (
         <button
           key={reaction.emoji}
           type="button"
           onClick={() => onReact(reaction.emoji)}
           disabled={!canParticipate || reaction.reactedByMe}
-          className={cn("inline-flex h-7 items-center gap-1 rounded-full border px-2 text-caption", reaction.reactedByMe ? "border-lake-blue bg-periwinkle-mist/55" : "border-ash")}
+          className={cn("inline-flex min-h-10 items-center gap-1 rounded-full border px-2.5 text-caption focus-visible:ring-2 focus-visible:ring-lake-blue", reaction.reactedByMe ? "border-lake-blue bg-periwinkle-mist/55" : "border-ash")}
         >
           {reaction.emoji} {reaction.count}
         </button>
       )) : null}
       {canReact ? (
-        <button type="button" onClick={() => setOpen((value) => !value)} className="grid size-7 place-items-center rounded-full text-smoke hover:bg-white" aria-label="React">☺</button>
+        <button type="button" onClick={() => setOpen((value) => !value)} className="grid size-10 place-items-center rounded-full text-smoke hover:bg-white focus-visible:ring-2 focus-visible:ring-lake-blue" aria-label="React">☺</button>
       ) : null}
       <ReplyAction count={item.replyCount} onClick={onReply} />
       <button
@@ -440,14 +454,14 @@ function ItemActions({
           setCopied(true);
           window.setTimeout(() => setCopied(false), 1_500);
         })}
-        className="inline-flex h-7 items-center gap-1 rounded-full px-2 text-caption text-smoke hover:bg-white hover:text-off-black"
+        className="inline-flex min-h-10 items-center gap-1 rounded-full px-2.5 text-caption text-smoke hover:bg-white hover:text-off-black focus-visible:ring-2 focus-visible:ring-lake-blue"
       >
         {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}{copied ? "Copied" : "Copy link"}
       </button>
       {open && canReact ? (
         <div className="absolute bottom-full left-0 z-20 mb-1 flex gap-1 rounded-full border border-ash bg-parchment p-1.5 shadow-lg">
           {QUICK_REACTIONS.map((emoji) => (
-            <button key={emoji} type="button" onClick={() => { onReact(emoji); setOpen(false); }} className="grid size-8 place-items-center rounded-full hover:bg-white">{emoji}</button>
+            <button key={emoji} type="button" onClick={() => { onReact(emoji); setOpen(false); }} className="grid size-10 place-items-center rounded-full hover:bg-white focus-visible:ring-2 focus-visible:ring-lake-blue">{emoji}</button>
           ))}
         </div>
       ) : null}
@@ -455,9 +469,9 @@ function ItemActions({
   );
 }
 
-function ReplyAction({ count, onClick }: { count: number; onClick: () => void }) {
+function ReplyAction({ count, onClick, className }: { count: number; onClick: () => void; className?: string }) {
   return (
-    <button type="button" onClick={onClick} className="mx-auto mt-2 inline-flex h-7 items-center gap-1 rounded-full px-2 text-caption text-smoke hover:bg-white hover:text-off-black">
+    <button type="button" onClick={onClick} className={cn("inline-flex min-h-10 items-center gap-1 rounded-full px-2.5 text-caption text-smoke hover:bg-white hover:text-off-black focus-visible:ring-2 focus-visible:ring-lake-blue", className)}>
       <MessageCircle className="size-3.5" />{count ? `${count} ${count === 1 ? "reply" : "replies"}` : "Reply"}
     </button>
   );

@@ -1,0 +1,9 @@
+{
+  "artifact": "slip.so",
+  "programId": "8VNZ5VseAcFaYhAZxetgE5N8eiD17ZZNchGhoatYUUXw",
+  "sourceRepository": "../slip",
+  "sourceCommit": "e4680b8e2a95414c4af8a67f8986b8149ccbd64b",
+  "sourceTreeSha256": "e592b8b6129b39e497c9b0b48f6d848324538c77fc09040f49e1a2b3eba69782",
+  "artifactSha256": "1f543c563a61dadf6eea27a927057bf12807af93ce227b4f403c5c521fbd2ba0",
+  "buildCommand": "cargo build-sbf --manifest-path program/programs/slip/Cargo.toml --sbf-out-dir ../fulltime/vendor"
+}

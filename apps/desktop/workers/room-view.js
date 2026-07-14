@@ -145,6 +145,8 @@ async function applyRoomOperation (operation, node, db, host) {
       return applyPoll(operation, actor, room, db)
     case 'poll.vote':
       return applyPollVote(operation, actor, room, db)
+    case 'market.reference':
+      return applyMarketReference(operation, actor, room, db)
     case 'answer.reference':
       return applyAnswerReference(operation, actor, room, db)
     case 'reaction.add':
@@ -596,6 +598,33 @@ async function applyPollVote (operation, actor, room, db) {
   return true
 }
 
+/** Authorization is derived from Autobase's actual source writer via actorForWriter. */
+async function applyMarketReference (operation, actor, room, db) {
+  if (room.isClosed) return false
+  const payload = operation.payload
+  if (payload.fixtureId !== String(room.fixture.id)) return false
+  const poll = await valueAt(db, `poll/${payload.pollId}`)
+  if (!poll) return false
+  const itemPointer = await valueAt(db, `item-id/${poll.itemId}`)
+  if (!itemPointer || itemPointer.kind !== 'poll') return false
+  const item = await valueAt(db, itemPointer.key)
+  if (!item || item.authorId !== actor.userId || item.poll.id !== payload.pollId) return false
+  const reference = {
+    version: 1,
+    network: payload.network,
+    program: payload.program,
+    mint: payload.mint,
+    market: payload.market,
+    fixtureId: payload.fixtureId,
+    rulebookHash: payload.rulebookHash,
+    creationSignature: payload.creationSignature
+  }
+  if (item.poll.marketReference) return JSON.stringify(item.poll.marketReference) === JSON.stringify(reference)
+  item.poll.marketReference = reference
+  await db.put(itemPointer.key, item)
+  return true
+}
+
 /**
  * Room writers can only reference an attestor receipt. They never append a
  * token, call, settlement, odds value, or proof claim. The manager verifies the
@@ -998,6 +1027,7 @@ async function projectRoom (view, { identityKeyPair, personal = {}, presence = n
       // entries even though JSON.stringify would otherwise duplicate them.
       polls: items.filter((item) => item.kind === 'poll').map((item) => ({
         ...item.poll,
+        ...(item.poll.marketReference ? { marketReference: { ...item.poll.marketReference } } : {}),
         options: item.poll.options.map((option) => ({ ...option }))
       })),
       items,

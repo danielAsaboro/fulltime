@@ -246,6 +246,10 @@ export class LiveDataClient implements FullTimeData {
     return getPeerBridge().request("room.poll.create", { roomId, input });
   }
 
+  async attachMarketReference(roomId: string, input: import("../types").AttachMarketReferenceInput): Promise<PollFeedItem> {
+    return getPeerBridge().request("room.market.reference", { roomId, input });
+  }
+
   async reactToItem(roomId: string, itemId: string, emoji: string): Promise<void> {
     await getPeerBridge().request("room.item.react", { roomId, itemId, emoji });
   }

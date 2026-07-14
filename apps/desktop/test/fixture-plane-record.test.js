@@ -9,6 +9,7 @@ const {
   parseFixturePlaneRecord
 } = require('../lib/fixture-plane-record.js')
 const { FixtureProjection } = require('../workers/fixture-plane.js')
+const { validateJson } = require('../lib/room-protocol.js')
 
 const FIXTURE = Object.freeze({
   id: 'fixture-42',
@@ -114,6 +115,8 @@ test('fixture projection exposes only real records and ignores stale score updat
   const first = projection.apply(parseFixturePlaneRecord(upsert()))
   assert.equal(first.phase, 'live')
   assert.deepEqual(first.score, { home: 1, away: 0 })
+  assert.notStrictEqual(first.score, first.fixture.score)
+  assert.doesNotThrow(() => validateJson(first))
   assert.equal(projection.hasVerifiedSnapshot(FIXTURE), true)
   assert.equal(projection.hasVerifiedSnapshot(first.fixture), true)
   const firstLiveSnapshot = structuredClone(first.fixture)

@@ -14,8 +14,13 @@ const electronPath = require('electron')
 const desktopRoot = path.resolve(__dirname, '..')
 const repoRoot = path.resolve(desktopRoot, '../..')
 const repoEnvPath = path.join(repoRoot, '.env')
-const runtimePath = path.resolve(desktopRoot, '../worker/.local-development/runtime.json')
-const storagePath = path.join(desktopRoot, '.local-development', 'peer-store')
+const runtimePath = process.env.FULLTIME_LOCAL_RUNTIME_PATH
+  ? path.resolve(process.env.FULLTIME_LOCAL_RUNTIME_PATH)
+  : path.resolve(desktopRoot, '../worker/.local-development/runtime.json')
+const storagePath = process.env.FULLTIME_LOCAL_STORAGE_PATH
+  ? path.resolve(process.env.FULLTIME_LOCAL_STORAGE_PATH)
+  : path.join(desktopRoot, '.local-development', 'peer-store')
+const desktopName = process.env.FULLTIME_LOCAL_DESKTOP_NAME || 'Local FullTime'
 const logPath = path.join(desktopRoot, '.local-development', 'electron.log')
 const pidPath = path.join(desktopRoot, '.local-development', 'electron.pid')
 
@@ -41,11 +46,15 @@ async function main () {
   if (runtime.caCertificatePath) env.NODE_EXTRA_CA_CERTS = runtime.caCertificatePath
   delete env.ELECTRON_RUN_AS_NODE
 
-  const child = spawn(electronPath, [
+  const electronArgs = [
+    ...(process.env.FULLTIME_ELECTRON_REMOTE_DEBUGGING_PORT
+      ? [`--remote-debugging-port=${process.env.FULLTIME_ELECTRON_REMOTE_DEBUGGING_PORT}`]
+      : []),
     desktopRoot,
     '--storage', storagePath,
-    '--name', 'Local FullTime'
-  ], {
+    '--name', desktopName
+  ]
+  const child = spawn(electronPath, electronArgs, {
     cwd: desktopRoot,
     env,
     detached: true,
@@ -60,6 +69,10 @@ async function main () {
     fs.closeSync(logFd)
   }
   child.unref()
+  await new Promise((resolve) => setTimeout(resolve, 1_000))
+  if (child.exitCode !== null) {
+    throw new Error(`FullTime desktop exited during startup with code ${child.exitCode}; inspect ${logPath}`)
+  }
   fs.writeFileSync(pidPath, `${child.pid}\n`, { mode: 0o600 })
   console.log(`[fulltime desktop] started local development app (pid ${child.pid}); log: ${logPath}`)
 }
@@ -77,7 +90,10 @@ async function stopExistingDesktop () {
     await waitForStorageRelease()
     return
   }
-  if (!command.includes(desktopRoot) || !command.includes(`--storage ${storagePath}`)) {
+  const storageMatch = command.match(/--storage\s+(\S+)/)
+  const existingStoragePath = storageMatch ? path.resolve(storageMatch[1]) : null
+  const allowedStorageRoot = path.join(desktopRoot, '.local-development') + path.sep
+  if (!command.includes(desktopRoot) || !existingStoragePath || !existingStoragePath.startsWith(allowedStorageRoot)) {
     throw new Error(`Refusing to stop unrelated process recorded in ${pidPath}`)
   }
   process.kill(pid, 'SIGTERM')
@@ -85,7 +101,7 @@ async function stopExistingDesktop () {
   while (Date.now() < deadline) {
     try { process.kill(pid, 0) } catch {
       fs.rmSync(pidPath, { force: true })
-      await waitForStorageRelease()
+      await waitForStorageRelease(existingStoragePath)
       return
     }
     await new Promise((resolve) => setTimeout(resolve, 100))
@@ -93,21 +109,21 @@ async function stopExistingDesktop () {
   throw new Error(`Existing FullTime desktop process ${pid} did not shut down cleanly; no second instance was started`)
 }
 
-async function waitForStorageRelease () {
+async function waitForStorageRelease (targetStoragePath = storagePath) {
   const deadline = Date.now() + 10_000
   while (Date.now() < deadline) {
-    const owners = findStorageOwners()
+    const owners = findStorageOwners(targetStoragePath)
     if (owners.length === 0) return
     await new Promise((resolve) => setTimeout(resolve, 100))
   }
-  const owners = findStorageOwners()
+  const owners = findStorageOwners(targetStoragePath)
   throw new Error(`FullTime peer storage is still owned by process ${owners.join(', ')}; no second instance was started`)
 }
 
-function findStorageOwners () {
+function findStorageOwners (targetStoragePath = storagePath) {
   let output = ''
   try { output = execFileSync('ps', ['-axo', 'pid=,command='], { encoding: 'utf8' }) } catch { return [] }
-  const storageArgument = `--storage ${storagePath}`
+  const storageArgument = `--storage ${targetStoragePath}`
   return output.split('\n').flatMap((line) => {
     const match = line.trim().match(/^(\d+)\s+(.+)$/)
     if (!match || !match[2].includes(desktopRoot) || !match[2].includes(storageArgument)) return []
@@ -119,7 +135,9 @@ function findStorageOwners () {
 function loadPublicEnvironment () {
   if (!fs.existsSync(repoEnvPath)) return {}
   const parsed = parseEnv(fs.readFileSync(repoEnvPath, 'utf8'))
-  return Object.fromEntries(Object.entries(parsed).filter(([key]) => key.startsWith('NEXT_PUBLIC_')))
+  return Object.fromEntries(Object.entries(parsed).filter(([key]) =>
+    key.startsWith('NEXT_PUBLIC_') || key === 'PRIVY_APP_ID' || key === 'PRIVY_CLIENT_ID' || key === 'FULLTIME_DESKTOP_PORT' || key === 'SLIP_PLAY_RUNTIME_PATH'
+  ))
 }
 
 function readRuntime () {
@@ -129,7 +147,7 @@ function readRuntime () {
   } catch (error) {
     throw new Error('Local operator authority is not running; start npm run operator:local-config first', { cause: error })
   }
-  const allowed = ['version', 'kind', 'pid', 'endpoint', 'publicKey', 'fixtureFeedKey', 'caCertificatePath', 'startedAt']
+  const allowed = ['version', 'kind', 'pid', 'endpoint', 'publicKey', 'fixtureFeedKey', 'caCertificatePath', 'fixtureId', 'archiveDir', 'delaySeconds', 'durationSeconds', 'armed', 'startedAt']
   if (!value || typeof value !== 'object' || Array.isArray(value) ||
       Object.keys(value).some((key) => !allowed.includes(key)) || ![1, 2].includes(value.version) ||
       !Number.isSafeInteger(value.pid) || value.pid < 1 ||
@@ -140,7 +158,7 @@ function readRuntime () {
   if (value.version === 1 && (typeof value.fixtureFeedKey !== 'string' || !/^[a-f0-9]{64}$/.test(value.fixtureFeedKey))) {
     throw new Error('Local operator runtime fixture feed key is invalid')
   }
-  if (value.version === 2 && (value.kind !== 'txline-live' || typeof value.caCertificatePath !== 'string' || !path.isAbsolute(value.caCertificatePath))) {
+  if (value.version === 2 && (!['txline-live', 'txline-replay'].includes(value.kind) || typeof value.caCertificatePath !== 'string' || !path.isAbsolute(value.caCertificatePath))) {
     throw new Error('Local live operator runtime configuration is invalid')
   }
   return value

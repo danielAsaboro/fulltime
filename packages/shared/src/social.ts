@@ -63,6 +63,18 @@ export interface Poll {
   scored: boolean;
   anchor?: SocialAnchor;
   createdAt: WallClock;
+  marketReference?: RoomMarketReference;
+}
+
+export interface RoomMarketReference {
+  version: 1;
+  network: "localnet" | "devnet" | "mainnet-beta";
+  program: string;
+  mint: string;
+  market: string;
+  fixtureId: string;
+  rulebookHash: string;
+  creationSignature: string;
 }
 
 export interface PollVote {

@@ -16,6 +16,7 @@ const { ROOM_IPC_VERSION, validateRequest } = require('../lib/room-protocol.js')
 const { startDesktopWebUpstream } = require('../lib/web-upstream.js')
 
 const EVENT_CHANNEL = 'fulltime-peers:event'
+const DEFAULT_DESKTOP_LOCAL_PORT = 47831
 const windows = new Set()
 const rendererTrust = new WeakMap()
 const securedSessions = new WeakSet()
@@ -29,6 +30,11 @@ let closePromise = null
 let notificationPresenter = null
 let notificationDrain = null
 let identityResetting = false
+
+const configuredDesktopPort = Number(process.env.FULLTIME_DESKTOP_PORT || DEFAULT_DESKTOP_LOCAL_PORT)
+if (!Number.isSafeInteger(configuredDesktopPort) || configuredDesktopPort < 1024 || configuredDesktopPort > 65535) {
+  throw new Error('FULLTIME_DESKTOP_PORT must be an integer from 1024 through 65535')
+}
 
 const defaultStorageRoot = path.join(app.getPath('userData'), 'pear-rooms')
 launchConfig = parseLaunchOptions(process.argv.slice(1), {
@@ -387,6 +393,9 @@ app.whenReady().then(async () => {
   await configurePeerController()
   localHost = new DesktopLocalHost({
     peerController,
+    // Privy authorizes exact web origins. A stable loopback port lets the
+    // desktop renderer be allowlisted without granting a wildcard origin.
+    port: configuredDesktopPort,
     openExternal: (url) => shell.openExternal(url),
     startUpstream: () => startDesktopWebUpstream({
       mode: app.isPackaged ? 'packaged' : 'development',

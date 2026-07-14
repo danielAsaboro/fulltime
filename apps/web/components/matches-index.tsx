@@ -416,7 +416,7 @@ function InviteReady({
       await navigator.clipboard.writeText(shareUrl);
       setFeedback("Invite link copied");
     } catch {
-      setFeedback("Select the link below to copy it");
+      setFeedback("Clipboard unavailable — use Share instead");
     }
   };
 
@@ -469,16 +469,9 @@ function InviteReady({
             </div>
           </div>
 
-          <label className="mt-6 block">
-            <span className="font-mono text-caption uppercase tracking-[0.1em] text-smoke">Invite link</span>
-            <input
-              readOnly
-              value={shareUrl}
-              onFocus={(event) => event.currentTarget.select()}
-              className="mt-2 w-full rounded-lg border border-ash bg-parchment px-4 py-3 font-mono text-body-sm text-off-black focus:border-off-black focus:outline-none"
-              aria-label="Invite link"
-            />
-          </label>
+          <p className="mt-6 max-w-xl font-mono text-caption text-smoke">
+            The private invite stays hidden on screen. Copy or share it only when your guest is ready.
+          </p>
 
           {feedback ? (
             <p className="mt-3 flex items-center gap-2 font-mono text-caption text-lake-blue" role="status">

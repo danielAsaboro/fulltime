@@ -23,6 +23,7 @@ type FullTimePeerAction =
   | 'room.history.page'
   | 'room.thread.page'
   | 'room.poll.vote'
+  | 'room.market.reference'
   | 'room.message.send'
   | 'room.media.upload.begin'
   | 'room.media.upload.chunk'
@@ -85,6 +86,7 @@ type FullTimePeerRequestMap = {
     result: FullTimeJsonObject
   }
   'room.poll.vote': { payload: { roomId: string; pollId: string; option: string }; result: null }
+  'room.market.reference': { payload: { roomId: string; input: FullTimeJsonObject }; result: FullTimeJsonObject }
   'room.message.send': {
     payload: { roomId: string; input: FullTimeJsonObject }
     result: FullTimeJsonObject

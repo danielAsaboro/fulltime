@@ -66,6 +66,26 @@ cannot mint them. Feed timestamps determine ordering and lock presentation;
 local wall clocks never authorize an answer. Browser `blob:` URLs are imported
 into encrypted replicated storage before durable room operations.
 
+Poll authors can attach one authenticated `market.reference` after a confirmed
+Slip market creation. The operation stores only network, program, settlement
+mint, market address, fixture identifier, canonical Rulebook hash, and creation
+signature. Authorization is derived from the actual Autobase source writer and
+requires that writer to be the original poll author; an identical retry is
+idempotent and a conflicting replacement is rejected. Replicas never treat
+copied odds, pools, results, or settlement state as authoritative. The normal
+browser independently verifies the PDA, owner, mint, fixture, Rulebook hash,
+and creation transaction through the packed public SDK before showing financial
+controls, then reads and subscribes to current on-chain state directly.
+
+The browser-only market flow uses Wallet Standard and a committed
+`@slip/sdk@0.2.0` pack tarball with base-commit, working-tree patch, SHA-512, and
+npm-integrity provenance in `vendor/`. It supports exact-label AI compilation,
+review-before-signing, two-to-five outcomes, variable stakes, wallet tickets,
+claims, refunds, proof receipts, and teardown-safe pool subscriptions. Electron
+offers Open in browser; mobile and unsupported clusters do not expose money
+controls. If market creation confirms but Autobase attachment fails, the exact
+confirmed reference is retained locally for an idempotent retry.
+
 Browser notification settings are available because the browser calls the
 Electron-owned worker and Electron retains the native notification presenter.
 The browser never receives a native module or Electron preload object.
@@ -78,6 +98,7 @@ The browser never receives a native module or Electron preload object.
     room.answer.submit / room.receipt.get / room.replay
     room.history.page / room.thread.page
     room.message.send / room.reply.send / room.poll.create / room.poll.vote / room.item.react
+    room.market.reference
     room.media.upload.begin|chunk|commit|abort
     room.media.download.begin|chunk|close
     room.notification.settings / room.notification.settings.update
@@ -120,6 +141,34 @@ Run from `fulltime/`:
     npm --workspace @fulltime/mobile run test
     npm --workspace @fulltime/mobile run bundle:ios
     npm --workspace @fulltime/mobile run link:ios
+
+The final July 14, 2026 archived-proof dogfood used these aggregate commands:
+
+    npm run typecheck
+    npm run lint
+    npm run build
+    npm --workspace @fulltime/worker test
+    npm --workspace @fulltime/web test
+    npm run desktop:test
+    npm run test:slip:surfpool
+    npm run desktop:test:integration
+
+Typecheck, lint, and the production build passed. The focused suites passed 17
+worker tests, 8 web tests, and 89 desktop tests (12 explicitly gated). The real
+archived-root Surfpool lifecycle passed in 1.05 seconds. The real desktop
+integration run passed attestation, same-peer Electron/normal-browser access,
+encrypted Hyperblob replication, and the PearRuntime IPC boundary, but its
+multi-peer room test timed out waiting for late-member admission replication.
+A focused retry also failed, this time waiting for invite-rotation replication
+despite both peers having three live connections and the same discovery key.
+This is an open real-Autobase replication defect, not a mocked or skipped pass.
+
+The packed SDK consumer contract imports only `@slip/sdk`; its default graph was
+also loaded in isolation without sibling-repository access or server-only
+modules. This is local/Surfpool evidence, not public-devnet evidence. Remaining
+release gates are the unified devnet program upgrade, a real devnet
+create/stake/read lifecycle, manual Wallet Standard dogfood, and a genuine
+TxLINE fixture/proof walkthrough with activated credentials.
 
 The loopback/package/DHT commands require local socket binding. Do not replace a denied
 sandbox run with a mocked DHT or browser bridge; report the environment gate.
@@ -275,6 +324,283 @@ until the Bare worker emits its real `bridge.ready` after room restoration.
 This prevents both Corestore lock races and startup requests being discarded.
 
 ## Do not regress
+
+The poll market path is a packed-SDK consumer, not a second protocol client.
+`npm run test:slip:surfpool` passes the full local chain boundary:
+clean binary capability detection, five-option creation, real Kit-backed Wallet
+Standard signatures, multiple variable stakes, exact SPL vault totals, deadline
+rejection, permissionless TxLINE V3 multiproof resolution, fee/tip and
+proportional payout, losing and double-claim rejection, one-sided void, timeout
+void, and refund. The test loads the archived terminal proof JSON verbatim and
+installs the finalized devnet daily-root account bytes verbatim; it does not
+generate a successful proof or root. The vendored SBF and packed SDK have
+source/artifact provenance files.
+
+The authenticated root artifact is
+`../resources/fixtures/world-cup-2026/18213979-norway-vs-england/daily-scores-roots.20645.devnet.json`.
+It is the JSON-RPC response at finalized devnet slot `476185731` for PDA
+`EdJuEftTBNwXRWJpvYCziVxKT87qMDVu9V6HC7PwGffB`, owned by TxLINE program
+`6pW64gN1s2uqjHkn1unFeEjAwJkPGHoppGvS715wyP2J`; its SHA-256 is
+`6efeab8e775b0919f9ea2832986e47ac13a7eb32e326c0d4da8415a39c3738f`.
+Its provenance sidecar records the RPC origin, commitment, slot, owner, and
+capture time. The terminal proof's three explicit stat leaves and four indexed
+multiproof siblings reconstruct its archived event-stat root exactly. TxLINE's
+compressed-zero encoding in the earlier V2 first-confirmed-goal proof remains
+undocumented, so that proof is not accepted as an expression witness.
+
+Poll publication checks the authenticated fixture context, question, and exact
+ordered labels once for each immutable poll/configuration key. Resolvable and
+deterministically unresolvable decisions are then persisted without a timer;
+provider, RPC, capability, and configuration errors are never negative-cached.
+The poll CTA is **Back my stand**. Its compact modal presents one decision at a
+time: outcome first, then 5/10/25 USDT presets plus a custom decimal stake and
+the explicit signing action. Settlement explanation is a single-sentence info
+popover and consumes no layout space. The author's first signature opens the
+pool and the second places the selected real ticket. Only an attached reference
+that every consumer independently verifies exposes the same outcome-first,
+stake-second control to other members. On 2026-07-14 this UI change passed
+`npm run typecheck`, `npm run lint`, `npm --workspace @fulltime/web test` (8/8),
+and `npm --workspace @fulltime/web run build`. The first sandboxed build attempt
+failed because Turbopack could not bind its temporary process port; the same
+build passed outside that restriction. A verified market contributes no inline
+pool grid, status, proof receipt, or ticket rows to the room card: the poll stays
+primary, with only **Back my stand** opening the wager flow. Terminal result and
+claim/refund details are likewise disclosed only through **View result**. Inside
+the wager modal the room-poll question is the primary heading; action copy is
+never used as the page title.
+
+The real TxLINE research corpus is captured from the workspace root with
+`node resources/scripts/capture-txline-world-cup.mjs`. As of 2026-07-14 it holds
+104 scheduled fixtures, 102 started fixtures, 100 terminal fixtures, and the
+complete 1,185-update Norway–England transcript under
+`resources/fixtures/world-cup-2026/`. Two archived fixtures returned no score
+records and remain explicit coverage gaps. The Slip settlement design and its
+proof limitations are documented in
+`resources/research/slip-txline-derived-markets/report.md`.
+
+### Authenticated archived-match replay
+
+The Norway–England desktop replay is a local test transport over the real
+fixture plane, not a production data fallback. It reads the captured 1,185-row
+TxLINE SSE archive, preserves source sequence and feed timestamps, converts the
+historical wire casing at one explicit adapter, folds every row through the
+production `FixtureMachine`, and appends the resulting snapshots/events to a
+fresh publisher-signed Hypercore. Unconfirmed and discarded incidents never
+become match events. The terminal fold is Norway 1–2 England with exactly three
+confirmed goal events.
+
+Surfpool cannot move its bank clock backwards to July 2026. The lifecycle uses
+an honest affine replay clock: archived kickoff is mapped ten minutes after the
+local run begins while preserving the policy intervals (entry close five
+minutes before kickoff, resolution four hours after kickoff, void after 48
+hours). `timeTravelToTimestamp` advances only forward. Proof timestamps,
+fixture identifier, root-account bytes, and Merkle witnesses remain the
+archived TxLINE values.
+
+Run the replay publisher and isolated Electron profile in separate terminals:
+
+```bash
+npm run operator:replay
+npm run desktop:replay
+```
+
+The publisher remains armed at the scheduled state so setup does not race a
+timer. After creating the Norway–England room, poll, and any pre-match Slip
+positions, begin the four-minute playback with:
+
+```bash
+npm run operator:replay:start
+```
+
+Every replay launch creates a fresh fixture-feed key and storage directory, so a
+completed immutable log is never rewound or overwritten. The production live
+operator remains a separate command and store.
+
+The verified desktop run used room
+`room_1f8c5d6b01d02b15ad950f751d47f7ee`, a five-option poll with labels `0`,
+`1`, `2`, `3`, `4+`, and the real MBP Ollama compiler. Compilation preserved
+those labels. A persistent FullTime play keypair is stored in a mode-0600 local
+runtime record, funded with five SOL and 1,000 six-decimal settlement tokens,
+and signs real Kit transactions. Privy remains installed but its provider path
+is intentionally paused for this dogfood.
+The live UI reached 1–2/full-time with source record `18213979:1184`, 36 signed
+incidents, and seven match calls. Evidence is in
+`evidence/desktop-rulebook-review.png`, `evidence/desktop-live-replay.png`,
+`evidence/desktop-terminal-replay.png`, and `evidence/desktop-vote-wager.png`.
+The last image (SHA-256
+`5293190766e29b3ae3fe861f1591e6b39cd913c9e0f32c6e70d3d5d2793d1c1a`)
+shows the durable room vote at 100% for `3`, the verified open market, a real
+five-token pool on outcome `3`, the connected-wallet ticket, and its creation
+proof signature. The program-level resolve/claim/refund path remains covered by
+the passing archived-proof Surfpool lifecycle.
+
+Start the persistent chain with `npm run slip:play-runtime`. It installs the
+vendored SBF, real six-decimal mint, authenticated archived daily root, and the
+persistent funded signer. Its 100ms event drain is required: without it,
+external transaction events eventually backpressure the embedded Surfpool RPC.
+
+### Native mobile poll parity
+
+The native room poll now follows the same progressive-disclosure rule as the
+web surface: the room question is the card's primary heading, each of the exact
+ordered options shows its live vote share and the current user's selection, and
+no market grid, proof receipt, ticket row, Rulebook dump, or money CTA is added
+to the room feed. Native poll creation is capped at the protocol's two-to-five
+option market range. After an independently verified `market.reference`, mobile
+shows only **Back my stand**. The modal asks for the outcome first and then a
+5/10/25 USDT preset or custom decimal stake. A mode-0600 generated play wallet
+is persisted locally, funded through the real local Slip funding boundary, and
+signs the actual Kit transaction; no placeholder transaction path exists.
+
+Privy packages and native configuration remain installed, but the provider and
+wallet runtime import are intentionally paused. Importing `@privy-io/expo` from
+the current React Native entry pulled the Node `jose` `zlib` runtime into Metro
+and made the real Android release bundle fail. Keeping the inactive runtime out
+of the entry bundle lets the existing device-owned FullTime identity run while
+preserving the Privy setup for later work. The Expo config also removes only the
+inactive Apple Sign In entitlement generated by that installed package; the
+existing development provisioning profile does not contain that entitlement.
+
+Local device builds now accept either a running `txline-live` operator or a
+running authenticated `txline-replay` operator. They still fetch the signed
+HTTPS network manifest, verify its publisher signature, and embed that verified
+cache; a stale runtime record or invalid manifest remains a hard failure.
+
+On 2026-07-14 the Infinix X683 (`061342509H000347`) passed the real device path:
+`npm run mobile:android` completed a Release build (`631` Gradle tasks; `76`
+executed and `555` up to date), the resulting APK SHA-256 was
+`b93aa1d3c9a493809ff4e9ff879a2a628158833f2751965ad3416d47e11b148f`,
+`adb -s 061342509H000347 install -r
+apps/mobile/.local-development/android/FullTime-local-release.apk` returned
+`Success`, and the installed app was launched and exercised into the genuine
+Norway–England replay room. `evidence/mobile-infinix-room-poll.png` records the
+poll-first card; its SHA-256 is
+`5e4adbd9cfefde3d11137bc461836e5b3ddcaf883ce04a8d44915b8698e27b21`.
+The first Android build correctly failed at Metro while the inactive Privy
+import exposed Node `jose/zlib`; the documented build is the subsequent clean
+release after removing only that runtime import.
+
+The current three-device dogfood checkpoint uses room
+`room_ba651726980755a8468baa72c978f116`, fixture feed
+`d17d4e6768481767bc8dd5c6eb7a817ed4ef840b56ea96a560ad3a1de77bc670`,
+and the ordered poll labels `0`, `1`, `2`, `3`, `4+`. The poll author now starts
+market creation automatically after the one cached resolvability check; there
+is no review/create CTA. The confirmed market is
+`9qfisPr9UvtKvgfeGjqaw9vrhwVQ8nbUycGm1WzwVgt4` under program
+`8VNZ5VseAcFaYhAZxetgE5N8eiD17ZZNchGhoatYUUXw` and settlement mint
+`ELWTKspHKCnCfCiCiqYw1EDH77k8VCP74dK9qytG2Ujh`. Desktop voted for `3`
+and signed a real 10 USDT ticket on `3`; Infinix voted for `4+` and signed a
+real 10 USDT ticket on `4+`. Android evidence is
+`evidence/mobile-infinix-back-my-stand.png`,
+`evidence/mobile-infinix-wager-outcomes.png`,
+`evidence/mobile-infinix-wager-stake.png`, and
+`evidence/mobile-infinix-signed-wager.png`.
+
+The authenticated replay was armed until the real desktop and Android wagers
+existed, then started with `npm run operator:replay:start`. Its existing process
+chain was inspected and reused: PIDs `37173` -> `37184` -> `37202` -> `37220`;
+no second publisher was launched. It reached Norway 1–2 England with 36 signed
+incidents.
+The persistent Slip play runtime remains active (two previously existing
+processes, PIDs `29587` and `30719`, were inspected and not killed). The local
+signed-fixture relay is PID `59095`, listening on `0.0.0.0:59638`; PID `84770`
+is a duplicate process without the listening socket and was left untouched.
+The real relay was probed from a fresh Corestore: pinned block zero decoded to
+fixture `18213979` with feed length one.
+
+The physical iPhone is not yet a successful third room member. The relay now
+serves canonical Hypercore wire proofs generated from the genuine publisher
+feed, and a fresh Corestore-to-Corestore proof test passes. On the physical
+iPhone, `Hypercore.key(proof.manifest)` prints the exact pinned feed key
+`d17d4e...bc670`, but Bare's native buffer identity comparison rejects those
+equal bytes. Copying decoded fields into fresh `b4a` buffers and comparing the
+computed manifest hex to the immutable signed pin did not clear native manifest
+installation. The cutoff test failed with `Fixture proof manifest resolves to
+d17d4e...bc670 instead of the pinned feed key`; its result is
+`/tmp/fulltime-iphone-signed-pin-20260714.xcresult`. The signed build and
+reversible local-peer archive test pass, but room join and the third wager are
+not reported as complete.
+
+The connected iPhone 12 Pro Max (`00008101-001035013468801E`, iOS `26.5.2`)
+passed `npm run mobile:ios`: Xcode reported `BUILD SUCCEEDED`, signed
+`com.txoddline.fulltime` with the existing Apple development identity and team
+profile, installed the app through CoreDevice, and reported
+`Launched application with com.txoddline.fulltime bundle identifier.` The
+embedded iOS `main.jsbundle` SHA-256 was
+`f12e2711c409c639af8f3e4dd91f587623f3b15b04733d2103f1294b4dc4fa68`.
+The first iOS build failed honestly because the inactive generated Sign in with
+Apple entitlement was absent from the profile; the passing run followed the
+scoped entitlement suppression above.
+
+Scoped checks passed on 2026-07-14: web tests (8/8), web typecheck, web lint,
+web production build, mobile tests (8/8), mobile typecheck, desktop check,
+desktop tests (89 passed, 12 explicitly gated, 0 failed), Slip SDK tests
+(13/13), Slip typecheck, Slip lint, Slip build, the signed iPhone Release
+`build-for-testing`, and the real archived-root Surfpool lifecycle. The full
+real Pear integration run passed four tests, skipped two explicit gates, and
+failed the three-peer room test once at admission-claim application during
+rejoin; that failure remains unresolved and is not described as passing.
+
+### Terminal two-device wager dogfood result
+
+The persistent Surfpool market contained exactly two positions before
+settlement: 10,000,000 token units on `3` and 10,000,000 on `4+`; the pool
+snapshot and token vault agreed. `surfnet_timeTravel` advanced the same running
+chain to the market's recorded `resolveAt`. The program then consumed
+`scores.terminal-proof-v3.1-2-3-4-5.json` verbatim against the installed
+finalized devnet daily-root account. Resolution signature:
+`5SZ5t5vYA6t3s6EDEU5Fao7MYcFHzzLBQ2PPeehocCFiHHzLjcoJqAwSNrLANWP4vnym2LnH3m2zJNVSZtuHBW1Z`.
+Outcome `3` won. Ticket
+`4Tnb6CSkDHvaHB423NmiHE9zFKLwqJ3yn1FxxfxmT7nE` was claimed with signature
+`3JzjZUpSDShXsCekYAp3sb6WHARgXQgGRf3HF5XZtEAZatV5duSy5iJmHeo2vi7tyFqjhZR5p2y8N6TUoJVV6vUf`.
+
+`npm run test:slip:surfpool` passed 1/1 against the real SBF and authenticated
+archived root. It covers market creation, multiple stakes, vault equality,
+deadline rejection, permissionless resolution, proportional payout, fee/tip
+routing, loser and double-claim rejection, void, and refund. The harness did
+not generate a root or successful proof.
+
+Android refreshes the independently verified market when its wager disclosure
+opens. A resolved/voided market shows **View result**, the winning label, the
+device wallet's tickets, and only an eligible claim/refund signing control. The
+Infinix displayed `3 won`, `4+ · 10 USDT`, and `This stand did not win`.
+
+The in-place Release update also exposed a real bounded-IPC defect: terminal
+fixture cards reused one score object at two paths, which the room protocol
+correctly rejected as a shared reference. The projection now copies its summary
+score and has a `validateJson` regression assertion. Mobile home also retains a
+successful encrypted-room result if the independent fixture-schedule request
+fails. The room and wallet survived every `adb install -r` update.
+
+Evidence and SHA-256:
+
+- `evidence/mobile-infinix-live-replay.png` —
+  `e3e89ab3742fe8e19550f78dcabe153e7ca2087b9ceb1158bcdf3e329e90336d`
+- `evidence/desktop-live-replay-two-sided.png` —
+  `9209f006453e2be601c371e2ed2884687a8b509245e981fee67ab5eaff347764`
+- `evidence/desktop-terminal-settled.png` —
+  `b26e947b8aed09019853507baaee6c90477d5850e2c19653b871c93f9f74f042`
+- `evidence/mobile-infinix-real-settlement.png` —
+  `02d6779271ea60cd6743f1c9a307e1e3a6b298808af07227ad076f8db07cd95c`
+
+The final Android Release APK SHA-256 is
+`3d04d0c8a860e53f41f8d490fcc850339919252bb9275ab3550a48afee1dc741`.
+`npm run mobile:android` passed with 631 Gradle tasks and the verified API 29
+Bare Kit/native-addon checks; `adb ... install -r` returned `Success`.
+
+Final verification after these changes:
+
+- `npm test`: 44 shared, 2/3 attestor (one gated), 91/103 desktop
+  (12 gated), 8 mobile, 8 web, and 17 worker tests passed; zero failures.
+- `npm run typecheck`, `npm run lint`, and `npm run build`: passed. The build
+  produced the complete Next 16 production route set.
+- `npm run test:slip:surfpool`: passed 1/1 against the real vendored SBF.
+- `npm --workspace @fulltime/desktop run test:integration`: 3 passed, 2 gated,
+  2 failed. The late-member case timed out with the late writer at length 88
+  while the creator signed length remained 82. The separate Bare worker case
+  reached an online peer connection but did not receive fixture `bare-fixture`
+  before its test deadline. These socket-bound failures remain open and are not
+  described as passing.
 
 - Do not expose native Holepunch objects to the renderer.
 - Do not add a per-browser Pear worker, browser session identity, or web gateway

@@ -30,6 +30,7 @@ const ROOM_ACTIONS = new Set([
   'room.history.page',
   'room.thread.page',
   'room.poll.vote',
+  'room.market.reference',
   'room.message.send',
   'room.media.upload.begin',
   'room.media.upload.chunk',

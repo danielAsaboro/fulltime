@@ -3,8 +3,10 @@
 import { useState } from "react";
 
 import type { Poll } from "@fulltime/shared";
+import type { Fixture, RoomMarketReference } from "@fulltime/shared";
 
 import { cn } from "@/lib/cn";
+import { PollMarket } from "@/components/poll-market";
 
 export function PollCard({
   poll,
@@ -12,12 +14,18 @@ export function PollCard({
   canVote,
   myVote,
   className,
+  fixture,
+  isAuthor = false,
+  onAttachMarket,
 }: {
   poll: Poll;
   onVote: (option: string) => void;
   canVote: boolean;
   myVote?: string;
   className?: string;
+  fixture?: Fixture;
+  isAuthor?: boolean;
+  onAttachMarket?: (input: RoomMarketReference & { pollId: string }) => Promise<void>;
 }) {
   const [optimisticChoice, setOptimisticChoice] = useState<string | null>(null);
   const choice = myVote ?? optimisticChoice;
@@ -60,6 +68,7 @@ export function PollCard({
           );
         })}
       </div>
+      {fixture && onAttachMarket ? <PollMarket poll={poll} fixture={fixture} isAuthor={isAuthor} onAttach={onAttachMarket} /> : null}
     </div>
   );
 }
