@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, LockKeyhole, Users } from "lucide-react";
+import { ArrowRight, LockKeyhole, RefreshCw, Users } from "lucide-react";
 
 import { useData, useRoomByInvite } from "@/lib/data";
+import { generateDisplayName } from "@/lib/peer-identity";
+import { PeerAvatar } from "@/components/peer-avatar";
 import { Button } from "@/components/ui/button";
 import { Container, EmptyState, ErrorState, Logo, Skeleton } from "@/components/ui/primitives";
 import { TextField } from "@/components/ui/field";
@@ -15,7 +17,7 @@ export function JoinView({ code }: { code: string }) {
   const invite = useRoomByInvite(code);
   const { client, session, signIn } = useData();
   const router = useRouter();
-  const [displayName, setDisplayName] = useState("");
+  const [displayName, setDisplayName] = useState(() => generateDisplayName());
   const [busy, setBusy] = useState(false);
   const [joinError, setJoinError] = useState<string | null>(null);
 
@@ -66,6 +68,7 @@ export function JoinView({ code }: { code: string }) {
               busy={busy}
               error={joinError}
               onDisplayNameChange={setDisplayName}
+              onReshuffle={() => setDisplayName(generateDisplayName())}
               onJoin={() => void join()}
             />
           )}
@@ -84,6 +87,7 @@ function InvitePreview({
   busy,
   error,
   onDisplayNameChange,
+  onReshuffle,
   onJoin,
 }: {
   roomName: string;
@@ -94,6 +98,7 @@ function InvitePreview({
   busy: boolean;
   error: string | null;
   onDisplayNameChange: (name: string) => void;
+  onReshuffle: () => void;
   onJoin: () => void;
 }) {
   return (
@@ -129,23 +134,34 @@ function InvitePreview({
 
       <div className="flex flex-col gap-4">
         {signedIn ? (
-          <div className="flex items-center justify-between rounded-lg border border-ash px-4 py-3">
-            <span className="font-mono text-caption uppercase tracking-[0.1em] text-smoke">Joining as</span>
-            <span className="font-mono text-body-sm text-off-black">{displayName}</span>
+          <div className="flex items-center gap-3 rounded-lg border border-ash px-4 py-3">
+            <PeerAvatar userId={`session:${displayName}`} displayName={displayName} size="md" isCurrentUser />
+            <div className="min-w-0 flex-1">
+              <span className="font-mono text-caption uppercase tracking-[0.1em] text-smoke">Joining as</span>
+              <p className="truncate font-mono text-body-sm text-off-black">{displayName}</p>
+            </div>
           </div>
         ) : (
-          <TextField
-            id="join-display-name"
-            label="Your display name"
-            placeholder="e.g. Amina"
-            value={displayName}
-            maxLength={24}
-            autoComplete="nickname"
-            onChange={(event) => onDisplayNameChange(event.target.value)}
-            onKeyDown={(event) => {
-              if (event.key === "Enter") onJoin();
-            }}
-          />
+          <div className="flex items-end gap-3">
+            <PeerAvatar userId={`preview:${displayName}`} displayName={displayName} size="lg" />
+            <div className="min-w-0 flex-1">
+              <TextField
+                id="join-display-name"
+                label="Your display name"
+                placeholder="Dancing Meadow"
+                value={displayName}
+                maxLength={48}
+                autoComplete="nickname"
+                onChange={(event) => onDisplayNameChange(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") onJoin();
+                }}
+              />
+            </div>
+            <Button type="button" variant="ghost" size="sm" onClick={onReshuffle} aria-label="Generate another name">
+              <RefreshCw className="size-3.5" />
+            </Button>
+          </div>
         )}
         {error ? (
           <p className="font-mono text-body-sm text-crimson" role="alert">{error}</p>

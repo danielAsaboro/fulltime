@@ -10,6 +10,7 @@ import {
   Copy,
   LockKeyhole,
   QrCode,
+  RefreshCw,
   RotateCcw,
   Share2,
   Users,
@@ -24,6 +25,8 @@ import {
   type RoomPhase,
 } from "@/lib/data";
 import { cn } from "@/lib/cn";
+import { generateDisplayName } from "@/lib/peer-identity";
+import { PeerAvatar } from "@/components/peer-avatar";
 import { Button } from "@/components/ui/button";
 import { TextField } from "@/components/ui/field";
 import { EmptyState, ErrorState, Skeleton } from "@/components/ui/primitives";
@@ -63,7 +66,7 @@ export function MatchesIndex({ initialFixtureId }: { initialFixtureId?: string }
   const [selectedId, setSelectedId] = useState(initialFixtureId ?? "");
   const [roomName, setRoomName] = useState("");
   const [roomNameTouched, setRoomNameTouched] = useState(false);
-  const [displayNameDraft, setDisplayNameDraft] = useState("");
+  const [displayNameDraft, setDisplayNameDraft] = useState(() => generateDisplayName());
   const [nameTouched, setNameTouched] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -233,18 +236,36 @@ export function MatchesIndex({ initialFixtureId }: { initialFixtureId?: string }
                   setRoomName(event.target.value);
                 }}
               />
-              <TextField
-                id="creator-display-name"
-                label="Your display name"
-                placeholder="e.g. Amina"
-                value={displayName}
-                maxLength={24}
-                autoComplete="nickname"
-                onChange={(event) => {
-                  setNameTouched(true);
-                  setDisplayNameDraft(event.target.value);
-                }}
-              />
+              <div className="flex items-center gap-3 rounded-[16px] border border-ash bg-white/40 px-3 py-3">
+                <PeerAvatar userId={`preview:${displayName}`} displayName={displayName} size="md" />
+                <div className="min-w-0 flex-1">
+                  <TextField
+                    id="creator-display-name"
+                    label="Your display name"
+                    placeholder="Dancing Meadow"
+                    value={displayName}
+                    maxLength={48}
+                    autoComplete="nickname"
+                    onChange={(event) => {
+                      setNameTouched(true);
+                      setDisplayNameDraft(event.target.value);
+                    }}
+                  />
+                </div>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="shrink-0"
+                  onClick={() => {
+                    setNameTouched(true);
+                    setDisplayNameDraft(generateDisplayName());
+                  }}
+                  aria-label="Generate another name"
+                >
+                  <RefreshCw className="size-3.5" />
+                </Button>
+              </div>
 
               {error ? <p className="font-mono text-body-sm text-crimson" role="alert">{error}</p> : null}
 

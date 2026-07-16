@@ -26,6 +26,7 @@ import type {
   RoomNotificationSettings,
 } from "@/lib/data";
 import { cn } from "@/lib/cn";
+import { PeerAvatar } from "@/components/peer-avatar";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/primitives";
 
@@ -403,10 +404,24 @@ export function RoomMemberList({
     <ul className="divide-y divide-ash px-5">
       {members.map((member) => (
         <li key={String(member.userId)} className="flex items-center gap-3 py-3">
-          <span className={cn("size-2 rounded-full", member.isOnline ? "bg-mint" : "bg-ash")} aria-label={member.isOnline ? "Online" : "Offline"} />
+          <span className="relative">
+            <PeerAvatar
+              userId={member.userId}
+              displayName={member.displayName}
+              size="md"
+              isCurrentUser={member.isCurrentUser}
+            />
+            <span
+              className={cn(
+                "absolute -bottom-0.5 -right-0.5 size-2.5 rounded-full border-2 border-parchment",
+                member.isOnline ? "bg-mint" : "bg-ash",
+              )}
+              aria-label={member.isOnline ? "Online" : "Offline"}
+            />
+          </span>
           <span className="min-w-0 flex-1">
             <span className="flex items-center gap-1.5 text-body-sm">
-              <span className="truncate">{member.displayName}</span>
+              <span className="truncate font-medium">{member.displayName}</span>
               {member.isCurrentUser ? <span className="text-[10px] text-smoke">You</span> : null}
             </span>
             <span className="mt-0.5 block text-[10px] uppercase tracking-[0.06em] text-smoke">{member.role}</span>

@@ -19,6 +19,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { RoomAttachment, RoomFeedItem, RoomMediaDownload, RoomMemberView, RoomUnreadState } from "@/lib/data";
 import type { Fixture, RoomMarketReference } from "@fulltime/shared";
 import { cn } from "@/lib/cn";
+import { PeerAvatar } from "@/components/peer-avatar";
 import { PollCard } from "@/components/poll-card";
 
 const QUICK_REACTIONS = ["🔥", "⚽", "👏", "😮"] as const;
@@ -55,10 +56,6 @@ function ordered(items: RoomFeedItem[]): RoomFeedItem[] {
 
 function localTime(value: number): string {
   return new Intl.DateTimeFormat(undefined, { hour: "numeric", minute: "2-digit" }).format(new Date(value));
-}
-
-function initials(name: string): string {
-  return name.split(/\s+/).slice(0, 2).map((part) => part[0]).join("").toUpperCase();
 }
 
 export function RoomFeed({
@@ -274,17 +271,23 @@ function FeedItem({
 
   return (
     <article id={String(item.id)} className={cn("group flex gap-3 py-4", item.author?.isCurrentUser && "flex-row-reverse")}>
-      <span className={cn(
-        "grid size-8 shrink-0 place-items-center rounded-full border border-ash bg-white/60 text-[10px]",
-        item.author?.isCurrentUser && "border-lake-blue bg-lake-blue text-parchment",
-      )}>
-        {initials(item.author?.displayName ?? "Room")}
-      </span>
+      <PeerAvatar
+        userId={item.author?.userId}
+        displayName={item.author?.displayName ?? "Room"}
+        size="md"
+        isCurrentUser={Boolean(item.author?.isCurrentUser)}
+      />
       <div className={cn("min-w-0 flex-1", item.author?.isCurrentUser && "flex flex-col items-end")}>
-        <div className="mb-1.5 flex items-center gap-2 text-caption text-smoke">
+        <div className="mb-1.5 flex flex-wrap items-center gap-2 text-caption text-smoke">
           <span className="font-medium text-off-black">{item.author?.displayName ?? "Room"}</span>
-          {item.author?.role === "creator" || item.author?.role === "moderator" ? (
-            <span className="inline-flex items-center gap-1 uppercase tracking-[0.06em]"><ShieldCheck className="size-3" />{item.author.role}</span>
+          {item.author?.role === "creator" ? (
+            <span className="inline-flex items-center gap-1 rounded-full bg-off-black px-1.5 py-0.5 text-[9px] uppercase tracking-[0.06em] text-parchment">
+              <ShieldCheck className="size-3" aria-hidden /> host
+            </span>
+          ) : item.author?.role === "moderator" ? (
+            <span className="inline-flex items-center gap-1 rounded-full bg-periwinkle-mist px-1.5 py-0.5 text-[9px] uppercase tracking-[0.06em] text-off-black">
+              <ShieldCheck className="size-3" aria-hidden /> mod
+            </span>
           ) : null}
           <time dateTime={new Date(Number(item.createdAt)).toISOString()}>{localTime(Number(item.createdAt))}</time>
         </div>

@@ -6,6 +6,7 @@ import { useEffect, useId, useMemo, useRef, useState, useSyncExternalStore } fro
 import type { RoomFeedItem, ThreadReply } from "@/lib/data";
 import { useRoomThread } from "@/lib/data";
 import { cn } from "@/lib/cn";
+import { PeerAvatar } from "@/components/peer-avatar";
 import { FeedKindIcon } from "@/components/room-feed";
 import { Sheet } from "@/components/ui/sheet";
 
@@ -219,15 +220,12 @@ function ThreadContent({
           {replies.length ? (
             replies.map((reply) => (
               <li key={String(reply.id)} className="flex gap-3 py-4">
-                <span
-                  className={cn(
-                    "grid size-7 shrink-0 place-items-center rounded-full border text-[9px] font-medium",
-                    reply.author.isCurrentUser ? "border-lake-blue bg-lake-blue text-parchment" : "border-ash bg-white/60",
-                  )}
-                  aria-hidden
-                >
-                  {reply.author.displayName.slice(0, 2).toUpperCase()}
-                </span>
+                <PeerAvatar
+                  userId={reply.author.userId}
+                  displayName={reply.author.displayName}
+                  size="sm"
+                  isCurrentUser={reply.author.isCurrentUser}
+                />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
                     <span className="text-caption font-medium text-off-black">{reply.author.displayName}</span>
