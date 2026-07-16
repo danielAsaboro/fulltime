@@ -25,6 +25,20 @@
   separate `npm run test:slip:surfpool` command executes the packed SDK through
   FullTime's signing/send boundary against that real SBF and SPL Token program.
 
+## Tim — room UI / marathon surface (2026-07-16)
+
+- Shared pure projections: `projectMatchStory` and `projectCallStreak` (tests green).
+- Room pulse: feed-backed match story card, latest Market Says, Fan IQ strip with
+  streak + top-3 board, seed banter chips that fill the real composer (Autobase write).
+- Spoiler-safe browser TTS on released timeline events only (`MatchCalloutToggle`).
+- Peer UX: auto adjective-noun display names with reshuffle on sign-in, create room,
+  and join; deterministic geometric `PeerAvatar` on feed, threads, header, members.
+- Call cards use “Back your stand” framing; invite share copies challenge-style text.
+- Tournament record share card copy improved on `/record`.
+- Open Graph / Twitter cards point at compressed `/images/og.jpg`.
+- Landing/marketing assets and multi-device evidence remain as previously dogfooded;
+  iPhone third-peer join and public Slip money remain open (see remaining below).
+
 ## Invariants
 
 - Native Pear/Holepunch modules stay inside the Bare worker.
