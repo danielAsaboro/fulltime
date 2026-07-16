@@ -38,6 +38,18 @@ import {
 import { chronologicalPage } from "../src/room-order";
 import { countryFlag } from "../src/country-flags";
 import { inviteCodeFromInput } from "../src/invite-code";
+import { generateDisplayName } from "../src/peer-identity";
+import { PeerAvatar } from "../src/peer-avatar";
+import { boothClipsForReleasedEvent, boothClipsForRoomMoment, catchMeUpClips } from "../src/match-voice";
+import {
+  enqueueMatchVoice,
+  getApiKeySync,
+  isMatchVoiceEnabledSync,
+  loadMatchVoicePrefs,
+  setElevenLabsApiKey,
+  setMatchVoiceEnabled,
+  testElevenLabsKey,
+} from "../src/match-voice-player";
 import { buyMobileTicket, claimMobileTicket, getMobileMarketPosition, loadMobileSlipWallet, verifyMobileMarketReference, type MobileSlipConfiguration, type MobileSlipWallet } from "../src/slip-wallet";
 
 type Json = Record<string, any>;
@@ -46,6 +58,7 @@ type Screen = { kind: "home" } | { kind: "room"; roomId: string };
 
 const CONFIG_CACHE_KEY = "fulltime.network-manifest.v1";
 const DEVICE_SECRET_KEY = "fulltime.device-secret.v1";
+/** Worker boot label only — real identity is set at sign-in with a generated peer name. */
 const DEFAULT_DISPLAY_NAME = "FullTime Fan";
 // Privy packages and native configuration stay installed, but its runtime import
 // remains out of the mobile bundle until that signing path is resumed.
@@ -189,6 +202,10 @@ function FullTimeApp() {
   const [session, setSession] = useState<Json | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
+  useEffect(() => {
+    void loadMatchVoicePrefs();
+  }, []);
+
   const resetAccount = async () => {
     const source = storagePath();
     const info = await FileSystem.getInfoAsync(source);
@@ -236,7 +253,7 @@ function Home({ peer, session, onSession, onSettings, onOpenRoom }: { peer: Retu
   const [rooms, setRooms] = useState<Json[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [displayName, setDisplayName] = useState("");
+  const [displayName, setDisplayName] = useState(() => generateDisplayName());
   const [invite, setInvite] = useState("");
   const [invitePreview, setInvitePreview] = useState<Json | null>(null);
   const [scannerOpen, setScannerOpen] = useState(false);
@@ -270,8 +287,23 @@ function Home({ peer, session, onSession, onSettings, onOpenRoom }: { peer: Retu
           <Wordmark />
           <Text style={styles.eyebrow}>YOUR DEVICE · YOUR IDENTITY</Text>
           <Text style={styles.hero}>The match room that belongs to the people in it.</Text>
-          <Text style={styles.bodyMuted}>Your identity, encrypted room history, and peer connections stay in this iPhone’s Bare worker.</Text>
-          <Field value={displayName} onChangeText={setDisplayName} placeholder="Display name" maxLength={48} />
+          <Text style={styles.bodyMuted}>We generated a name and mark for this device. Keep them, reshuffle, or type your own — your Pear identity still signs what you send.</Text>
+          <View style={styles.peerPreview}>
+            <PeerAvatar userId={`preview:${displayName}`} displayName={displayName || "Peer"} size="lg" isCurrentUser />
+            <View style={styles.peerPreviewCopy}>
+              <Text style={styles.cardEyebrow}>YOU WILL APPEAR AS</Text>
+              <Text style={styles.peerPreviewName} numberOfLines={1}>{displayName.trim() || "…"}</Text>
+            </View>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="Generate another name"
+              onPress={() => setDisplayName(generateDisplayName())}
+              style={styles.reshuffleButton}
+            >
+              <Text style={styles.reshuffleText}>NEW</Text>
+            </Pressable>
+          </View>
+          <Field value={displayName} onChangeText={setDisplayName} placeholder="Dancing Meadow" maxLength={48} autoComplete="nickname" />
           <Button label={busy ? "Opening identity…" : "Enter FullTime"} disabled={!displayName.trim() || busy} onPress={() => void run(async () => {
             const next = await peer.request<Json>("session.sign-in", { displayName: displayName.trim() });
             onSession(next);
@@ -336,7 +368,10 @@ function Home({ peer, session, onSession, onSettings, onOpenRoom }: { peer: Retu
       </View>
       {peer.resolution?.stale ? <Banner text="SIGNED NETWORK CONFIG · CACHED" /> : null}
       <Text style={styles.eyebrow}>WELCOME BACK</Text>
-      <Text style={styles.heading}>{session.displayName}</Text>
+      <View style={styles.welcomeRow}>
+        <PeerAvatar userId={session.userId} displayName={session.displayName} size="lg" isCurrentUser />
+        <Text style={[styles.heading, styles.welcomeName]} numberOfLines={2}>{session.displayName}</Text>
+      </View>
 
       <View style={styles.homeActions}><Pressable onPress={() => setMode("create")} style={styles.homeActionPrimary}><Text style={[styles.homeActionEyebrow, styles.homeActionLight]}>START A ROOM</Text><Text style={[styles.homeActionTitle, styles.homeActionLight]}>Choose a match</Text><Text style={[styles.homeActionArrow, styles.homeActionLight]}>→</Text></Pressable><Pressable onPress={() => setMode("join")} style={styles.homeAction}><Text style={styles.homeActionEyebrow}>HAVE AN INVITE?</Text><Text style={styles.homeActionTitle}>Join a room</Text><Text style={styles.homeActionArrow}>→</Text></Pressable></View>
       <SectionTitle eyebrow="YOUR ROOMS" title={rooms.length ? "Back to the match." : "No rooms yet."} />
@@ -448,18 +483,72 @@ function AccountSettings({ open, session, request, onSession, onClose, onReset }
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  useEffect(() => { if (open) { setName(String(session?.displayName ?? "")); setError(null); } }, [open, session?.displayName]);
+  const [voiceOn, setVoiceOn] = useState(false);
+  const [apiKey, setApiKey] = useState("");
+  const [keyOk, setKeyOk] = useState(false);
+  useEffect(() => {
+    if (!open) return;
+    setName(String(session?.displayName ?? ""));
+    setError(null);
+    void loadMatchVoicePrefs().then((prefs) => {
+      setVoiceOn(prefs.enabled);
+      setApiKey(prefs.apiKey ?? "");
+      setKeyOk(Boolean(prefs.apiKey));
+    });
+  }, [open, session?.displayName]);
   const run = async (action: () => Promise<void>) => { if (busy) return; setBusy(true); setError(null); try { await action(); } catch (reason) { setError(message(reason)); } finally { setBusy(false); } };
   return <Modal visible={open} animationType="slide" presentationStyle="pageSheet" onRequestClose={onClose}>
     <SafeAreaView style={styles.safe}>
       <View style={styles.settingsHeader}><View><Text style={styles.eyebrow}>ACCOUNT</Text><Text style={styles.heading}>Settings</Text></View><Pressable onPress={onClose} style={styles.threadClose}><Text style={styles.threadCloseText}>×</Text></Pressable></View>
       <ScrollView contentContainerStyle={styles.settingsContent} keyboardShouldPersistTaps="handled">
         {session ? <>
-          <Card><Text style={styles.cardEyebrow}>DISPLAY NAME</Text><Field value={name} onChangeText={setName} placeholder="Display name" maxLength={48} /><Button label={busy ? "Saving…" : "Save name"} disabled={busy || !name.trim() || name.trim() === session.displayName} onPress={() => void run(async () => onSession(await request<Json>("session.sign-in", { displayName: name.trim() })))} /></Card>
+          <Card>
+            <View style={styles.peerPreview}>
+              <PeerAvatar userId={session.userId} displayName={name || session.displayName} size="lg" isCurrentUser />
+              <View style={styles.peerPreviewCopy}>
+                <Text style={styles.cardEyebrow}>PEER LOOK</Text>
+                <Text style={styles.peerPreviewName} numberOfLines={1}>{name.trim() || session.displayName}</Text>
+              </View>
+              <Pressable accessibilityRole="button" accessibilityLabel="Generate another name" onPress={() => setName(generateDisplayName())} style={styles.reshuffleButton}>
+                <Text style={styles.reshuffleText}>NEW</Text>
+              </Pressable>
+            </View>
+            <Text style={styles.cardEyebrow}>DISPLAY NAME</Text>
+            <Field value={name} onChangeText={setName} placeholder="Dancing Meadow" maxLength={48} autoComplete="nickname" />
+            <Button label={busy ? "Saving…" : "Save name"} disabled={busy || !name.trim() || name.trim() === session.displayName} onPress={() => void run(async () => onSession(await request<Json>("session.sign-in", { displayName: name.trim() })))} />
+          </Card>
           <Card><Text style={styles.cardEyebrow}>ACCOUNT ID</Text><Text selectable style={styles.accountId}>{session.userId}</Text></Card>
+        </> : <Empty text="Sign in to manage peer identity. Match voice works without signing in." />}
+
+        <Card>
+          <Text style={styles.cardEyebrow}>ROOM RADIO · ELEVENLABS</Text>
+          <Text style={styles.bodyMuted}>This room has a booth — not stadium PA. Ambient lines for stands, markets, and released events with odds. Your book only speaks your open stands and Fan IQ streak. Peers still write; radio keeps eyes on the TV. Paste your ElevenLabs key (stays on this phone).</Text>
+          <Pressable
+            onPress={() => void run(async () => {
+              const next = !voiceOn;
+              await setMatchVoiceEnabled(next);
+              setVoiceOn(next);
+            })}
+            style={styles.voiceToggleRow}
+          >
+            <Text style={styles.body}>{voiceOn ? "● Room radio on" : "○ Room radio off"}</Text>
+            <Text style={styles.smallAction}>{voiceOn ? "DISABLE" : "ENABLE"}</Text>
+          </Pressable>
+          <Field value={apiKey} onChangeText={setApiKey} placeholder="sk_… ElevenLabs API key" autoCapitalize="none" autoCorrect={false} secureTextEntry />
+          <Button label={busy ? "Checking…" : "Save & test key"} disabled={busy || !apiKey.trim()} onPress={() => void run(async () => {
+            const result = await testElevenLabsKey(apiKey.trim());
+            if (!result.ok) throw new Error(result.error);
+            await setElevenLabsApiKey(apiKey.trim());
+            setKeyOk(true);
+          })} />
+          {keyOk ? <Text style={styles.hint}>Key saved · booth + your book ready</Text> : <Text style={styles.hint}>Without a key, room radio stays silent on mobile</Text>}
+          {keyOk ? <Button quiet label="Clear key" disabled={busy} onPress={() => void run(async () => { await setElevenLabsApiKey(null); setApiKey(""); setKeyOk(false); })} /> : null}
+        </Card>
+
+        {session ? <>
           <Button quiet label="Sign out" disabled={busy} onPress={() => void run(async () => { await request("session.sign-out", null); onSession(null); onClose(); })} />
           <Card><Text style={[styles.cardEyebrow, styles.dangerText]}>DANGER ZONE</Text><Text style={styles.bodyMuted}>Archives this iPhone’s peer store and creates a new device identity.</Text><Button quiet label="Reset account" disabled={busy} onPress={() => Alert.alert("Reset this account?", "The existing peer store will be archived. FullTime will create a new identity on this iPhone.", [{ text: "Cancel", style: "cancel" }, { text: "Reset", style: "destructive", onPress: () => void run(onReset) }])} /></Card>
-        </> : <><Empty text="Sign in to manage this device identity." /><Button label="Close" onPress={onClose} /></>}
+        </> : <Button label="Close" onPress={onClose} />}
         {error ? <ErrorText text={error} /> : null}
       </ScrollView>
     </SafeAreaView>
@@ -469,13 +558,118 @@ function AccountSettings({ open, session, request, onSession, onClose, onReset }
 function MatchTab({ state, busy, onAnswer, onRefresh, refreshing }: { state: Json; busy: boolean; onAnswer(callId: string, optionId: string): Promise<void>; onRefresh(): Promise<void>; refreshing: boolean }) {
   const [showAllCalls, setShowAllCalls] = useState(false);
   const [showTimeline, setShowTimeline] = useState(false);
+  const [voiceOn, setVoiceOn] = useState(() => isMatchVoiceEnabledSync());
   const card = state.fixture;
   const fixture = card.fixture;
   const calls = state.calls ?? [];
   const featuredCalls = showAllCalls ? calls : calls.filter((view: Json) => view.status === "open").slice(0, 1).concat(calls.filter((view: Json) => view.status !== "open").slice(-1));
   const timeline = state.timeline ?? [];
+  const marketSays = state.marketSays ?? [];
   const visibleTimeline = showTimeline ? timeline : timeline.slice(-3);
+  const seenVoice = useRef<Set<string>>(new Set());
+  const seenMarkets = useRef<Set<string>>(new Set());
+  const seenAnswers = useRef<Set<string>>(new Set());
+  const catchUpDone = useRef(false);
+
+  useEffect(() => {
+    setVoiceOn(isMatchVoiceEnabledSync());
+  }, []);
+
+  useEffect(() => {
+    if (!isMatchVoiceEnabledSync() || !getApiKeySync()) return;
+    const home = String(fixture?.home?.name ?? "Home");
+    const away = String(fixture?.away?.name ?? "Away");
+    const teams = { home, away };
+
+    if (!catchUpDone.current) {
+      catchUpDone.current = true;
+      for (const event of timeline) seenVoice.current.add(String(event.id ?? event.messageId ?? ""));
+      for (const m of marketSays) seenMarkets.current.add(String(m.id));
+      for (const c of calls) {
+        if (c.myAnswer) seenAnswers.current.add(String(c.myAnswer.answerId ?? c.call?.id));
+      }
+      const openCall = [...calls].reverse().find((c: Json) => c.status === "open" && Number(c.total) > 0);
+      let majoritySide: string | null = null;
+      let majorityShare: number | null = null;
+      if (openCall) {
+        let best = 0;
+        for (const opt of openCall.call?.options ?? []) {
+          const n = Number(openCall.tally?.[opt.id] ?? 0);
+          if (n > best) {
+            best = n;
+            majoritySide = String(opt.label);
+            majorityShare = openCall.total ? best / Number(openCall.total) : null;
+          }
+        }
+      }
+      enqueueMatchVoice(catchMeUpClips({
+        teams,
+        phase: String(card.phase ?? "live"),
+        statusLabel: String(card.status ?? "").replace(/-/g, " "),
+        score: card.score ?? null,
+        minute: card.minute ?? null,
+        majoritySide,
+        majorityShare,
+        hottestMarketLine: marketSays.length ? String(marketSays[marketSays.length - 1]?.text ?? "") : null,
+        lastBigCall: calls.length ? String(calls[calls.length - 1]?.call?.prompt ?? "") : null,
+      }));
+      return;
+    }
+
+    for (const event of timeline) {
+      const id = String(event.id ?? event.messageId ?? "");
+      if (!id || seenVoice.current.has(id)) continue;
+      seenVoice.current.add(id);
+      const impact = ["goal", "own-goal", "penalty-scored", "red-card", "second-yellow"].includes(String(event.kind ?? event.type));
+      const mine = calls.filter((c: Json) => c.status === "open" && c.myAnswer);
+      const standLabel = mine[0]
+        ? String((mine[0].call?.options ?? []).find((o: Json) => o.id === mine[0].myAnswer?.optionId)?.label ?? mine[0].call?.prompt ?? "")
+        : null;
+      const clips = boothClipsForReleasedEvent({
+        event,
+        teams,
+        marketText: marketSays.length ? String(marketSays[marketSays.length - 1]?.text ?? "") : null,
+        openStandsTouching: calls.filter((c: Json) => c.status === "open" && Number(c.total) > 0).length,
+        personal: {
+          hasOpenStand: mine.length > 0,
+          standLabel,
+          underPressure: mine.length > 0 && impact,
+          youreUpIfHolds: mine.length > 0 && ["goal", "penalty-scored"].includes(String(event.kind ?? event.type)),
+          streakLength: 0,
+          streakAtRisk: false,
+        },
+      });
+      if (clips.length) enqueueMatchVoice(clips);
+    }
+
+    for (const m of marketSays) {
+      const id = String(m.id);
+      if (seenMarkets.current.has(id)) continue;
+      seenMarkets.current.add(id);
+      enqueueMatchVoice(boothClipsForRoomMoment({ kind: "market-says", label: String(m.text ?? "") }));
+    }
+
+    for (const c of calls) {
+      if (!c.myAnswer) continue;
+      const aid = String(c.myAnswer.answerId ?? `${c.call?.id}:mine`);
+      if (seenAnswers.current.has(aid)) continue;
+      seenAnswers.current.add(aid);
+      const label = String((c.call?.options ?? []).find((o: Json) => o.id === c.myAnswer?.optionId)?.label ?? c.call?.prompt ?? "stand");
+      enqueueMatchVoice(boothClipsForRoomMoment({ kind: "stand-locked", label, detail: String(c.call?.prompt ?? ""), personal: true }));
+    }
+  }, [timeline, marketSays, calls, fixture?.home?.name, fixture?.away?.name, card.phase, card.status, card.score, card.minute]);
+
   return <ScrollView style={styles.flex} contentContainerStyle={styles.tabContent} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.ink} />}>
+    <Pressable
+      style={styles.voiceChip}
+      onPress={() => void (async () => {
+        const next = !voiceOn;
+        await setMatchVoiceEnabled(next);
+        setVoiceOn(next);
+      })()}
+    >
+      <Text style={styles.voiceChipText}>{voiceOn ? (getApiKeySync() ? "📻 ROOM RADIO ON" : "📻 RADIO ON · ADD KEY") : "🔇 ROOM RADIO"}</Text>
+    </Pressable>
     <View style={styles.scoreCard}>
       <View style={styles.team}><CountryFlag country={fixture.home.country} teamName={fixture.home.name} /><Text style={styles.teamCode}>{fixture.home.shortName ?? fixture.home.country ?? fixture.home.name.slice(0, 3).toUpperCase()}</Text><Text style={styles.teamName}>{fixture.home.name}</Text></View>
       <View style={styles.scoreCenter}><Text style={styles.score}>{card.score ? `${card.score.home} — ${card.score.away}` : "—"}</Text><Text style={styles.liveState}>{card.phase === "live" ? `● ${card.minute != null ? `${card.minute}′` : "LIVE"}` : String(card.status).replace(/-/g, " ").toUpperCase()}</Text></View>
@@ -556,7 +750,25 @@ function FeedItem({ item, onReact, onVote, onThread, onDownload }: { item: Json;
   }
   const mine = Boolean(item.author?.isCurrentUser);
   const name = String(item.author?.displayName ?? "Room member");
-  return <View style={[styles.messageRow, mine && styles.messageRowMine]}><View style={[styles.avatar, mine && styles.avatarMine]}><Text style={[styles.avatarText, mine && styles.avatarTextMine]}>{name.split(/\s+/).map((part) => part[0]).join("").slice(0, 2).toUpperCase()}</Text></View><View style={[styles.messageColumn, mine && styles.messageColumnMine]}><View style={[styles.messageTop, mine && styles.messageTopMine]}><Text style={styles.messageAuthor}>{name}{item.author?.role === "creator" ? " · CREATOR" : item.author?.role === "moderator" ? " · MOD" : ""}</Text><Text style={styles.messageTime}>{new Date(Number(item.createdAt)).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</Text></View><View style={[styles.message, mine && styles.messageMine]}>{item.text ? <Text style={styles.messageText}>{item.text}</Text> : null}{item.attachment ? <Pressable onPress={() => void onDownload?.()} style={styles.attachment}><Text style={styles.attachmentName}>▣ {item.attachment.name}</Text><Text style={styles.bodyMuted}>{item.attachment.mimeType} · {formatBytes(Number(item.attachment.sizeBytes))}</Text><Text style={styles.attachmentAction}>OPEN VERIFIED COPY</Text></Pressable> : null}</View><View style={[styles.reactions, mine && styles.reactionsMine]}>{QUICK_REACTIONS.map((emoji) => <Pressable key={emoji} onPress={() => void onReact(emoji)} style={styles.reaction}><Text>{emoji}</Text></Pressable>)}{(item.reactions ?? []).filter((reaction: Json) => reaction.count).map((reaction: Json) => <Text key={reaction.emoji} style={styles.reactionCount}>{reaction.emoji} {reaction.count}</Text>)}{onThread ? <Pressable onPress={onThread} style={styles.threadAction}><Text style={styles.threadActionText}>↳ {Number(item.replyCount ?? 0)} REPLIES</Text></Pressable> : null}</View></View></View>;
+  const authorId = item.author?.userId != null ? String(item.author.userId) : undefined;
+  return <View style={[styles.messageRow, mine && styles.messageRowMine]}>
+    <PeerAvatar userId={authorId} displayName={name} size="md" isCurrentUser={mine} />
+    <View style={[styles.messageColumn, mine && styles.messageColumnMine]}>
+      <View style={[styles.messageTop, mine && styles.messageTopMine]}>
+        <Text style={styles.messageAuthor}>{name}{item.author?.role === "creator" ? " · CREATOR" : item.author?.role === "moderator" ? " · MOD" : ""}</Text>
+        <Text style={styles.messageTime}>{new Date(Number(item.createdAt)).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</Text>
+      </View>
+      <View style={[styles.message, mine && styles.messageMine]}>
+        {item.text ? <Text style={styles.messageText}>{item.text}</Text> : null}
+        {item.attachment ? <Pressable onPress={() => void onDownload?.()} style={styles.attachment}><Text style={styles.attachmentName}>▣ {item.attachment.name}</Text><Text style={styles.bodyMuted}>{item.attachment.mimeType} · {formatBytes(Number(item.attachment.sizeBytes))}</Text><Text style={styles.attachmentAction}>OPEN VERIFIED COPY</Text></Pressable> : null}
+      </View>
+      <View style={[styles.reactions, mine && styles.reactionsMine]}>
+        {QUICK_REACTIONS.map((emoji) => <Pressable key={emoji} onPress={() => void onReact(emoji)} style={styles.reaction}><Text>{emoji}</Text></Pressable>)}
+        {(item.reactions ?? []).filter((reaction: Json) => reaction.count).map((reaction: Json) => <Text key={reaction.emoji} style={styles.reactionCount}>{reaction.emoji} {reaction.count}</Text>)}
+        {onThread ? <Pressable onPress={onThread} style={styles.threadAction}><Text style={styles.threadActionText}>↳ {Number(item.replyCount ?? 0)} REPLIES</Text></Pressable> : null}
+      </View>
+    </View>
+  </View>;
 }
 
 function mobileSlipConfiguration(): MobileSlipConfiguration | null {
@@ -661,7 +873,17 @@ function ThreadOverlay({ roomId, item, closed, request, onRun, onClose }: { room
   const load = useCallback(async () => { try { setLoading(true); const page = await request<Json>("room.thread.page", { roomId, itemId: String(item.id), limit: 100 }); setReplies(chronologicalPage(page.items)); setError(null); } catch (reason) { setError(message(reason)); } finally { setLoading(false); } }, [item.id, request, roomId]);
   useEffect(() => { void load(); }, [load]);
   const send = () => onRun(async () => { await request("room.reply.send", { roomId, itemId: String(item.id), input: { text: text.trim() } }); setText(""); await load(); });
-  return <Modal animationType="slide" presentationStyle="pageSheet" onRequestClose={onClose}><SafeAreaView style={styles.safe}><View style={styles.threadHeader}><View><Text style={styles.eyebrow}>THREAD</Text><Text style={styles.cardTitle}>{replies.length} {replies.length === 1 ? "reply" : "replies"}</Text></View><Pressable onPress={onClose} style={styles.threadClose}><Text style={styles.threadCloseText}>×</Text></Pressable></View><ScrollView style={styles.flex} contentContainerStyle={styles.chatContent}><FeedItem item={item} onReact={async () => undefined} onVote={async () => undefined} />{loading ? <ActivityIndicator /> : null}{error ? <ErrorText text={error} /> : null}{replies.map((reply) => <View key={String(reply.id)} style={styles.message}><View style={styles.messageTop}><Text style={styles.messageAuthor}>{reply.author?.displayName ?? "Room member"}</Text><Text style={styles.messageTime}>{new Date(Number(reply.createdAt)).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</Text></View><Text style={styles.messageText}>{reply.text}</Text></View>)}</ScrollView>{!closed ? <View style={styles.composerRow}><TextInput style={styles.composerInput} value={text} onChangeText={setText} placeholder="Reply…" placeholderTextColor={colors.smoke} multiline maxLength={4000} /><Pressable disabled={!text.trim()} onPress={() => void send()} style={[styles.sendButton, !text.trim() && styles.disabled]}><Text style={styles.sendText}>↑</Text></Pressable></View> : null}</SafeAreaView></Modal>;
+  return <Modal animationType="slide" presentationStyle="pageSheet" onRequestClose={onClose}><SafeAreaView style={styles.safe}><View style={styles.threadHeader}><View><Text style={styles.eyebrow}>THREAD</Text><Text style={styles.cardTitle}>{replies.length} {replies.length === 1 ? "reply" : "replies"}</Text></View><Pressable onPress={onClose} style={styles.threadClose}><Text style={styles.threadCloseText}>×</Text></Pressable></View><ScrollView style={styles.flex} contentContainerStyle={styles.chatContent}><FeedItem item={item} onReact={async () => undefined} onVote={async () => undefined} />{loading ? <ActivityIndicator /> : null}{error ? <ErrorText text={error} /> : null}{replies.map((reply) => {
+    const replyName = String(reply.author?.displayName ?? "Room member");
+    const replyId = reply.author?.userId != null ? String(reply.author.userId) : undefined;
+    return <View key={String(reply.id)} style={styles.messageRow}>
+      <PeerAvatar userId={replyId} displayName={replyName} size="sm" isCurrentUser={Boolean(reply.author?.isCurrentUser)} />
+      <View style={styles.messageColumn}>
+        <View style={styles.messageTop}><Text style={styles.messageAuthor}>{replyName}</Text><Text style={styles.messageTime}>{new Date(Number(reply.createdAt)).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</Text></View>
+        <View style={styles.message}><Text style={styles.messageText}>{reply.text}</Text></View>
+      </View>
+    </View>;
+  })}</ScrollView>{!closed ? <View style={styles.composerRow}><TextInput style={styles.composerInput} value={text} onChangeText={setText} placeholder="Reply…" placeholderTextColor={colors.smoke} multiline maxLength={4000} /><Pressable disabled={!text.trim()} onPress={() => void send()} style={[styles.sendButton, !text.trim() && styles.disabled]}><Text style={styles.sendText}>↑</Text></Pressable></View> : null}</SafeAreaView></Modal>;
 }
 
 function formatBytes(bytes: number): string { if (bytes < 1024) return `${bytes} B`; if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KiB`; return `${(bytes / (1024 * 1024)).toFixed(1)} MiB`; }
@@ -693,7 +915,7 @@ function DetailsTab({ roomId, details, busy, onRun, request, onBack, onSession, 
     {invite?.status === "active" && !details.isClosed ? <Card><Text style={styles.cardEyebrow}>ACTIVE INVITE</Text><Text style={styles.cardTitle}>Bring your people.</Text><Text style={styles.bodyMuted}>{invite.viewerSuccessfulJoins ?? 0} successful joins through your invite.</Text><Button label="Share invite" onPress={() => void shareInvite()} /></Card> : null}
     {!invite && details.permissions.canInvite ? <Button label="Create invite" disabled={busy} onPress={() => void onRun(async () => { await request("room.invite.create", { roomId }); })} /> : null}
     <SectionTitle eyebrow="MEMBERS" title={`${details.members.length} in the room`} />
-    <Card>{details.members.map((member: Json) => <View key={String(member.userId)} style={styles.memberRow}><View style={styles.memberCopy}><Text style={styles.memberName}>{member.displayName}{member.isCurrentUser ? " · you" : ""}</Text><Text style={styles.memberRole}>{String(member.role).toUpperCase()}</Text></View>{!member.isCurrentUser ? <View style={styles.memberActions}><Pressable onPress={() => setReportMember(member)}><Text style={styles.smallAction}>REPORT</Text></Pressable>{details.permissions.canModerateMembers ? <><Pressable onPress={() => void onRun(async () => { await request("room.member.role", { roomId, userId: String(member.userId), role: member.role === "moderator" ? "member" : "moderator" }); await onRefresh(); })}><Text style={styles.smallAction}>{member.role === "moderator" ? "DEMOTE" : "MOD"}</Text></Pressable><Pressable onPress={() => Alert.alert("Remove member?", `${member.displayName} will lose room access.`, [{ text: "Cancel", style: "cancel" }, { text: "Remove", style: "destructive", onPress: () => void onRun(async () => { await request("room.member.remove", { roomId, userId: String(member.userId) }); await onRefresh(); }) }])}><Text style={[styles.smallAction, styles.dangerText]}>REMOVE</Text></Pressable></> : null}</View> : <View style={[styles.presence, member.isOnline && styles.presenceOnline]} />}</View>)}</Card>
+    <Card>{details.members.map((member: Json) => <View key={String(member.userId)} style={styles.memberRow}><PeerAvatar userId={String(member.userId)} displayName={String(member.displayName)} size="md" isCurrentUser={Boolean(member.isCurrentUser)} style={styles.memberAvatar} /><View style={styles.memberCopy}><Text style={styles.memberName}>{member.displayName}{member.isCurrentUser ? " · you" : ""}</Text><Text style={styles.memberRole}>{String(member.role).toUpperCase()}</Text></View>{!member.isCurrentUser ? <View style={styles.memberActions}><Pressable onPress={() => setReportMember(member)}><Text style={styles.smallAction}>REPORT</Text></Pressable>{details.permissions.canModerateMembers ? <><Pressable onPress={() => void onRun(async () => { await request("room.member.role", { roomId, userId: String(member.userId), role: member.role === "moderator" ? "member" : "moderator" }); await onRefresh(); })}><Text style={styles.smallAction}>{member.role === "moderator" ? "DEMOTE" : "MOD"}</Text></Pressable><Pressable onPress={() => Alert.alert("Remove member?", `${member.displayName} will lose room access.`, [{ text: "Cancel", style: "cancel" }, { text: "Remove", style: "destructive", onPress: () => void onRun(async () => { await request("room.member.remove", { roomId, userId: String(member.userId) }); await onRefresh(); }) }])}><Text style={[styles.smallAction, styles.dangerText]}>REMOVE</Text></Pressable></> : null}</View> : <View style={[styles.presence, member.isOnline && styles.presenceOnline]} />}</View>)}</Card>
     {reportMember ? <Card><Text style={styles.cardEyebrow}>REPORT {String(reportMember.displayName).toUpperCase()}</Text><View style={styles.reasonGrid}>{["harassment", "hate", "misinformation", "sexual-content", "spam", "threats", "other"].map((reason) => <Pressable key={reason} onPress={() => setReportReason(reason)} style={[styles.reason, reportReason === reason && styles.reasonActive]}><Text style={styles.reasonText}>{reason.replace("-", " ").toUpperCase()}</Text></Pressable>)}</View><Field value={reportNote} onChangeText={setReportNote} placeholder="Optional context for room moderators" multiline maxLength={1000} /><View style={styles.inline}><Button quiet label="Cancel" onPress={() => setReportMember(null)} /><Button label="Submit report" disabled={busy} onPress={() => void onRun(async () => { await request("room.report", { roomId, target: { kind: "member", id: String(reportMember.userId) }, reason: reportReason, note: reportNote.trim() }); setReportMember(null); setReportNote(""); })} /></View></Card> : null}
     {details.permissions.canModerateMembers ? <><DisclosureButton label="Moderation inbox" meta={reports ? `${reports.length} reports` : "Private reports"} open={moderationOpen} onPress={() => setModerationOpen((open) => !open)} />{moderationOpen ? <><Button quiet label={reports ? "Refresh reports" : "Load reports"} disabled={busy} onPress={() => void onRun(async () => setReports(await request<Json[]>("room.reports.list", { roomId })))} />{reports?.length === 0 ? <Empty text="No reports in this room." /> : reports?.map((report) => <Card key={String(report.reportId)}><Text style={styles.cardEyebrow}>{String(report.reason).replace("-", " ").toUpperCase()}</Text><Text style={styles.body}>Target: {report.target?.kind} · {report.target?.id}</Text>{report.note ? <Text style={styles.bodyMuted}>{report.note}</Text> : null}<Text style={styles.messageTime}>{new Date(Number(report.createdAt)).toLocaleString()}</Text></Card>)}</> : null}</> : null}
     {details.permissions.canRename || details.permissions.canSetSlowMode ? <><DisclosureButton label="Creator controls" meta="Name and slow mode" open={controlsOpen} onPress={() => setControlsOpen((open) => !open)} />{controlsOpen ? <Card>{details.permissions.canRename ? <><Field value={rename} onChangeText={setRename} placeholder={details.room.name} maxLength={48} /><Button quiet label="Rename room" disabled={busy || !rename.trim()} onPress={() => void onRun(async () => { await request("room.rename", { roomId, name: rename.trim() }); setRename(""); })} /></> : null}{details.permissions.canSetSlowMode ? <><Field value={slow} onChangeText={setSlow} placeholder="Slow mode seconds (0–60)" keyboardType="number-pad" /><Button quiet label="Apply slow mode" disabled={busy || !/^\d+$/.test(slow) || Number(slow) > 60} onPress={() => void onRun(async () => { await request("room.slow-mode", { roomId, seconds: Number(slow) }); })} /></> : null}</Card> : null}</> : null}
@@ -720,6 +942,8 @@ const serif = Platform.select({ ios: "New York", android: "serif" });
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.parchment }, flex: { flex: 1 }, center: { flex: 1, alignItems: "center", justifyContent: "center", padding: 28 }, spinner: { marginTop: 28 }, centerCopy: { marginTop: 20, maxWidth: 540, textAlign: "center", color: colors.graphite, fontFamily: mono, fontSize: 14, lineHeight: 21 },
   onboarding: { flexGrow: 1, justifyContent: "center", padding: 28, gap: 18 }, home: { padding: 20, paddingBottom: 60, gap: 14 }, focusFlow: { padding: 20, paddingBottom: 60, gap: 16 }, flowHeader: { flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 8 }, flowBack: { width: 38, height: 38, alignItems: "center", justifyContent: "center", borderRadius: 19, borderWidth: 1, borderColor: colors.ash }, flowBackText: { color: colors.ink, fontSize: 28, lineHeight: 30 }, homeActions: { gap: 10, marginTop: 10 }, homeActionPrimary: { minHeight: 118, borderRadius: 20, backgroundColor: colors.ink, padding: 18, justifyContent: "center" }, homeAction: { minHeight: 104, borderRadius: 20, borderWidth: 1, borderColor: colors.ash, backgroundColor: "rgba(251,250,247,0.62)", padding: 18, justifyContent: "center" }, homeActionEyebrow: { color: colors.smoke, fontFamily: mono, fontSize: 8, letterSpacing: 1.2 }, homeActionTitle: { color: colors.ink, fontFamily: serif, fontSize: 25, marginTop: 4 }, homeActionArrow: { position: "absolute", right: 18, bottom: 16, color: colors.blue, fontSize: 20 }, homeActionLight: { color: colors.white }, topRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }, headerActions: { flexDirection: "row", alignItems: "center", gap: 5 }, settingsButton: { width: 36, height: 36, borderRadius: 18, borderWidth: 1, borderColor: colors.ash, alignItems: "center", justifyContent: "center" }, settingsGlyph: { color: colors.ink, fontSize: 17 }, settingsHeader: { minHeight: 86, paddingHorizontal: 20, flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderBottomWidth: 1, borderBottomColor: colors.ash }, settingsContent: { padding: 20, paddingBottom: 60, gap: 14 }, accountId: { color: colors.graphite, fontFamily: mono, fontSize: 10, lineHeight: 16 }, brand: { flexDirection: "row", alignItems: "center", gap: 7, flexShrink: 1 }, wordmark: { color: colors.ink, fontFamily: serif, fontSize: Platform.OS === "android" ? 25 : 30, fontWeight: "700" }, eyebrow: { color: colors.smoke, fontFamily: mono, fontSize: 10, letterSpacing: 1.7 }, hero: { color: colors.ink, fontFamily: serif, fontSize: 42, lineHeight: 45, textAlign: "center" }, heading: { color: colors.ink, fontFamily: serif, fontSize: 34 }, subheading: { color: colors.ink, fontFamily: serif, fontSize: 25, marginTop: 3 }, body: { color: colors.ink, fontSize: 14, lineHeight: 21 }, bodyMuted: { color: colors.smoke, fontSize: 13, lineHeight: 19 }, transport: { flexDirection: "row", alignItems: "center", borderWidth: 1, borderColor: colors.ash, borderRadius: 20, paddingHorizontal: 8, paddingVertical: 6 }, transportText: { color: colors.graphite, fontFamily: mono, fontSize: 9, textTransform: "uppercase" }, dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: colors.gold, marginRight: 5 }, dotOnline: { backgroundColor: colors.green },
+  peerPreview: { flexDirection: "row", alignItems: "center", gap: 12, borderWidth: 1, borderColor: colors.ash, borderRadius: 18, backgroundColor: "rgba(251,250,247,0.72)", padding: 14 }, peerPreviewCopy: { flex: 1, minWidth: 0, gap: 4 }, peerPreviewName: { color: colors.ink, fontFamily: serif, fontSize: 22 }, reshuffleButton: { minHeight: 36, borderRadius: 18, borderWidth: 1, borderColor: colors.ash, paddingHorizontal: 12, alignItems: "center", justifyContent: "center" }, reshuffleText: { color: colors.ink, fontFamily: mono, fontSize: 10, letterSpacing: 1 }, welcomeRow: { flexDirection: "row", alignItems: "center", gap: 14 }, welcomeName: { flex: 1 }, memberAvatar: { marginRight: 4 },
+  voiceToggleRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderWidth: 1, borderColor: colors.ash, borderRadius: 14, paddingHorizontal: 14, paddingVertical: 12 }, voiceChip: { alignSelf: "flex-start", borderWidth: 1, borderColor: colors.ash, borderRadius: 20, backgroundColor: "rgba(251,250,247,0.7)", paddingHorizontal: 12, paddingVertical: 8 }, voiceChipText: { color: colors.graphite, fontFamily: mono, fontSize: 9, letterSpacing: 0.8 },
   sectionTitle: { marginTop: 18, marginBottom: 5 }, card: { borderWidth: 1, borderColor: colors.ash, borderRadius: 18, backgroundColor: "rgba(251,250,247,0.62)", padding: 17, gap: 12 }, cardStrong: { borderColor: colors.ink }, cardEyebrow: { color: colors.smoke, fontFamily: mono, fontSize: 10, letterSpacing: 1.2 }, cardTitle: { color: colors.ink, fontFamily: serif, fontSize: 21 }, pollQuestion: { color: colors.ink, fontFamily: serif, fontSize: 24, lineHeight: 29 }, detailsTitle: { color: colors.ink, fontFamily: serif, fontSize: 29 }, field: { minHeight: 48, borderWidth: 1, borderColor: colors.ash, borderRadius: 13, backgroundColor: colors.white, color: colors.ink, paddingHorizontal: 14, paddingVertical: 12, fontSize: 15 }, fieldMultiline: { minHeight: 74, textAlignVertical: "top" }, button: { minHeight: 47, borderRadius: 24, alignItems: "center", justifyContent: "center", paddingHorizontal: 18, backgroundColor: colors.ink }, buttonQuiet: { backgroundColor: "transparent", borderWidth: 1, borderColor: colors.ash }, buttonText: { color: colors.white, fontFamily: mono, fontSize: 11, letterSpacing: 1, textTransform: "uppercase" }, buttonQuietText: { color: colors.ink }, disabled: { opacity: 0.4 }, inline: { flexDirection: "row", justifyContent: "flex-end", gap: 8 }, banner: { backgroundColor: colors.mist, borderWidth: 1, borderColor: colors.ash, borderRadius: 12, padding: 11 }, bannerText: { color: colors.graphite, fontFamily: mono, fontSize: 9, letterSpacing: 1, textAlign: "center" }, error: { borderWidth: 1, borderColor: colors.crimson, borderRadius: 12, padding: 13, backgroundColor: "#F9E9E8" }, errorCompact: { marginHorizontal: 12, marginTop: 8 }, errorText: { color: colors.crimson, fontFamily: mono, fontSize: 11, lineHeight: 17 }, empty: { borderWidth: 1, borderColor: colors.ash, borderRadius: 18, borderStyle: "dashed", padding: 22, alignItems: "center" },
   invitePreview: { borderLeftWidth: 2, borderLeftColor: colors.green, paddingLeft: 12, gap: 4 }, scannerSafe: { flex: 1, backgroundColor: colors.ink }, scannerHeader: { minHeight: 86, paddingHorizontal: 20, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }, eyebrowLight: { color: colors.ash, fontFamily: mono, fontSize: 9, letterSpacing: 1.5 }, scannerTitle: { color: colors.white, fontFamily: serif, fontSize: 29, marginTop: 3 }, scannerClose: { color: colors.white, fontSize: 30 }, scannerCenter: { flex: 1, justifyContent: "center", padding: 28, gap: 14 }, scannerCopy: { color: colors.white, fontSize: 16, lineHeight: 24, textAlign: "center" }, cameraFrame: { flex: 1, overflow: "hidden", marginHorizontal: 18, borderWidth: 1, borderColor: colors.ash }, scanTarget: { position: "absolute", left: "12%", right: "12%", top: "23%", aspectRatio: 1, borderWidth: 1, borderColor: "rgba(255,255,255,0.65)", padding: 9 }, scanCorners: { flex: 1, borderWidth: 3, borderColor: colors.white }, scannerHint: { color: colors.ash, fontFamily: mono, fontSize: 9, lineHeight: 15, textAlign: "center", padding: 20 }, scannerError: { position: "absolute", left: 18, right: 18, bottom: 70, backgroundColor: colors.parchment, padding: 12, gap: 9 },
   roomRow: { flexDirection: "row", alignItems: "center", borderWidth: 1, borderColor: colors.ash, borderRadius: 16, backgroundColor: "rgba(251,250,247,0.5)", padding: 16 }, roomRowMain: { flex: 1, gap: 4 }, roomRowName: { color: colors.ink, fontFamily: mono, fontSize: 13 }, chevron: { color: colors.ink, fontSize: 28 }, fixtureCard: { borderWidth: 1, borderColor: colors.ash, borderRadius: 18, backgroundColor: "rgba(251,250,247,0.45)", padding: 17, gap: 12 }, fixtureSelected: { borderColor: colors.ink, backgroundColor: colors.white }, fixtureTop: { flexDirection: "row", justifyContent: "space-between" }, fixtureStatus: { color: colors.smoke, fontFamily: mono, fontSize: 9 }, live: { color: colors.crimson }, fixtureTeamsRow: { flexDirection: "row", alignItems: "center", flexWrap: "wrap", gap: 7 }, fixtureTeams: { color: colors.ink, fontFamily: serif, fontSize: 18 }, fixtureScore: { color: colors.graphite, fontFamily: mono, fontSize: 12 },

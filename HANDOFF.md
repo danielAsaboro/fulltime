@@ -30,14 +30,37 @@
 - Shared pure projections: `projectMatchStory` and `projectCallStreak` (tests green).
 - Room pulse: feed-backed match story card, latest Market Says, Fan IQ strip with
   streak + top-3 board, seed banter chips that fill the real composer (Autobase write).
-- Spoiler-safe browser TTS on released timeline events only (`MatchCalloutToggle`).
-- Peer UX: auto adjective-noun display names with reshuffle on sign-in, create room,
-  and join; deterministic geometric `PeerAvatar` on feed, threads, header, members.
+- **Room radio (web + desktop + mobile) — social second screen, not stadium PA:**
+  Product narrative is a peer-room booth (ambient second screen), not play-by-play
+  PA and not “spoiler-safe” as the headline. Implementation still speaks only from
+  already-visible room state (MatchSync release). Capabilities:
+  - **Booth:** stands, polls, Market Says, released events with **odds-as-drama**
+  - **Your book:** personal open stands / Fan IQ streak only
+  - **Catch-me-up** on room join (score, room temperature, hottest market, last call)
+  - House style: calm desk vs hype bench
+  - Scripts: `packages/shared/src/match-voice.ts` (+ mobile mirror)
+  - Web/desktop: `useRoomRadio` + `elevenlabs-consumer` + `POST /api/tts`
+  - Consumer may paste their ElevenLabs key (device-local); host
+    `ELEVENLABS_API_KEY` is builder-only via gitignored `.env.local`
+  - Mobile: SecureStore key + direct ElevenLabs + `expo-av`
+- **Peer UX parity (web + desktop loopback + mobile):** auto adjective-noun
+  display names with reshuffle; deterministic geometric `PeerAvatar` on feed,
+  threads, members, home, settings. Mobile: `apps/mobile/src/peer-*`,
+  `author-style.ts`.
 - Call cards use “Back your stand” framing; invite share copies challenge-style text.
 - Tournament record share card copy improved on `/record`.
 - Open Graph / Twitter cards point at compressed `/images/og.jpg`.
 - Landing/marketing assets and multi-device evidence remain as previously dogfooded;
   iPhone third-peer join and public Slip money remain open (see remaining below).
+
+### Verify before demo
+
+    npm --workspace @fulltime/shared test
+    npm --workspace @fulltime/web run typecheck
+    npm --workspace @fulltime/web run build -- --webpack
+    npm --workspace @fulltime/mobile run typecheck
+    npm --workspace @fulltime/mobile test
+
 
 ## Invariants
 

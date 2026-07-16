@@ -15,7 +15,7 @@ import { CallCard } from "@/components/call-card";
 import { EventFeed } from "@/components/event-feed";
 import { FanIqStrip } from "@/components/fan-iq-strip";
 import { MarketSaysCard } from "@/components/market-says-card";
-import { MatchCalloutToggle, useMatchCallouts } from "@/components/match-callouts";
+import { MatchCalloutToggle, useRoomRadio } from "@/components/match-callouts";
 import { MatchStoryCard } from "@/components/match-story-card";
 import { PressureIndicator } from "@/components/pressure-indicator";
 import { ReceiptChip } from "@/components/receipt-chip";
@@ -227,7 +227,7 @@ function RoomOverviewSidebar({ roomId, state, details, canParticipate, onAnswer,
       }),
     [match, state.fixture.minute, state.fixture.phase, state.pressure, state.timeline],
   );
-  useMatchCallouts(state.timeline, match.home.name, match.away.name);
+  useRoomRadio(roomId, state);
   const latestMarketSays = state.marketSays.slice(-3).reverse();
   return (
     <aside className="hidden min-h-0 overflow-y-auto py-5 lg:block">

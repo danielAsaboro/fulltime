@@ -1,7 +1,7 @@
 "use client";
 
 import { RefreshCw } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { useData } from "@/lib/data";
 import { generateDisplayName } from "@/lib/peer-identity";
@@ -24,13 +24,9 @@ export function SignInModal({
   onSignedIn?: () => void;
 }) {
   const { signIn } = useData();
-  const [name, setName] = useState("");
+  const [name, setName] = useState(() => generateDisplayName());
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (open && !name) setName(generateDisplayName());
-  }, [open, name]);
 
   const reshuffle = () => {
     setName(generateDisplayName());

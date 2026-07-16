@@ -28,6 +28,7 @@ export * from "./social";
 export * from "./media";
 export * from "./market-says";
 export * from "./match-intelligence";
+export * from "./match-voice";
 export * from "./receipt-state";
 export * from "./records";
 export * from "./highlights";
