@@ -30,6 +30,8 @@ export function RoomComposer({
   fixture,
   onAttachMarket,
   onTypingChange,
+  draftText,
+  onDraftTextChange,
 }: {
   canParticipate: boolean;
   roomClosed?: boolean;
@@ -41,8 +43,16 @@ export function RoomComposer({
   fixture?: Fixture;
   onAttachMarket?: (input: RoomMarketReference & { pollId: string }) => Promise<void>;
   onTypingChange?: (typing: boolean) => void;
+  /** Optional controlled draft (seed banter one-tap fill). */
+  draftText?: string;
+  onDraftTextChange?: (text: string) => void;
 }) {
-  const [text, setText] = useState("");
+  const [internalText, setInternalText] = useState("");
+  const text = draftText !== undefined ? draftText : internalText;
+  const setText = (value: string) => {
+    if (onDraftTextChange) onDraftTextChange(value);
+    else setInternalText(value);
+  };
   const [emojiOpen, setEmojiOpen] = useState(false);
   const [pollOpen, setPollOpen] = useState(false);
   const [sending, setSending] = useState(false);
@@ -196,7 +206,7 @@ export function RoomComposer({
                   key={emoji}
                   type="button"
                   onClick={() => {
-                    setText((value) => `${value}${emoji}`.slice(0, MAX_MESSAGE_LENGTH));
+                    setText(`${text}${emoji}`.slice(0, MAX_MESSAGE_LENGTH));
                     setEmojiOpen(false);
                     inputRef.current?.focus();
                   }}

@@ -65,7 +65,14 @@ export function CallCard({
     <section className={cn("rounded-card border bg-parchment p-5", view.status === "settled" ? "border-off-black" : "border-ash", className)}>
       <div className="mb-3 flex items-start justify-between gap-4">
         <div className="space-y-2">
-          <span className="inline-flex rounded-pill border border-ash px-2.5 py-1 font-mono text-caption uppercase tracking-[0.08em] text-smoke">{difficulty}</span>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex rounded-pill border border-ash px-2.5 py-1 font-mono text-caption uppercase tracking-[0.08em] text-smoke">{difficulty}</span>
+            {view.status === "open" && !view.myAnswer ? (
+              <span className="inline-flex rounded-pill border border-off-black/20 bg-off-black px-2.5 py-1 font-mono text-caption uppercase tracking-[0.08em] text-parchment">
+                Back your stand
+              </span>
+            ) : null}
+          </div>
           <h3 className="text-subheading text-off-black">{view.call.prompt}</h3>
         </div>
         {view.status === "open" ? <CountdownRing progress={progress} center={String(left)} tone={left <= 5 ? "urgent" : "ink"} /> : <StatePill state={statusPill} />}

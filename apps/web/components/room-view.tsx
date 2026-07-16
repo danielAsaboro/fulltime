@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronDown, ChevronLeft, ChevronUp, Copy, Link2, ListTree, LockKeyhole, ReceiptText, Share2, Users } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronUp, Copy, Link2, ListTree, LockKeyhole, ReceiptText, Share2, Sparkles, Users } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
+import { projectMatchStory } from "@fulltime/shared";
 import { AccountSettingsButton } from "@/components/account-settings";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -12,6 +13,10 @@ import { cn } from "@/lib/cn";
 import { PollCard } from "@/components/poll-card";
 import { CallCard } from "@/components/call-card";
 import { EventFeed } from "@/components/event-feed";
+import { FanIqStrip } from "@/components/fan-iq-strip";
+import { MarketSaysCard } from "@/components/market-says-card";
+import { MatchCalloutToggle, useMatchCallouts } from "@/components/match-callouts";
+import { MatchStoryCard } from "@/components/match-story-card";
 import { PressureIndicator } from "@/components/pressure-indicator";
 import { ReceiptChip } from "@/components/receipt-chip";
 import { RoomComposer } from "@/components/room-composer";
@@ -19,13 +24,15 @@ import { CompactInviteCard, RoomDetails, RoomMemberList } from "@/components/roo
 import { RoomFeed } from "@/components/room-feed";
 import { RoomThreadOverlays } from "@/components/room-thread";
 import { Scoreline } from "@/components/scoreline";
+import { PeerAvatar } from "@/components/peer-avatar";
+import { SeedBanterStrip } from "@/components/seed-banter";
 import { SignInModal } from "@/components/sign-in-modal";
 import { Button } from "@/components/ui/button";
 import { Container, EmptyState, ErrorState, Logo, Skeleton } from "@/components/ui/primitives";
 import { Sheet } from "@/components/ui/sheet";
 
 type RoomTab = "chat" | "polls" | "details";
-type MobileSheet = "calls" | "timeline" | "receipts" | "members" | null;
+type MobileSheet = "calls" | "timeline" | "receipts" | "members" | "pulse" | null;
 type PollStage = "active" | "completed";
 const EMPTY_ROOM_ITEMS: readonly RoomFeedItem[] = [];
 
@@ -41,6 +48,7 @@ export function RoomView({ roomId }: { roomId: string }) {
   const [threadItemId, setThreadItemId] = useState<string | null>(null);
   const [details, setDetails] = useState<RoomDetailsModel | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
+  const [composerDraft, setComposerDraft] = useState("");
   const state = live.data;
   const history = useRoomHistory(roomId, state?.items ?? EMPTY_ROOM_ITEMS);
   const detailsRevision = state
@@ -107,10 +115,24 @@ export function RoomView({ roomId }: { roomId: string }) {
           <section className="flex h-full min-h-0 min-w-0 flex-col border-x border-ash">
             <RoomTabs tab={tab} unread={state.unreadState.count} pollCount={polls.length} onChange={setTab} />
             {actionError ? <div className="flex shrink-0 items-center justify-between gap-3 border-b border-crimson/20 bg-coral/15 px-4 py-2 font-mono text-caption text-crimson" role="alert"><span>{actionError}</span><button type="button" onClick={() => setActionError(null)} aria-label="Dismiss error">×</button></div> : null}
-            <MobileRoomTools calls={state.calls.length} timeline={state.timeline.length} receipts={state.receipts.length} members={state.members.length} onOpen={setMobileSheet} />
+            <MobileRoomTools calls={state.calls.length} timeline={state.timeline.length} receipts={state.receipts.length} members={state.members.length} marketSays={state.marketSays.length} onOpen={setMobileSheet} />
 
             {tab === "chat" ? (
               <>
+                {history.items.length < 4 ? (
+                  <SeedBanterStrip
+                    fixture={state.fixture.fixture}
+                    roomName={details?.room.name ?? room.data.room.name}
+                    canPost={canParticipate}
+                    onPick={(text) => {
+                      if (!canParticipate) {
+                        setSignInOpen(true);
+                        return;
+                      }
+                      setComposerDraft(text);
+                    }}
+                  />
+                ) : null}
                 <RoomFeed
                   items={history.items}
                   hasOlder={history.hasMore}
@@ -134,12 +156,18 @@ export function RoomView({ roomId }: { roomId: string }) {
                   roomClosed={details?.isClosed}
                   slowModeSeconds={details?.slowModeSeconds}
                   onRequireSignIn={() => setSignInOpen(true)}
-                  onSend={(input) => client.sendMessage(roomId, input).then(() => undefined)}
-                  onSendAttachment={(file, text) => client.uploadAttachment(roomId, file, text).then(() => undefined)}
+                  onSend={(input) => client.sendMessage(roomId, input).then(() => {
+                    setComposerDraft("");
+                  })}
+                  onSendAttachment={(file, text) => client.uploadAttachment(roomId, file, text).then(() => {
+                    setComposerDraft("");
+                  })}
                   onCreatePoll={(input) => client.createPoll(roomId, input)}
                   fixture={state.fixture.fixture}
                   onAttachMarket={(input) => client.attachMarketReference(roomId, input).then(() => undefined)}
                   onTypingChange={(typing) => { void client.setTyping(roomId, typing).catch(() => undefined); }}
+                  draftText={composerDraft}
+                  onDraftTextChange={setComposerDraft}
                 />
               </>
             ) : null}
@@ -185,16 +213,36 @@ function RoomOverviewSidebar({ roomId, state, details, canParticipate, onAnswer,
   const [callsOpen, setCallsOpen] = useState(false);
   const [receiptsOpen, setReceiptsOpen] = useState(false);
   const [timelineOpen, setTimelineOpen] = useState(true);
+  const match = state.fixture.fixture;
+  const story = useMemo(
+    () =>
+      projectMatchStory({
+        fixtureId: match.id,
+        homeName: match.home.shortName ?? match.home.name,
+        awayName: match.away.shortName ?? match.away.name,
+        events: state.timeline,
+        pressure: state.pressure,
+        minute: state.fixture.minute,
+        phase: state.fixture.phase,
+      }),
+    [match, state.fixture.minute, state.fixture.phase, state.pressure, state.timeline],
+  );
+  useMatchCallouts(state.timeline, match.home.name, match.away.name);
+  const latestMarketSays = state.marketSays.slice(-3).reverse();
   return (
     <aside className="hidden min-h-0 overflow-y-auto py-5 lg:block">
       <div className="space-y-4">
         <section className="border border-ash bg-white/35 p-5"><Scoreline home={state.fixture.fixture.home} away={state.fixture.fixture.away} score={state.fixture.score} status={state.fixture.status} minute={state.fixture.minute} /><PressureIndicator pressure={state.pressure} className="mt-5 border-t border-ash pt-4" /></section>
+        <MatchStoryCard story={story} />
+        {latestMarketSays.length ? (
+          <div className="space-y-2">
+            {latestMarketSays.map((card) => (
+              <MarketSaysCard key={card.id} card={card} />
+            ))}
+          </div>
+        ) : null}
+        <FanIqStrip iq={state.fanIq} receipts={state.receipts} />
         {details && !details.isClosed && details.permissions.canInvite ? <CompactInviteCard details={details} onOpen={onInvite} /> : null}
-        <div className="grid grid-cols-3 gap-px border border-ash bg-ash">
-          <MiniStat label="Rank" value={state.fanIq.roomRank ? `#${state.fanIq.roomRank}` : "—"} />
-          <MiniStat label="Fan IQ" value={state.fanIq.fanIq} />
-          <MiniStat label="Members" value={state.members.length} />
-        </div>
         <SidebarPanel title="Timeline" count={state.timeline.length} open={timelineOpen} onToggle={() => setTimelineOpen(!timelineOpen)} icon={<ListTree className="size-4" />}><EventFeed events={timelineOpen ? state.timeline : state.timeline.slice(-1)} /></SidebarPanel>
         <SidebarPanel title="Receipts" count={state.receipts.length} open={receiptsOpen} onToggle={() => setReceiptsOpen(!receiptsOpen)} icon={<ReceiptText className="size-4" />}><ReceiptList receipts={receiptsOpen ? state.receipts : state.receipts.slice(-1)} /></SidebarPanel>
         <SidebarPanel title="Match calls" count={state.calls.length} open={callsOpen} onToggle={() => setCallsOpen(!callsOpen)} icon={<LockKeyhole className="size-4" />}><CallList roomId={roomId} state={state} canParticipate={canParticipate} onAnswer={onAnswer} compact={!callsOpen} /></SidebarPanel>
@@ -247,7 +295,22 @@ function RoomHeader({
             </div>
             <p className="mt-0.5 text-[10px] uppercase tracking-[0.08em] text-smoke">Encrypted Pear room</p>
           </div>
-          <button type="button" onClick={onMembers} className="hidden items-center gap-2 rounded-full border border-ash px-2 py-1.5 sm:flex" aria-label={`${members.length} members`}><span className="flex -space-x-1.5">{members.slice(0, 3).map((member) => <span key={String(member.userId)} className="grid size-5 place-items-center rounded-full border border-parchment bg-periwinkle-mist text-[7px]">{member.displayName.slice(0, 1).toUpperCase()}</span>)}</span><span className="text-[10px] text-smoke">{members.length}</span></button>
+          <button type="button" onClick={onMembers} className="hidden items-center gap-2 rounded-full border border-ash px-2 py-1.5 sm:flex" aria-label={`${members.length} members`}>
+            <span className="flex -space-x-1.5">
+              {members.slice(0, 3).map((member) => (
+                <PeerAvatar
+                  key={String(member.userId)}
+                  userId={member.userId}
+                  displayName={member.displayName}
+                  size="xs"
+                  isCurrentUser={member.isCurrentUser}
+                  className="border-parchment"
+                />
+              ))}
+            </span>
+            <span className="text-[10px] text-smoke">{members.length}</span>
+          </button>
+          <MatchCalloutToggle className="inline-flex items-center gap-1.5 rounded-full border border-ash px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.06em] text-smoke hover:bg-white hover:text-off-black" />
           <AccountSettingsButton />
           <Button type="button" size="sm" className="px-3 sm:px-5" onClick={onInvite} disabled={!canInvite}><Link2 className="size-3.5" /><span className="hidden sm:inline">Invite</span></Button>
         </div>
@@ -277,9 +340,27 @@ function RoomTabs({ tab, unread, pollCount, onChange }: { tab: RoomTab; unread: 
   );
 }
 
-function MobileRoomTools({ calls, timeline, receipts, members, onOpen }: { calls: number; timeline: number; receipts: number; members: number; onOpen: (sheet: Exclude<MobileSheet, null>) => void }) { return <div className="flex h-10 shrink-0 items-center gap-1 overflow-x-auto border-b border-ash px-2 lg:hidden"><ToolButton icon={<LockKeyhole className="size-3.5" />} label="Calls" count={calls} onClick={() => onOpen("calls")} /><ToolButton icon={<ListTree className="size-3.5" />} label="Timeline" count={timeline} onClick={() => onOpen("timeline")} /><ToolButton icon={<ReceiptText className="size-3.5" />} label="Receipts" count={receipts} onClick={() => onOpen("receipts")} /><ToolButton icon={<Users className="size-3.5" />} label="Members" count={members} onClick={() => onOpen("members")} /></div>; }
+function MobileRoomTools({ calls, timeline, receipts, members, marketSays, onOpen }: { calls: number; timeline: number; receipts: number; members: number; marketSays: number; onOpen: (sheet: Exclude<MobileSheet, null>) => void }) {
+  return (
+    <div className="flex h-10 shrink-0 items-center gap-1 overflow-x-auto border-b border-ash px-2 lg:hidden">
+      <ToolButton icon={<Sparkles className="size-3.5" />} label="Pulse" count={marketSays} onClick={() => onOpen("pulse")} />
+      <ToolButton icon={<LockKeyhole className="size-3.5" />} label="Calls" count={calls} onClick={() => onOpen("calls")} />
+      <ToolButton icon={<ListTree className="size-3.5" />} label="Timeline" count={timeline} onClick={() => onOpen("timeline")} />
+      <ToolButton icon={<ReceiptText className="size-3.5" />} label="Receipts" count={receipts} onClick={() => onOpen("receipts")} />
+      <ToolButton icon={<Users className="size-3.5" />} label="Members" count={members} onClick={() => onOpen("members")} />
+    </div>
+  );
+}
 
-function ToolButton({ icon, label, count, onClick }: { icon: React.ReactNode; label: string; count: number; onClick: () => void }) { return <button type="button" onClick={onClick} className="inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] text-smoke hover:bg-white hover:text-off-black">{icon}{label}<span className="tabular">{count}</span></button>; }
+function ToolButton({ icon, label, count, onClick }: { icon: React.ReactNode; label: string; count: number; onClick: () => void }) {
+  return (
+    <button type="button" onClick={onClick} className="inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] text-smoke hover:bg-white hover:text-off-black">
+      {icon}
+      {label}
+      {count > 0 ? <span className="tabular">{count}</span> : null}
+    </button>
+  );
+}
 
 function PollIndex({ items, stage, onStage, canVote, onVote, fixture, onAttachMarket }: { items: Extract<RoomFeedItem, { kind: "poll" }>[]; stage: PollStage; onStage: (stage: PollStage) => void; canVote: boolean; onVote: (pollId: string, option: string) => void; fixture: import("@fulltime/shared").Fixture; onAttachMarket: (input: import("@fulltime/shared").RoomMarketReference & { pollId: string }) => Promise<void> }) {
   const answered = (item: Extract<RoomFeedItem, { kind: "poll" }>) => Boolean(item.myVote);
@@ -302,7 +383,36 @@ function PollIndex({ items, stage, onStage, canVote, onVote, fixture, onAttachMa
 
 function IndexButton({ active, label, count, onClick }: { active: boolean; label: string; count: number; onClick: () => void }) { return <button type="button" onClick={onClick} aria-pressed={active} className={cn("border-b px-4 py-1.5 text-caption uppercase tracking-[0.08em]", active ? "border-off-black text-off-black" : "border-transparent text-smoke")}>{label} · {count}</button>; }
 
-function RoomMobileSheets({ sheet, onClose, roomId, state, canParticipate, onAnswer }: { sheet: MobileSheet; onClose: () => void; roomId: string; state: import("@/lib/data").RoomLiveState; canParticipate: boolean; onAnswer: (callId: string, optionId: string) => Promise<void> }) { return <><Sheet open={sheet === "calls"} onClose={onClose} eyebrow="Signed fixture feed" title={`Calls · ${state.calls.length}`} className="max-h-[82dvh]"><div className="max-h-[62dvh] overflow-y-auto"><CallList roomId={roomId} state={state} canParticipate={canParticipate} onAnswer={onAnswer} /></div></Sheet><Sheet open={sheet === "timeline"} onClose={onClose} eyebrow="Match room" title={`Timeline · ${state.timeline.length}`} className="max-h-[82dvh]"><div className="max-h-[62dvh] overflow-y-auto"><EventFeed events={state.timeline} /></div></Sheet><Sheet open={sheet === "receipts"} onClose={onClose} eyebrow="Verified moments" title={`Receipts · ${state.receipts.length}`} className="max-h-[82dvh]"><div className="max-h-[62dvh] overflow-y-auto"><ReceiptList receipts={state.receipts} /></div></Sheet><Sheet open={sheet === "members"} onClose={onClose} eyebrow="Invite-only room" title={`Members · ${state.members.length}`} className="max-h-[82dvh]"><div className="max-h-[62dvh] overflow-y-auto"><RoomMemberList members={state.members} /></div></Sheet></>; }
+function RoomMobileSheets({ sheet, onClose, roomId, state, canParticipate, onAnswer }: { sheet: MobileSheet; onClose: () => void; roomId: string; state: import("@/lib/data").RoomLiveState; canParticipate: boolean; onAnswer: (callId: string, optionId: string) => Promise<void> }) {
+  const match = state.fixture.fixture;
+  const story = projectMatchStory({
+    fixtureId: match.id,
+    homeName: match.home.shortName ?? match.home.name,
+    awayName: match.away.shortName ?? match.away.name,
+    events: state.timeline,
+    pressure: state.pressure,
+    minute: state.fixture.minute,
+    phase: state.fixture.phase,
+  });
+  const latestMarketSays = state.marketSays.slice(-3).reverse();
+  return (
+    <>
+      <Sheet open={sheet === "pulse"} onClose={onClose} eyebrow="Match pulse" title="Story · Fan IQ · Market" className="max-h-[82dvh]">
+        <div className="max-h-[62dvh] space-y-4 overflow-y-auto">
+          <MatchStoryCard story={story} />
+          <FanIqStrip iq={state.fanIq} receipts={state.receipts} />
+          {latestMarketSays.length ? latestMarketSays.map((card) => <MarketSaysCard key={card.id} card={card} />) : (
+            <p className="py-4 text-center text-caption text-smoke">Market Says appears when signed odds move materially.</p>
+          )}
+        </div>
+      </Sheet>
+      <Sheet open={sheet === "calls"} onClose={onClose} eyebrow="Signed fixture feed" title={`Calls · ${state.calls.length}`} className="max-h-[82dvh]"><div className="max-h-[62dvh] overflow-y-auto"><CallList roomId={roomId} state={state} canParticipate={canParticipate} onAnswer={onAnswer} /></div></Sheet>
+      <Sheet open={sheet === "timeline"} onClose={onClose} eyebrow="Match room" title={`Timeline · ${state.timeline.length}`} className="max-h-[82dvh]"><div className="max-h-[62dvh] overflow-y-auto"><EventFeed events={state.timeline} /></div></Sheet>
+      <Sheet open={sheet === "receipts"} onClose={onClose} eyebrow="Verified moments" title={`Receipts · ${state.receipts.length}`} className="max-h-[82dvh]"><div className="max-h-[62dvh] overflow-y-auto"><ReceiptList receipts={state.receipts} /></div></Sheet>
+      <Sheet open={sheet === "members"} onClose={onClose} eyebrow="Invite-only room" title={`Members · ${state.members.length}`} className="max-h-[82dvh]"><div className="max-h-[62dvh] overflow-y-auto"><RoomMemberList members={state.members} /></div></Sheet>
+    </>
+  );
+}
 
 function InviteSheet({
   open,
@@ -349,9 +459,20 @@ function InviteSheet({
   };
   const share = async () => {
     if (!absolute) return;
+    // Onside/FanField edge: challenge framing, not a generic invite
+    const battle = `Back your stand in my FullTime room — spoiler-safe, Fan IQ on the line. ${absolute}`;
     try {
-      if (navigator.share) await navigator.share({ title: details?.room.name ?? "FullTime room", text: "Join my private match room.", url: absolute });
-      else await copy();
+      if (navigator.share) {
+        await navigator.share({
+          title: details?.room.name ?? "FullTime room",
+          text: battle,
+          url: absolute,
+        });
+      } else {
+        await navigator.clipboard.writeText(battle);
+        setCopied(true);
+        window.setTimeout(() => setCopied(false), 1_500);
+      }
     } catch (reason) {
       if (reason instanceof DOMException && reason.name === "AbortError") return;
       setError("The invite could not be shared. Copy the link instead.");
