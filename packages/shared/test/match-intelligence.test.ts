@@ -9,7 +9,9 @@ import {
   callPoints,
   difficultyMultiplier,
   projectAcceptedReceiptState,
+  projectCallStreak,
   projectMarketSays,
+  projectMatchStory,
   projectPressure,
   type MatchEvent,
   type OddsSnapshot,
@@ -82,6 +84,38 @@ test("scoring stays deterministic for an unlikely correct call", () => {
   assert.equal(multiplier, 4);
   assert.equal(callPoints(true, multiplier), 400);
   assert.equal(callPoints(false, multiplier), 0);
+});
+
+test("match story is deterministic from signed events and pressure", () => {
+  const pressure = projectPressure(fixtureId, events, odds);
+  const first = projectMatchStory({
+    fixtureId,
+    homeName: "Home FC",
+    awayName: "Away FC",
+    events,
+    pressure,
+    minute: 13,
+    phase: "live",
+  });
+  const second = projectMatchStory({
+    fixtureId,
+    homeName: "Home FC",
+    awayName: "Away FC",
+    events: [...events].reverse(),
+    pressure,
+    minute: 13,
+    phase: "live",
+  });
+  assert.deepEqual(first, second);
+  assert.equal(first.tone === "goal" || first.tone === "pressure" || first.tone === "control", true);
+  assert.equal(first.headline.length > 0, true);
+});
+
+test("call streak counts consecutive correct from the end", () => {
+  const streak = projectCallStreak(["correct", "incorrect", "correct", "correct", "void", "correct"]);
+  // void neither breaks nor extends; from the end: correct, void, correct, correct → 3
+  assert.equal(streak.current, 3);
+  assert.equal(streak.best, 3);
 });
 
 test("accepted receipts never claim an anchor until a verifier says so", () => {

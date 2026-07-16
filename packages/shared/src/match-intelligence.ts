@@ -251,3 +251,155 @@ function maxFeedTs(left: FeedTimestamp | null, right: FeedTimestamp | null): Fee
   if (right === null) return left;
   return left >= right ? left : right;
 }
+
+/** Pulse-style ambient match narrative. Presentation only — never settlement input. */
+export type MatchStoryTone = "kickoff" | "control" | "pressure" | "goal" | "break" | "closing" | "idle";
+
+export interface MatchStoryCard {
+  tone: MatchStoryTone;
+  headline: string;
+  detail: string;
+  /** Latest signed feed timestamp used for the story, if any. */
+  feedTs: FeedTimestamp | null;
+  eventId: MatchEventId | null;
+}
+
+export interface MatchStoryInput {
+  fixtureId: FixtureId;
+  homeName: string;
+  awayName: string;
+  events: readonly MatchEvent[];
+  pressure: PressureProjection | null;
+  minute: number | null;
+  phase: "upcoming" | "live" | "finished";
+}
+
+/**
+ * One-line "what the match feels like" from signed events + pressure.
+ * Same inputs always yield the same card (live and replay).
+ */
+export function projectMatchStory(input: MatchStoryInput): MatchStoryCard {
+  const ordered = sortEvents(input.fixtureId, input.events);
+  const latest = ordered.at(-1) ?? null;
+  const pressure = input.pressure?.value ?? 0;
+  const home = input.homeName.trim() || "Home";
+  const away = input.awayName.trim() || "Away";
+
+  if (input.phase === "upcoming" || ordered.length === 0) {
+    return {
+      tone: "idle",
+      headline: "Waiting for signed kickoff",
+      detail: `${home} vs ${away} — the room is quiet until the fixture feed moves.`,
+      feedTs: input.pressure?.feedTs ?? null,
+      eventId: null,
+    };
+  }
+
+  if (input.phase === "finished" || latest?.kind === "full-time" || latest?.kind === "abandoned") {
+    const score = latest?.score;
+    const line = score ? `${score.home}–${score.away}` : "full time";
+    return {
+      tone: "closing",
+      headline: `Full time · ${line}`,
+      detail: "Calls settle from feed truth. Receipts stay with the room.",
+      feedTs: latest?.feedTs ?? null,
+      eventId: latest?.id ?? null,
+    };
+  }
+
+  if (latest && goalLike(latest.kind)) {
+    const side = teamLabel(latest.side, home, away);
+    const score = latest.score ? ` · ${latest.score.home}–${latest.score.away}` : "";
+    return {
+      tone: "goal",
+      headline: `${side} goal${score}`,
+      detail: latest.detail
+        ? `${latest.detail}${latest.minute != null ? ` · ${latest.minute}'` : ""}`
+        : `Signed ${eventLabel(latest.kind)}${latest.minute != null ? ` at ${latest.minute}'` : ""}.`,
+      feedTs: latest.feedTs,
+      eventId: latest.id,
+    };
+  }
+
+  if (latest && (latest.kind === "half-time" || latest.kind === "second-half-start" || latest.kind === "extra-time-start")) {
+    return {
+      tone: "break",
+      headline: eventLabel(latest.kind),
+      detail: input.minute != null ? `Match clock ${input.minute}'.` : "Phase change from the signed feed.",
+      feedTs: latest.feedTs,
+      eventId: latest.id,
+    };
+  }
+
+  if (pressure >= 0.55 || (latest && pressureEvent(latest.kind))) {
+    const side = latest ? teamLabel(latest.side, home, away) : "Either side";
+    return {
+      tone: "pressure",
+      headline: pressure >= 0.75 ? "High danger" : "Pressure building",
+      detail: latest
+        ? `${side} · ${eventLabel(latest.kind)}${latest.minute != null ? ` · ${latest.minute}'` : ""}`
+        : "Recent signed incidents and odds movement are stacking.",
+      feedTs: latest?.feedTs ?? input.pressure?.feedTs ?? null,
+      eventId: latest?.id ?? null,
+    };
+  }
+
+  if (latest && (latest.kind === "kickoff" || latest.kind === "second-half-start")) {
+    return {
+      tone: "kickoff",
+      headline: latest.kind === "kickoff" ? "We're underway" : "Second half",
+      detail: `${home} vs ${away}${input.minute != null ? ` · ${input.minute}'` : ""}`,
+      feedTs: latest.feedTs,
+      eventId: latest.id,
+    };
+  }
+
+  return {
+    tone: "control",
+    headline: input.minute != null ? `${input.minute}' · mid-block` : "Match in progress",
+    detail: latest
+      ? `Last signed: ${eventLabel(latest.kind)}${latest.side ? ` (${teamLabel(latest.side, home, away)})` : ""}`
+      : "No material incident in the recent feed window.",
+    feedTs: latest?.feedTs ?? null,
+    eventId: latest?.id ?? null,
+  };
+}
+
+function teamLabel(side: MatchEvent["side"], home: string, away: string): string {
+  if (side === "home") return home;
+  if (side === "away") return away;
+  return "Either side";
+}
+
+/**
+ * Consecutive correct scored answers from newest → oldest (Onside/FanField streak feel).
+ * Pass outcomes in chronological order (oldest first).
+ */
+export function projectCallStreak(outcomes: readonly ("correct" | "incorrect" | "void" | "accepted" | "pending")[]): {
+  current: number;
+  best: number;
+  lastOutcome: "correct" | "incorrect" | "void" | "accepted" | "pending" | null;
+} {
+  let current = 0;
+  let best = 0;
+  let run = 0;
+  let last: (typeof outcomes)[number] | null = null;
+  for (const outcome of outcomes) {
+    last = outcome;
+    if (outcome === "correct") {
+      run += 1;
+      best = Math.max(best, run);
+    } else if (outcome === "incorrect") {
+      run = 0;
+    }
+    // void / accepted / pending do not break or extend the streak
+  }
+  // current streak from the end
+  current = 0;
+  for (let i = outcomes.length - 1; i >= 0; i -= 1) {
+    const outcome = outcomes[i]!;
+    if (outcome === "correct") current += 1;
+    else if (outcome === "incorrect") break;
+  }
+  return { current, best, lastOutcome: last };
+}
