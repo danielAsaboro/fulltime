@@ -13,6 +13,7 @@ import {
   ActivityIndicator,
   Alert,
   KeyboardAvoidingView,
+  Linking,
   Modal,
   Platform,
   Pressable,
@@ -25,7 +26,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { formatAmount, parseAmount, type MarketReferenceV1, type MarketSnapshot, type TicketSnapshot } from "@slip/sdk";
+import { formatAmount, parseAmount, type CompiledRulebook, type MarketReferenceV1, type MarketSnapshot, type TicketSnapshot } from "@slip/sdk";
 
 import { downloadAndShareAttachment, pickAndUploadAttachment } from "../src/media-transfer";
 import { MobilePeerController, MobilePeerError, type PeerEvent } from "../src/peer-controller";
@@ -50,11 +51,18 @@ import {
   setMatchVoiceEnabled,
   testElevenLabsKey,
 } from "../src/match-voice-player";
-import { buyMobileTicket, claimMobileTicket, getMobileMarketPosition, loadMobileSlipWallet, verifyMobileMarketReference, type MobileSlipConfiguration, type MobileSlipWallet } from "../src/slip-wallet";
+import { buyMobileTicket, claimMobileTicket, compileMobileRulebook, createMobileMarketReference, getMobileMarketPosition, loadMobileSlipWallet, verifyMobileMarketReference, type MobileSlipConfiguration, type MobileSlipWallet } from "../src/slip-wallet";
+import { externalLinks, fetchMobileLinkPreview, type MobileLinkPreview } from "../src/link-preview";
 
 type Json = Record<string, any>;
 type RoomTab = "match" | "chat" | "polls" | "details";
 type Screen = { kind: "home" } | { kind: "room"; roomId: string };
+type PendingMobileMarket = {
+  pollId: string;
+  question: string;
+  rulebook: Omit<CompiledRulebook, "bands"> & { bands: Array<{ lowerInclusive: string | null; upperExclusive: string | null; outcomeIndex: number }> };
+  reference?: MarketReferenceV1;
+};
 
 const CONFIG_CACHE_KEY = "fulltime.network-manifest.v1";
 const DEVICE_SECRET_KEY = "fulltime.device-secret.v1";
@@ -95,6 +103,14 @@ function CountryFlag({ country, teamName, size = 34 }: { country?: string | null
 
 function message(error: unknown): string {
   return error instanceof Error ? error.message : "Something went wrong.";
+}
+
+function serializePendingRulebook(rulebook: CompiledRulebook): PendingMobileMarket["rulebook"] {
+  return { ...rulebook, bands: rulebook.bands.map((band) => ({ lowerInclusive: band.lowerInclusive?.toString() ?? null, upperExclusive: band.upperExclusive?.toString() ?? null, outcomeIndex: band.outcomeIndex })) };
+}
+
+function deserializePendingRulebook(rulebook: PendingMobileMarket["rulebook"]): CompiledRulebook {
+  return { ...rulebook, bands: rulebook.bands.map((band) => ({ lowerInclusive: band.lowerInclusive === null ? null : BigInt(band.lowerInclusive), upperExclusive: band.upperExclusive === null ? null : BigInt(band.upperExclusive), outcomeIndex: band.outcomeIndex })) };
 }
 
 function storagePath(): string {
@@ -364,7 +380,7 @@ function Home({ peer, session, onSession, onSettings, onOpenRoom }: { peer: Retu
     <ScrollView refreshControl={<RefreshControl refreshing={false} onRefresh={load} tintColor={colors.ink} />} contentContainerStyle={styles.home} keyboardShouldPersistTaps="handled">
       <View style={styles.topRow}>
         <Wordmark />
-        <View style={styles.headerActions}><View style={styles.transport}><View style={[styles.dot, peer.transport.status === "online" && styles.dotOnline]} /><Text style={styles.transportText}>{String(peer.transport.status)} · {Number(peer.transport.peerCount || 0)} peers</Text></View><SettingsButton onPress={onSettings} /></View>
+        <View style={styles.headerActions}><View accessibilityLabel={`${String(peer.transport.status)}, ${Number(peer.transport.peerCount || 0)} peers`} style={styles.transport}><View style={[styles.dot, peer.transport.status === "online" && styles.dotOnline]} /><Text style={styles.transportText}>{Number(peer.transport.peerCount || 0)} peers</Text></View><SettingsButton onPress={onSettings} /></View>
       </View>
       {peer.resolution?.stale ? <Banner text="SIGNED NETWORK CONFIG · CACHED" /> : null}
       <Text style={styles.eyebrow}>WELCOME BACK</Text>
@@ -373,7 +389,7 @@ function Home({ peer, session, onSession, onSettings, onOpenRoom }: { peer: Retu
         <Text style={[styles.heading, styles.welcomeName]} numberOfLines={2}>{session.displayName}</Text>
       </View>
 
-      <View style={styles.homeActions}><Pressable onPress={() => setMode("create")} style={styles.homeActionPrimary}><Text style={[styles.homeActionEyebrow, styles.homeActionLight]}>START A ROOM</Text><Text style={[styles.homeActionTitle, styles.homeActionLight]}>Choose a match</Text><Text style={[styles.homeActionArrow, styles.homeActionLight]}>→</Text></Pressable><Pressable onPress={() => setMode("join")} style={styles.homeAction}><Text style={styles.homeActionEyebrow}>HAVE AN INVITE?</Text><Text style={styles.homeActionTitle}>Join a room</Text><Text style={styles.homeActionArrow}>→</Text></Pressable></View>
+      <View style={styles.homeActions}><Pressable onPress={() => setMode("create")} style={styles.homeActionPrimary}><Text style={[styles.homeActionEyebrow, styles.homeActionLight]}>START A ROOM</Text><Text style={[styles.homeActionTitle, styles.homeActionLight]}>Choose a match</Text><Text style={[styles.homeActionArrow, styles.homeActionLight]}>›</Text></Pressable><Pressable onPress={() => setMode("join")} style={styles.homeAction}><Text style={styles.homeActionEyebrow}>HAVE AN INVITE?</Text><Text style={styles.homeActionTitle}>Join a room</Text><Text style={styles.homeActionArrow}>›</Text></Pressable></View>
       <SectionTitle eyebrow="YOUR ROOMS" title={rooms.length ? "Back to the match." : "No rooms yet."} />
       {rooms.length ? rooms.map((room) => <RoomRow key={String(room.room.id)} room={room} onPress={() => onOpenRoom(String(room.room.id))} />) : <Empty text="Create a room for a fixture or join one with an invite." />}
       {error ? <ErrorText text={error} /> : null}
@@ -718,12 +734,58 @@ function ChatTab({ roomId, items, state, closed, busy, onRun, request, onRefresh
   const [pollMode, setPollMode] = useState(false);
   const [pollQuestion, setPollQuestion] = useState("");
   const [pollOptions, setPollOptions] = useState(["", ""]);
+  const [pollKind, setPollKind] = useState<"wager" | "poll">(mobileSlipConfiguration() ? "wager" : "poll");
+  const [draftRulebook, setDraftRulebook] = useState<CompiledRulebook | null>(null);
+  const [pendingMarket, setPendingMarket] = useState<PendingMobileMarket | null>(null);
   const [threadItem, setThreadItem] = useState<Json | null>(null);
+  const pendingMarketKey = `fulltime.pending-market.${roomId}`;
+  useEffect(() => {
+    let alive = true;
+    SecureStore.getItemAsync(pendingMarketKey).then((stored) => {
+      if (!alive || !stored) return;
+      const pending = JSON.parse(stored) as PendingMobileMarket;
+      const rulebook = deserializePendingRulebook(pending.rulebook);
+      setPendingMarket(pending);
+      setDraftRulebook(rulebook);
+      setPollQuestion(pending.question);
+      setPollKind("wager");
+      setPollMode(true);
+    }).catch(() => undefined);
+    return () => { alive = false; };
+  }, [pendingMarketKey]);
   const send = () => onRun(async () => { await request("room.message.send", { roomId, input: { text: text.trim() } }); setText(""); });
+  const compileWager = () => onRun(async () => {
+    const config = mobileSlipConfiguration();
+    const fixture = state.fixture?.fixture;
+    const fixtureId = String(fixture?.id ?? "");
+    if (!config || !fixtureId || !fixture) throw new Error("This room does not expose a configured Slip compiler and fixture.");
+    setDraftRulebook(await compileMobileRulebook({ config, fixtureId, question: pollQuestion, fixture: { competition: String(fixture.competition), home: String(fixture.home.name), away: String(fixture.away.name), kickoff: Number(fixture.kickoff), ...(Number.isSafeInteger(fixture.rawStatusCode) ? { gameState: Number(fixture.rawStatusCode) } : {}) } }));
+  });
   const createPoll = () => onRun(async () => {
-    const options = pollOptions.map((value) => value.trim()).filter(Boolean);
-    await request("room.poll.create", { roomId, input: { question: pollQuestion.trim(), options } });
-    setPollQuestion(""); setPollOptions(["", ""]); setPollMode(false);
+    const options = pollKind === "wager" && draftRulebook ? draftRulebook.outcomeLabels : pollOptions.map((value) => value.trim()).filter(Boolean);
+    if (pollKind === "wager") {
+      const config = mobileSlipConfiguration();
+      if (!config || !draftRulebook) throw new Error("Build and review the Rulebook before publishing the wager.");
+      let pending = pendingMarket;
+      if (!pending) {
+        const created = await request<Json>("room.poll.create", { roomId, input: { question: pollQuestion.trim(), options } });
+        pending = { pollId: String(created.poll.id), question: pollQuestion.trim(), rulebook: serializePendingRulebook(draftRulebook) };
+        await SecureStore.setItemAsync(pendingMarketKey, JSON.stringify(pending), { keychainAccessible: SecureStore.WHEN_UNLOCKED_THIS_DEVICE_ONLY });
+        setPendingMarket(pending);
+      }
+      const wallet = await loadMobileSlipWallet(config);
+      const reference = pending.reference ?? await createMobileMarketReference({ config, wallet, rulebook: draftRulebook });
+      if (!pending.reference) {
+        pending = { ...pending, reference };
+        await SecureStore.setItemAsync(pendingMarketKey, JSON.stringify(pending), { keychainAccessible: SecureStore.WHEN_UNLOCKED_THIS_DEVICE_ONLY });
+        setPendingMarket(pending);
+      }
+      const { version: _version, ...durableReference } = reference;
+      await request("room.market.reference", { roomId, input: { pollId: pending.pollId, ...durableReference } });
+      await SecureStore.deleteItemAsync(pendingMarketKey);
+      setPendingMarket(null);
+    } else await request("room.poll.create", { roomId, input: { question: pollQuestion.trim(), options } });
+    setPollQuestion(""); setPollOptions(["", ""]); setDraftRulebook(null); setPollMode(false);
   });
   return <View style={styles.flex}>
     <ScrollView style={styles.flex} contentContainerStyle={styles.chatContent} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.ink} />}>
@@ -731,7 +793,7 @@ function ChatTab({ roomId, items, state, closed, busy, onRun, request, onRefresh
       {(state.typingUsers ?? []).length ? <Text style={styles.typing}>{state.typingUsers.map((member: Json) => member.displayName).join(", ")} typing…</Text> : null}
     </ScrollView>
     {!closed ? <View style={styles.composer}>
-      {pollMode ? <View style={styles.pollComposer}><View style={styles.pollComposerTop}><Text style={styles.cardEyebrow}>NEW ROOM POLL</Text><Pressable onPress={() => setPollMode(false)}><Text style={styles.smallAction}>CANCEL</Text></Pressable></View><Field value={pollQuestion} onChangeText={setPollQuestion} placeholder="Ask the room…" />{pollOptions.map((option, index) => <Field key={index} value={option} onChangeText={(value) => setPollOptions((current) => current.map((item, itemIndex) => itemIndex === index ? value : item))} placeholder={`Option ${index + 1}`} maxLength={80} />)}{pollOptions.length < 5 ? <Pressable onPress={() => setPollOptions((current) => [...current, ""])}><Text style={styles.smallAction}>+ ADD OPTION</Text></Pressable> : null}<Button label="Post poll" disabled={busy || !pollQuestion.trim() || pollOptions.filter((value) => value.trim()).length < 2} onPress={createPoll} /></View> : <>{actionsOpen ? <View style={styles.composerActions}><Pressable disabled={busy} style={styles.composerAction} onPress={() => { setActionsOpen(false); void onRun(async () => { await pickAndUploadAttachment(request, roomId, text); setText(""); }); }}><Text style={styles.composerActionTitle}>Attach a file</Text><Text style={styles.hint}>Encrypted before it enters room history</Text></Pressable><Pressable style={styles.composerAction} onPress={() => { setActionsOpen(false); setPollMode(true); }}><Text style={styles.composerActionTitle}>Create a poll</Text><Text style={styles.hint}>Ask the room and collect one answer each</Text></Pressable></View> : null}<View style={styles.composerRow}><Pressable style={styles.plusButton} onPress={() => setActionsOpen((open) => !open)}><Text style={styles.plus}>{actionsOpen ? "×" : "+"}</Text></Pressable><TextInput style={styles.composerInput} value={text} onChangeText={setText} placeholder="Say it to the room…" placeholderTextColor={colors.smoke} multiline maxLength={4000} /><Pressable disabled={!text.trim() || busy} onPress={() => void send()} style={[styles.sendButton, (!text.trim() || busy) && styles.disabled]}><Text style={styles.sendText}>↑</Text></Pressable></View></>}
+      {pollMode ? <View style={styles.pollComposer}><View style={styles.pollComposerTop}><Text style={styles.cardEyebrow}>{pendingMarket ? "FINISH SIGNED MARKET" : pollKind === "wager" ? "NATURAL WAGER" : "NEW ROOM POLL"}</Text><Pressable onPress={() => setPollMode(false)}><Text style={styles.smallAction}>CLOSE</Text></Pressable></View>{mobileSlipConfiguration() ? <View style={styles.pollKindTabs}><Pressable disabled={Boolean(pendingMarket)} accessibilityRole="tab" accessibilityState={{ selected: pollKind === "wager", disabled: Boolean(pendingMarket) }} onPress={() => { setPollKind("wager"); setDraftRulebook(null); }} style={[styles.pollKindTab, pollKind === "wager" && styles.pollKindTabActive]}><Text style={[styles.pollKindTabText, pollKind === "wager" && styles.pollKindTabTextActive]}>WAGER</Text></Pressable><Pressable disabled={Boolean(pendingMarket)} accessibilityRole="tab" accessibilityState={{ selected: pollKind === "poll", disabled: Boolean(pendingMarket) }} onPress={() => { setPollKind("poll"); setDraftRulebook(null); }} style={[styles.pollKindTab, pollKind === "poll" && styles.pollKindTabActive]}><Text style={[styles.pollKindTabText, pollKind === "poll" && styles.pollKindTabTextActive]}>POLL</Text></Pressable></View> : null}<Field value={pollQuestion} onChangeText={(value) => { if (!pendingMarket) { setPollQuestion(value); setDraftRulebook(null); } }} placeholder={pollKind === "wager" ? "Will both teams score? Yes or no." : "Ask the room…"} />{pollKind === "poll" ? <>{pollOptions.map((option, index) => <Field key={index} value={option} onChangeText={(value) => setPollOptions((current) => current.map((item, itemIndex) => itemIndex === index ? value : item))} placeholder={`Option ${index + 1}`} maxLength={80} />)}{pollOptions.length < 5 ? <Pressable onPress={() => setPollOptions((current) => [...current, ""])}><Text style={styles.smallAction}>+ ADD OPTION</Text></Pressable> : null}</> : draftRulebook ? <View style={styles.rulebookPreview}><Text style={styles.cardEyebrow}>VERIFIED RULEBOOK</Text><Text style={styles.body}>{draftRulebook.sentence}</Text><Text style={styles.hint}>{draftRulebook.outcomeLabels.join("  ·  ")}</Text>{pendingMarket ? <Text style={styles.hint}>THE ROOM POLL IS SAVED. RETRY TO FINISH ITS SOLANA REGISTRATION.</Text> : null}</View> : <Text style={styles.hint}>FULLTIME DERIVES COMPLETE OUTCOMES, THEN SHOWS THE EXACT TERMS BEFORE SIGNING.</Text>}<Button label={pollKind === "wager" ? pendingMarket ? "Finish publishing market" : draftRulebook ? "Publish signed market" : "Build Rulebook" : "Post poll"} disabled={busy || !pollQuestion.trim() || (pollKind === "poll" && pollOptions.filter((value) => value.trim()).length < 2)} onPress={pollKind === "wager" && !draftRulebook ? compileWager : createPoll} /></View> : <>{actionsOpen ? <View style={styles.composerActions}><Pressable disabled={busy} style={styles.composerAction} onPress={() => { setActionsOpen(false); void onRun(async () => { await pickAndUploadAttachment(request, roomId, text); setText(""); }); }}><Text style={styles.composerActionTitle}>Attach a file</Text><Text style={styles.hint}>Encrypted before it enters room history</Text></Pressable><Pressable style={styles.composerAction} onPress={() => { setActionsOpen(false); setPollMode(true); }}><Text style={styles.composerActionTitle}>Create a wager or poll</Text><Text style={styles.hint}>Natural language becomes a verified Slip Rulebook</Text></Pressable></View> : null}<View style={styles.composerRow}><Pressable style={styles.plusButton} onPress={() => setActionsOpen((open) => !open)}><Text style={styles.plus}>{actionsOpen ? "×" : "+"}</Text></Pressable><TextInput style={styles.composerInput} value={text} onChangeText={setText} placeholder="Say it to the room…" placeholderTextColor={colors.smoke} multiline maxLength={4000} /><Pressable disabled={!text.trim() || busy} onPress={() => void send()} style={[styles.sendButton, (!text.trim() || busy) && styles.disabled]}><Text style={styles.sendText}>↑</Text></Pressable></View></>}
     </View> : <Banner text="THIS ROOM IS CLOSED · HISTORY IS READ-ONLY" />}
     {threadItem ? <ThreadOverlay roomId={roomId} item={threadItem} closed={closed} request={request} onRun={onRun} onClose={() => setThreadItem(null)} /> : null}
   </View>;
@@ -760,6 +822,7 @@ function FeedItem({ item, onReact, onVote, onThread, onDownload }: { item: Json;
       </View>
       <View style={[styles.message, mine && styles.messageMine]}>
         {item.text ? <Text style={styles.messageText}>{item.text}</Text> : null}
+        {item.text ? <MobileLinkPreviews text={String(item.text)} /> : null}
         {item.attachment ? <Pressable onPress={() => void onDownload?.()} style={styles.attachment}><Text style={styles.attachmentName}>▣ {item.attachment.name}</Text><Text style={styles.bodyMuted}>{item.attachment.mimeType} · {formatBytes(Number(item.attachment.sizeBytes))}</Text><Text style={styles.attachmentAction}>OPEN VERIFIED COPY</Text></Pressable> : null}
       </View>
       <View style={[styles.reactions, mine && styles.reactionsMine]}>
@@ -771,9 +834,38 @@ function FeedItem({ item, onReact, onVote, onThread, onDownload }: { item: Json;
   </View>;
 }
 
+function MobileLinkPreviews({ text }: { text: string }) {
+  const endpoint = Constants.expoConfig?.extra?.linkPreviewUrl;
+  const links = useMemo(() => externalLinks(text), [text]);
+  if (typeof endpoint !== "string" || !links.length) return null;
+  return <View style={styles.linkPreviewList}>{links.map((url) => <MobileLinkPreviewCard key={url} endpoint={endpoint} url={url} />)}</View>;
+}
+
+function MobileLinkPreviewCard({ endpoint, url }: { endpoint: string; url: string }) {
+  const [revision, setRevision] = useState(0);
+  const [preview, setPreview] = useState<MobileLinkPreview | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    const controller = new AbortController();
+    setPreview(null);
+    setError(null);
+    fetchMobileLinkPreview(endpoint, url, controller.signal).then(setPreview).catch((reason) => {
+      if (!controller.signal.aborted) setError(message(reason));
+    });
+    return () => controller.abort();
+  }, [endpoint, revision, url]);
+  if (!preview && !error) return <View accessibilityLabel="Loading link preview" style={styles.linkPreviewLoading}><ActivityIndicator size="small" color={colors.blue} /><Text style={styles.hint}>LOADING PREVIEW</Text></View>;
+  if (error) return <Pressable accessibilityRole="button" onPress={() => setRevision((value) => value + 1)} style={styles.linkPreviewFallback}><Text style={styles.linkPreviewSite}>PREVIEW UNAVAILABLE</Text><Text numberOfLines={1} style={styles.linkPreviewTitle}>{new URL(url).hostname}</Text><Text style={styles.smallAction}>RETRY</Text></Pressable>;
+  if (!preview) return null;
+  if (preview.kind === "x") {
+    return <Pressable accessibilityRole="link" accessibilityLabel={`Open X post by ${preview.authorName}`} onPress={() => void Linking.openURL(preview.url)} style={styles.xEmbed}><View style={styles.xEmbedHeader}><View style={styles.xMark}><Text style={styles.xMarkText}>X</Text></View><View style={styles.flex}><Text style={styles.xAuthor}>{preview.authorName}</Text><Text style={styles.xHandle}>@{preview.authorName}</Text></View><Text style={styles.smallAction}>OPEN</Text></View><Text style={styles.xPostText}>{preview.text}</Text><Text style={styles.xSource}>PRELOADED FROM X</Text></Pressable>;
+  }
+  return <Pressable accessibilityRole="link" onPress={() => void Linking.openURL(preview.url)} style={styles.linkPreview}><Text style={styles.linkPreviewSite}>{preview.siteName.toUpperCase()}</Text><Text numberOfLines={2} style={styles.linkPreviewTitle}>{preview.title}</Text>{preview.description ? <Text numberOfLines={2} style={styles.linkPreviewDescription}>{preview.description}</Text> : null}<Text style={styles.smallAction}>OPEN LINK</Text></Pressable>;
+}
+
 function mobileSlipConfiguration(): MobileSlipConfiguration | null {
   const value = Constants.expoConfig?.extra?.slip as Partial<MobileSlipConfiguration> | null | undefined;
-  if (!value || value.network !== "localnet" || typeof value.rpcUrl !== "string" || typeof value.fundingUrl !== "string" || typeof value.program !== "string" || typeof value.mint !== "string") return null;
+  if (!value || value.network !== "localnet" || typeof value.rpcUrl !== "string" || typeof value.fundingUrl !== "string" || typeof value.compilerUrl !== "string" || typeof value.program !== "string" || typeof value.mint !== "string") return null;
   return value as MobileSlipConfiguration;
 }
 
@@ -950,7 +1042,9 @@ const styles = StyleSheet.create({
   roomHeader: { height: 55, flexDirection: "row", alignItems: "center", gap: 9, borderBottomWidth: 1, borderBottomColor: colors.ash, paddingHorizontal: 10 }, roundButton: { width: 35, height: 35, borderRadius: 18, alignItems: "center", justifyContent: "center" }, roundButtonText: { fontSize: 30, lineHeight: 32, color: colors.ink }, roomHeaderTitle: { flex: 1 }, roomName: { color: colors.ink, fontFamily: mono, fontSize: 12 }, roomMeta: { color: colors.smoke, fontFamily: mono, fontSize: 7, letterSpacing: 0.7, marginTop: 2 }, memberPill: { borderWidth: 1, borderColor: colors.ash, borderRadius: 20, paddingHorizontal: 9, paddingVertical: 6 }, memberPillText: { color: colors.graphite, fontFamily: mono, fontSize: 10 }, inviteButton: { backgroundColor: colors.ink, paddingHorizontal: 10, paddingVertical: 8 }, inviteButtonText: { color: colors.white, fontFamily: mono, fontSize: 8, letterSpacing: 0.7 }, fixtureBar: { height: 49, flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 10, paddingHorizontal: 15, borderBottomWidth: 1, borderBottomColor: colors.ash }, fixtureBarText: { flex: 1, color: colors.ink, fontFamily: mono, fontSize: 11 }, fixtureBarScore: { fontWeight: "700" }, fixtureBarMeta: { color: colors.smoke, fontFamily: mono, fontSize: 8 }, tabs: { height: 48, flexDirection: "row", borderBottomWidth: 1, borderBottomColor: colors.ash }, tab: { flex: 1, alignItems: "center", justifyContent: "center", borderBottomWidth: 2, borderBottomColor: "transparent" }, tabActive: { borderBottomColor: colors.ink }, tabText: { color: colors.smoke, fontFamily: mono, fontSize: 8, letterSpacing: 0.7 }, tabTextActive: { color: colors.ink }, tabContent: { padding: 13, paddingBottom: 50, gap: 13 },
   scoreCard: { borderWidth: 1, borderColor: colors.ash, borderRadius: 20, backgroundColor: "rgba(251,250,247,0.58)", padding: 18, flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center" }, team: { width: "28%", alignItems: "center", gap: 5 }, countryFlag: { overflow: "hidden", alignItems: "center", justifyContent: "center", borderWidth: StyleSheet.hairlineWidth, borderColor: colors.ash, backgroundColor: colors.mist }, teamCode: { color: colors.ink, fontFamily: mono, fontSize: 12, fontWeight: "700" }, teamName: { color: colors.graphite, fontSize: 11, textAlign: "center" }, scoreCenter: { width: "40%", alignItems: "center" }, score: { color: colors.ink, fontFamily: mono, fontSize: 27, fontWeight: "700" }, liveState: { color: colors.crimson, fontFamily: mono, fontSize: 9, marginTop: 6 }, iqStrip: { width: "100%", marginTop: 18, paddingTop: 13, borderTopWidth: 1, borderTopColor: colors.ash, flexDirection: "row" }, iqCell: { flex: 1, gap: 4 }, iqLabel: { color: colors.smoke, fontFamily: mono, fontSize: 7, letterSpacing: 0.7 }, iqValue: { color: colors.ink, fontFamily: mono, fontWeight: "700" }, callTop: { flexDirection: "row", justifyContent: "space-between", gap: 10 }, callCopy: { flex: 1, gap: 8 }, pill: { alignSelf: "flex-start", borderWidth: 1, borderColor: colors.ash, borderRadius: 12, paddingHorizontal: 8, paddingVertical: 4, color: colors.smoke, fontFamily: mono, fontSize: 8 }, callPrompt: { color: colors.ink, fontFamily: serif, fontSize: 21, lineHeight: 26 }, callTimer: { color: colors.ink, fontFamily: mono, fontSize: 18 }, option: { minHeight: 46, overflow: "hidden", borderWidth: 1, borderColor: colors.ash, borderRadius: 13, paddingHorizontal: 13, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }, optionActive: { borderColor: colors.ink }, optionFill: { position: "absolute", inset: 0, right: undefined, backgroundColor: colors.mist, opacity: 0.65 }, optionText: { zIndex: 1, flex: 1, color: colors.ink, fontFamily: mono, fontSize: 12 }, optionShare: { zIndex: 1, color: colors.graphite, fontFamily: mono, fontSize: 11 }, pollOption: { minHeight: 48, overflow: "hidden", borderWidth: 1, borderColor: colors.ash, borderRadius: 16, paddingHorizontal: 14, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }, pollOptionActive: { borderColor: colors.ink }, pollOptionFill: { position: "absolute", inset: 0, right: undefined, backgroundColor: colors.mist, opacity: 0.72 }, pollOptionText: { zIndex: 1, flex: 1, color: colors.ink, fontFamily: mono, fontSize: 13 }, pollOptionShare: { zIndex: 1, color: colors.graphite, fontFamily: mono, fontSize: 12 }, receipt: { borderTopWidth: 1, borderTopColor: colors.ash, paddingTop: 11, color: colors.blue, fontFamily: mono, fontSize: 9 }, hint: { color: colors.smoke, fontFamily: mono, fontSize: 9, lineHeight: 14 }, timelineRow: { flexDirection: "row", gap: 12, paddingVertical: 10, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.ash }, timelineMinute: { width: 32, color: colors.ink, fontFamily: mono, fontSize: 11 }, timelineCopy: { flex: 1 }, timelineType: { color: colors.smoke, fontFamily: mono, fontSize: 8, letterSpacing: 0.7 }, pressureTop: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" }, pressureValue: { color: colors.ink, fontFamily: mono, fontSize: 13, fontWeight: "700" }, pressureTrack: { height: 7, borderRadius: 4, overflow: "hidden", backgroundColor: colors.mist }, pressureFill: { height: "100%", borderRadius: 4, backgroundColor: colors.crimson },
   chatContent: { padding: 15, paddingBottom: 28, gap: 15 }, messageRow: { flexDirection: "row", alignItems: "flex-start", gap: 10 }, messageRowMine: { flexDirection: "row-reverse" }, avatar: { width: 34, height: 34, borderRadius: 17, borderWidth: 1, borderColor: colors.ash, backgroundColor: "rgba(251,250,247,0.7)", alignItems: "center", justifyContent: "center" }, avatarMine: { borderColor: colors.blue, backgroundColor: colors.blue }, avatarText: { color: colors.graphite, fontFamily: mono, fontSize: 9, fontWeight: "700" }, avatarTextMine: { color: colors.white }, messageColumn: { flex: 1, alignItems: "flex-start" }, messageColumnMine: { alignItems: "flex-end" }, message: { maxWidth: "94%", borderRadius: 18, backgroundColor: "rgba(251,250,247,0.9)", paddingHorizontal: 15, paddingVertical: 12, gap: 7 }, messageMine: { backgroundColor: colors.mist }, messageTop: { maxWidth: "94%", flexDirection: "row", alignItems: "center", gap: 8, marginBottom: 5 }, messageTopMine: { flexDirection: "row-reverse" }, messageAuthor: { color: colors.ink, fontFamily: mono, fontSize: 9, fontWeight: "700" }, messageTime: { color: colors.smoke, fontFamily: mono, fontSize: 8 }, messageText: { color: colors.ink, fontSize: 15, lineHeight: 21 }, reactions: { maxWidth: "96%", flexDirection: "row", flexWrap: "wrap", gap: 5, marginTop: 7 }, reactionsMine: { justifyContent: "flex-end" }, reaction: { borderWidth: 1, borderColor: colors.ash, borderRadius: 14, backgroundColor: "rgba(251,250,247,0.72)", paddingHorizontal: 7, paddingVertical: 4 }, reactionCount: { borderWidth: 1, borderColor: colors.ash, borderRadius: 14, paddingHorizontal: 7, paddingVertical: 4, color: colors.graphite, fontSize: 11 }, systemMessage: { alignSelf: "center", borderRadius: 14, backgroundColor: "rgba(221,228,255,0.5)", paddingHorizontal: 12, paddingVertical: 7 }, systemText: { color: colors.smoke, fontFamily: mono, fontSize: 9, textAlign: "center" }, typing: { color: colors.smoke, fontFamily: mono, fontSize: 9 }, composer: { borderTopWidth: 1, borderTopColor: colors.ash, backgroundColor: colors.parchment, padding: 10 }, composerRow: { flexDirection: "row", alignItems: "flex-end", gap: 8 }, composerActions: { gap: 1, marginBottom: 9, overflow: "hidden", borderRadius: 16, borderWidth: 1, borderColor: colors.ash }, composerAction: { backgroundColor: colors.white, paddingHorizontal: 15, paddingVertical: 12 }, composerActionTitle: { color: colors.ink, fontSize: 14, fontWeight: "600" }, composerInput: { flex: 1, maxHeight: 110, minHeight: 43, borderWidth: 1, borderColor: colors.ash, borderRadius: 22, backgroundColor: colors.white, paddingHorizontal: 14, paddingVertical: 10, color: colors.ink }, plusButton: { width: 43, height: 43, borderRadius: 22, borderWidth: 1, borderColor: colors.ash, alignItems: "center", justifyContent: "center" }, plus: { color: colors.ink, fontSize: 20 }, sendButton: { width: 43, height: 43, borderRadius: 22, backgroundColor: colors.blue, alignItems: "center", justifyContent: "center" }, sendText: { color: colors.white, fontSize: 22 }, pollComposer: { gap: 8 }, pollComposerTop: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" }, wagerCta: { minHeight: 44, alignSelf: "flex-start", justifyContent: "center", borderRadius: 22, backgroundColor: colors.ink, paddingHorizontal: 17, marginTop: 2 }, wagerCtaText: { color: colors.white, fontFamily: mono, fontSize: 10, letterSpacing: 0.7 }, wagerBackdrop: { flex: 1, justifyContent: "flex-end", backgroundColor: "rgba(25,24,22,0.52)" }, wagerSheet: { maxHeight: "88%", backgroundColor: colors.parchment, padding: 20, gap: 18, borderTopLeftRadius: 24, borderTopRightRadius: 24 }, wagerHeader: { flexDirection: "row", alignItems: "flex-start", gap: 10 }, wagerQuestion: { color: colors.ink, fontFamily: serif, fontSize: 28, lineHeight: 33, marginTop: 5 }, wagerChoices: { gap: 10 }, wagerChoice: { minHeight: 54, borderWidth: 1, borderColor: colors.ash, backgroundColor: colors.white, paddingHorizontal: 15, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }, wagerChoiceActive: { borderColor: colors.ink, backgroundColor: colors.ink }, wagerChoiceText: { color: colors.ink, fontFamily: mono, fontSize: 13 }, wagerChoiceTextActive: { color: colors.white }, wagerSelection: { minHeight: 48, borderWidth: 1, borderColor: colors.ink, backgroundColor: colors.mist, paddingHorizontal: 14, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }, stakePresets: { flexDirection: "row", gap: 8 }, stakePreset: { flex: 1, minHeight: 48, borderWidth: 1, borderColor: colors.ash, alignItems: "center", justifyContent: "center" },
+  pollKindTabs: { flexDirection: "row", borderWidth: 1, borderColor: colors.ash, borderRadius: 22, padding: 3 }, pollKindTab: { flex: 1, minHeight: 38, borderRadius: 19, alignItems: "center", justifyContent: "center" }, pollKindTabActive: { backgroundColor: colors.ink }, pollKindTabText: { color: colors.graphite, fontFamily: mono, fontSize: 9, letterSpacing: 0.8 }, pollKindTabTextActive: { color: colors.white }, rulebookPreview: { gap: 7, borderWidth: 1, borderColor: colors.blue, borderRadius: 14, backgroundColor: colors.mist, padding: 13 },
   marketVerification: { width: 44, height: 44, alignItems: "center", justifyContent: "center" }, marketVerificationError: { alignItems: "flex-start", gap: 8 }, marketInfoButton: { width: 44, height: 44, borderRadius: 22, borderWidth: 1, borderColor: colors.ash, alignItems: "center", justifyContent: "center" }, marketInfoText: { color: colors.graphite, fontFamily: mono, fontSize: 14, fontWeight: "700" }, marketErrorCopy: { maxWidth: 310, gap: 8 }, marketRetry: { minHeight: 40, justifyContent: "center", alignSelf: "flex-start", paddingHorizontal: 4 },
   attachment: { borderWidth: 1, borderColor: colors.ash, padding: 10, gap: 3 }, attachmentName: { color: colors.ink, fontFamily: mono, fontSize: 11 }, attachmentAction: { color: colors.blue, fontFamily: mono, fontSize: 8, marginTop: 5 }, threadAction: { borderWidth: 1, borderColor: colors.ash, borderRadius: 14, paddingHorizontal: 8, paddingVertical: 5 }, threadActionText: { color: colors.graphite, fontFamily: mono, fontSize: 8 }, threadHeader: { minHeight: 70, borderBottomWidth: 1, borderBottomColor: colors.ash, paddingHorizontal: 18, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }, threadClose: { width: 40, height: 40, alignItems: "center", justifyContent: "center" }, threadCloseText: { color: colors.ink, fontSize: 30 },
+  linkPreviewList: { marginTop: 8, gap: 8 }, linkPreviewLoading: { minHeight: 72, flexDirection: "row", alignItems: "center", gap: 10, borderWidth: 1, borderColor: colors.ash, borderRadius: 14, paddingHorizontal: 14, backgroundColor: colors.parchment }, linkPreviewFallback: { minHeight: 72, justifyContent: "center", gap: 3, borderWidth: 1, borderColor: colors.ash, borderRadius: 14, padding: 12, backgroundColor: colors.parchment }, linkPreview: { gap: 5, borderWidth: 1, borderColor: colors.ash, borderRadius: 14, padding: 13, backgroundColor: colors.parchment }, linkPreviewSite: { color: colors.smoke, fontFamily: mono, fontSize: 8, letterSpacing: 0.8 }, linkPreviewTitle: { color: colors.ink, fontFamily: serif, fontSize: 18, lineHeight: 22 }, linkPreviewDescription: { color: colors.graphite, fontSize: 12, lineHeight: 17 }, xEmbed: { gap: 13, overflow: "hidden", borderWidth: 1, borderColor: colors.ash, borderRadius: 14, backgroundColor: colors.white, padding: 14 }, xEmbedHeader: { flexDirection: "row", alignItems: "center", gap: 10 }, xMark: { width: 34, height: 34, borderRadius: 17, backgroundColor: colors.ink, alignItems: "center", justifyContent: "center" }, xMarkText: { color: colors.white, fontFamily: mono, fontSize: 14, fontWeight: "700" }, xAuthor: { color: colors.ink, fontSize: 13, fontWeight: "700" }, xHandle: { color: colors.smoke, fontFamily: mono, fontSize: 9, marginTop: 2 }, xPostText: { color: colors.ink, fontSize: 16, lineHeight: 22 }, xSource: { color: colors.smoke, fontFamily: mono, fontSize: 7, letterSpacing: 0.8 },
   stats: { flexDirection: "row", borderWidth: 1, borderColor: colors.ash, marginTop: 10 }, stat: { flex: 1, alignItems: "center", paddingVertical: 12, borderRightWidth: StyleSheet.hairlineWidth, borderRightColor: colors.ash }, statValue: { color: colors.ink, fontFamily: mono, fontSize: 16 }, statLabel: { color: colors.smoke, fontFamily: mono, fontSize: 7, marginTop: 4 }, disclosure: { minHeight: 64, flexDirection: "row", alignItems: "center", borderWidth: 1, borderColor: colors.ash, borderRadius: 16, backgroundColor: "rgba(251,250,247,0.5)", paddingHorizontal: 16, paddingVertical: 12 }, disclosureDanger: { borderColor: "rgba(182,41,49,0.35)" }, disclosureLabel: { color: colors.ink, fontSize: 14, fontWeight: "600" }, disclosureMark: { color: colors.smoke, fontSize: 20 }, memberRow: { minHeight: 58, flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.ash }, memberCopy: { flex: 1 }, memberActions: { flexDirection: "row", alignItems: "center", gap: 10 }, smallAction: { color: colors.blue, fontFamily: mono, fontSize: 8 }, dangerText: { color: colors.crimson }, memberName: { color: colors.ink, fontSize: 14 }, memberRole: { color: colors.smoke, fontFamily: mono, fontSize: 8, marginTop: 3 }, presence: { width: 8, height: 8, borderRadius: 4, backgroundColor: colors.ash }, presenceOnline: { backgroundColor: colors.green }, reasonGrid: { flexDirection: "row", flexWrap: "wrap", gap: 6 }, reason: { borderWidth: 1, borderColor: colors.ash, paddingHorizontal: 8, paddingVertical: 6 }, reasonActive: { borderColor: colors.ink, backgroundColor: colors.mist }, reasonText: { color: colors.graphite, fontFamily: mono, fontSize: 7 },
 });

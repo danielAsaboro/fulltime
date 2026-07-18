@@ -2,10 +2,10 @@
   "package": "@slip/sdk",
   "version": "0.2.0",
   "tarball": "slip-sdk-0.2.0.tgz",
-  "slipBaseCommit": "e4680b8e2a95414c4af8a67f8986b8149ccbd64b",
-  "packedSdkSourcePatchSha256": "84862d248472bad6f4b091558cdc8e811682a96f52989ddb947984d355217061",
-  "sha256": "e4f0737d2ecaa7b20bf34a5a7ea0edb1c95f3ec3e0cc83547cf1238c6a4e0d78",
-  "sha512": "bf8304df199d6fd5429cc6845242c83c067279b40fcbee5faecb6b893ccf10e09418427ee27414f644e2705ba559f280d2ce55510915824e0554607344faf50c",
-  "npmIntegrity": "sha512-v4ME3xmdb9VCnMaEUkLIPAZyebQPy+5frstriTzPEOCUGEJ+4nQU9kTicFulWfKA0s5VUQkVgk4FVGBzRPr1DA==",
+  "slipBaseCommit": "8a03357f1d98d2f16d271fe899bc6d0c40a8f9ef",
+  "packedSdkSourcePatchSha256": "76ff8907cd1fc6f0a4a57f8a65577510a505dd4ad33afaa89b8a74c147e6e366",
+  "sha256": "e8c5b90d21d2d600f0f079d766cbec77b267a38f6a171f80a3383bc1022683e6",
+  "sha512": "0dd28e6f45c294b334db69e42683693425b2a0e8e16b96e9c4eff13b7d170bfa1c4c0380dc77a7722dc40914c5ebc9a65b684fda3f746bce02f2ec4d80ecd54d",
+  "npmIntegrity": "sha512-DdKOb0XClLM022nkJoNpNCWyoOjha5bpxO/xO30XC/ocTAOA3Henci3ECRTF68mmW2hP2j90a84C8uxNgOzVTQ==",
   "note": "The base commit and complete uncommitted packages/sdk patch hash identify the packed source. No commit or staging operation was performed for this update."
 }

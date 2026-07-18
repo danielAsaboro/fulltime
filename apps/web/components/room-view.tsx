@@ -257,10 +257,6 @@ function ReceiptList({ receipts }: { receipts: import("@/lib/data").RoomLiveStat
 
 function CallList({ roomId, state, canParticipate, onAnswer, compact = false }: { roomId: string; state: import("@/lib/data").RoomLiveState; canParticipate: boolean; onAnswer: (callId: string, optionId: string) => Promise<void>; compact?: boolean }) { const calls = compact ? state.calls.slice(-1) : state.calls; if (!calls.length) return <p className="py-6 text-center text-caption text-smoke">Signed calls appear when the fixture publisher opens them.</p>; return <div className="space-y-3 py-4">{calls.map((call) => <CallCard key={String(call.call.id)} view={call} roomId={roomId} canSelect={canParticipate} attestationAvailable={state.attestationAvailable} onSelect={(optionId) => onAnswer(String(call.call.id), optionId)} className="p-4" />)}</div>; }
 
-function MiniStat({ label, value }: { label: string; value: React.ReactNode }) {
-  return <div className="bg-parchment px-3 py-3"><p className="text-[9px] uppercase tracking-[0.08em] text-smoke">{label}</p><p className="mt-1 font-mono text-body-sm font-medium tabular">{value}</p></div>;
-}
-
 function RoomHeader({
   roomName,
   fixture,

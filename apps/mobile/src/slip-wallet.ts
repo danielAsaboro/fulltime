@@ -18,6 +18,10 @@ import {
 } from "@solana/kit";
 import {
   createSlipClient,
+  calculateRulebookHash,
+  createMarketReference,
+  verifyCompiledRulebookHash,
+  type CompiledRulebook,
   type MarketReferenceV1,
   type MarketSnapshot,
   type TicketSnapshot,
@@ -53,6 +57,7 @@ export interface MobileSlipConfiguration {
   network: "localnet" | "devnet" | "mainnet-beta";
   rpcUrl: string;
   fundingUrl: string;
+  compilerUrl: string;
   program: string;
   mint: string;
 }
@@ -155,6 +160,51 @@ export async function buyMobileTicket(input: {
   });
   const signature = await sendInstructions(input.config.rpcUrl, input.wallet, built.instructions);
   return { signature, ticket: built.ticket };
+}
+
+function randomU64(bytes: Uint8Array): bigint {
+  return new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength).getBigUint64(0, true);
+}
+
+export async function compileMobileRulebook(input: {
+  config: MobileSlipConfiguration;
+  fixtureId: string;
+  fixture: { competition: string; home: string; away: string; kickoff: number; gameState?: number };
+  question: string;
+}): Promise<CompiledRulebook> {
+  const response = await fetch(input.config.compilerUrl, {
+    method: "POST",
+    headers: { "content-type": "application/json", accept: "application/json" },
+    body: JSON.stringify({ fixtureId: input.fixtureId, question: input.question.trim(), fixture: input.fixture }),
+  });
+  const payload = await response.json().catch(() => null) as { data?: Omit<CompiledRulebook, "bands"> & { bands: Array<{ lowerInclusive: string | null; upperExclusive: string | null; outcomeIndex: number }> }; error?: { message?: string } } | null;
+  if (!response.ok) throw new Error(payload?.error?.message || `Rulebook compilation failed with HTTP ${response.status}`);
+  if (!payload?.data || payload.data.fixtureId !== input.fixtureId || payload.data.question !== input.question.trim()) throw new Error("Rulebook compiler returned mismatched fixture context");
+  const rulebook: CompiledRulebook = { ...payload.data, bands: payload.data.bands.map((band) => ({ lowerInclusive: band.lowerInclusive === null ? null : BigInt(band.lowerInclusive), upperExclusive: band.upperExclusive === null ? null : BigInt(band.upperExclusive), outcomeIndex: band.outcomeIndex })) };
+  await verifyCompiledRulebookHash(rulebook);
+  return rulebook;
+}
+
+async function prepareMobileRulebook(config: MobileSlipConfiguration, rulebook: CompiledRulebook): Promise<CompiledRulebook> {
+  if (config.network !== "localnet") return rulebook;
+  const slot = await rpc<number>(config.rpcUrl, "getSlot", [{ commitment: "confirmed" }]);
+  const now = await rpc<number | null>(config.rpcUrl, "getBlockTime", [slot]) ?? Math.floor(Date.now() / 1_000);
+  if (rulebook.entryDeadline > now) return rulebook;
+  const kickoff = now + 10 * 60;
+  const base = { ...rulebook, entryDeadline: kickoff - 5 * 60, resolveAt: kickoff + 4 * 60 * 60, voidAt: kickoff + 48 * 60 * 60, hash: "" };
+  return { ...base, hash: await calculateRulebookHash(base) };
+}
+
+export async function createMobileMarketReference(input: {
+  config: MobileSlipConfiguration;
+  wallet: MobileSlipWallet;
+  rulebook: CompiledRulebook;
+}): Promise<MarketReferenceV1> {
+  const rulebook = await prepareMobileRulebook(input.config, input.rulebook);
+  const client = createMobileSlipClient(input.config);
+  const created = await client.createMarket({ id: randomU64(await Crypto.getRandomBytesAsync(8)), creator: input.wallet.address, rulebook });
+  const signature = await sendInstructions(input.config.rpcUrl, input.wallet, created.instructions);
+  return createMarketReference(client.config, { market: created.market, fixtureId: rulebook.fixtureId, rulebookHash: rulebook.hash, creationSignature: signature });
 }
 
 export async function getMobileMarketPosition(input: {

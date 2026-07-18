@@ -29,6 +29,7 @@ function localGatewayOrigin() {
 }
 
 const slipGatewayOrigin = useLocal ? localGatewayOrigin() : null
+const linkPreviewOrigin = slipGatewayOrigin || process.env.FULLTIME_LINK_PREVIEW_ORIGIN || null
 const network = useLocal && slipGatewayOrigin ? {
   ...cachedNetwork,
   fixtureRelay: { host: new URL(slipGatewayOrigin).hostname, port: 59638 }
@@ -37,6 +38,7 @@ const slip = useLocal && slipGatewayOrigin ? {
   network: 'localnet',
   rpcUrl: `${slipGatewayOrigin}/api/slip/rpc`,
   fundingUrl: `${slipGatewayOrigin}/api/slip/fund`,
+  compilerUrl: `${slipGatewayOrigin}/api/slip/compile`,
   program: process.env.NEXT_PUBLIC_SLIP_PROGRAM_ID || repoEnv.NEXT_PUBLIC_SLIP_PROGRAM_ID,
   mint: process.env.NEXT_PUBLIC_SLIP_SETTLEMENT_MINT || repoEnv.NEXT_PUBLIC_SLIP_SETTLEMENT_MINT
 } : null
@@ -84,7 +86,8 @@ module.exports = {
         appId: privyAppId,
         clientId: privyClientId
       },
-      slip
+      slip,
+      linkPreviewUrl: linkPreviewOrigin ? `${linkPreviewOrigin}/api/link-preview` : null
     }
   }
 }

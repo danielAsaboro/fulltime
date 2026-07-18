@@ -584,7 +584,7 @@ Evidence and SHA-256:
   `02d6779271ea60cd6743f1c9a307e1e3a6b298808af07227ad076f8db07cd95c`
 
 The final Android Release APK SHA-256 is
-`3d04d0c8a860e53f41f8d490fcc850339919252bb9275ab3550a48afee1dc741`.
+`f2248cc3fffc04d7ab049cd8eeaef75ada526ab78471aa2a372109f457bafa0f`.
 `npm run mobile:android` passed with 631 Gradle tasks and the verified API 29
 Bare Kit/native-addon checks; `adb ... install -r` returned `Success`.
 
@@ -612,3 +612,40 @@ Final verification after these changes:
 - Do not put room state into a centralized database.
 - Do not add a visual control or IPC action until its native backing operation
   exists and is verified.
+
+## Native chat links and natural wagers (2026-07-18)
+
+- Web room feeds and threads render external URLs as links plus native preview cards. Generic cards
+  are populated by the real `/api/link-preview` boundary, which fetches bounded Open Graph metadata
+  only after public-DNS validation and rejects private/local destinations. X/Twitter status URLs use
+  X's official `publish.x.com/oembed` response and `platform.twitter.com/widgets.js`; failures stay
+  visible and retryable instead of falling back to invented metadata.
+- Mobile room chat uses the same URL parsing contract. Generic metadata is requested from the
+  configured FullTime web origin; X posts use a compact native card populated with the author and
+  text returned by X's official oEmbed boundary and open in the system browser when tapped. This
+  avoids an oversized or partially initialized widget surface on older Android WebViews.
+- Web and mobile wager composers can submit only a natural-language question. Slip derives two to
+  five outcomes, displays the exact hashed TxLINE Rulebook for review, then creates the real poll and
+  Solana market. The mobile path signs with the device-local wallet and persists the poll/rulebook/
+  market reference between attempts, so a failed Autobase attachment resumes without minting a
+  duplicate market.
+- The compiler receives the room's authenticated fixture projection (competition, teams, kickoff,
+  and game state) when TxLINE's server schedule boundary is unavailable. It cannot supply a fixture
+  ID, outcome proof, result, or publisher authority; those remain canonical room/Slip inputs.
+- The packed Slip SDK provenance includes the natural-outcome compiler contract. A real local Ollama
+  request for `Will both teams score? Yes or no.` produced a two-outcome hashed Rulebook; the
+  real Surfpool lifecycle remains the settlement verification boundary.
+- On the connected Android 10 device, that same question compiled through the configured gateway,
+  displayed `No`/`Yes` without count-label rewriting, registered a signed market and opening ticket
+  on local Surfpool, and attached the verified reference to encrypted Autobase history. Interrupting
+  the first attachment proved the persisted recovery path reused the signed market instead of
+  creating a duplicate. The web compiler proxy now allows the compiler's documented 180-second
+  upper bound rather than aborting a valid local-model request at 35 seconds.
+- The final Android Release build completed all 631 Gradle tasks, installed successfully on the
+  Infinix X683, and visually rendered the compact X card and verified No/Yes market together in the
+  persisted room. The final iOS Bare worker bundle also passed. Physical Apple deployment remains
+  unverified because Xcode reported the available iPad and both iPhones offline on this host.
+- Final verification for this change passed `npm test` (51 shared, 2 attestor plus 1 gated,
+  91 desktop plus 12 gated, 14 mobile, 10 web, and 17 worker), repository-wide typecheck, clean web
+  lint, the FullTime production build, the 1/1 packed-SDK Surfpool boundary, and Slip's complete
+  4 bigint / 13 scripts / 16 SDK / 4 keeper / 7 web / 4 real Surfpool test matrix.

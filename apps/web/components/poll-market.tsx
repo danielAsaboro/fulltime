@@ -21,6 +21,9 @@ function randomU64(): bigint {
 
 export function PollMarket({ poll, fixture, isAuthor, onAttach }: { poll: Poll; fixture: Fixture; isAuthor: boolean; onAttach(input: AttachInput): Promise<void> }) {
   const config = useMemo(() => slipBrowserConfiguration(), []);
+  const { competition, kickoff, rawStatusCode } = fixture;
+  const homeName = fixture.home.name;
+  const awayName = fixture.away.name;
   const walletRuntime = useSlipWallet();
   const financial = isNormalFinancialBrowser() || walletRuntime.configured;
   const [resolution, setResolution] = useState<PollResolution | null>(null);
@@ -35,12 +38,12 @@ export function PollMarket({ poll, fixture, isAuthor, onAttach }: { poll: Poll; 
     resolvePollRulebook({
       client: createFullTimeSlipClient(),
       configuration: config,
-      request: { fixtureId: String(fixture.id), question: poll.question, outcomeLabels: poll.options.map((option) => option.label) },
+      request: { fixtureId: String(fixture.id), question: poll.question, outcomeLabels: poll.options.map((option) => option.label), fixture: { competition, home: homeName, away: awayName, kickoff: Number(kickoff), ...(rawStatusCode !== undefined ? { gameState: rawStatusCode } : {}) } },
     }).then((value) => { if (alive) setResolution(value); }).catch((cause) => {
       if (alive) setCheckError(cause instanceof Error ? cause.message : String(cause));
     });
     return () => { alive = false; };
-  }, [checkRevision, config, financial, fixture.id, poll.marketReference, poll.options, poll.question]);
+  }, [awayName, checkRevision, competition, config, financial, fixture.id, homeName, kickoff, poll.marketReference, poll.options, poll.question, rawStatusCode]);
 
   useEffect(() => {
     if (!isAuthor || !config || !financial || poll.marketReference || resolution?.status !== "resolvable" || creationStarted.current) return;
@@ -81,6 +84,9 @@ export function MarketComposer({ poll, fixture, initialRulebook, onClose, onAtta
   const config = useMemo(() => slipBrowserConfiguration()!, []);
   const client = useMemo(() => createFullTimeSlipClient(), []);
   const outcomeLabels = useMemo(() => poll.options.map((option) => option.label), [poll.options]);
+  const { competition, kickoff, rawStatusCode } = fixture;
+  const homeName = fixture.home.name;
+  const awayName = fixture.away.name;
   const walletRuntime = useSlipWallet();
   const walletRequested = useRef(false);
   const [rulebook, setRulebook] = useState<CompiledRulebook | null>(null);
@@ -107,6 +113,7 @@ export function MarketComposer({ poll, fixture, initialRulebook, onClose, onAtta
         fixtureId: String(fixture.id),
         question: poll.question,
         outcomeLabels,
+        fixture: { competition, home: homeName, away: awayName, kickoff: Number(kickoff), ...(rawStatusCode !== undefined ? { gameState: rawStatusCode } : {}) },
       },
     });
     source.then((resolution) => {
@@ -120,7 +127,7 @@ export function MarketComposer({ poll, fixture, initialRulebook, onClose, onAtta
       if (alive) setBusy(null);
     });
     return () => { alive = false; };
-  }, [client, config, fixture.id, initialRulebook, outcomeLabels, poll.question]);
+  }, [awayName, client, competition, config, fixture.id, homeName, initialRulebook, kickoff, outcomeLabels, poll.question, rawStatusCode]);
 
   useEffect(() => {
     if (!rulebook || wallet || walletRequested.current) return;

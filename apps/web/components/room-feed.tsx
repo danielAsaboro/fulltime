@@ -21,6 +21,7 @@ import type { Fixture, RoomMarketReference } from "@fulltime/shared";
 import { cn } from "@/lib/cn";
 import { PeerAvatar } from "@/components/peer-avatar";
 import { PollCard } from "@/components/poll-card";
+import { MessageContent } from "@/components/message-content";
 
 const QUICK_REACTIONS = ["🔥", "⚽", "👏", "😮"] as const;
 type OptimisticReactions = Record<string, Record<string, boolean>>;
@@ -294,7 +295,7 @@ function FeedItem({
         <div className={cn("w-full max-w-[92%] sm:max-w-[86%]", item.author?.isCurrentUser && "ml-auto")}>
           {item.kind === "text" ? (
             <div className={cn("rounded-[18px] bg-white/65 px-4 py-3", item.author?.isCurrentUser && "bg-periwinkle-mist/65")}>
-              {item.text ? <p className="whitespace-pre-wrap break-words text-body text-off-black">{item.text}</p> : null}
+              {item.text ? <MessageContent text={item.text} /> : null}
               {item.attachment ? <AttachmentView itemId={String(item.id)} attachment={item.attachment} onDownload={onDownloadAttachment} /> : null}
             </div>
           ) : (

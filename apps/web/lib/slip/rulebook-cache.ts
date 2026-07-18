@@ -7,7 +7,8 @@ const CACHE_VERSION = 2;
 type RulebookRequest = {
   fixtureId: string;
   question: string;
-  outcomeLabels: Array<string>;
+  outcomeLabels?: Array<string>;
+  fixture?: { competition: string; home: string; away: string; kickoff: number; gameState?: number };
 };
 
 type StoredRulebook = Omit<CompiledRulebook, "bands"> & {
@@ -122,4 +123,13 @@ export async function resolvePollRulebook(input: {
   inFlight.set(key, compilation);
   try { return await compilation; }
   finally { inFlight.delete(key); }
+}
+
+export async function cacheResolvedPollRulebook(input: {
+  configuration: SlipBrowserConfiguration;
+  request: RulebookRequest;
+  rulebook: CompiledRulebook;
+}): Promise<void> {
+  const key = await cacheKey(input.configuration, input.request);
+  writeCached(key, { status: "resolvable", rulebook: input.rulebook, cached: false });
 }

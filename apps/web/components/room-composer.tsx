@@ -11,13 +11,18 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { Fixture, RoomMarketReference } from "@fulltime/shared";
+import type { CompiledRulebook } from "@slip/sdk";
 import type { CreatePollInput, PollFeedItem, SendMessageInput } from "@/lib/data";
 import { cn } from "@/lib/cn";
 import { createFullTimeSlipClient, slipBrowserConfiguration } from "@/lib/slip/config";
-import { resolvePollRulebook } from "@/lib/slip/rulebook-cache";
+import { cacheResolvedPollRulebook, resolvePollRulebook } from "@/lib/slip/rulebook-cache";
 
 const MAX_MESSAGE_LENGTH = 1_000;
 const EMOJIS = ["⚽", "🔥", "👏", "😂", "😮", "❤️", "👀", "🏆"];
+
+function compilerFixture(fixture: Fixture) {
+  return { competition: fixture.competition, home: fixture.home.name, away: fixture.away.name, kickoff: Number(fixture.kickoff), ...(fixture.rawStatusCode !== undefined ? { gameState: fixture.rawStatusCode } : {}) };
+}
 
 export function RoomComposer({
   canParticipate,
@@ -115,16 +120,36 @@ export function RoomComposer({
           onClose={() => setPollOpen(false)}
           onRequireSignIn={onRequireSignIn}
           canParticipate={canParticipate}
-          onCreate={async (input) => {
+          onCompileNatural={fixture ? async (question) => {
+            const configuration = slipBrowserConfiguration();
+            if (!configuration) throw new Error("Natural-language wagers need the configured Slip compiler and Surfpool gateway.");
+            const resolution = await resolvePollRulebook({
+              client: createFullTimeSlipClient(),
+              configuration,
+              request: { fixtureId: String(fixture.id), question, fixture: compilerFixture(fixture) },
+            });
+            if (resolution.status === "unresolvable") throw new Error(resolution.message);
+            return resolution.rulebook;
+          } : undefined}
+          onCreate={async (input, naturalRulebook) => {
             const configuration = fixture && onAttachMarket ? slipBrowserConfiguration() : null;
-            const resolutionPromise = configuration && fixture
+            const resolutionPromise = naturalRulebook
+              ? Promise.resolve({ status: "resolvable" as const, rulebook: naturalRulebook, cached: true })
+              : configuration && fixture
               ? resolvePollRulebook({
                 client: createFullTimeSlipClient(),
                 configuration,
-                request: { fixtureId: String(fixture.id), question: input.question, outcomeLabels: [...input.options] },
+                request: { fixtureId: String(fixture.id), question: input.question, outcomeLabels: [...input.options], fixture: compilerFixture(fixture) },
               }).catch((reason: unknown) => ({ status: "error" as const, reason }))
               : Promise.resolve(null);
             const [, resolution] = await Promise.all([onCreatePoll(input), resolutionPromise]);
+            if (configuration && fixture && resolution?.status === "resolvable") {
+              await cacheResolvedPollRulebook({
+                configuration,
+                request: { fixtureId: String(fixture.id), question: input.question, outcomeLabels: [...input.options], fixture: compilerFixture(fixture) },
+                rulebook: resolution.rulebook,
+              });
+            }
             setPollOpen(false);
             // A successful resolution is cached and consumed by PollMarket as soon
             // as the durable poll projects. Market creation is automatic and does
@@ -276,19 +301,37 @@ function formatBytes(bytes: number): string {
 function PollComposer({
   canParticipate,
   onRequireSignIn,
+  onCompileNatural,
   onCreate,
   onClose,
 }: {
   canParticipate: boolean;
   onRequireSignIn: () => void;
-  onCreate: (input: CreatePollInput) => Promise<void>;
+  onCompileNatural?: (question: string) => Promise<CompiledRulebook>;
+  onCreate: (input: CreatePollInput, naturalRulebook?: CompiledRulebook) => Promise<void>;
   onClose: () => void;
 }) {
+  const [mode, setMode] = useState<"wager" | "poll">(onCompileNatural ? "wager" : "poll");
   const [question, setQuestion] = useState("");
   const [options, setOptions] = useState(["", ""]);
+  const [naturalRulebook, setNaturalRulebook] = useState<CompiledRulebook | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const validOptions = options.map((option) => option.trim()).filter(Boolean);
+  const validOptions = mode === "wager" && naturalRulebook ? naturalRulebook.outcomeLabels : options.map((option) => option.trim()).filter(Boolean);
+
+  const compile = async () => {
+    if (!onCompileNatural || !question.trim()) return;
+    setSaving(true);
+    setError(null);
+    try {
+      setNaturalRulebook(await onCompileNatural(question.trim()));
+    } catch (reason) {
+      setNaturalRulebook(null);
+      setError(reason instanceof Error ? reason.message : "This wager could not be compiled from verified match data.");
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const create = async () => {
     if (!canParticipate) {
@@ -299,7 +342,7 @@ function PollComposer({
     setSaving(true);
     setError(null);
     try {
-      await onCreate({ question: question.trim(), options: validOptions });
+      await onCreate({ question: question.trim(), options: validOptions }, mode === "wager" ? naturalRulebook ?? undefined : undefined);
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "Poll could not be created.");
       setSaving(false);
@@ -310,24 +353,28 @@ function PollComposer({
     <section className="absolute inset-x-0 bottom-full z-30 max-h-[70dvh] overflow-y-auto border border-ash bg-parchment p-4 shadow-xl sm:left-auto sm:right-4 sm:w-[420px]" aria-label="Create a poll">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <p className="text-caption uppercase tracking-[0.1em] text-smoke">Room poll</p>
-          <h2 className="mt-1 text-label">Ask the room</h2>
+          <p className="text-caption uppercase tracking-[0.1em] text-smoke">Room market</p>
+          <h2 className="mt-1 text-label">Ask it naturally</h2>
         </div>
         <button type="button" onClick={onClose} className="grid size-8 place-items-center rounded-full hover:bg-white" aria-label="Close poll composer">
           <X className="size-4" />
         </button>
       </div>
+      {onCompileNatural ? <div className="mt-4 grid grid-cols-2 rounded-full border border-ash bg-white/45 p-1" role="tablist" aria-label="Room post type">
+        <button type="button" role="tab" aria-selected={mode === "wager"} onClick={() => { setMode("wager"); setNaturalRulebook(null); setError(null); }} className={cn("min-h-10 rounded-full px-3 text-caption focus-visible:ring-2 focus-visible:ring-lake-blue", mode === "wager" && "bg-off-black text-parchment")}>Natural wager</button>
+        <button type="button" role="tab" aria-selected={mode === "poll"} onClick={() => { setMode("poll"); setNaturalRulebook(null); setError(null); }} className={cn("min-h-10 rounded-full px-3 text-caption focus-visible:ring-2 focus-visible:ring-lake-blue", mode === "poll" && "bg-off-black text-parchment")}>Social poll</button>
+      </div> : null}
       <label className="mt-4 block">
-        <span className="text-caption text-smoke">Question</span>
+        <span className="text-caption text-smoke">{mode === "wager" ? "Describe the wager" : "Question"}</span>
         <input
           value={question}
-          onChange={(event) => setQuestion(event.target.value)}
+          onChange={(event) => { setQuestion(event.target.value); setNaturalRulebook(null); }}
           maxLength={160}
-          placeholder="Who changes the game next?"
+          placeholder={mode === "wager" ? "Will both teams score? Yes or no." : "Who changes the game next?"}
           className="mt-1 w-full border border-ash bg-white/50 px-3 py-2.5 text-body outline-none focus:border-off-black"
         />
       </label>
-      <div className="mt-3 space-y-2">
+      {mode === "poll" ? <div className="mt-3 space-y-2">
         {options.map((option, index) => (
           <div key={index} className="flex items-center gap-2">
             <span className="grid size-6 shrink-0 place-items-center rounded-full border border-ash text-[10px] text-smoke">{index + 1}</span>
@@ -345,8 +392,8 @@ function PollComposer({
             ) : null}
           </div>
         ))}
-      </div>
-      {options.length < 5 ? (
+      </div> : naturalRulebook ? <div className="mt-4 rounded-xl border border-lake-blue/30 bg-periwinkle-mist/35 p-3"><p className="text-caption uppercase tracking-[0.08em] text-lake-blue">Verified Rulebook</p><p className="mt-1 text-body-sm text-off-black">{naturalRulebook.sentence}</p><div className="mt-3 flex flex-wrap gap-2">{naturalRulebook.outcomeLabels.map((label) => <span key={label} className="rounded-full border border-ash bg-white/65 px-3 py-1.5 text-caption">{label}</span>)}</div></div> : <p className="mt-3 text-caption text-smoke">FullTime will derive 2–5 complete outcomes, then show the exact TxLINE Rulebook before publishing.</p>}
+      {mode === "poll" && options.length < 5 ? (
         <button type="button" onClick={() => setOptions((values) => [...values, ""])} className="mt-3 inline-flex items-center gap-1.5 text-caption text-lake-blue">
           <Plus className="size-3.5" /> Add option
         </button>
@@ -354,14 +401,14 @@ function PollComposer({
       {error ? <p className="mt-3 text-caption text-crimson">{error}</p> : null}
       <button
         type="button"
-        onClick={() => void create()}
-        disabled={saving || !question.trim() || validOptions.length < 2}
+        onClick={() => void (mode === "wager" && !naturalRulebook ? compile() : create())}
+        disabled={saving || !question.trim() || (mode === "poll" && validOptions.length < 2)}
         className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full bg-lake-blue px-5 py-3 text-caption uppercase tracking-[0.06em] text-parchment disabled:opacity-35"
       >
-        {saving ? <LoaderCircle className="size-4 animate-spin" /> : <BarChart3 className="size-4" />}
-        Publish poll
+        {saving ? <LoaderCircle className="size-4 animate-spin motion-reduce:animate-none" /> : <BarChart3 className="size-4" />}
+        {mode === "wager" ? naturalRulebook ? "Publish wager" : "Build Rulebook" : "Publish poll"}
       </button>
-      <p className="mt-2 text-center text-[10px] text-smoke">2–5 options · exact labels become the market terms · first vote is final</p>
+      <p className="mt-2 text-center text-[10px] text-smoke">{mode === "wager" ? "Natural language → verified Rulebook → signed Solana market" : "2–5 options · first vote is final"}</p>
     </section>
   );
 }

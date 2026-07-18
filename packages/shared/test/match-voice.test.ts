@@ -1,13 +1,13 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import type { MatchEvent } from "../src/events.ts";
+import type { MatchEvent } from "../src/events.js";
 import {
   boothClipsForReleasedEvent,
   boothClipsForRoomMoment,
   catchMeUpClips,
   voicePackTemplates,
-} from "../src/match-voice.ts";
+} from "../src/match-voice.js";
 
 const teams = { home: "Brazil", away: "France" };
 

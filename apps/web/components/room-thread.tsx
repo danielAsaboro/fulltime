@@ -5,8 +5,8 @@ import { useEffect, useId, useMemo, useRef, useState, useSyncExternalStore } fro
 
 import type { RoomFeedItem, ThreadReply } from "@/lib/data";
 import { useRoomThread } from "@/lib/data";
-import { cn } from "@/lib/cn";
 import { PeerAvatar } from "@/components/peer-avatar";
+import { MessageContent } from "@/components/message-content";
 import { FeedKindIcon } from "@/components/room-feed";
 import { Sheet } from "@/components/ui/sheet";
 
@@ -234,7 +234,7 @@ function ThreadContent({
                     </time>
                     {reply.editedAt ? <span className="text-[10px] text-smoke">edited</span> : null}
                   </div>
-                  <p className="mt-1 whitespace-pre-wrap break-words text-body-sm text-off-black">{reply.text}</p>
+                  <div className="mt-1 text-body-sm"><MessageContent text={reply.text} /></div>
                   {reply.reactions.length ? (
                     <div className="mt-2 flex flex-wrap gap-1">
                       {reply.reactions.map((reaction) => (
