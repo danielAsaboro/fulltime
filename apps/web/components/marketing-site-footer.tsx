@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { Container, Logo } from "@/components/ui/primitives";
 
-export function MarketingSiteFooter() {
+export function MarketingSiteFooter({ downloadsAvailable = false }: { downloadsAvailable?: boolean }) {
   return (
     <footer className="border-t border-ash">
       <Container className="flex flex-col gap-4 py-10 sm:flex-row sm:items-center sm:justify-between">
@@ -14,8 +14,16 @@ export function MarketingSiteFooter() {
           >
             How it works
           </Link>
+          {downloadsAvailable ? (
+            <Link
+              href="#download"
+              className="min-h-10 rounded-sm py-3 font-mono text-caption uppercase tracking-[0.1em] text-smoke hover:text-off-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lake-blue"
+            >
+              Download
+            </Link>
+          ) : null}
           <Link
-            href="https://github.com/winsznx/fulltime"
+            href="https://github.com/danielAsaboro/fulltime"
             className="min-h-10 rounded-sm py-3 font-mono text-caption uppercase tracking-[0.1em] text-smoke hover:text-off-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lake-blue"
           >
             Source

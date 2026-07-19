@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Container, Eyebrow } from "@/components/ui/primitives";
 import { AnnouncementBar } from "@/components/announcement-bar";
+import { DownloadSection } from "@/components/download-section";
 import { Faq } from "@/components/faq";
 import { MarketingSiteFooter } from "@/components/marketing-site-footer";
 import { MarketingSiteNav } from "@/components/marketing-site-nav";
+import { fullTimeDownloads } from "@/lib/downloads";
 
 const BUILT_ON = ["Pear", "Hyperswarm", "Autobase", "Hypercore", "Next.js"];
 
@@ -36,10 +38,12 @@ const STEPS = [
 ];
 
 export default function Home() {
+  const downloads = fullTimeDownloads();
+
   return (
     <>
       <AnnouncementBar />
-      <MarketingSiteNav />
+      <MarketingSiteNav downloadsAvailable={downloads.length > 0} />
 
       <main>
         {/* Hero artwork is an original FullTime asset generated for this product. */}
@@ -74,7 +78,7 @@ export default function Home() {
                     How it works
                   </Button>
                   <Button
-                    href="https://github.com/winsznx/fulltime"
+                    href="https://github.com/danielAsaboro/fulltime"
                     variant="ghost"
                     className="border-parchment text-parchment hover:bg-parchment hover:text-off-black sm:min-w-48"
                   >
@@ -205,6 +209,8 @@ export default function Home() {
           </Container>
         </section>
 
+        <DownloadSection downloads={downloads} />
+
         {/* FAQ */}
         <section id="questions" className="scroll-mt-6 border-t border-ash">
           <Container className="py-16 sm:py-20">
@@ -238,8 +244,12 @@ export default function Home() {
                   Bring the group chat to the match — and keep the room on your peers.
                 </h2>
                 <div className="mt-8">
-                  <Button href="https://github.com/winsznx/fulltime" variant="primary" withArrow>
-                    View source
+                  <Button
+                    href={downloads.length ? "#download" : "https://github.com/danielAsaboro/fulltime"}
+                    variant="primary"
+                    withArrow
+                  >
+                    {downloads.length ? "Download FullTime" : "View source"}
                   </Button>
                 </div>
               </div>
@@ -248,7 +258,7 @@ export default function Home() {
         </section>
       </main>
 
-      <MarketingSiteFooter />
+      <MarketingSiteFooter downloadsAvailable={downloads.length > 0} />
     </>
   );
 }

@@ -649,3 +649,15 @@ Final verification after these changes:
   91 desktop plus 12 gated, 14 mobile, 10 web, and 17 worker), repository-wide typecheck, clean web
   lint, the FullTime production build, the 1/1 packed-SDK Surfpool boundary, and Slip's complete
   4 bigint / 13 scripts / 16 SDK / 4 keeper / 7 web / 4 real Surfpool test matrix.
+
+## Public application downloads (2026-07-19)
+
+- The marketing homepage renders a **Get FullTime** section and download navigation only for
+  platforms backed by a configured absolute HTTPS release URL. The operator boundary is
+  `FULLTIME_DESKTOP_DOWNLOAD_URL`, `FULLTIME_IOS_DOWNLOAD_URL`, and
+  `FULLTIME_ANDROID_DOWNLOAD_URL`; malformed, non-HTTPS, or credential-bearing URLs fail the
+  production build instead of producing an unsafe link.
+- No public downloads are configured in this repository. The GitHub repository is private and has
+  no releases, the desktop and mobile consumer release configurations remain unset, and the local
+  Android APK is not a public consumer artifact. Keep unavailable platforms hidden until signed,
+  consumer-configured releases or store listings are genuinely reachable.

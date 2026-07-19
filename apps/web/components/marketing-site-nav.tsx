@@ -9,14 +9,18 @@ const LINKS = [
   { href: "#questions", label: "Questions" },
 ];
 
-export function MarketingSiteNav() {
+export function MarketingSiteNav({ downloadsAvailable = false }: { downloadsAvailable?: boolean }) {
+  const links = downloadsAvailable
+    ? [...LINKS.slice(0, 2), { href: "#download", label: "Download" }, ...LINKS.slice(2)]
+    : LINKS;
+
   return (
     <header>
       <Container className="flex h-[96px] items-center justify-between gap-6 xl:h-[112px]">
         <div className="flex items-center gap-10">
           <Logo />
           <nav aria-label="Marketing" className="hidden items-center gap-8 xl:flex">
-            {LINKS.map((link) => (
+            {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -27,8 +31,13 @@ export function MarketingSiteNav() {
             ))}
           </nav>
         </div>
-        <Button href="https://github.com/winsznx/fulltime" variant="primary" size="sm" withArrow>
-          View source
+        <Button
+          href={downloadsAvailable ? "#download" : "https://github.com/danielAsaboro/fulltime"}
+          variant="primary"
+          size="sm"
+          withArrow
+        >
+          {downloadsAvailable ? "Download" : "View source"}
         </Button>
       </Container>
     </header>
