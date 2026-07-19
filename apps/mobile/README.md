@@ -6,7 +6,28 @@ the mobile identity, Corestore, Hyperswarm, BlindPairing, Autobase, fixture
 feed, presence, and durable room history. React Native receives only validated
 v2 request responses and events over the framed IPC stream.
 
-## Local iPhone build
+## iPhone build from source
+
+There is no App Store or public IPA build yet. You can build the real iPhone
+app from this repository on a Mac with Xcode. Apple requires the person
+installing the app to select their own Apple signing team; FullTime cannot ship
+a generic unsigned IPA that iOS devices will install.
+
+Clone the repository and install its dependencies, then select an Apple ID/team
+in Xcode under **Settings → Accounts**. Build the release-configured native
+project with:
+
+    npm install
+    npm run mobile:bundle:ios
+    npm --workspace @fulltime/mobile run link:ios
+    npm --workspace @fulltime/mobile run prebuild:ios
+
+Open `apps/mobile/ios/FullTime.xcworkspace` in Xcode, select the `FullTime`
+target and your signing team, then run it on a connected iPhone. The committed
+release configuration verifies the live operator manifest; publisher secrets
+and TxLINE credentials are not part of the app.
+
+## Local iPhone development build
 
 1. Start the real operator publisher from the repository root:
 
@@ -53,6 +74,19 @@ The React tree is rooted in `SafeAreaProvider`, and every full-screen app or
 modal surface uses the safe-area-context `SafeAreaView`. Android edge-to-edge
 windows therefore keep room controls, composers, settings, and the QR scanner
 clear of the status and navigation bars.
+
+## Android release APK
+
+The public APK must use a private, durable Android signing key rather than the
+Expo debug key. Keep the keystore and its passwords outside Git, set
+`FULLTIME_ANDROID_KEYSTORE_PATH`, `FULLTIME_ANDROID_KEYSTORE_PASSWORD`,
+`FULLTIME_ANDROID_KEY_ALIAS`, and `FULLTIME_ANDROID_KEY_PASSWORD`, then run:
+
+    npm --workspace @fulltime/mobile run android:release
+
+The command bundles and links the real peer worker, regenerates the native
+project with the committed production manifest pins, requires the dedicated
+release signer, and writes `android/app/build/outputs/apk/release/app-release.apk`.
 
 ## Checks
 

@@ -1,4 +1,4 @@
-import { Download, Laptop, Smartphone } from "lucide-react";
+import { Code2, Download, Laptop, Smartphone } from "lucide-react";
 
 import type { FullTimeDownload } from "@/lib/downloads";
 import { Button } from "@/components/ui/button";
@@ -34,7 +34,11 @@ export function DownloadSection({ downloads }: { downloads: FullTimeDownload[] }
                 <h3 className="mt-8 text-subheading text-off-black">{release.name}</h3>
                 <p className="mt-3 flex-1 font-mono text-body-sm text-graphite">{release.description}</p>
                 <Button href={release.url} variant="ghost" size="sm" className="mt-8 self-start">
-                  <Download className="size-4" aria-hidden />
+                  {release.delivery === "source" ? (
+                    <Code2 className="size-4" aria-hidden />
+                  ) : (
+                    <Download className="size-4" aria-hidden />
+                  )}
                   {release.action}
                 </Button>
               </Card>

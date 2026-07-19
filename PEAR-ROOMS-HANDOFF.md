@@ -657,7 +657,24 @@ Final verification after these changes:
   `FULLTIME_DESKTOP_DOWNLOAD_URL`, `FULLTIME_IOS_DOWNLOAD_URL`, and
   `FULLTIME_ANDROID_DOWNLOAD_URL`; malformed, non-HTTPS, or credential-bearing URLs fail the
   production build instead of producing an unsafe link.
-- No public downloads are configured in this repository. The GitHub repository is private and has
-  no releases, the desktop and mobile consumer release configurations remain unset, and the local
-  Android APK is not a public consumer artifact. Keep unavailable platforms hidden until signed,
-  consumer-configured releases or store listings are genuinely reachable.
+- The GitHub repository is public, and desktop/mobile consumer release configs now pin the live
+  authority documented below. Public download controls must remain hidden until the matching signed
+  desktop bundle and Android APK have passed release verification and exist as reachable GitHub
+  Release assets. The local-development APK remains outside that release boundary.
+
+### Live release authority
+
+- The live mainnet fixture publisher runs as the supervised `fulltime-operator.service` on the
+  DigitalOcean host at `134.122.23.27`. Its publisher data and corpus are durable under
+  `/opt/fulltime-operator/data`; operator keys and the minimal TxLINE environment are isolated under
+  `/opt/fulltime-operator/secrets`. The service uses the existing Docker runtime under a 192 MiB
+  memory cap and publishes through Hyperswarm without exposing TxLINE credentials.
+- Caddy serves the signed manifest at
+  `https://fulltime.134.122.23.27.nip.io/v1/network.json`. FullTime's manifest verifier accepted its
+  Ed25519 signature and pinned fixture feed
+  `20e63f5f9f5bb191a48f40c1167948b8998059b9ce384464913dece3d0f873d4`. Desktop and native release
+  configs embed only that HTTPS endpoint, its public verification key, and—on native—the same
+  verified signed manifest as an honest stale startup cache.
+- The Android release signing identity is not stored in Git. Its root-only recovery copy is at
+  `/opt/fulltime-operator/secrets/android-release/` on the DigitalOcean host. Preserve that identity
+  for every direct APK update; rotating it would prevent installed copies from upgrading in place.

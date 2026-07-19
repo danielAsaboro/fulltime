@@ -1,5 +1,10 @@
 {
-  "endpoint": null,
-  "publicKey": null,
-  "initialManifest": null
+  "endpoint": "https://fulltime.134.122.23.27.nip.io/v1/network.json",
+  "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEApKwNm43cYhiv6+WjGCCK3be7y0GIk6QpApyJDmV+nlI=\n-----END PUBLIC KEY-----\n",
+  "initialManifest": {
+    "version": 1,
+    "issuedAt": 1784478533877,
+    "fixtureFeedKey": "20e63f5f9f5bb191a48f40c1167948b8998059b9ce384464913dece3d0f873d4",
+    "signature": "RsGLLJ5AfroZJVSauWvwctOEou4cupL5rudAOmLcERFs3ZDY-9l2k9FarwcyxktGHmwJNbcm-VxUGtSnRn0GBg"
+  }
 }

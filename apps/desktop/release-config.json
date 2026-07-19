@@ -1,4 +1,4 @@
 {
-  "networkManifestUrl": null,
-  "networkManifestPublicKey": null
+  "networkManifestUrl": "https://fulltime.134.122.23.27.nip.io/v1/network.json",
+  "networkManifestPublicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEApKwNm43cYhiv6+WjGCCK3be7y0GIk6QpApyJDmV+nlI=\n-----END PUBLIC KEY-----\n"
 }

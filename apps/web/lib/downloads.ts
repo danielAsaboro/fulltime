@@ -1,5 +1,6 @@
 export type FullTimeDownload = {
   platform: "desktop" | "ios" | "android";
+  delivery: "download" | "source";
   name: string;
   description: string;
   action: string;
@@ -16,6 +17,7 @@ type DownloadEnvironment = Partial<Record<
 const RELEASES = [
   {
     platform: "desktop",
+    delivery: "download",
     name: "Desktop",
     description: "Run your Pear room worker and encrypted room history on your computer.",
     action: "Download desktop app",
@@ -23,6 +25,7 @@ const RELEASES = [
   },
   {
     platform: "ios",
+    delivery: "download",
     name: "iPhone",
     description: "Join rooms, scan invites, and keep up with the match from your iPhone.",
     action: "Download iPhone app",
@@ -30,12 +33,22 @@ const RELEASES = [
   },
   {
     platform: "android",
+    delivery: "download",
     name: "Android",
     description: "Bring the same encrypted room, polls, and reactions to Android.",
     action: "Download Android app",
     env: "FULLTIME_ANDROID_DOWNLOAD_URL",
   },
 ] as const;
+
+const IOS_SOURCE: FullTimeDownload = {
+  platform: "ios",
+  delivery: "source",
+  name: "iPhone",
+  description: "Build the native app with Xcode using your own Apple signing team.",
+  action: "Build from source",
+  url: "https://github.com/danielAsaboro/fulltime/blob/main/apps/mobile/README.md#iphone-build-from-source",
+};
 
 function releaseUrl(value: string | undefined, variable: string): string | null {
   const candidate = value?.trim();
@@ -58,8 +71,9 @@ export function fullTimeDownloads(environment: DownloadEnvironment = {
   FULLTIME_IOS_DOWNLOAD_URL: process.env.FULLTIME_IOS_DOWNLOAD_URL,
   FULLTIME_ANDROID_DOWNLOAD_URL: process.env.FULLTIME_ANDROID_DOWNLOAD_URL,
 }): FullTimeDownload[] {
-  return RELEASES.flatMap((release) => {
+  const downloads = RELEASES.flatMap((release) => {
     const url = releaseUrl(environment[release.env], release.env);
     return url ? [{ ...release, url }] : [];
   });
+  return downloads.some(({ platform }) => platform === "ios") ? downloads : [...downloads, IOS_SOURCE];
 }

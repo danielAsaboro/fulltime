@@ -15,6 +15,7 @@
     "prebuild:android": "expo prebuild --platform android",
     "prebuild:ios": "expo prebuild --platform ios",
     "android:local": "node scripts/build-android-local.cjs",
+    "android:release": "node scripts/build-android-release.cjs",
     "ios:device": "node scripts/run-ios-device.cjs",
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit",

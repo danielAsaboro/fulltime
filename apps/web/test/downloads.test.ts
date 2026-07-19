@@ -3,8 +3,17 @@ import test from "node:test";
 
 import { fullTimeDownloads } from "../lib/downloads";
 
-test("publishes only configured release downloads", () => {
-  assert.deepEqual(fullTimeDownloads({}), []);
+test("publishes only configured downloads plus the real iPhone source build", () => {
+  assert.deepEqual(fullTimeDownloads({}), [
+    {
+      platform: "ios",
+      delivery: "source",
+      name: "iPhone",
+      description: "Build the native app with Xcode using your own Apple signing team.",
+      action: "Build from source",
+      url: "https://github.com/danielAsaboro/fulltime/blob/main/apps/mobile/README.md#iphone-build-from-source",
+    },
+  ]);
 
   const downloads = fullTimeDownloads({
     FULLTIME_DESKTOP_DOWNLOAD_URL: "https://releases.example.com/fulltime.dmg",
@@ -17,6 +26,10 @@ test("publishes only configured release downloads", () => {
     {
       platform: "android",
       url: "https://play.google.com/store/apps/details?id=com.txoddline.fulltime",
+    },
+    {
+      platform: "ios",
+      url: "https://github.com/danielAsaboro/fulltime/blob/main/apps/mobile/README.md#iphone-build-from-source",
     },
   ]);
 });

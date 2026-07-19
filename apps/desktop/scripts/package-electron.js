@@ -29,6 +29,8 @@ async function main () {
     dir: desktopRoot,
     out: outputRoot,
     name: 'FullTime',
+    appBundleId: 'com.txoddline.fulltime',
+    appCategoryType: 'public.app-category.sports',
     appVersion: packageJson.version,
     buildVersion: packageJson.version,
     platform: process.platform,

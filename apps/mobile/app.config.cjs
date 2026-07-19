@@ -3,7 +3,7 @@
 const fs = require('fs')
 const os = require('os')
 const path = require('path')
-const { withEntitlementsPlist } = require('@expo/config-plugins')
+const { withAppBuildGradle, withEntitlementsPlist } = require('@expo/config-plugins')
 
 function readJson(file) {
   return JSON.parse(fs.readFileSync(file, 'utf8'))
@@ -50,6 +50,71 @@ function withoutInactivePrivyEntitlements(config) {
   })
 }
 
+function withFullTimeAndroidReleaseSigning(config) {
+  return withAppBuildGradle(config, (next) => {
+    if (next.modResults.language !== 'groovy') {
+      throw new Error('FullTime Android release signing requires a Groovy app build.gradle')
+    }
+    let contents = next.modResults.contents
+    const anchor = 'android {\n    ndkVersion rootProject.ext.ndkVersion'
+    const variables = `def fullTimeReleaseStoreFile = System.getenv('FULLTIME_ANDROID_KEYSTORE_PATH')
+def fullTimeReleaseStorePassword = System.getenv('FULLTIME_ANDROID_KEYSTORE_PASSWORD')
+def fullTimeReleaseKeyAlias = System.getenv('FULLTIME_ANDROID_KEY_ALIAS')
+def fullTimeReleaseKeyPassword = System.getenv('FULLTIME_ANDROID_KEY_PASSWORD')
+def fullTimeReleaseSigningConfigured = [fullTimeReleaseStoreFile, fullTimeReleaseStorePassword, fullTimeReleaseKeyAlias, fullTimeReleaseKeyPassword].every { it }
+
+android {
+    ndkVersion rootProject.ext.ndkVersion`
+    if (!contents.includes('def fullTimeReleaseStoreFile')) {
+      if (!contents.includes(anchor)) throw new Error('Could not locate Android configuration for release signing')
+      contents = contents.replace(anchor, variables)
+    }
+
+    const signingAnchor = `        debug {
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+    }`
+    const signingReplacement = `        debug {
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+        if (fullTimeReleaseSigningConfigured) {
+            fullTimeRelease {
+                storeFile file(fullTimeReleaseStoreFile)
+                storePassword fullTimeReleaseStorePassword
+                keyAlias fullTimeReleaseKeyAlias
+                keyPassword fullTimeReleaseKeyPassword
+            }
+        }
+    }`
+    if (!contents.includes('fullTimeRelease {')) {
+      if (!contents.includes(signingAnchor)) throw new Error('Could not locate Android signing configuration')
+      contents = contents.replace(signingAnchor, signingReplacement)
+    }
+
+    const releaseAnchor = `        release {
+            // Caution! In production, you need to generate your own keystore file.
+            // see https://reactnative.dev/docs/signed-apk-android.
+            signingConfig signingConfigs.debug`
+    const releaseReplacement = `        release {
+            if (!fullTimeReleaseSigningConfigured) {
+                throw new GradleException('Release signing requires FULLTIME_ANDROID_KEYSTORE_PATH, FULLTIME_ANDROID_KEYSTORE_PASSWORD, FULLTIME_ANDROID_KEY_ALIAS, and FULLTIME_ANDROID_KEY_PASSWORD')
+            }
+            signingConfig signingConfigs.fullTimeRelease`
+    if (!contents.includes('signingConfig signingConfigs.fullTimeRelease')) {
+      if (!contents.includes(releaseAnchor)) throw new Error('Could not locate Android release build type')
+      contents = contents.replace(releaseAnchor, releaseReplacement)
+    }
+    next.modResults.contents = contents
+    return next
+  })
+}
+
 module.exports = {
   expo: {
     name: 'FullTime',
@@ -78,6 +143,7 @@ module.exports = {
       'expo-web-browser',
       ['expo-camera', { cameraPermission: 'Allow FullTime to scan encrypted room invite QR codes.' }],
       ['expo-build-properties', { android: { minSdkVersion: 29, usesCleartextTraffic: useLocal } }],
+      withFullTimeAndroidReleaseSigning,
       withoutInactivePrivyEntitlements
     ],
     extra: {
