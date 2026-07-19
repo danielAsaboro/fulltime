@@ -3,6 +3,24 @@ import test from "node:test";
 
 import { fullTimeDownloads } from "../lib/downloads";
 
+test("defaults the deployed website to the published GitHub release", () => {
+  const downloads = fullTimeDownloads();
+  assert.deepEqual(downloads.map(({ platform, url }) => ({ platform, url })), [
+    {
+      platform: "desktop",
+      url: "https://github.com/danielAsaboro/fulltime/releases/download/v0.1.0-beta.1/FullTime-0.1.0-macos-arm64.zip",
+    },
+    {
+      platform: "android",
+      url: "https://github.com/danielAsaboro/fulltime/releases/download/v0.1.0-beta.1/FullTime-0.1.0-android.apk",
+    },
+    {
+      platform: "ios",
+      url: "https://github.com/danielAsaboro/fulltime/blob/main/apps/mobile/README.md#iphone-build-from-source",
+    },
+  ]);
+});
+
 test("publishes only configured downloads plus the real iPhone source build", () => {
   assert.deepEqual(fullTimeDownloads({}), [
     {

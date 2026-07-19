@@ -658,9 +658,10 @@ Final verification after these changes:
   `FULLTIME_ANDROID_DOWNLOAD_URL`; malformed, non-HTTPS, or credential-bearing URLs fail the
   production build instead of producing an unsafe link.
 - The GitHub repository is public, and desktop/mobile consumer release configs now pin the live
-  authority documented below. Public download controls must remain hidden until the matching signed
-  desktop bundle and Android APK have passed release verification and exist as reachable GitHub
-  Release assets. The local-development APK remains outside that release boundary.
+  authority documented below. The verified beta artifacts are published at
+  `https://github.com/danielAsaboro/fulltime/releases/tag/v0.1.0-beta.1`; the website defaults to
+  those exact macOS and Android assets and links iPhone users to the real Xcode source-build path.
+  The local-development APK remains outside that release boundary.
 
 ### Live release authority
 

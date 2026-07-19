@@ -14,6 +14,10 @@ type DownloadEnvironment = Partial<Record<
   string | undefined
 >>;
 
+const GITHUB_RELEASE_ROOT = "https://github.com/danielAsaboro/fulltime/releases/download/v0.1.0-beta.1";
+const DEFAULT_DESKTOP_DOWNLOAD_URL = `${GITHUB_RELEASE_ROOT}/FullTime-0.1.0-macos-arm64.zip`;
+const DEFAULT_ANDROID_DOWNLOAD_URL = `${GITHUB_RELEASE_ROOT}/FullTime-0.1.0-android.apk`;
+
 const RELEASES = [
   {
     platform: "desktop",
@@ -67,9 +71,9 @@ function releaseUrl(value: string | undefined, variable: string): string | null 
 }
 
 export function fullTimeDownloads(environment: DownloadEnvironment = {
-  FULLTIME_DESKTOP_DOWNLOAD_URL: process.env.FULLTIME_DESKTOP_DOWNLOAD_URL,
+  FULLTIME_DESKTOP_DOWNLOAD_URL: process.env.FULLTIME_DESKTOP_DOWNLOAD_URL ?? DEFAULT_DESKTOP_DOWNLOAD_URL,
   FULLTIME_IOS_DOWNLOAD_URL: process.env.FULLTIME_IOS_DOWNLOAD_URL,
-  FULLTIME_ANDROID_DOWNLOAD_URL: process.env.FULLTIME_ANDROID_DOWNLOAD_URL,
+  FULLTIME_ANDROID_DOWNLOAD_URL: process.env.FULLTIME_ANDROID_DOWNLOAD_URL ?? DEFAULT_ANDROID_DOWNLOAD_URL,
 }): FullTimeDownload[] {
   const downloads = RELEASES.flatMap((release) => {
     const url = releaseUrl(environment[release.env], release.env);
