@@ -1,0 +1,528 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomCorpus",
+  "name": "World Cup 2026 promotion rooms",
+  "fixtures": [
+    {
+      "fixtureId": "17588227",
+      "seed": "data/world-cup-2026/17588227-mexico-vs-south-africa/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588227-mexico-vs-south-africa"
+    },
+    {
+      "fixtureId": "17926696",
+      "seed": "data/world-cup-2026/17926696-south-korea-vs-czech-republic/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17926696-south-korea-vs-czech-republic"
+    },
+    {
+      "fixtureId": "17926604",
+      "seed": "data/world-cup-2026/17926604-canada-vs-bosnia-herzegovina/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17926604-canada-vs-bosnia-herzegovina"
+    },
+    {
+      "fixtureId": "17588396",
+      "seed": "data/world-cup-2026/17588396-usa-vs-paraguay/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588396-usa-vs-paraguay"
+    },
+    {
+      "fixtureId": "17588308",
+      "seed": "data/world-cup-2026/17588308-qatar-vs-switzerland/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588308-qatar-vs-switzerland"
+    },
+    {
+      "fixtureId": "17588386",
+      "seed": "data/world-cup-2026/17588386-brazil-vs-morocco/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588386-brazil-vs-morocco"
+    },
+    {
+      "fixtureId": "17588316",
+      "seed": "data/world-cup-2026/17588316-haiti-vs-scotland/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588316-haiti-vs-scotland"
+    },
+    {
+      "fixtureId": "17926689",
+      "seed": "data/world-cup-2026/17926689-australia-vs-turkey/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17926689-australia-vs-turkey"
+    },
+    {
+      "fixtureId": "17588318",
+      "seed": "data/world-cup-2026/17588318-germany-vs-curacao/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588318-germany-vs-curacao"
+    },
+    {
+      "fixtureId": "17588305",
+      "seed": "data/world-cup-2026/17588305-netherlands-vs-japan/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588305-netherlands-vs-japan"
+    },
+    {
+      "fixtureId": "17588239",
+      "seed": "data/world-cup-2026/17588239-ivory-coast-vs-ecuador/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588239-ivory-coast-vs-ecuador"
+    },
+    {
+      "fixtureId": "17926553",
+      "seed": "data/world-cup-2026/17926553-sweden-vs-tunisia/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17926553-sweden-vs-tunisia"
+    },
+    {
+      "fixtureId": "17588403",
+      "seed": "data/world-cup-2026/17588403-spain-vs-cape-verde/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588403-spain-vs-cape-verde"
+    },
+    {
+      "fixtureId": "17588230",
+      "seed": "data/world-cup-2026/17588230-belgium-vs-egypt/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588230-belgium-vs-egypt"
+    },
+    {
+      "fixtureId": "17588311",
+      "seed": "data/world-cup-2026/17588311-saudi-arabia-vs-uruguay/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588311-saudi-arabia-vs-uruguay"
+    },
+    {
+      "fixtureId": "17588241",
+      "seed": "data/world-cup-2026/17588241-iran-vs-new-zealand/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588241-iran-vs-new-zealand"
+    },
+    {
+      "fixtureId": "17588306",
+      "seed": "data/world-cup-2026/17588306-france-vs-senegal/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588306-france-vs-senegal"
+    },
+    {
+      "fixtureId": "17926828",
+      "seed": "data/world-cup-2026/17926828-iraq-vs-norway/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17926828-iraq-vs-norway"
+    },
+    {
+      "fixtureId": "17588322",
+      "seed": "data/world-cup-2026/17588322-argentina-vs-algeria/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588322-argentina-vs-algeria"
+    },
+    {
+      "fixtureId": "17588405",
+      "seed": "data/world-cup-2026/17588405-austria-vs-jordan/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588405-austria-vs-jordan"
+    },
+    {
+      "fixtureId": "17926703",
+      "seed": "data/world-cup-2026/17926703-portugal-vs-congo-dr/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17926703-portugal-vs-congo-dr"
+    },
+    {
+      "fixtureId": "17588228",
+      "seed": "data/world-cup-2026/17588228-england-vs-croatia/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588228-england-vs-croatia"
+    },
+    {
+      "fixtureId": "17588406",
+      "seed": "data/world-cup-2026/17588406-ghana-vs-panama/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588406-ghana-vs-panama"
+    },
+    {
+      "fixtureId": "17588399",
+      "seed": "data/world-cup-2026/17588399-uzbekistan-vs-colombia/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588399-uzbekistan-vs-colombia"
+    },
+    {
+      "fixtureId": "17926765",
+      "seed": "data/world-cup-2026/17926765-czech-republic-vs-south-africa/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17926765-czech-republic-vs-south-africa"
+    },
+    {
+      "fixtureId": "17926603",
+      "seed": "data/world-cup-2026/17926603-switzerland-vs-bosnia-herzegovina/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17926603-switzerland-vs-bosnia-herzegovina"
+    },
+    {
+      "fixtureId": "17588238",
+      "seed": "data/world-cup-2026/17588238-canada-vs-qatar/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588238-canada-vs-qatar"
+    },
+    {
+      "fixtureId": "17588223",
+      "seed": "data/world-cup-2026/17588223-mexico-vs-south-korea/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588223-mexico-vs-south-korea"
+    },
+    {
+      "fixtureId": "17588388",
+      "seed": "data/world-cup-2026/17588388-usa-vs-australia/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588388-usa-vs-australia"
+    },
+    {
+      "fixtureId": "17588397",
+      "seed": "data/world-cup-2026/17588397-scotland-vs-morocco/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588397-scotland-vs-morocco"
+    },
+    {
+      "fixtureId": "17588317",
+      "seed": "data/world-cup-2026/17588317-brazil-vs-haiti/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588317-brazil-vs-haiti"
+    },
+    {
+      "fixtureId": "17926688",
+      "seed": "data/world-cup-2026/17926688-turkey-vs-paraguay/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17926688-turkey-vs-paraguay"
+    },
+    {
+      "fixtureId": "17926687",
+      "seed": "data/world-cup-2026/17926687-netherlands-vs-sweden/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17926687-netherlands-vs-sweden"
+    },
+    {
+      "fixtureId": "17588240",
+      "seed": "data/world-cup-2026/17588240-germany-vs-ivory-coast/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588240-germany-vs-ivory-coast"
+    },
+    {
+      "fixtureId": "17588320",
+      "seed": "data/world-cup-2026/17588320-ecuador-vs-curacao/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588320-ecuador-vs-curacao"
+    },
+    {
+      "fixtureId": "17588310",
+      "seed": "data/world-cup-2026/17588310-tunisia-vs-japan/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588310-tunisia-vs-japan"
+    },
+    {
+      "fixtureId": "17588232",
+      "seed": "data/world-cup-2026/17588232-spain-vs-saudi-arabia/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588232-spain-vs-saudi-arabia"
+    },
+    {
+      "fixtureId": "17588390",
+      "seed": "data/world-cup-2026/17588390-belgium-vs-iran/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588390-belgium-vs-iran"
+    },
+    {
+      "fixtureId": "17588235",
+      "seed": "data/world-cup-2026/17588235-uruguay-vs-cape-verde/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588235-uruguay-vs-cape-verde"
+    },
+    {
+      "fixtureId": "17588242",
+      "seed": "data/world-cup-2026/17588242-new-zealand-vs-egypt/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588242-new-zealand-vs-egypt"
+    },
+    {
+      "fixtureId": "17588389",
+      "seed": "data/world-cup-2026/17588389-argentina-vs-austria/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588389-argentina-vs-austria"
+    },
+    {
+      "fixtureId": "17926647",
+      "seed": "data/world-cup-2026/17926647-france-vs-iraq/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17926647-france-vs-iraq"
+    },
+    {
+      "fixtureId": "17588313",
+      "seed": "data/world-cup-2026/17588313-norway-vs-senegal/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588313-norway-vs-senegal"
+    },
+    {
+      "fixtureId": "17588244",
+      "seed": "data/world-cup-2026/17588244-jordan-vs-algeria/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588244-jordan-vs-algeria"
+    },
+    {
+      "fixtureId": "17588231",
+      "seed": "data/world-cup-2026/17588231-portugal-vs-uzbekistan/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588231-portugal-vs-uzbekistan"
+    },
+    {
+      "fixtureId": "17588324",
+      "seed": "data/world-cup-2026/17588324-england-vs-ghana/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588324-england-vs-ghana"
+    },
+    {
+      "fixtureId": "17588401",
+      "seed": "data/world-cup-2026/17588401-panama-vs-croatia/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588401-panama-vs-croatia"
+    },
+    {
+      "fixtureId": "17926615",
+      "seed": "data/world-cup-2026/17926615-colombia-vs-congo-dr/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17926615-colombia-vs-congo-dr"
+    },
+    {
+      "fixtureId": "17588303",
+      "seed": "data/world-cup-2026/17588303-switzerland-vs-canada/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588303-switzerland-vs-canada"
+    },
+    {
+      "fixtureId": "17926766",
+      "seed": "data/world-cup-2026/17926766-bosnia-herzegovina-vs-qatar/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17926766-bosnia-herzegovina-vs-qatar"
+    },
+    {
+      "fixtureId": "17588319",
+      "seed": "data/world-cup-2026/17588319-morocco-vs-haiti/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588319-morocco-vs-haiti"
+    },
+    {
+      "fixtureId": "17588398",
+      "seed": "data/world-cup-2026/17588398-scotland-vs-brazil/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588398-scotland-vs-brazil"
+    },
+    {
+      "fixtureId": "17588395",
+      "seed": "data/world-cup-2026/17588395-south-africa-vs-south-korea/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588395-south-africa-vs-south-korea"
+    },
+    {
+      "fixtureId": "17926764",
+      "seed": "data/world-cup-2026/17926764-czech-republic-vs-mexico/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17926764-czech-republic-vs-mexico"
+    },
+    {
+      "fixtureId": "17588302",
+      "seed": "data/world-cup-2026/17588302-ecuador-vs-germany/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588302-ecuador-vs-germany"
+    },
+    {
+      "fixtureId": "17588321",
+      "seed": "data/world-cup-2026/17588321-curacao-vs-ivory-coast/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588321-curacao-vs-ivory-coast"
+    },
+    {
+      "fixtureId": "17588400",
+      "seed": "data/world-cup-2026/17588400-tunisia-vs-switzerland/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588400-tunisia-vs-switzerland",
+      "captureState": "scheduled-only"
+    },
+    {
+      "fixtureId": "17588236",
+      "seed": "data/world-cup-2026/17588236-tunisia-vs-netherlands/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588236-tunisia-vs-netherlands"
+    },
+    {
+      "fixtureId": "17926686",
+      "seed": "data/world-cup-2026/17926686-japan-vs-sweden/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17926686-japan-vs-sweden"
+    },
+    {
+      "fixtureId": "17588229",
+      "seed": "data/world-cup-2026/17588229-paraguay-vs-australia/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588229-paraguay-vs-australia"
+    },
+    {
+      "fixtureId": "17926593",
+      "seed": "data/world-cup-2026/17926593-turkey-vs-usa/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17926593-turkey-vs-usa"
+    },
+    {
+      "fixtureId": "17588234",
+      "seed": "data/world-cup-2026/17588234-norway-vs-france/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588234-norway-vs-france"
+    },
+    {
+      "fixtureId": "17926740",
+      "seed": "data/world-cup-2026/17926740-senegal-vs-iraq/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17926740-senegal-vs-iraq"
+    },
+    {
+      "fixtureId": "17588314",
+      "seed": "data/world-cup-2026/17588314-cape-verde-vs-saudi-arabia/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588314-cape-verde-vs-saudi-arabia"
+    },
+    {
+      "fixtureId": "17588404",
+      "seed": "data/world-cup-2026/17588404-uruguay-vs-spain/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588404-uruguay-vs-spain"
+    },
+    {
+      "fixtureId": "17588309",
+      "seed": "data/world-cup-2026/17588309-egypt-vs-iran/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588309-egypt-vs-iran"
+    },
+    {
+      "fixtureId": "17588323",
+      "seed": "data/world-cup-2026/17588323-new-zealand-vs-belgium/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588323-new-zealand-vs-belgium"
+    },
+    {
+      "fixtureId": "17588245",
+      "seed": "data/world-cup-2026/17588245-croatia-vs-ghana/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588245-croatia-vs-ghana"
+    },
+    {
+      "fixtureId": "17588402",
+      "seed": "data/world-cup-2026/17588402-panama-vs-england/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588402-panama-vs-england"
+    },
+    {
+      "fixtureId": "17588391",
+      "seed": "data/world-cup-2026/17588391-colombia-vs-portugal/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588391-colombia-vs-portugal"
+    },
+    {
+      "fixtureId": "17926704",
+      "seed": "data/world-cup-2026/17926704-congo-dr-vs-uzbekistan/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17926704-congo-dr-vs-uzbekistan"
+    },
+    {
+      "fixtureId": "17588325",
+      "seed": "data/world-cup-2026/17588325-jordan-vs-argentina/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588325-jordan-vs-argentina"
+    },
+    {
+      "fixtureId": "17588326",
+      "seed": "data/world-cup-2026/17588326-algeria-vs-austria/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588326-algeria-vs-austria"
+    },
+    {
+      "fixtureId": "18167317",
+      "seed": "data/world-cup-2026/18167317-south-africa-vs-canada/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18167317-south-africa-vs-canada"
+    },
+    {
+      "fixtureId": "18172469",
+      "seed": "data/world-cup-2026/18172469-brazil-vs-japan/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18172469-brazil-vs-japan"
+    },
+    {
+      "fixtureId": "18175983",
+      "seed": "data/world-cup-2026/18175983-germany-vs-paraguay/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18175983-germany-vs-paraguay"
+    },
+    {
+      "fixtureId": "18172280",
+      "seed": "data/world-cup-2026/18172280-netherlands-vs-morocco/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18172280-netherlands-vs-morocco"
+    },
+    {
+      "fixtureId": "18175397",
+      "seed": "data/world-cup-2026/18175397-ivory-coast-vs-norway/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18175397-ivory-coast-vs-norway"
+    },
+    {
+      "fixtureId": "18175981",
+      "seed": "data/world-cup-2026/18175981-france-vs-sweden/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18175981-france-vs-sweden"
+    },
+    {
+      "fixtureId": "18179759",
+      "seed": "data/world-cup-2026/18179759-mexico-vs-ecuador/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18179759-mexico-vs-ecuador"
+    },
+    {
+      "fixtureId": "18179764",
+      "seed": "data/world-cup-2026/18179764-england-vs-congo-dr/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18179764-england-vs-congo-dr"
+    },
+    {
+      "fixtureId": "18179550",
+      "seed": "data/world-cup-2026/18179550-belgium-vs-senegal/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18179550-belgium-vs-senegal"
+    },
+    {
+      "fixtureId": "18172379",
+      "seed": "data/world-cup-2026/18172379-usa-vs-bosnia-herzegovina/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18172379-usa-vs-bosnia-herzegovina"
+    },
+    {
+      "fixtureId": "18179551",
+      "seed": "data/world-cup-2026/18179551-spain-vs-austria/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18179551-spain-vs-austria"
+    },
+    {
+      "fixtureId": "18179763",
+      "seed": "data/world-cup-2026/18179763-portugal-vs-croatia/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18179763-portugal-vs-croatia"
+    },
+    {
+      "fixtureId": "18179552",
+      "seed": "data/world-cup-2026/18179552-switzerland-vs-algeria/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18179552-switzerland-vs-algeria"
+    },
+    {
+      "fixtureId": "18176123",
+      "seed": "data/world-cup-2026/18176123-australia-vs-egypt/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18176123-australia-vs-egypt"
+    },
+    {
+      "fixtureId": "18175918",
+      "seed": "data/world-cup-2026/18175918-argentina-vs-cape-verde/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18175918-argentina-vs-cape-verde"
+    },
+    {
+      "fixtureId": "18179549",
+      "seed": "data/world-cup-2026/18179549-colombia-vs-ghana/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18179549-colombia-vs-ghana"
+    },
+    {
+      "fixtureId": "18185036",
+      "seed": "data/world-cup-2026/18185036-canada-vs-morocco/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18185036-canada-vs-morocco"
+    },
+    {
+      "fixtureId": "18188721",
+      "seed": "data/world-cup-2026/18188721-paraguay-vs-france/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18188721-paraguay-vs-france"
+    },
+    {
+      "fixtureId": "18187298",
+      "seed": "data/world-cup-2026/18187298-brazil-vs-norway/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18187298-brazil-vs-norway"
+    },
+    {
+      "fixtureId": "18192996",
+      "seed": "data/world-cup-2026/18192996-mexico-vs-england/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18192996-mexico-vs-england"
+    },
+    {
+      "fixtureId": "18198205",
+      "seed": "data/world-cup-2026/18198205-portugal-vs-spain/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18198205-portugal-vs-spain"
+    },
+    {
+      "fixtureId": "18193785",
+      "seed": "data/world-cup-2026/18193785-usa-vs-belgium/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18193785-usa-vs-belgium"
+    },
+    {
+      "fixtureId": "18202701",
+      "seed": "data/world-cup-2026/18202701-argentina-vs-egypt/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18202701-argentina-vs-egypt"
+    },
+    {
+      "fixtureId": "18202783",
+      "seed": "data/world-cup-2026/18202783-switzerland-vs-colombia/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18202783-switzerland-vs-colombia"
+    },
+    {
+      "fixtureId": "18209181",
+      "seed": "data/world-cup-2026/18209181-france-vs-morocco/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18209181-france-vs-morocco"
+    },
+    {
+      "fixtureId": "18218149",
+      "seed": "data/world-cup-2026/18218149-spain-vs-belgium/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18218149-spain-vs-belgium"
+    },
+    {
+      "fixtureId": "18213979",
+      "seed": "data/world-cup-2026/18213979-norway-vs-england/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18213979-norway-vs-england"
+    },
+    {
+      "fixtureId": "18222446",
+      "seed": "data/world-cup-2026/18222446-argentina-vs-switzerland/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18222446-argentina-vs-switzerland"
+    },
+    {
+      "fixtureId": "18237038",
+      "seed": "data/world-cup-2026/18237038-france-vs-spain/room-seed.json",
+      "archive": "data/world-cup-2026/18237038-france-vs-spain/archive"
+    },
+    {
+      "fixtureId": "18257865",
+      "seed": "data/world-cup-2026/18257865-france-vs-england/room-seed.json",
+      "archive": "data/world-cup-2026/18257865-france-vs-england/archive"
+    },
+    {
+      "fixtureId": "18257739",
+      "seed": "data/world-cup-2026/18257739-spain-vs-argentina/room-seed.json",
+      "archive": "data/world-cup-2026/18257739-spain-vs-argentina/archive"
+    }
+  ]
+}

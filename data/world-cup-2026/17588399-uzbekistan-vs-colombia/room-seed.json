@@ -1,0 +1,376 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588399",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781743500000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1781743500000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1781743560000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1781743620000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1781743680000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1781744400000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “In honor of Uzbekistan’s first-ever WC appearance — plov, blini, samsa from Rus Uz (Arlington); staff hopeful vs Colombia”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067395239807947043",
+        "url": "https://x.com/mviser/status/2067395239807947043",
+        "observedAt": "2026-06-17 23:53"
+      }
+    },
+    {
+      "at": 1781744460000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Uzbekistan may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1781744700000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Pre-match analysis — Colombia favorites; projected 2-0; Díaz vs Khusanov key”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067393270796464395",
+        "url": "https://x.com/_HeyTheo/status/2067393270796464395",
+        "observedAt": "2026-06-17 23:45"
+      }
+    },
+    {
+      "at": 1781744730000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781744820000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Uzbekistan, Colombia, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1781745300000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Uzbekistan or Colombia?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Uzbekistan"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Colombia"
+        }
+      ]
+    },
+    {
+      "at": 1781745306000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781745312000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1781745318000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1781745324000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1781748014025,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588399:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1781748009025,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781748019025,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588399:16:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1781748009025,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781748024025,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588399:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1781748009025,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781750494689,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "42' GOAL — Colombia. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 421,
+        "sourceTs": 1781750489689,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1781750499689,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781750504689,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1781751228060,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Luis Díaz assist and Gustavo Puerta goal — Uzbekistan vs Colombia”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067756153023684893",
+        "url": "https://x.com/dailyfootvibes/status/2067756153023684893",
+        "observedAt": "2026-06-18 23:47"
+      }
+    },
+    {
+      "at": 1781751263060,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Uzbekistan 0-1 Colombia. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 529,
+        "sourceTs": 1781751258060,
+        "action": "halftime_finalised",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1781751268060,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1781752942116,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "83' GOAL — Uzbekistan. 1-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 716,
+        "sourceTs": 1781752937116,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Head",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1781752947116,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781753227757,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "87' GOAL — Colombia. 1-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 762,
+        "sourceTs": 1781753222757,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "1-2"
+      }
+    },
+    {
+      "at": 1781753232757,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781755224363,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "goal-4",
+      "text": "121' GOAL — Colombia. 1-3. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1072,
+        "sourceTs": 1781755219363,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Head",
+        "score": "1-3"
+      }
+    },
+    {
+      "at": 1781755229363,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "goal-4",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781755661431,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Uzbekistan 1-3 Colombia. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1093,
+        "sourceTs": 1781755656431,
+        "action": "game_finalised",
+        "score": "1-3"
+      }
+    },
+    {
+      "at": 1781755666431,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1781755676431,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 1-3. No scrollback archaeology required."
+    },
+    {
+      "at": 1781755686431,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Biggest sports moment — Uzbekistan’s first-ever WC goal / Colombia’s win”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068089224415326418",
+        "url": "https://x.com/CMMGSports/status/2068089224415326418",
+        "observedAt": "2026-06-19 21:51"
+      }
+    },
+    {
+      "at": 1781755691431,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588399-uzbekistan-vs-colombia/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588399-uzbekistan-vs-colombia/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588399-uzbekistan-vs-colombia/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/mviser/status/2067395239807947043",
+      "https://x.com/i/status/2067395239807947043",
+      "https://x.com/_HeyTheo/status/2067393270796464395",
+      "https://x.com/i/status/2067393270796464395",
+      "https://x.com/DasamTejas/status/2067393226227814873",
+      "https://x.com/i/status/2067393226227814873",
+      "https://x.com/The_king_VIRAT/status/2067393407832797659",
+      "https://x.com/i/status/2067393407832797659",
+      "https://x.com/robinsportsnews/status/2067393253184528794",
+      "https://x.com/i/status/2067393253184528794",
+      "https://x.com/dailyfootvibes/status/2067756153023684893",
+      "https://x.com/i/status/2067756153023684893"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 1-3 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

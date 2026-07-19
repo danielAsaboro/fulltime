@@ -8,11 +8,11 @@ test("defaults the deployed website to the published GitHub release", () => {
   assert.deepEqual(downloads.map(({ platform, url }) => ({ platform, url })), [
     {
       platform: "desktop",
-      url: "https://github.com/danielAsaboro/fulltime/releases/download/v0.1.0-beta.1/FullTime-0.1.0-macos-arm64.zip",
+      url: "https://github.com/danielAsaboro/fulltime/releases/download/v0.1.0-beta.4/FullTime-0.1.0-macos-arm64.zip",
     },
     {
       platform: "android",
-      url: "https://github.com/danielAsaboro/fulltime/releases/download/v0.1.0-beta.1/FullTime-0.1.0-android.apk",
+      url: "https://github.com/danielAsaboro/fulltime/releases/download/v0.1.0-beta.4/FullTime-0.1.0-android.apk",
     },
     {
       platform: "ios",

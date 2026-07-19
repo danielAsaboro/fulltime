@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588391",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782598560000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782598560000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782598620000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782598680000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782598740000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782599460000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “4x WC tickets Colombia vs Portugal Miami Cat 1”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070656820004220999",
+        "url": "https://x.com/Jessica_Bough/status/2070656820004220999",
+        "observedAt": "2026-06-26 23:53"
+      }
+    },
+    {
+      "at": 1782599520000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Colombia may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782599760000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “FOR SALE Hard Rock Stadium Colombia vs Portugal $600 Cat 2”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070654256512946622",
+        "url": "https://x.com/RobbiMorgat/status/2070654256512946622",
+        "observedAt": "2026-06-26 23:43"
+      }
+    },
+    {
+      "at": 1782599790000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782599880000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Colombia, Portugal, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782600360000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Colombia or Portugal?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Colombia"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Portugal"
+        }
+      ]
+    },
+    {
+      "at": 1782600366000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782600372000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782600378000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782600384000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782603079509,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588391:15:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1782603074509,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782603084509,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588391:15:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1782603074509,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782603089509,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588391:15:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1782603074509,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782606064048,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Colombia looking more serious than Portugal 😂 one goal and chaos”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071020727830970871",
+        "url": "https://x.com/FlourishFcbrx/status/2071020727830970871",
+        "observedAt": "2026-06-27 23:59"
+      }
+    },
+    {
+      "at": 1782606099048,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Colombia 0-0 Portugal. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 569,
+        "sourceTs": 1782606094048,
+        "action": "halftime_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1782606104048,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782610450616,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Colombia 0-0 Portugal. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1086,
+        "sourceTs": 1782610445616,
+        "action": "game_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1782610455616,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782610465616,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 0-0. No scrollback archaeology required."
+    },
+    {
+      "at": 1782610475616,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Messi/FIFA paid Portugal to draw Congo & Colombia for hard path 😂”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071379328550797341",
+        "url": "https://x.com/DeepakS20893978/status/2071379328550797341",
+        "observedAt": "2026-06-28 23:44"
+      }
+    },
+    {
+      "at": 1782610480616,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588391-colombia-vs-portugal/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588391-colombia-vs-portugal/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588391-colombia-vs-portugal/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/Jessica_Bough/status/2070656820004220999",
+      "https://x.com/i/status/2070656820004220999",
+      "https://x.com/RobbiMorgat/status/2070654256512946622",
+      "https://x.com/i/status/2070654256512946622",
+      "https://x.com/DAVIDREPORTS01/status/2070651214065209504",
+      "https://x.com/i/status/2070651214065209504",
+      "https://x.com/pbpsports/status/2070643414723391845",
+      "https://x.com/i/status/2070643414723391845",
+      "https://x.com/RLGBets/status/2070643274382266548",
+      "https://x.com/i/status/2070643274382266548",
+      "https://x.com/Kembarbolainfo8/status/2070643524085993551",
+      "https://x.com/i/status/2070643524085993551"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 0-0 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

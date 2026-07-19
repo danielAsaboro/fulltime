@@ -1,0 +1,243 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "18222446",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1783814100000
+  },
+  "personas": [
+    { "id": "fan_a", "displayName": "Amina", "joinedAt": 1783814100000, "creator": true },
+    { "id": "fan_b", "displayName": "Tunde", "joinedAt": 1783814160000 },
+    { "id": "fan_c", "displayName": "Maya", "joinedAt": 1783814220000 },
+    { "id": "fan_d", "displayName": "Jo", "joinedAt": 1783814280000 }
+  ],
+  "actions": [
+    {
+      "at": 1783814354870,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-swiss-upset-price",
+      "text": "Switzerland at +505. Everyone sees a mismatch; I see an upset worth calling.",
+      "source": { "kind": "x-post", "postId": "2076093994346361017", "url": "https://x.com/i/status/2076093994346361017" }
+    },
+    {
+      "at": 1783814363676,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "tunde-path-critique",
+      "text": "If Argentina win, it is a semi-final run without facing a top-15 side. That is the argument waiting for them.",
+      "source": { "kind": "x-post", "postId": "2076094031281496232", "url": "https://x.com/i/status/2076094031281496232" }
+    },
+    {
+      "at": 1783814385313,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "jo-swiss-win",
+      "text": "Switzerland are going to win. No hedge, no penalties escape hatch.",
+      "source": { "kind": "x-post", "postId": "2076094122033860641", "url": "https://x.com/i/status/2076094122033860641" }
+    },
+    {
+      "at": 1783814386073,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-argentina-call",
+      "text": "Emi Martínez starts his 65th cap. Argentina advance, but Switzerland make this uncomfortable.",
+      "source": { "kind": "x-post", "postId": "2076094125221273950", "url": "https://x.com/i/status/2076094125221273950" }
+    },
+    {
+      "at": 1783814390000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "jo-swiss-win",
+      "text": "Screenshot taken. That is either elite ball knowledge or tomorrow's evidence."
+    },
+    { "at": 1783814395000, "actor": "fan_c", "type": "reaction", "item": "jo-swiss-win", "emoji": "🔥" },
+    {
+      "at": 1783814400000,
+      "actor": "fan_d",
+      "type": "poll",
+      "key": "miami-late-quarterfinal",
+      "question": "Who reaches the semi-final?",
+      "options": [
+        { "key": "argentina", "label": "Argentina" },
+        { "key": "switzerland", "label": "Switzerland" },
+        { "key": "penalties", "label": "Decided on penalties" }
+      ],
+      "source": { "kind": "x-post", "postId": "2076094085425979901", "url": "https://x.com/i/status/2076094085425979901" }
+    },
+    { "at": 1783814405000, "actor": "fan_a", "type": "vote", "poll": "miami-late-quarterfinal", "option": "argentina" },
+    { "at": 1783814410000, "actor": "fan_b", "type": "vote", "poll": "miami-late-quarterfinal", "option": "argentina" },
+    { "at": 1783814415000, "actor": "fan_c", "type": "vote", "poll": "miami-late-quarterfinal", "option": "switzerland" },
+    { "at": 1783814420000, "actor": "fan_d", "type": "vote", "poll": "miami-late-quarterfinal", "option": "switzerland" },
+    {
+      "at": 1783818052399,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-first-goal-argentina",
+      "callId": "call:18222446:16:phase:kickoff:first-goal",
+      "option": "home",
+      "source": { "kind": "archive-event", "sequence": 16, "sourceTs": 1783818042399, "action": "kickoff" }
+    },
+    {
+      "at": 1783818057399,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-first-goal-switzerland",
+      "callId": "call:18222446:16:phase:kickoff:first-goal",
+      "option": "away",
+      "source": { "kind": "archive-event", "sequence": 16, "sourceTs": 1783818042399, "action": "kickoff" }
+    },
+    {
+      "at": 1783818700057,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "argentina-opener",
+      "text": "10' Argentina score first. Amina's first-goal call lands; the Swiss upset picks are immediately chasing.",
+      "source": { "kind": "archive-event", "sequence": 117, "sourceTs": 1783818695057, "action": "goal", "participant": 1, "clockSeconds": 585, "score": "1-0" }
+    },
+    {
+      "at": 1783818705057,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "amina-first-goal-receipt",
+      "item": "amina-argentina-call",
+      "text": "First part settled. Argentina ahead; uncomfortable can wait."
+    },
+    { "at": 1783818710057, "actor": "fan_b", "type": "reaction", "item": "amina-first-goal-receipt", "emoji": "👏" },
+    {
+      "at": 1783821024872,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-fast-start-yes",
+      "callId": "call:18222446:432:phase:half-time:second-half-fast-start",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 432, "sourceTs": 1783821014872, "action": "half-time", "score": "1-0" }
+    },
+    {
+      "at": 1783821029872,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-fast-start-no",
+      "callId": "call:18222446:432:phase:half-time:second-half-fast-start",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 432, "sourceTs": 1783821014872, "action": "half-time", "score": "1-0" }
+    },
+    {
+      "at": 1783823381174,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "swiss-equaliser",
+      "text": "67' SWITZERLAND EQUALISE. Jo's upset call just came back from the dead.",
+      "source": { "kind": "archive-event", "sequence": 661, "sourceTs": 1783823376174, "action": "goal", "participant": 2, "clockSeconds": 3999, "score": "1-1" }
+    },
+    {
+      "at": 1783823386174,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-upset-alive",
+      "item": "jo-swiss-win",
+      "text": "One-one. The evidence is no longer funny."
+    },
+    { "at": 1783823391174, "actor": "fan_c", "type": "reaction", "item": "jo-upset-alive", "emoji": "😮" },
+    {
+      "at": 1783823493842,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "var-argument",
+      "text": "69' VAR. The score stays 1-1, but the room has split into conspiracy court.",
+      "source": { "kind": "archive-event", "sequence": 681, "sourceTs": 1783823488842, "action": "var", "clockSeconds": 4169, "score": "1-1" }
+    },
+    {
+      "at": 1783825441055,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "argentina-swiss-extra-time",
+      "text": "Ninety minutes, 1-1. Extra time. The favourite is surviving; the upset is still breathing.",
+      "source": { "kind": "archive-event", "sequence": 924, "sourceTs": 1783825436055, "action": "extra-time-start", "score": "1-1" }
+    },
+    {
+      "at": 1783827288889,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-another-goal-yes",
+      "callId": "call:18222446:1201:goal:another-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 1201, "sourceTs": 1783827283889, "action": "goal", "participant": 1, "clockSeconds": 6667, "score": "2-1" }
+    },
+    {
+      "at": 1783827293889,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-another-goal-no",
+      "callId": "call:18222446:1201:goal:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 1201, "sourceTs": 1783827283889, "action": "goal", "participant": 1, "clockSeconds": 6667, "score": "2-1" }
+    },
+    {
+      "at": 1783827298889,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "argentina-et-lead",
+      "text": "112' Argentina retake the lead. 2-1, and Amina says there is still another goal in this.",
+      "source": { "kind": "archive-event", "sequence": 1201, "sourceTs": 1783827283889, "action": "goal", "participant": 1, "clockSeconds": 6667, "score": "2-1" }
+    },
+    {
+      "at": 1783827760290,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "argentina-third",
+      "text": "120' Argentina again. 3-1. The another-goal call lands with the last kick of the story.",
+      "source": { "kind": "archive-event", "sequence": 1282, "sourceTs": 1783827755290, "action": "goal", "participant": 1, "clockSeconds": 7215, "score": "3-1" }
+    },
+    {
+      "at": 1783827765290,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "amina-another-goal-receipt",
+      "item": "argentina-et-lead",
+      "text": "Eight minutes later. Yes means yes."
+    },
+    { "at": 1783827770290, "actor": "fan_d", "type": "reaction", "item": "amina-another-goal-receipt", "emoji": "⚽" },
+    {
+      "at": 1783828227499,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "amina-argentina-receipt",
+      "item": "amina-argentina-call",
+      "text": "Full-time 3-1 after extra time. Argentina advance, and Switzerland made it deeply uncomfortable.",
+      "source": { "kind": "archive-event", "sequence": 1306, "sourceTs": 1783828222499, "action": "full-time", "score": "3-1" }
+    },
+    {
+      "at": 1783828232499,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-swiss-miss",
+      "item": "jo-swiss-win",
+      "text": "My upset was level after ninety and dead after one hundred twenty. I accept the receipt."
+    },
+    { "at": 1783828237499, "actor": "fan_b", "type": "reaction", "item": "amina-argentina-receipt", "emoji": "👏" },
+    {
+      "at": 1783985049528,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "path-debate-after",
+      "text": "Argentina are through and the route argument has already replaced the match argument. Results settle; narratives keep moving.",
+      "source": { "kind": "x-post", "postId": "2076809939633291302", "url": "https://x.com/i/status/2076809939633291302" }
+    },
+    {
+      "at": 1783985054528,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "tunde-path-receipt",
+      "item": "tunde-path-critique",
+      "text": "You called the argument before kickoff. It arrived before the celebrations ended."
+    }
+  ],
+  "evidence": {
+    "fixture": "../../../../resources/fixtures/world-cup-2026/18222446-argentina-vs-switzerland/fixture.json",
+    "archive": "../../../../resources/fixtures/world-cup-2026/18222446-argentina-vs-switzerland/scores.historical.sse",
+    "conversation": "../../../../resources/fixtures/world-cup-2026/18222446-argentina-vs-switzerland/conversation-weave.json",
+    "sourcePolicy": "Archive timestamps, participant sides, confirmed goals, phase transitions, and terminal score remain authoritative. The archive confirms Argentina's 9:45 opener, Switzerland's 66:39 equaliser, extra time at 1-1, then Argentina goals at 111:07 and 120:15 for a 3-1 terminal result. Public-post claims about route strength remain attributed social opinion, not fixture fact. X-derived language is restaged into disclosed showcase personas."
+  }
+}

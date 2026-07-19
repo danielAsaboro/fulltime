@@ -1,0 +1,298 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17926689",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781406000000
+  },
+  "personas": [
+    { "id": "fan_a", "displayName": "Amina", "joinedAt": 1781406000000, "creator": true },
+    { "id": "fan_b", "displayName": "Tunde", "joinedAt": 1781406060000 },
+    { "id": "fan_c", "displayName": "Maya", "joinedAt": 1781406120000 },
+    { "id": "fan_d", "displayName": "Jo", "joinedAt": 1781406180000 }
+  ],
+  "actions": [
+    {
+      "at": 1781406600000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-turkey-two-one",
+      "text": "Turkey are back at a World Cup with the exciting names everyone wanted to see. Türkiye 2-1; Australia make it awkward, talent wins.",
+      "source": { "kind": "x-post", "postId": "2065945172559446243", "url": "https://x.com/N1_bet/status/2065945172559446243" }
+    },
+    {
+      "at": 1781406660000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-turkey-two-one",
+      "text": "I have 3-1 Turkey and over 2.5. First World Cup since 2002; they are not arriving to play scared."
+    },
+    {
+      "at": 1781406720000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-australia-two-zero",
+      "text": "You are picking names. Australia stay compact, counter into the space and win 2-0. Screenshot it now."
+    },
+    {
+      "at": 1781406780000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-one-one",
+      "item": "maya-australia-two-zero",
+      "text": "Australia can frustrate them, yes. Two unanswered is wild. I have 1-1 and both fanbases unhappy."
+    },
+    { "at": 1781406810000, "actor": "fan_b", "type": "reaction", "item": "maya-australia-two-zero", "emoji": "😮" },
+    {
+      "at": 1781406900000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "herrington-spotlight",
+      "text": "Also, Barcelona links around an Australia defender on matchday. One big night and that timeline becomes unbearable.",
+      "source": { "kind": "x-post", "postId": "2065946821021552843", "url": "https://x.com/DeadlineDayLive/status/2065946821021552843" }
+    },
+    {
+      "at": 1781406960000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "australia-turkey-result",
+      "question": "Who takes the opener in Vancouver?",
+      "options": [
+        { "key": "australia-win", "label": "Australia win" },
+        { "key": "draw", "label": "Draw" },
+        { "key": "turkey-win", "label": "Turkey win" }
+      ]
+    },
+    { "at": 1781406965000, "actor": "fan_a", "type": "vote", "poll": "australia-turkey-result", "option": "turkey-win" },
+    { "at": 1781406970000, "actor": "fan_b", "type": "vote", "poll": "australia-turkey-result", "option": "turkey-win" },
+    { "at": 1781406975000, "actor": "fan_c", "type": "vote", "poll": "australia-turkey-result", "option": "australia-win" },
+    { "at": 1781406980000, "actor": "fan_d", "type": "vote", "poll": "australia-turkey-result", "option": "draw" },
+    {
+      "at": 1781409648651,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17926689:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 17, "sourceTs": 1781409643651, "action": "kickoff" }
+    },
+    {
+      "at": 1781409653651,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-no",
+      "callId": "call:17926689:17:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 17, "sourceTs": 1781409643651, "action": "kickoff" }
+    },
+    {
+      "at": 1781409658651,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-opening-goal-no",
+      "callId": "call:17926689:17:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 17, "sourceTs": 1781409643651, "action": "kickoff" }
+    },
+    {
+      "at": 1781410248651,
+      "actor": "fan_c",
+      "type": "reply",
+      "item": "maya-australia-two-zero",
+      "text": "Ten minutes without a goal. The locked no lands and this is already the compact game I ordered."
+    },
+    {
+      "at": 1781411312192,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "australia-first-goal",
+      "text": "26' AUSTRALIA 1-0. Two Turkey votes are suddenly reputation receipts.",
+      "source": { "kind": "archive-event", "sequence": 264, "sourceTs": 1781411307192, "action": "goal", "participant": 1, "clockSeconds": 1602, "goalType": "Shot", "score": "1-0" }
+    },
+    { "at": 1781411317192, "actor": "fan_a", "type": "reaction", "item": "australia-first-goal", "emoji": "😮" },
+    {
+      "at": 1781411322192,
+      "actor": "fan_b",
+      "type": "quote",
+      "key": "tunde-over-still-alive",
+      "item": "amina-turkey-two-one",
+      "text": "Wrong scorer, but 3-1 and the over still live. Turkey answer quickly and none of you heard this panic."
+    },
+    {
+      "at": 1781411327192,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-another-goal-yes",
+      "callId": "call:17926689:264:goal:another-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 264, "sourceTs": 1781411307192, "action": "goal" }
+    },
+    {
+      "at": 1781411332192,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-another-goal-no",
+      "callId": "call:17926689:264:goal:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 264, "sourceTs": 1781411307192, "action": "goal" }
+    },
+    {
+      "at": 1781411337192,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-another-goal-no",
+      "callId": "call:17926689:264:goal:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 264, "sourceTs": 1781411307192, "action": "goal" }
+    },
+    {
+      "at": 1781411912192,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "tunde-over-still-alive",
+      "text": "Ten minutes, no reply. The locked no wins and your over is beginning to look like wishful arithmetic."
+    },
+    {
+      "at": 1781412254075,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "first-half-var",
+      "text": "43' VAR interruption, score still 1-0. Every pause feels longer when your favourite is behind.",
+      "source": { "kind": "archive-event", "sequence": 438, "sourceTs": 1781412249075, "action": "var", "score": "1-0" }
+    },
+    {
+      "at": 1781412597184,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "halftime-one-zero",
+      "text": "Half-time: Australia 1-0 Turkey. Maya has winner, clean sheet and exact score all alive; the rest of us have explanations.",
+      "source": { "kind": "archive-event", "sequence": 512, "sourceTs": 1781412592184, "action": "half-time", "score": "1-0" }
+    },
+    {
+      "at": 1781412602184,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-fast-start-yes",
+      "callId": "call:17926689:512:phase:half-time:second-half-fast-start",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 512, "sourceTs": 1781412592184, "action": "half-time" }
+    },
+    {
+      "at": 1781412607184,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-fast-start-yes",
+      "callId": "call:17926689:512:phase:half-time:second-half-fast-start",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 512, "sourceTs": 1781412592184, "action": "half-time" }
+    },
+    {
+      "at": 1781412612184,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-fast-start-no",
+      "callId": "call:17926689:512:phase:half-time:second-half-fast-start",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 512, "sourceTs": 1781412592184, "action": "half-time" }
+    },
+    {
+      "at": 1781413202184,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-fast-start-receipt",
+      "item": "halftime-one-zero",
+      "text": "No fast second-half goal. My locked no settles while the Turkey comeback calls expire."
+    },
+    {
+      "at": 1781415364099,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "australia-second-goal",
+      "text": "74' AUSTRALIA 2-0. Exact score on the screen. Please continue explaining how Turkey's names were going to win this.",
+      "source": { "kind": "archive-event", "sequence": 814, "sourceTs": 1781415359099, "action": "goal", "participant": 1, "clockSeconds": 4472, "goalType": "Shot", "score": "2-0" }
+    },
+    { "at": 1781415369099, "actor": "fan_b", "type": "reaction", "item": "australia-second-goal", "emoji": "🔥" },
+    {
+      "at": 1781415374099,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-late-another-yes",
+      "callId": "call:17926689:814:goal:another-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 814, "sourceTs": 1781415359099, "action": "goal" }
+    },
+    {
+      "at": 1781415379099,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-late-another-no",
+      "callId": "call:17926689:814:goal:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 814, "sourceTs": 1781415359099, "action": "goal" }
+    },
+    {
+      "at": 1781415384099,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-late-another-no",
+      "callId": "call:17926689:814:goal:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 814, "sourceTs": 1781415359099, "action": "goal" }
+    },
+    {
+      "at": 1781415964099,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "australia-second-goal",
+      "text": "Ten more minutes, no third. Maya's locked no protects the exact 2-0 while Amina chases a consolation."
+    },
+    {
+      "at": 1781416951001,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "fulltime-two-zero",
+      "text": "Finalised: Australia 2-0 Turkey. Two confirmed Australia goals, clean sheet, and the favourite never found a reply.",
+      "source": { "kind": "archive-event", "sequence": 1054, "sourceTs": 1781416946001, "action": "game_finalised", "score": "2-0" }
+    },
+    {
+      "at": 1781416956001,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-exact-receipt",
+      "item": "maya-australia-two-zero",
+      "text": "Australia 2-0, compact and ruthless. I said it before kickoff while you picked the famous names—this is the full receipt."
+    },
+    { "at": 1781416961001, "actor": "fan_a", "type": "reaction", "item": "maya-exact-receipt", "emoji": "👏" },
+    {
+      "at": 1781416966001,
+      "actor": "fan_b",
+      "type": "quote",
+      "key": "tunde-wrong-receipt",
+      "item": "amina-turkey-two-one",
+      "text": "Turkey 3-1 and over 2.5: wrong winner, wrong score, wrong total. I have achieved the full gamut."
+    },
+    {
+      "at": 1781416971001,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "maya-exact-receipt",
+      "text": "Biggest upset so far, and the one person who ignored the hype has the exact score. Ball knowledge tax paid.",
+      "source": { "kind": "x-post", "postId": "2066669198911401990", "url": "https://x.com/PalmerbetAU/status/2066669198911401990" }
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17926689-australia-vs-turkey/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17926689-australia-vs-turkey/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17926689-australia-vs-turkey/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/N1_bet/status/2065945172559446243",
+      "https://x.com/ClarkyTips/status/2065944292552507766",
+      "https://x.com/DeadlineDayLive/status/2065946821021552843",
+      "https://x.com/PalmerbetAU/status/2066669198911401990",
+      "https://x.com/DivingxDown/status/2066661051727315201",
+      "https://x.com/And_I13/status/2066308810378277319"
+    ],
+    "sourcePolicy": "The authenticated TxLINE archive is authoritative for fixture identity, kickoff, Australia's confirmed 26th- and 74th-minute goals, VAR phases, half-time, and the 2-0 terminal result. Pre-match positions, talent/hype framing, transfer chatter, and upset interpretation are concise fictional-room restagings informed by the cited public X posts; personas do not impersonate source authors. Player names are intentionally omitted from archive-event claims. Canonical calls voided by preserved feed gaps are omitted; only settled kickoff, goal, and half-time calls are answered."
+  }
+}

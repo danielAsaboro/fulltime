@@ -211,19 +211,30 @@ export async function resolveNetworkManifest(
     }
   }
 
+  let cachedManifest: SignedNetworkManifest | null = null;
   const cached = await storage.read().catch(() => null);
   if (cached) {
     try {
-      return { manifest: parseManifestText(cached, config.publicKey), source: "cache", stale: true, refreshError };
+      cachedManifest = parseManifestText(cached, config.publicKey);
     } catch {
       // A cache is never trusted merely because it was stored previously.
     }
   }
 
-  if (config.initialManifest) {
-    const manifest = verifyNetworkManifest(config.initialManifest, config.publicKey);
-    await storage.write(JSON.stringify(manifest)).catch(() => undefined);
-    return { manifest, source: "bundled-cache", stale: true, refreshError };
+  let bundledManifest: SignedNetworkManifest | null = null;
+  if (config.initialManifest) bundledManifest = verifyNetworkManifest(config.initialManifest, config.publicKey);
+
+  // Local signed manifests can rotate the fixture feed between app builds.
+  // Never let a valid but older device cache override a newer signed manifest
+  // embedded in the installed build.
+  if (bundledManifest && (!cachedManifest || bundledManifest.issuedAt > cachedManifest.issuedAt)) {
+    await storage.write(JSON.stringify(bundledManifest)).catch(() => undefined);
+    return { manifest: bundledManifest, source: "bundled-cache", stale: true, refreshError };
+  }
+  if (cachedManifest) return { manifest: cachedManifest, source: "cache", stale: true, refreshError };
+  if (bundledManifest) {
+    await storage.write(JSON.stringify(bundledManifest)).catch(() => undefined);
+    return { manifest: bundledManifest, source: "bundled-cache", stale: true, refreshError };
   }
 
   fail("CONFIGURATION_UNAVAILABLE", "FullTime network configuration is unavailable. Connect and try again.");

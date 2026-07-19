@@ -1,0 +1,422 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588323",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782524700000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782524700000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782524760000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782524820000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782524880000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782525600000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “World Cup NZ vs Belgium — odds 2.38, 2.5pts Betfair”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070657914663022610",
+        "url": "https://x.com/JNValueBetting/status/2070657914663022610",
+        "observedAt": "2026-06-26 23:58"
+      }
+    },
+    {
+      "at": 1782525660000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "New Zealand may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782525900000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “NZ vs Belgium dual odds 1.75 / 3.25 Unibet”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070656944147247430",
+        "url": "https://x.com/JNValueBetting/status/2070656944147247430",
+        "observedAt": "2026-06-26 23:54"
+      }
+    },
+    {
+      "at": 1782525930000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782526020000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. New Zealand, Belgium, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782526500000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: New Zealand or Belgium?",
+      "options": [
+        {
+          "key": "home",
+          "label": "New Zealand"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Belgium"
+        }
+      ]
+    },
+    {
+      "at": 1782526506000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782526512000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782526518000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782526524000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782529289759,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588323:15:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1782529284759,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782529294759,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588323:15:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1782529284759,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782529299759,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588323:15:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1782529284759,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782530980151,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "29' GOAL — Belgium. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 231,
+        "sourceTs": 1782530975151,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782530985151,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782530990151,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1782532831184,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “The live reaction has completely flipped since kickoff.”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071005697253216543",
+        "url": "https://x.com/oluwaspace/status/2071005697253216543",
+        "observedAt": "2026-06-27 23:00"
+      }
+    },
+    {
+      "at": 1782532866184,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: New Zealand 0-1 Belgium. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 467,
+        "sourceTs": 1782532861184,
+        "action": "halftime_finalised",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782532871184,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782533598268,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "72' GOAL — Belgium. 0-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 518,
+        "sourceTs": 1782533593268,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-2"
+      }
+    },
+    {
+      "at": 1782533603268,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782534588172,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "89' GOAL — Belgium. 0-3. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 689,
+        "sourceTs": 1782534583172,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-3"
+      }
+    },
+    {
+      "at": 1782534593172,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782535618937,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "goal-4",
+      "text": "106' GOAL — New Zealand. 1-3. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 838,
+        "sourceTs": 1782535613937,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-3"
+      }
+    },
+    {
+      "at": 1782535623937,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "goal-4",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782535744323,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-5",
+      "text": "108' GOAL — Belgium. 1-4. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 852,
+        "sourceTs": 1782535739323,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Head",
+        "score": "1-4"
+      }
+    },
+    {
+      "at": 1782535749323,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-5",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782536249514,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-6",
+      "text": "116' GOAL — Belgium. 1-5. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 933,
+        "sourceTs": 1782536244514,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "1-5"
+      }
+    },
+    {
+      "at": 1782536254514,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-6",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782536736866,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: New Zealand 1-5 Belgium. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 944,
+        "sourceTs": 1782536731866,
+        "action": "game_finalised",
+        "score": "1-5"
+      }
+    },
+    {
+      "at": 1782536741866,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782536751866,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 1-5. No scrollback archaeology required."
+    },
+    {
+      "at": 1782536761866,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Couldn’t win vs weakest Belgium / NZ / Egypt — don’t deserve to pass (Iran discourse)”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071373274601173306",
+        "url": "https://x.com/lightyagami2k23/status/2071373274601173306",
+        "observedAt": "2026-06-28 23:20"
+      }
+    },
+    {
+      "at": 1782536766866,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588323-new-zealand-vs-belgium/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588323-new-zealand-vs-belgium/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588323-new-zealand-vs-belgium/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/JNValueBetting/status/2070657914663022610",
+      "https://x.com/i/status/2070657914663022610",
+      "https://x.com/JNValueBetting/status/2070656944147247430",
+      "https://x.com/i/status/2070656944147247430",
+      "https://x.com/robot2trade1/status/2070656816531312803",
+      "https://x.com/i/status/2070656816531312803",
+      "https://x.com/RoseCitySports_/status/2070655982623969434",
+      "https://x.com/i/status/2070655982623969434",
+      "https://x.com/trendsmcp/status/2070655287988556121",
+      "https://x.com/i/status/2070655287988556121",
+      "https://x.com/bolavipus/status/2070653278078075017",
+      "https://x.com/i/status/2070653278078075017"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 1-5 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

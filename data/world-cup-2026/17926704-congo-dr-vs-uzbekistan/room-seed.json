@@ -1,0 +1,353 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17926704",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782598560000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782598560000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782598620000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782598680000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782598740000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782599460000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Egypt elimination scenario needs DR Congo beat Uzbekistan among chain”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070652170072948973",
+        "url": "https://x.com/fulltime_94/status/2070652170072948973",
+        "observedAt": "2026-06-26 23:35"
+      }
+    },
+    {
+      "at": 1782599520000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Congo DR may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782599760000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Picks, predictions, odds — Uzbekistan vs DR Congo Saturday”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070650927204220942",
+        "url": "https://x.com/azcentral/status/2070650927204220942",
+        "observedAt": "2026-06-26 23:30"
+      }
+    },
+    {
+      "at": 1782599790000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782599880000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Congo DR, Uzbekistan, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782600360000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Congo DR or Uzbekistan?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Congo DR"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Uzbekistan"
+        }
+      ]
+    },
+    {
+      "at": 1782600366000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782600372000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782600378000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782600384000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782603087700,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17926704:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782603082700,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782603092700,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17926704:16:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782603082700,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782603097700,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17926704:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782603082700,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782603696930,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "11' GOAL — Uzbekistan. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 150,
+        "sourceTs": 1782603691930,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782603701930,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782603706930,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1782606377109,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “SK calling AFC brother Uzbekistan — beating Congo almost keeps Korea alive”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071020621702549723",
+        "url": "https://x.com/Flame31Shine/status/2071020621702549723",
+        "observedAt": "2026-06-27 23:59"
+      }
+    },
+    {
+      "at": 1782606412109,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Congo DR 0-1 Uzbekistan. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 537,
+        "sourceTs": 1782606407109,
+        "action": "halftime_finalised",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782606417109,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782609139529,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "101' GOAL — Congo DR. 1-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 888,
+        "sourceTs": 1782609134529,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1782609144529,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782609907339,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "114' GOAL — Congo DR. 2-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1025,
+        "sourceTs": 1782609902339,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "2-1"
+      }
+    },
+    {
+      "at": 1782609912339,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782610755802,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Congo DR 3-1 Uzbekistan. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1116,
+        "sourceTs": 1782610750802,
+        "action": "game_finalised",
+        "score": "3-1"
+      }
+    },
+    {
+      "at": 1782610760802,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782610770802,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 3-1. No scrollback archaeology required."
+    },
+    {
+      "at": 1782610780802,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Group with Congo and Uzbekistan is “difficult”? Portugal excuses”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071364775766831308",
+        "url": "https://x.com/MIamiCuler_305/status/2071364775766831308",
+        "observedAt": "2026-06-28 22:47"
+      }
+    },
+    {
+      "at": 1782610785802,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17926704-congo-dr-vs-uzbekistan/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17926704-congo-dr-vs-uzbekistan/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17926704-congo-dr-vs-uzbekistan/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/fulltime_94/status/2070652170072948973",
+      "https://x.com/i/status/2070652170072948973",
+      "https://x.com/azcentral/status/2070650927204220942",
+      "https://x.com/i/status/2070650927204220942",
+      "https://x.com/Kembarbolainfo8/status/2070643524085993551",
+      "https://x.com/i/status/2070643524085993551",
+      "https://x.com/CarefulTweeter/status/2070637211565871476",
+      "https://x.com/i/status/2070637211565871476",
+      "https://x.com/AdorableTickets/status/2070635710487413013",
+      "https://x.com/i/status/2070635710487413013",
+      "https://x.com/callmemummyq2rv/status/2070634650758717513",
+      "https://x.com/i/status/2070634650758717513"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 3-1 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

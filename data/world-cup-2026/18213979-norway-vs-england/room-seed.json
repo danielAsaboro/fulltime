@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "18213979",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1783726800000
+  },
+  "personas": [
+    { "id": "fan_a", "displayName": "Amina", "joinedAt": 1783726800000, "creator": true },
+    { "id": "fan_b", "displayName": "Tunde", "joinedAt": 1783726860000 },
+    { "id": "fan_c", "displayName": "Maya", "joinedAt": 1783726920000 },
+    { "id": "fan_d", "displayName": "Jo", "joinedAt": 1783726980000 }
+  ],
+  "actions": [
+    {
+      "at": 1783727397000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-england-two-one",
+      "text": "I really like Norway, but England win 2-1. Exact score, before kickoff. Keep this one.",
+      "source": { "kind": "x-post", "postId": "2075729267703611816", "url": "https://x.com/PhngLoanHo14722/status/2075729267703611816" }
+    },
+    {
+      "at": 1783727402000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "maya-england-two-one",
+      "text": "Norway score and still lose? You are asking for maximum pain."
+    },
+    { "at": 1783727407000, "actor": "fan_a", "type": "reaction", "item": "maya-england-two-one", "emoji": "🔥" },
+    {
+      "at": 1783727523000,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "jo-lindisfarne",
+      "text": "The Lindisfarne Derby. Haaland against Kane with a World Cup semi-final on the other side.",
+      "source": { "kind": "x-post", "postId": "2075729795464175677", "url": "https://x.com/IronBloodedLion/status/2075729795464175677" }
+    },
+    {
+      "at": 1783727870000,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "tunde-norway-swagger",
+      "text": "Norway fans are already singing 'England's going home.' First quarter-final and zero fear.",
+      "source": { "kind": "x-post", "postId": "2075731252510883953", "url": "https://x.com/DavidhBrown/status/2075731252510883953", "media": "video" }
+    },
+    {
+      "at": 1783727919000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "miami-quarterfinal",
+      "question": "Who reaches the semi-final?",
+      "options": [
+        { "key": "norway", "label": "Norway" },
+        { "key": "england", "label": "England" },
+        { "key": "penalties", "label": "Decided on penalties" }
+      ],
+      "source": { "kind": "x-post", "postId": "2075731456794759615", "url": "https://x.com/PatrickE_Vegas/status/2075731456794759615" }
+    },
+    { "at": 1783727924000, "actor": "fan_a", "type": "vote", "poll": "miami-quarterfinal", "option": "england" },
+    { "at": 1783727929000, "actor": "fan_b", "type": "vote", "poll": "miami-quarterfinal", "option": "norway" },
+    { "at": 1783727934000, "actor": "fan_c", "type": "vote", "poll": "miami-quarterfinal", "option": "england" },
+    { "at": 1783727939000, "actor": "fan_d", "type": "vote", "poll": "miami-quarterfinal", "option": "penalties" },
+    {
+      "at": 1783803696111,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-yes",
+      "callId": "call:18213979:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 16, "sourceTs": 1783803686111, "action": "kickoff" }
+    },
+    {
+      "at": 1783803701111,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-no",
+      "callId": "call:18213979:16:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 16, "sourceTs": 1783803686111, "action": "kickoff" }
+    },
+    {
+      "at": 1783805887803,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-after-norway-goal-yes",
+      "callId": "call:18213979:314:goal:another-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 314, "sourceTs": 1783805882803, "action": "goal", "participant": 1, "clockSeconds": 2146, "score": "1-0" }
+    },
+    {
+      "at": 1783805892803,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-after-norway-goal-no",
+      "callId": "call:18213979:314:goal:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 314, "sourceTs": 1783805882803, "action": "goal", "participant": 1, "clockSeconds": 2146, "score": "1-0" }
+    },
+    {
+      "at": 1783805897803,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "norway-opener",
+      "text": "36' NORWAY LEAD. Those songs do not sound so brave now; they sound prophetic.",
+      "source": { "kind": "archive-event", "sequence": 314, "sourceTs": 1783805882803, "action": "goal", "participant": 1, "clockSeconds": 2146, "score": "1-0" }
+    },
+    {
+      "at": 1783805902803,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-exact-alive",
+      "item": "maya-england-two-one",
+      "text": "The Norway goal is in. My 2-1 needs an England comeback now."
+    },
+    { "at": 1783805907803, "actor": "fan_a", "type": "reaction", "item": "maya-exact-alive", "emoji": "😮" },
+    {
+      "at": 1783806537285,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "england-equaliser",
+      "text": "47' England equalise. Jo's ten-minute 'no' survived by seconds; Maya's exact score is one goal away.",
+      "source": { "kind": "archive-event", "sequence": 418, "sourceTs": 1783806532285, "action": "goal", "participant": 2, "clockSeconds": 2808, "score": "1-1" }
+    },
+    {
+      "at": 1783806542285,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-window-receipt",
+      "item": "norway-opener",
+      "text": "The call said ten minutes. England waited longer. No is still correct."
+    },
+    {
+      "at": 1783806667256,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-fast-start-yes",
+      "callId": "call:18213979:444:phase:half-time:second-half-fast-start",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 444, "sourceTs": 1783806657256, "action": "half-time", "score": "1-1" }
+    },
+    {
+      "at": 1783806672256,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-fast-start-no",
+      "callId": "call:18213979:444:phase:half-time:second-half-fast-start",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 444, "sourceTs": 1783806657256, "action": "half-time", "score": "1-1" }
+    },
+    {
+      "at": 1783808275143,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "second-half-var",
+      "text": "55' VAR intervention. Still 1-1. Nobody in this room is breathing normally.",
+      "source": { "kind": "archive-event", "sequence": 536, "sourceTs": 1783808270143, "action": "var", "clockSeconds": 3300, "score": "1-1" }
+    },
+    { "at": 1783808280143, "actor": "fan_b", "type": "reaction", "item": "second-half-var", "emoji": "😮" },
+    {
+      "at": 1783811209258,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "extra-time",
+      "text": "Ninety minutes: 1-1. Extra time. Who is still holding the same pre-match pick?",
+      "source": { "kind": "archive-event", "sequence": 846, "sourceTs": 1783811204258, "action": "extra-time-start", "score": "1-1" }
+    },
+    {
+      "at": 1783811214258,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "extra-time",
+      "text": "Norway. I have suffered too much to switch now."
+    },
+    {
+      "at": 1783811475820,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "england-et-winner",
+      "text": "93' ENGLAND 2-1. Maya's exact score has arrived in extra time.",
+      "source": { "kind": "archive-event", "sequence": 885, "sourceTs": 1783811470820, "action": "goal", "participant": 2, "clockSeconds": 5565, "score": "1-2" }
+    },
+    {
+      "at": 1783811480820,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-scorelanded",
+      "item": "maya-england-two-one",
+      "text": "Scoreline landed. Now England just have to hold it for the receipt."
+    },
+    { "at": 1783811485820, "actor": "fan_a", "type": "reaction", "item": "maya-scorelanded", "emoji": "⚽" },
+    {
+      "at": 1783813945264,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-exact-receipt",
+      "item": "maya-england-two-one",
+      "text": "Full-time Norway 1-2 England. Exact score, posted a day early. No scrolling required.",
+      "source": { "kind": "archive-event", "sequence": 1184, "sourceTs": 1783813940264, "action": "full-time", "score": "1-2" }
+    },
+    {
+      "at": 1783813950264,
+      "actor": "fan_b",
+      "type": "quote",
+      "key": "tunde-norway-miss",
+      "item": "tunde-norway-swagger",
+      "text": "The song lasted. The prediction did not. England are in the semi-final."
+    },
+    { "at": 1783813955264, "actor": "fan_d", "type": "reaction", "item": "maya-exact-receipt", "emoji": "👏" },
+    {
+      "at": 1783900059000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "sorloth-aftermath",
+      "text": "A day later and everyone is still asking why Sørloth did not square it to Haaland. One decision became the whole post-match story.",
+      "source": { "kind": "x-post", "postId": "2076094181785608243", "url": "https://x.com/ofg_vs10/status/2076094181785608243" }
+    },
+    {
+      "at": 1783900339000,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "retroactive-certainty",
+      "text": "Now people say they knew Norway would lose from that missed pass. Funny how certainty always gets louder after full-time.",
+      "source": { "kind": "x-post", "postId": "2076454599087600051", "url": "https://x.com/Vigilante_1999/status/2076454599087600051" }
+    },
+    {
+      "at": 1783900705000,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "fulltime-kept-call",
+      "item": "maya-exact-receipt",
+      "text": "They can rewrite the feeling. They cannot rewrite the call."
+    }
+  ],
+  "evidence": {
+    "fixture": "../../../../resources/fixtures/world-cup-2026/18213979-norway-vs-england/fixture.json",
+    "archive": "../../../../resources/fixtures/world-cup-2026/18213979-norway-vs-england/scores.historical.sse",
+    "conversation": "../../../../resources/fixtures/world-cup-2026/18213979-norway-vs-england/conversation-weave.json",
+    "sourcePolicy": "Archive timestamps, participant sides, confirmed goals, phase transitions, and terminal score remain authoritative. The archive places the goals at 35:46 Norway, 46:48 England, and 92:45 England in extra time; this corrects looser public minute descriptions. The exact pre-match England 2-1 prediction and later Sørloth discourse retain their public-post sources. X-derived language is restaged into disclosed showcase personas."
+  }
+}

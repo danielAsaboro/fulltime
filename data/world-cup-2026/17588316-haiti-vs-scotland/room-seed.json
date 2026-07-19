@@ -1,0 +1,267 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588316",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781394600000
+  },
+  "personas": [
+    { "id": "fan_a", "displayName": "Amina", "joinedAt": 1781394600000, "creator": true },
+    { "id": "fan_b", "displayName": "Tunde", "joinedAt": 1781394660000 },
+    { "id": "fan_c", "displayName": "Maya", "joinedAt": 1781394720000 },
+    { "id": "fan_d", "displayName": "Jo", "joinedAt": 1781394780000 }
+  ],
+  "actions": [
+    {
+      "at": 1781395020000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-scotland-two-zero",
+      "text": "Twenty-eight years waiting for this. Scotland are clear favourites and I have 2-0—controlled, professional, no drama.",
+      "source": { "kind": "x-post", "postId": "2065947296819265577", "url": "https://x.com/DailyMail/status/2065947296819265577" }
+    },
+    {
+      "at": 1781395080000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-scotland-two-zero",
+      "text": "The opener is always tense. Scotland 1-0, one first-half goal, then everyone spends an hour asking for the whistle."
+    },
+    {
+      "at": 1781395140000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-haiti-point",
+      "text": "Haiti are no mugs. They sit in, Scotland get anxious, 1-1—and the favourites learn why opening games are traps.",
+      "source": { "kind": "x-post", "postId": "2065946593044656575", "url": "https://x.com/FtblBetClub/status/2065946593044656575" }
+    },
+    {
+      "at": 1781395200000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-scotland-two-one",
+      "item": "maya-haiti-point",
+      "text": "Respect Haiti, still pick Scotland. 2-1, and the Tartan Army makes it feel like a home match in Boston.",
+      "source": { "kind": "x-post", "postId": "2065946684496998885", "url": "https://x.com/Forth1News/status/2065946684496998885" }
+    },
+    { "at": 1781395230000, "actor": "fan_a", "type": "reaction", "item": "jo-scotland-two-one", "emoji": "👏" },
+    {
+      "at": 1781395320000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "haiti-scotland-result",
+      "question": "Does Scotland win its World Cup return?",
+      "options": [
+        { "key": "scotland-win", "label": "Scotland win" },
+        { "key": "draw", "label": "Draw" },
+        { "key": "haiti-win", "label": "Haiti win" }
+      ]
+    },
+    { "at": 1781395325000, "actor": "fan_a", "type": "vote", "poll": "haiti-scotland-result", "option": "scotland-win" },
+    { "at": 1781395330000, "actor": "fan_b", "type": "vote", "poll": "haiti-scotland-result", "option": "scotland-win" },
+    { "at": 1781395335000, "actor": "fan_c", "type": "vote", "poll": "haiti-scotland-result", "option": "draw" },
+    { "at": 1781395340000, "actor": "fan_d", "type": "vote", "poll": "haiti-scotland-result", "option": "scotland-win" },
+    {
+      "at": 1781398969557,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588316:15:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 15, "sourceTs": 1781398964557, "action": "kickoff" }
+    },
+    {
+      "at": 1781398974557,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588316:15:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 15, "sourceTs": 1781398964557, "action": "kickoff" }
+    },
+    {
+      "at": 1781398979557,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-no",
+      "callId": "call:17588316:15:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 15, "sourceTs": 1781398964557, "action": "kickoff" }
+    },
+    {
+      "at": 1781399569557,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-scotland-two-zero",
+      "text": "Ten minutes, no opener. First receipt to the cautious side; this already looks tighter than 2-0."
+    },
+    {
+      "at": 1781400704465,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "scotland-goal",
+      "text": "27:56 SCOTLAND LEAD. One chance, one goal, and my 1-0 card is exactly on script.",
+      "source": { "kind": "archive-event", "sequence": 264, "confirmedSequence": 265, "sourceTs": 1781400699465, "action": "goal", "participant": 2, "clockSeconds": 1676, "goalType": "Shot", "score": "0-1" }
+    },
+    { "at": 1781400709465, "actor": "fan_a", "type": "reaction", "item": "scotland-goal", "emoji": "⚽" },
+    {
+      "at": 1781400714465,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "scotland-goal",
+      "text": "McGinn on the public timeline. Scotland waited 28 years for a World Cup goal and now the whole room wants the scorer receipt.",
+      "source": { "kind": "x-post", "postId": "2066670764116631599", "url": "https://x.com/ga_richardson/status/2066670764116631599" }
+    },
+    {
+      "at": 1781400719465,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-another-goal-yes",
+      "callId": "call:17588316:264:goal:another-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 264, "confirmedSequence": 265, "sourceTs": 1781400699465, "action": "goal" }
+    },
+    {
+      "at": 1781400724465,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-another-goal-no",
+      "callId": "call:17588316:264:goal:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 264, "confirmedSequence": 265, "sourceTs": 1781400699465, "action": "goal" }
+    },
+    {
+      "at": 1781400729465,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-another-goal-no",
+      "callId": "call:17588316:264:goal:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 264, "confirmedSequence": 265, "sourceTs": 1781400699465, "action": "goal" }
+    },
+    {
+      "at": 1781401304465,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-no-second-goal",
+      "item": "scotland-goal",
+      "text": "Ten minutes later, still 0-1. The locked no lands; this match is refusing to become comfortable."
+    },
+    {
+      "at": 1781401928079,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "halftime-zero-one",
+      "text": "Half-time: Haiti 0-1 Scotland. Three winner votes look good; only Tunde has the exact score alive.",
+      "source": { "kind": "archive-event", "sequence": 455, "sourceTs": 1781401923079, "action": "half-time", "score": "0-1" }
+    },
+    {
+      "at": 1781401933079,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-fast-start-yes",
+      "callId": "call:17588316:455:phase:half-time:second-half-fast-start",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 455, "sourceTs": 1781401923079, "action": "half-time" }
+    },
+    {
+      "at": 1781401938079,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-fast-start-no",
+      "callId": "call:17588316:455:phase:half-time:second-half-fast-start",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 455, "sourceTs": 1781401923079, "action": "half-time" }
+    },
+    {
+      "at": 1781401943079,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-fast-start-no",
+      "callId": "call:17588316:455:phase:half-time:second-half-fast-start",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 455, "sourceTs": 1781401923079, "action": "half-time" }
+    },
+    {
+      "at": 1781403374907,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "haiti-pressure-starts",
+      "text": "51' Haiti corner. The second-half fast-start goal never came, but the underdog is finally making Scotland defend.",
+      "source": { "kind": "archive-event", "sequence": 526, "sourceTs": 1781403369907, "action": "corner", "participant": 1, "clockSeconds": 3099, "score": "0-1" }
+    },
+    {
+      "at": 1781404858552,
+      "actor": "fan_c",
+      "type": "reply",
+      "item": "haiti-pressure-starts",
+      "text": "76' another Haiti corner. My draw call is still breathing; Scotland's clean finish is not."
+    },
+    {
+      "at": 1781405074546,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "haiti-fourth-corner",
+      "item": "amina-scotland-two-zero",
+      "text": "80' Haiti's fourth corner of the half. I called controlled and comfortable; this is neither.",
+      "source": { "kind": "archive-event", "sequence": 762, "sourceTs": 1781405069546, "action": "corner", "participant": 1, "clockSeconds": 4808, "score": "0-1" }
+    },
+    { "at": 1781405079546, "actor": "fan_d", "type": "reaction", "item": "haiti-fourth-corner", "emoji": "😮" },
+    {
+      "at": 1781405720000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "haiti-penalty-argument",
+      "text": "Haiti want a penalty and the room is split. The feed still says 0-1; the argument is going to outlive the result.",
+      "source": { "kind": "x-post", "postId": "2066666607691145624", "url": "https://x.com/M0MV2021/status/2066666607691145624" }
+    },
+    { "at": 1781405725000, "actor": "fan_b", "type": "reaction", "item": "haiti-penalty-argument", "emoji": "🔥" },
+    {
+      "at": 1781406510396,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "fulltime-zero-one",
+      "text": "Finalised: Haiti 0-1 Scotland. One confirmed first-half goal survives every second-half corner and every argument.",
+      "source": { "kind": "archive-event", "sequence": 960, "sourceTs": 1781406505396, "action": "game_finalised", "score": "0-1" }
+    },
+    {
+      "at": 1781406515396,
+      "actor": "fan_b",
+      "type": "quote",
+      "key": "tunde-exact-receipt",
+      "item": "amina-scotland-two-zero",
+      "text": "I said Scotland 1-0 before kickoff: one first-half goal, then an hour begging for full-time. Exact score, exact shape, timestamped."
+    },
+    { "at": 1781406520396, "actor": "fan_a", "type": "reaction", "item": "tunde-exact-receipt", "emoji": "👏" },
+    {
+      "at": 1781406525396,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "amina-wrong-margin",
+      "item": "amina-scotland-two-zero",
+      "text": "Right winner, wrong margin, completely wrong comfort level. Tunde gets the lap; I keep the evidence."
+    },
+    {
+      "at": 1781406530396,
+      "actor": "fan_c",
+      "type": "reply",
+      "item": "fulltime-zero-one",
+      "text": "The result is settled. The penalty debate is not—and now nobody can rewrite which side they took."
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588316-haiti-vs-scotland/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588316-haiti-vs-scotland/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588316-haiti-vs-scotland/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/DailyMail/status/2065947296819265577",
+      "https://x.com/Forth1News/status/2065946684496998885",
+      "https://x.com/FtblBetClub/status/2065946593044656575",
+      "https://x.com/ga_richardson/status/2066670764116631599",
+      "https://x.com/M0MV2021/status/2066666607691145624",
+      "https://x.com/Change/status/2066666616738218141"
+    ],
+    "sourcePolicy": "The authenticated TxLINE archive is authoritative for fixture identity, kickoff, Scotland's confirmed 27:56 goal, half-time, Haiti's four second-half corners, disciplinary events, and the 0-1 terminal result. Pre-match positions, scorer discussion, supporter atmosphere, and the penalty grievance are concise fictional-room restagings informed by the cited public X posts; personas do not impersonate source authors. The archive does not encode the disputed penalty claim as a settled fact. Canonical calls voided by preserved feed gaps are omitted; only settled kickoff, goal, and half-time calls are answered."
+  }
+}

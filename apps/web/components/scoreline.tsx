@@ -10,6 +10,7 @@ function statusLabel(status: FixtureStatus, minute: number | null): { text: stri
     case "extra-time":
       return { text: minute != null ? `${minute}'` : "LIVE", live: true };
     case "half-time": return { text: "HALF-TIME", live: true };
+    case "end-of-regulation": return { text: "END REG.", live: true };
     case "penalty-shootout": return { text: "PENALTIES", live: true };
     case "full-time": return { text: "FULL-TIME", live: false };
     case "after-extra-time": return { text: "AET", live: false };

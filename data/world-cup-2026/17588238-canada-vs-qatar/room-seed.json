@@ -1,0 +1,422 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588238",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781815500000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1781815500000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1781815560000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1781815620000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1781815680000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1781816400000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Group B open; Switzerland/Bosnia noon, Canada/Qatar stakes for R32 path”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067395657812619730",
+        "url": "https://x.com/i/status/2067395657812619730",
+        "observedAt": "2026-06-17 23:55"
+      }
+    },
+    {
+      "at": 1781816460000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Canada may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1781816700000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Canada vs Qatar betting preview — Group stage”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067393901598568903",
+        "url": "https://x.com/i/status/2067393901598568903",
+        "observedAt": "2026-06-17 23:48"
+      }
+    },
+    {
+      "at": 1781816730000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781816820000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Canada, Qatar, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1781817300000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Canada or Qatar?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Canada"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Qatar"
+        }
+      ]
+    },
+    {
+      "at": 1781817306000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781817312000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1781817318000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781817324000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1781820055511,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588238:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1781820050511,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781820060511,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588238:16:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1781820050511,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781820065511,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588238:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1781820050511,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781821083513,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "18' GOAL — Canada. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 203,
+        "sourceTs": 1781821078513,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1781821088513,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781821093513,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1781821840225,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "30' GOAL — Canada. 2-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 303,
+        "sourceTs": 1781821835225,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1781821845225,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781822972364,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "49' GOAL — Canada. 3-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 529,
+        "sourceTs": 1781822967364,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "3-0"
+      }
+    },
+    {
+      "at": 1781822977364,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781823280022,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “GOAL! Jonathan David hat-trick on home soil — Canada 6-0 Qatar”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067759234398187866",
+        "url": "https://x.com/i/status/2067759234398187866",
+        "observedAt": "2026-06-18 23:59"
+      }
+    },
+    {
+      "at": 1781823315022,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Canada 3-0 Qatar. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 573,
+        "sourceTs": 1781823310022,
+        "action": "halftime_finalised",
+        "score": "3-0"
+      }
+    },
+    {
+      "at": 1781823320022,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1781825171636,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "goal-4",
+      "text": "86' GOAL — Canada. 4-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 755,
+        "sourceTs": 1781825166636,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "4-0"
+      }
+    },
+    {
+      "at": 1781825176636,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "goal-4",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781825871241,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-5",
+      "text": "97' GOAL — Canada. 5-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 844,
+        "sourceTs": 1781825866241,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "5-0"
+      }
+    },
+    {
+      "at": 1781825876241,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-5",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781826857424,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-6",
+      "text": "114' GOAL — Canada. 6-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1049,
+        "sourceTs": 1781826852424,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "6-0"
+      }
+    },
+    {
+      "at": 1781826862424,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-6",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781827787703,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Canada 6-0 Qatar. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1164,
+        "sourceTs": 1781827782703,
+        "action": "game_finalised",
+        "score": "6-0"
+      }
+    },
+    {
+      "at": 1781827792703,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1781827802703,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 6-0. No scrollback archaeology required."
+    },
+    {
+      "at": 1781827812703,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Canada thrash nine-man Qatar 6-0; first-ever WC win; Koné horror injury”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068118830086242683",
+        "url": "https://x.com/i/status/2068118830086242683",
+        "observedAt": "2026-06-19 23:48"
+      }
+    },
+    {
+      "at": 1781827817703,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588238-canada-vs-qatar/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588238-canada-vs-qatar/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588238-canada-vs-qatar/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/i/status/2067395657812619730",
+      "https://x.com/i/status/2067393901598568903",
+      "https://x.com/i/status/2067393321945760119",
+      "https://x.com/i/status/2067392788858274235",
+      "https://x.com/i/status/2067386332427542658",
+      "https://x.com/i/status/2067383251615064493",
+      "https://x.com/i/status/2067759234398187866",
+      "https://x.com/i/status/2067759223824642477",
+      "https://x.com/i/status/2067759207206506668",
+      "https://x.com/i/status/2067759206900331007",
+      "https://x.com/i/status/2067759188340854805",
+      "https://x.com/i/status/2067759170888032318"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 6-0 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

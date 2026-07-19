@@ -1,0 +1,233 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588386",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781381000000
+  },
+  "personas": [
+    { "id": "fan_a", "displayName": "Amina", "joinedAt": 1781381000000, "creator": true },
+    { "id": "fan_b", "displayName": "Tunde", "joinedAt": 1781381060000 },
+    { "id": "fan_c", "displayName": "Maya", "joinedAt": 1781381120000 },
+    { "id": "fan_d", "displayName": "Jo", "joinedAt": 1781381180000 }
+  ],
+  "actions": [
+    {
+      "at": 1781381600000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-brazil-two-zero",
+      "text": "Neymar is out and I am still saying Brazil 2-0. Morocco are serious, but Brazil have too much in transition.",
+      "source": { "kind": "x-post", "postId": "2065578134880260300", "url": "https://x.com/achisolx/status/2065578134880260300" }
+    },
+    {
+      "at": 1781381660000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-brazil-two-zero",
+      "text": "You cannot say Morocco are serious and then erase them. They made a World Cup semi-final; I have 1-1."
+    },
+    {
+      "at": 1781381720000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-brazil-three-one",
+      "text": "Brazil 3-1. Morocco will make them work, then the wide players decide it.",
+      "source": { "kind": "x-post", "postId": "2065579227773374705", "url": "https://x.com/tewi91/status/2065579227773374705" }
+    },
+    {
+      "at": 1781381780000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-morocco-respect",
+      "item": "amina-brazil-two-zero",
+      "text": "Nobody overlooks Morocco after 2022. I am taking Brazil 2-1, but a clean sheet is brave.",
+      "source": { "kind": "x-post", "postId": "2065217903583015087", "url": "https://x.com/emelucrypto/status/2065217903583015087" }
+    },
+    { "at": 1781381810000, "actor": "fan_b", "type": "reaction", "item": "jo-morocco-respect", "emoji": "👏" },
+    {
+      "at": 1781381900000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "brazil-morocco-result",
+      "question": "What happens tonight?",
+      "options": [
+        { "key": "brazil-win", "label": "Brazil win" },
+        { "key": "draw", "label": "Draw" },
+        { "key": "morocco-win", "label": "Morocco win" }
+      ]
+    },
+    { "at": 1781381905000, "actor": "fan_a", "type": "vote", "poll": "brazil-morocco-result", "option": "brazil-win" },
+    { "at": 1781381910000, "actor": "fan_b", "type": "vote", "poll": "brazil-morocco-result", "option": "draw" },
+    { "at": 1781381915000, "actor": "fan_c", "type": "vote", "poll": "brazil-morocco-result", "option": "brazil-win" },
+    { "at": 1781381920000, "actor": "fan_d", "type": "vote", "poll": "brazil-morocco-result", "option": "brazil-win" },
+    {
+      "at": 1781388273970,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-first-goal-brazil",
+      "callId": "call:17588386:16:phase:kickoff:first-goal",
+      "option": "home",
+      "source": { "kind": "archive-event", "sequence": 16, "sourceTs": 1781388268970, "action": "kickoff" }
+    },
+    {
+      "at": 1781388278970,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-first-goal-morocco",
+      "callId": "call:17588386:16:phase:kickoff:first-goal",
+      "option": "away",
+      "source": { "kind": "archive-event", "sequence": 16, "sourceTs": 1781388268970, "action": "kickoff" }
+    },
+    {
+      "at": 1781388283970,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588386:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 16, "sourceTs": 1781388268970, "action": "kickoff" }
+    },
+    {
+      "at": 1781388288970,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-opening-goal-no",
+      "callId": "call:17588386:16:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 16, "sourceTs": 1781388268970, "action": "kickoff" }
+    },
+    {
+      "at": 1781389572109,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "morocco-score-first",
+      "text": "20' MOROCCO LEAD. The underdog scores first and my locked call is the only one smiling.",
+      "source": { "kind": "archive-event", "sequence": 249, "sourceTs": 1781389567109, "action": "goal", "participant": 2, "clockSeconds": 1250, "score": "0-1" }
+    },
+    { "at": 1781389577109, "actor": "fan_a", "type": "reaction", "item": "morocco-score-first", "emoji": "😮" },
+    {
+      "at": 1781389582109,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "amina-two-zero-cooked",
+      "item": "amina-brazil-two-zero",
+      "text": "Twenty minutes and the clean sheet is already gone. Keep the 2-0 screenshot where everyone can see it."
+    },
+    {
+      "at": 1781390226556,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "brazil-equalise",
+      "text": "31' Brazil answer: 1-1. That is the quality we picked, but Tunde still owns the first-goal receipt.",
+      "source": { "kind": "archive-event", "sequence": 338, "sourceTs": 1781390221556, "action": "goal", "participant": 1, "clockSeconds": 1910, "score": "1-1" }
+    },
+    { "at": 1781390231556, "actor": "fan_d", "type": "reaction", "item": "brazil-equalise", "emoji": "⚽" },
+    {
+      "at": 1781391218973,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "halftime-one-one",
+      "text": "Half-time: Brazil 1-1 Morocco. Every Brazil win is still alive, but the draw call has gone from cheeky to sensible.",
+      "source": { "kind": "archive-event", "sequence": 511, "sourceTs": 1781391213973, "action": "half-time", "score": "1-1" }
+    },
+    {
+      "at": 1781391223973,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-fast-start-yes",
+      "callId": "call:17588386:511:phase:half-time:second-half-fast-start",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 511, "sourceTs": 1781391213973, "action": "half-time" }
+    },
+    {
+      "at": 1781391228973,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-fast-start-no",
+      "callId": "call:17588386:511:phase:half-time:second-half-fast-start",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 511, "sourceTs": 1781391213973, "action": "half-time" }
+    },
+    {
+      "at": 1781391233973,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-fast-start-yes",
+      "callId": "call:17588386:511:phase:half-time:second-half-fast-start",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 511, "sourceTs": 1781391213973, "action": "half-time" }
+    },
+    {
+      "at": 1781391823973,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "halftime-one-one",
+      "text": "Ten second-half minutes with no goal. The locked no lands; Brazil's fast-start confidence does not."
+    },
+    {
+      "at": 1781395012140,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "stoppage-siege",
+      "text": "90+1, still 1-1, and Brazil have another corner. Ten added minutes for one of these winner calls to survive.",
+      "source": { "kind": "archive-event", "sequence": 904, "sourceTs": 1781395007140, "action": "corner", "participant": 1, "clockSeconds": 5480, "score": "1-1" }
+    },
+    {
+      "at": 1781395064075,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "stoppage-siege",
+      "text": "Another Brazil corner. Morocco's resistance is now the whole match.",
+      "source": { "kind": "x-post", "postId": "2065947160491769882", "url": "https://x.com/BearManofTX/status/2065947160491769882" }
+    },
+    { "at": 1781395069075, "actor": "fan_b", "type": "reaction", "item": "stoppage-siege", "emoji": "🔥" },
+    {
+      "at": 1781396048483,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "fulltime-one-one",
+      "text": "Finalised: Brazil 1-1 Morocco. Morocco scored first, Brazil answered, and the second half never broke the draw.",
+      "source": { "kind": "archive-event", "sequence": 982, "sourceTs": 1781396043483, "action": "game_finalised", "score": "1-1" }
+    },
+    {
+      "at": 1781396053483,
+      "actor": "fan_b",
+      "type": "quote",
+      "key": "tunde-draw-receipt",
+      "item": "amina-brazil-two-zero",
+      "text": "You called 2-0; I replied 1-1 before kickoff. Morocco first scorer plus exact result—this room is my evidence locker."
+    },
+    { "at": 1781396058483, "actor": "fan_a", "type": "reaction", "item": "tunde-draw-receipt", "emoji": "👏" },
+    {
+      "at": 1781396063483,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "amina-wrong-receipt",
+      "item": "amina-brazil-two-zero",
+      "text": "Brazil 2-0 was wrong before half-time and never recovered. No deleting it; take your lap."
+    },
+    {
+      "at": 1781396068483,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "tunde-draw-receipt",
+      "text": "Fair. Morocco made three Brazil-win votes look like reputation picks instead of ball knowledge."
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588386-brazil-vs-morocco/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588386-brazil-vs-morocco/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588386-brazil-vs-morocco/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/achisolx/status/2065578134880260300",
+      "https://x.com/tewi91/status/2065579227773374705",
+      "https://x.com/emelucrypto/status/2065217903583015087",
+      "https://x.com/WaversClub_CN/status/2065946973811741052",
+      "https://x.com/BearManofTX/status/2065947160491769882",
+      "https://x.com/al3xonchain/status/2065947039448301671"
+    ],
+    "sourcePolicy": "The authenticated TxLINE archive is authoritative for fixture identity, kickoff, Morocco's first goal, Brazil's equaliser, half-time, stoppage-time corners, and the 1-1 terminal result. Pre-match takes and live colour are concise fictional-room restagings informed by the cited public X posts; personas do not impersonate source authors. Player names are intentionally omitted from archive-event claims. Canonical calls voided by preserved feed gaps are omitted; only settled kickoff and half-time calls are answered."
+  }
+}

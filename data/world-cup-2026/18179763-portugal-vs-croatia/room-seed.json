@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "18179763",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1783028700000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1783028700000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1783028760000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1783028820000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1783028880000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1783029600000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Toronto Jul 3: “last dance” Ronaldo vs Modrić at BMO Field”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2072468472315969942",
+        "url": "https://x.com/m_martinho94/status/2072468472315969942",
+        "observedAt": "2026-07-01 23:52"
+      }
+    },
+    {
+      "at": 1783029660000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Portugal may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1783029900000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: ““I will be here after Croatia knock Portugal out and Ronaldo retires with 0 WC knockout goals””",
+      "source": {
+        "kind": "x-post",
+        "postId": "2072467611280195725",
+        "url": "https://x.com/FootballXtra365/status/2072467611280195725",
+        "observedAt": "2026-07-01 23:49"
+      }
+    },
+    {
+      "at": 1783029930000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1783030020000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Portugal, Croatia, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1783030500000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Portugal or Croatia?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Portugal"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Croatia"
+        }
+      ]
+    },
+    {
+      "at": 1783030506000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1783030512000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1783030518000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1783030524000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1783033214808,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:18179763:20:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 20,
+        "sourceTs": 1783033209808,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783033219808,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:18179763:20:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 20,
+        "sourceTs": 1783033209808,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783033224808,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:18179763:20:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 20,
+        "sourceTs": 1783033209808,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783036188606,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “45’ Portugal 0-0 Croatia; possession without breakthrough”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2072832609432830361",
+        "url": "https://x.com/Laraib_Fatiima/status/2072832609432830361",
+        "observedAt": "2026-07-02 23:59"
+      }
+    },
+    {
+      "at": 1783036223606,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Portugal 0-0 Croatia. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 486,
+        "sourceTs": 1783036218606,
+        "action": "halftime_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1783036228606,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1783037674284,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "75' GOAL — Croatia. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 592,
+        "sourceTs": 1783037669284,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1783037679284,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1783037684284,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1783040165240,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "116' GOAL — Portugal. 1-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 970,
+        "sourceTs": 1783040160240,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Head",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1783040170240,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1783041226434,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Portugal 2-1 Croatia. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1074,
+        "sourceTs": 1783041221434,
+        "action": "game_finalised",
+        "score": "2-1"
+      }
+    },
+    {
+      "at": 1783041231434,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1783041241434,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 2-1. No scrollback archaeology required."
+    },
+    {
+      "at": 1783041251434,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Brutal finish; Ronaldo consoles Modrić after Portugal win”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2073194002145521771",
+        "url": "https://x.com/3LQDNChmYZ89095/status/2073194002145521771",
+        "observedAt": "2026-07-03 23:55"
+      }
+    },
+    {
+      "at": 1783041256434,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/18179763-portugal-vs-croatia/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/18179763-portugal-vs-croatia/scores.historical.sse",
+    "provenance": "../resources/fixtures/world-cup-2026/18179763-portugal-vs-croatia/scores.historical.sse.provenance.json",
+    "socialSources": [
+      "https://x.com/m_martinho94/status/2072468472315969942",
+      "https://x.com/i/status/2072468472315969942",
+      "https://x.com/FootballXtra365/status/2072467611280195725",
+      "https://x.com/i/status/2072467611280195725",
+      "https://x.com/Runewagercom/status/2072467452680614009",
+      "https://x.com/i/status/2072467452680614009",
+      "https://x.com/AltcoinSherpa/status/2072466170645532894",
+      "https://x.com/i/status/2072466170645532894",
+      "https://x.com/TeksFootball/status/2072463237891719316",
+      "https://x.com/i/status/2072463237891719316",
+      "https://x.com/Laraib_Fatiima/status/2072832609432830361",
+      "https://x.com/i/status/2072832609432830361"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 2-1 result. 8 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

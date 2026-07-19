@@ -1,0 +1,353 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "18179551",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1783014300000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1783014300000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1783014360000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1783014420000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1783014480000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1783015200000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “R32 alert: Spain vs Austria — predictions”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2072463612241690680",
+        "url": "https://x.com/Shamsu0180/status/2072463612241690680",
+        "observedAt": "2026-07-01 23:33"
+      }
+    },
+    {
+      "at": 1783015260000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Spain may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1783015500000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: ““Also: Spain vs Austria (3pm)… R16 spots””",
+      "source": {
+        "kind": "x-post",
+        "postId": "2072463237891719316",
+        "url": "https://x.com/TeksFootball/status/2072463237891719316",
+        "observedAt": "2026-07-01 23:31"
+      }
+    },
+    {
+      "at": 1783015530000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1783015620000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Spain, Austria, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1783016100000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Spain or Austria?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Spain"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Austria"
+        }
+      ]
+    },
+    {
+      "at": 1783016106000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1783016112000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1783016118000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1783016124000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1783018823985,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:18179551:14:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 14,
+        "sourceTs": 1783018818985,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783018828985,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:18179551:14:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 14,
+        "sourceTs": 1783018818985,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783018833985,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:18179551:14:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 14,
+        "sourceTs": 1783018818985,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783021057803,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "38' GOAL — Spain. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 373,
+        "sourceTs": 1783021052803,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1783021062803,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1783021067803,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1783021793802,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “FT Spain 3-0 Austria — Oyarzabal brace, Porro header; first KO win since 2010 final”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2072831263371575600",
+        "url": "https://x.com/Imole171919/status/2072831263371575600",
+        "observedAt": "2026-07-02 23:54"
+      }
+    },
+    {
+      "at": 1783021828802,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Spain 1-0 Austria. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 515,
+        "sourceTs": 1783021823802,
+        "action": "halftime_finalised",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1783021833802,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1783024159103,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "89' GOAL — Spain. 2-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 752,
+        "sourceTs": 1783024154103,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Head",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1783024164103,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1783025500339,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "112' GOAL — Spain. 3-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 960,
+        "sourceTs": 1783025495339,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "3-0"
+      }
+    },
+    {
+      "at": 1783025505339,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1783026039574,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Spain 3-0 Austria. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1041,
+        "sourceTs": 1783026034574,
+        "action": "game_finalised",
+        "score": "3-0"
+      }
+    },
+    {
+      "at": 1783026044574,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1783026054574,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 3-0. No scrollback archaeology required."
+    },
+    {
+      "at": 1783026064574,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Penélope Cruz, Javier Bardem, Rosalía celebrate Spain’s 3-0 over Austria”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2073176275796001253",
+        "url": "https://x.com/HelloCanada/status/2073176275796001253",
+        "observedAt": "2026-07-03 22:45"
+      }
+    },
+    {
+      "at": 1783026069574,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/18179551-spain-vs-austria/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/18179551-spain-vs-austria/scores.historical.sse",
+    "provenance": "../resources/fixtures/world-cup-2026/18179551-spain-vs-austria/scores.historical.sse.provenance.json",
+    "socialSources": [
+      "https://x.com/Shamsu0180/status/2072463612241690680",
+      "https://x.com/i/status/2072463612241690680",
+      "https://x.com/TeksFootball/status/2072463237891719316",
+      "https://x.com/i/status/2072463237891719316",
+      "https://x.com/THE_ELIXx/status/2072462896710234510",
+      "https://x.com/i/status/2072462896710234510",
+      "https://x.com/UtdRedDevils20/status/2072462224124203187",
+      "https://x.com/i/status/2072462224124203187",
+      "https://x.com/Charlotte92329E/status/2072462618510672153",
+      "https://x.com/i/status/2072462618510672153",
+      "https://x.com/Imole171919/status/2072831263371575600",
+      "https://x.com/i/status/2072831263371575600"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 3-0 result. 8 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

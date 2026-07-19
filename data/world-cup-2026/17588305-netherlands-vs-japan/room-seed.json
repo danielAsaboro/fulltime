@@ -1,0 +1,341 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588305",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781463600000
+  },
+  "personas": [
+    { "id": "fan_a", "displayName": "Amina", "joinedAt": 1781463600000, "creator": true },
+    { "id": "fan_b", "displayName": "Tunde", "joinedAt": 1781463660000 },
+    { "id": "fan_c", "displayName": "Maya", "joinedAt": 1781463720000 },
+    { "id": "fan_d", "displayName": "Jo", "joinedAt": 1781463780000 }
+  ],
+  "actions": [
+    {
+      "at": 1781464200000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-japan-respect",
+      "text": "Japan took down Germany and Spain last time. Netherlands have more names, but this is not a routine opener.",
+      "source": { "kind": "x-post", "postId": "2065940483143311520", "url": "https://x.com/DJYYLiveData/status/2065940483143311520" }
+    },
+    {
+      "at": 1781464260000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-japan-respect",
+      "text": "Respect them, then pick the better team. Netherlands 2-0; control the ball and remove the drama."
+    },
+    {
+      "at": 1781464320000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-exact-two-two",
+      "text": "The viral board says 2-2 and I am riding with it. Japan equalise twice. Screenshot this before anyone gets clever.",
+      "source": { "kind": "x-post", "postId": "2065337895590690914", "url": "https://x.com/Dhavidtips/status/2065337895590690914" }
+    },
+    { "at": 1781464350000, "actor": "fan_b", "type": "reaction", "item": "maya-exact-two-two", "emoji": "😮" },
+    {
+      "at": 1781464380000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-one-one",
+      "item": "maya-exact-two-two",
+      "text": "Draw is sharp, four goals is greedy. I have 1-1 and both teams to score."
+    },
+    {
+      "at": 1781464440000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "netherlands-or-draw",
+      "text": "Netherlands or draw is the safe public position. Japan are dangerous enough that even the favourites crowd brought insurance.",
+      "source": { "kind": "x-post", "postId": "2065944292552507766", "url": "https://x.com/ClarkyTips/status/2065944292552507766" }
+    },
+    {
+      "at": 1781464500000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "netherlands-japan-result",
+      "question": "Who takes the points in Group F?",
+      "options": [
+        { "key": "netherlands-win", "label": "Netherlands" },
+        { "key": "draw", "label": "Draw" },
+        { "key": "japan-win", "label": "Japan" }
+      ]
+    },
+    { "at": 1781464505000, "actor": "fan_a", "type": "vote", "poll": "netherlands-japan-result", "option": "draw" },
+    { "at": 1781464510000, "actor": "fan_b", "type": "vote", "poll": "netherlands-japan-result", "option": "netherlands-win" },
+    { "at": 1781464515000, "actor": "fan_c", "type": "vote", "poll": "netherlands-japan-result", "option": "draw" },
+    { "at": 1781464520000, "actor": "fan_d", "type": "vote", "poll": "netherlands-japan-result", "option": "draw" },
+    {
+      "at": 1781467820000,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "ten-minutes-cagey",
+      "text": "Ten minutes, 0-0. Japan are compact and the Dutch are learning why nobody wanted to call this easy."
+    },
+    {
+      "at": 1781470110416,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "halftime-zero-zero",
+      "text": "Half-time: Netherlands 0-0 Japan. Four pre-match goals promised; none delivered yet. Who blinks after the break?",
+      "source": { "kind": "archive-event", "sequence": 416, "sourceTs": 1781470105416, "action": "half-time", "score": "0-0" }
+    },
+    {
+      "at": 1781470113416,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-next-second-half-home",
+      "callId": "call:17588305:416:phase:half-time:next-goal-second-half",
+      "option": "home",
+      "source": { "kind": "archive-event", "sequence": 416, "sourceTs": 1781470105416, "action": "half-time" }
+    },
+    {
+      "at": 1781470117416,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-next-second-half-home",
+      "callId": "call:17588305:416:phase:half-time:next-goal-second-half",
+      "option": "home",
+      "source": { "kind": "archive-event", "sequence": 416, "sourceTs": 1781470105416, "action": "half-time" }
+    },
+    {
+      "at": 1781470121416,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-next-second-half-away",
+      "callId": "call:17588305:416:phase:half-time:next-goal-second-half",
+      "option": "away",
+      "source": { "kind": "archive-event", "sequence": 416, "sourceTs": 1781470105416, "action": "half-time" }
+    },
+    {
+      "at": 1781470125416,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-fast-start-yes",
+      "callId": "call:17588305:416:phase:half-time:second-half-fast-start",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 416, "sourceTs": 1781470105416, "action": "half-time" }
+    },
+    {
+      "at": 1781470129416,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-fast-start-no",
+      "callId": "call:17588305:416:phase:half-time:second-half-fast-start",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 416, "sourceTs": 1781470105416, "action": "half-time" }
+    },
+    {
+      "at": 1781470133416,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-fast-start-no",
+      "callId": "call:17588305:416:phase:half-time:second-half-fast-start",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 416, "sourceTs": 1781470105416, "action": "half-time" }
+    },
+    {
+      "at": 1781470710416,
+      "actor": "fan_c",
+      "type": "reply",
+      "item": "halftime-zero-zero",
+      "text": "No goal in the first ten minutes after the half-time event. The locked no lands; the exact 2-2 still needs a sprint."
+    },
+    {
+      "at": 1781471413348,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "netherlands-one-zero",
+      "text": "50' NETHERLANDS 1-0. Next-goal home settles, and now the favourite looks obvious again.",
+      "source": { "kind": "archive-event", "sequence": 481, "sourceTs": 1781471408348, "action": "goal", "participant": 1, "clockSeconds": 3048, "goalType": "Head", "score": "1-0" }
+    },
+    { "at": 1781471418348, "actor": "fan_a", "type": "reaction", "item": "netherlands-one-zero", "emoji": "⚽" },
+    {
+      "at": 1781471423348,
+      "actor": "fan_c",
+      "type": "reply",
+      "item": "netherlands-one-zero",
+      "text": "One of four. My call needs Japan to answer, not admire the header."
+    },
+    {
+      "at": 1781471817330,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "japan-one-one",
+      "text": "56' JAPAN 1-1. They have answered the favourite once; Maya says they will have to do it again.",
+      "source": { "kind": "archive-event", "sequence": 537, "sourceTs": 1781471812330, "action": "goal", "participant": 2, "clockSeconds": 3423, "goalType": "Shot", "score": "1-1" }
+    },
+    { "at": 1781471822330, "actor": "fan_c", "type": "reaction", "item": "japan-one-one", "emoji": "🔥" },
+    {
+      "at": 1781471827330,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-halfway-there",
+      "item": "maya-exact-two-two",
+      "text": "1-1 and halfway there. The board is not a meme yet."
+    },
+    {
+      "at": 1781471832330,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-another-after-one-one-yes",
+      "callId": "call:17588305:537:goal:another-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 537, "sourceTs": 1781471812330, "action": "goal" }
+    },
+    {
+      "at": 1781471837330,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-another-after-one-one-yes",
+      "callId": "call:17588305:537:goal:another-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 537, "sourceTs": 1781471812330, "action": "goal" }
+    },
+    {
+      "at": 1781471841330,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-another-after-one-one-no",
+      "callId": "call:17588305:537:goal:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 537, "sourceTs": 1781471812330, "action": "goal" }
+    },
+    {
+      "at": 1781472185970,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "netherlands-two-one",
+      "text": "63' NETHERLANDS 2-1. Another-goal yes lands inside seven minutes. Routine win people are back from hiding.",
+      "source": { "kind": "archive-event", "sequence": 584, "sourceTs": 1781472180970, "action": "goal", "participant": 1, "clockSeconds": 3827, "goalType": "Shot", "score": "2-1" }
+    },
+    { "at": 1781472190970, "actor": "fan_d", "type": "reaction", "item": "netherlands-two-one", "emoji": "😮" },
+    {
+      "at": 1781472195970,
+      "actor": "fan_b",
+      "type": "quote",
+      "key": "tunde-two-zero-rewrite",
+      "item": "netherlands-or-draw",
+      "text": "I said Netherlands control it. Ignore the exact 2-0 part and admire the winner."
+    },
+    {
+      "at": 1781472200970,
+      "actor": "fan_a",
+      "type": "reply",
+      "item": "tunde-two-zero-rewrite",
+      "text": "No edits accepted. Your clean sheet disappeared six minutes ago."
+    },
+    {
+      "at": 1781473634042,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "japan-late-pressure",
+      "text": "87' Japan corner. Maya's 2-2 has one last attack to become immortal.",
+      "source": { "kind": "archive-event", "sequence": 803, "sourceTs": 1781473629042, "action": "corner", "participant": 2, "score": "2-1" }
+    },
+    {
+      "at": 1781473683829,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "japan-two-two",
+      "text": "88' JAPAN 2-2. Twice behind, twice level. Scroll all the way back to the exact call.",
+      "source": { "kind": "archive-event", "sequence": 808, "sourceTs": 1781473678829, "action": "goal", "participant": 2, "clockSeconds": 5282, "goalType": "Head", "score": "2-2" }
+    },
+    { "at": 1781473688829, "actor": "fan_a", "type": "reaction", "item": "japan-two-two", "emoji": "🔥" },
+    {
+      "at": 1781473693829,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-exact-live",
+      "item": "maya-exact-two-two",
+      "text": "NETHERLANDS 2-2 JAPAN. Called before kickoff. Four goals later, the receipt is on the screen."
+    },
+    { "at": 1781473698829, "actor": "fan_b", "type": "reaction", "item": "maya-exact-live", "emoji": "👏" },
+    {
+      "at": 1781473700829,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-another-after-two-two-no",
+      "callId": "call:17588305:808:goal:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 808, "sourceTs": 1781473678829, "action": "goal" }
+    },
+    {
+      "at": 1781473703829,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-another-after-two-two-no",
+      "callId": "call:17588305:808:goal:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 808, "sourceTs": 1781473678829, "action": "goal" }
+    },
+    {
+      "at": 1781473706829,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-another-after-two-two-yes",
+      "callId": "call:17588305:808:goal:another-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 808, "sourceTs": 1781473678829, "action": "goal" }
+    },
+    {
+      "at": 1781474283829,
+      "actor": "fan_a",
+      "type": "reply",
+      "item": "maya-exact-live",
+      "text": "Ten minutes with no fifth goal. Locked no settles and protects the exact score."
+    },
+    {
+      "at": 1781474451209,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "fulltime-two-two",
+      "text": "Finalised: Netherlands 2-2 Japan. Four confirmed second-half goals; Japan came from behind twice.",
+      "source": { "kind": "archive-event", "sequence": 881, "sourceTs": 1781474446209, "action": "game_finalised", "score": "2-2" }
+    },
+    {
+      "at": 1781474456209,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-full-receipt",
+      "item": "maya-exact-two-two",
+      "text": "The viral 2-2 board hit exactly. Not 'I fancied a draw' after the whistle—the score was locked before kickoff."
+    },
+    { "at": 1781474461209, "actor": "fan_a", "type": "reaction", "item": "maya-full-receipt", "emoji": "👏" },
+    {
+      "at": 1781474466209,
+      "actor": "fan_b",
+      "type": "quote",
+      "key": "tunde-wrong-receipt",
+      "item": "netherlands-or-draw",
+      "text": "Netherlands did not lose, but my 2-0 certainty became a 2-2 classic. Maya owns the room."
+    },
+    {
+      "at": 1781474471209,
+      "actor": "fan_a",
+      "type": "reply",
+      "item": "fulltime-two-two",
+      "text": "Best game of the early tournament so far. Japan turned respect into a point and the exact-score receipt made it permanent.",
+      "source": { "kind": "x-post", "postId": "2066308878451519976", "url": "https://x.com/koaisama/status/2066308878451519976" }
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588305-netherlands-vs-japan/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588305-netherlands-vs-japan/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588305-netherlands-vs-japan/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/Dhavidtips/status/2065337895590690914",
+      "https://x.com/chidowrld/status/2065908566846804401",
+      "https://x.com/ClarkyTips/status/2065944292552507766",
+      "https://x.com/DJYYLiveData/status/2065940483143311520",
+      "https://x.com/The90PlusFooty/status/2066308353530253739",
+      "https://x.com/koaisama/status/2066308878451519976",
+      "https://x.com/pavantulaskar/status/2066664493850284446"
+    ],
+    "sourcePolicy": "The authenticated TxLINE archive is authoritative for fixture identity, kickoff, the 0-0 half-time state, four confirmed second-half goals, Japan's two equalising score states, and the terminal 2-2 result. Pre-match scorelines, Japan's prior-tournament reputation, favourite framing, best-game interpretation, and supporter culture are concise fictional-room restagings informed by the cited public X posts; personas do not impersonate source authors. Player names and causal descriptions from public discourse are intentionally omitted from archive-event claims. All nine available provenance sidecars match their corresponding raw bytes. The production replay consumer parses 862 preserved interval records ending at sequence 881; the derived analysis reports 881 historical sequence positions. Kickoff and goal calls voided by preserved feed gaps are omitted, and only settled half-time and late-goal canonical markets are answered."
+  }
+}

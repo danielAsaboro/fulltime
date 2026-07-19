@@ -21,9 +21,11 @@ const { PresenceNetwork } = require('./presence-network.js')
 const { phaseOf, valueAt } = require('./room-view.js')
 const { codedError, projectRoomIntelligence, verifyReference } = require('./room-intelligence.js')
 const { Room } = require('./room.js')
+
 const { operationId } = require('../lib/room-operations.js')
 
 const ROOM_ID_PREFIX = 'room_'
+const DEFAULT_MAX_ACTIVE_ROOM_HANDLES = 6
 
 class RoomManager extends EventEmitter {
   constructor ({
@@ -34,7 +36,10 @@ class RoomManager extends EventEmitter {
     bootstrap = undefined,
     fixtureRelay = undefined,
     answerAttestor = null,
-    notificationsEnabled = true
+    notificationsEnabled = true,
+    openPersistedRooms = true,
+    maxActiveRoomHandles = DEFAULT_MAX_ACTIVE_ROOM_HANDLES,
+    operationClock = Date.now
   }) {
     super()
     this.storagePath = storagePath
@@ -46,6 +51,8 @@ class RoomManager extends EventEmitter {
     this.deviceSecret = b4a.from(deviceSecret)
     this.bootstrap = bootstrap
     this.fixtureRelay = fixtureRelay
+    if (typeof operationClock !== 'function') throw new TypeError('Room manager operation clock must be a function')
+    this.operationClock = operationClock
     if (answerAttestor !== null && (!answerAttestor || typeof answerAttestor !== 'object' ||
         typeof answerAttestor.servicePublicKey !== 'string' || typeof answerAttestor.receiptFeedKey !== 'string')) {
       throw new TypeError('Room manager answer attestor configuration is invalid')
@@ -53,6 +60,12 @@ class RoomManager extends EventEmitter {
     this.answerAttestorConfig = answerAttestor
     if (typeof notificationsEnabled !== 'boolean') throw new TypeError('Room manager notificationsEnabled must be a boolean')
     this.notificationsEnabled = notificationsEnabled
+    if (typeof openPersistedRooms !== 'boolean') throw new TypeError('Room manager openPersistedRooms must be a boolean')
+    this.openPersistedRooms = openPersistedRooms
+    if (!Number.isSafeInteger(maxActiveRoomHandles) || maxActiveRoomHandles < 1 || maxActiveRoomHandles > 256) {
+      throw new TypeError('Room manager active-room handle limit must be an integer from 1 to 256')
+    }
+    this.maxActiveRoomHandles = maxActiveRoomHandles
 
     this.store = null
     this.swarm = null
@@ -65,7 +78,12 @@ class RoomManager extends EventEmitter {
     this.notifications = null
     this.notificationKnownItems = new Map()
     this.rooms = new Map()
+    this.roomRecords = new Map()
+    this.roomCatalog = new Map()
+    this.openingRooms = new Map()
     this.joining = new Map()
+    this.roomLastUsed = new Map()
+    this.roomLeases = new Map()
     this.revisions = new Map()
     this.closed = false
     this._connectionCloseHandlers = new WeakMap()
@@ -102,10 +120,7 @@ class RoomManager extends EventEmitter {
       this._emit({
         type: 'fixture.updated',
         fixtureId: String(card.fixture.id),
-        // Fixture projections deliberately reuse immutable objects internally.
-        // IPC is a JSON boundary, so materialize an independent tree before
-        // the strict validator rejects those shared references.
-        card: JSON.parse(JSON.stringify(card)),
+        card,
         at: Date.now()
       })
       void this._refreshRoomIntelligence()
@@ -130,13 +145,9 @@ class RoomManager extends EventEmitter {
       await this.answerAttestor.open()
     }
 
-    const records = await this.account.listRooms()
-    for (const record of records) {
-      try {
-        await this._openRecord(record)
-      } catch (error) {
-        this._emitRoomError(record.roomId, error, true)
-      }
+    if (this.openPersistedRooms) {
+      const records = await this.account.listRooms()
+      for (const record of records) this.roomRecords.set(record.roomId, record)
     }
     this._emit({
       type: 'bridge.ready',
@@ -151,6 +162,11 @@ class RoomManager extends EventEmitter {
     this.closed = true
     const rooms = [...this.rooms.values()]
     this.rooms.clear()
+    this.roomRecords.clear()
+    this.roomCatalog.clear()
+    this.openingRooms.clear()
+    this.roomLastUsed.clear()
+    this.roomLeases.clear()
     this.mediaTransfers?.close()
     this.mediaTransfers = null
     this.notificationKnownItems.clear()
@@ -170,8 +186,37 @@ class RoomManager extends EventEmitter {
     this.removeAllListeners()
   }
 
+  async suspendRoom (roomId) {
+    const room = this.rooms.get(roomId)
+    if (!room) return false
+    this.rooms.delete(roomId)
+    this.roomLastUsed.delete(roomId)
+    await this.presence.removeRoom(roomId).catch(() => {})
+    await room.close()
+    return true
+  }
+
   async dispatch (action, payload = null) {
+    const roomId = dispatchRoomId(action, payload)
+    if (roomId) this._acquireRoomLease(roomId)
+    try {
+      const result = await this._dispatch(action, payload)
+      if (roomId) this._touchRoom(roomId)
+      return result === undefined ? undefined : JSON.parse(JSON.stringify(result))
+    } finally {
+      if (roomId) {
+        this._releaseRoomLease(roomId)
+        await this._trimActiveRooms(roomId)
+      }
+    }
+  }
+
+  async _dispatch (action, payload = null) {
     if (this.closed && action !== 'system.close') throw new Error('Room worker is closing')
+    if (action.startsWith('room.') && !ROOM_ACTIONS_WITHOUT_OPEN.has(action) && payload && typeof payload === 'object' &&
+        !Array.isArray(payload) && typeof payload.roomId === 'string') {
+      await this.ensureRoom(payload.roomId)
+    }
     switch (action) {
       case 'system.config':
         return {
@@ -346,14 +391,22 @@ class RoomManager extends EventEmitter {
 
   async listRooms () {
     const rooms = []
-    for (const room of this.rooms.values()) {
-      try {
-        rooms.push((await room.project()).roomView)
-      } catch (error) {
-        this._emitRoomError(room.roomId, error, true)
+    for (const record of this.roomRecords.values()) {
+      const cached = this.roomCatalog.get(record.roomId)
+      if (cached) rooms.push(cached)
+      else {
+        try {
+          rooms.push(this._catalogRoom(record))
+        } catch (error) {
+          this._emitRoomError(record.roomId, error, true)
+        }
       }
     }
-    return rooms
+    return rooms.sort((left, right) => {
+      const kickoffDelta = Number(right.fixture?.kickoff || 0) - Number(left.fixture?.kickoff || 0)
+      if (kickoffDelta !== 0) return kickoffDelta
+      return String(left.room?.id || '').localeCompare(String(right.room?.id || ''))
+    })
   }
 
   listFixtures (payload) {
@@ -410,7 +463,7 @@ class RoomManager extends EventEmitter {
       answerId: operationId('answer'),
       callId,
       optionId,
-      submittedAt: Date.now()
+      submittedAt: this.operationClock()
     })
     const claims = token.claims
     const reference = {
@@ -563,19 +616,30 @@ class RoomManager extends EventEmitter {
     const fixture = this.fixturePlane.requireFixture(requiredString(input, 'fixtureId'))
     await this.account.signIn(displayName)
     const roomId = `${ROOM_ID_PREFIX}${b4a.toString(crypto.randomBytes(16), 'hex')}`
+    await this._makeRoomCapacity(roomId)
+    this._acquireRoomLease(roomId)
     const room = this._makeRoom({ roomId })
     this.rooms.set(roomId, room)
+    this._touchRoom(roomId)
     try {
       await room.open({ requireWritable: true })
       await room.initialize({ fixture, name: requiredString(input, 'roomName'), displayName })
       await this.presence.addRoom(room)
-      await this.account.putRoom({
+      const projection = await room.project()
+      const record = {
         roomId,
         fixtureId: String(fixture.id),
         bootstrapKey: b4a.toString(room.base.key, 'hex'),
         discoveryKey: b4a.toString(room.base.discoveryKey, 'hex'),
-        joinedAt: Date.now()
-      })
+        joinedAt: Date.now(),
+        roomName: projection.roomView.room.name,
+        createdBy: projection.roomView.room.createdBy,
+        createdAt: projection.roomView.room.createdAt,
+        memberCount: projection.roomView.members
+      }
+      await this.account.putRoom(record)
+      this.roomRecords.set(roomId, record)
+      this.roomCatalog.set(roomId, projection.roomView)
       await room.createInvite()
       return (await room.project()).details
     } catch (error) {
@@ -583,6 +647,9 @@ class RoomManager extends EventEmitter {
       await this.presence.removeRoom(roomId).catch(() => {})
       await room.close()
       throw error
+    } finally {
+      this._releaseRoomLease(roomId)
+      await this._trimActiveRooms(roomId)
     }
   }
 
@@ -591,10 +658,11 @@ class RoomManager extends EventEmitter {
     const parsed = parseInviteCode(code)
     await this.fixturePlane.assertVerifiedSnapshotAfterSync(parsed.preview.fixture)
     const roomId = parsed.preview.roomId
-    const existing = this.rooms.get(roomId)
+    const existing = this.rooms.get(roomId) || (this.roomRecords.has(roomId) ? await this.ensureRoom(roomId) : null)
     if (existing) {
+      await existing.base.update()
       const membership = await valueAt(existing.view, `member/${this.account.userId}`)
-      if (!membership?.active) {
+      if (!membership?.active || !existing.base.writable) {
         await existing.rejoin(code, session.displayName)
         await this.presence.announce(roomId, 'online')
       }
@@ -613,6 +681,7 @@ class RoomManager extends EventEmitter {
   }
 
   async _joinRoom ({ code, roomId, session }) {
+    await this._makeRoomCapacity(roomId)
     const pairingStore = this.store.namespace(`fulltime-room-v1/${roomId}`)
     let paired
     try {
@@ -621,7 +690,8 @@ class RoomManager extends EventEmitter {
         pairing: this.pairing,
         inviteCode: code,
         displayName: session.displayName,
-        identityKeyPair: this.account.identityKeyPair
+        identityKeyPair: this.account.identityKeyPair,
+        resumeInitialized: true
       })
     } finally {
       await pairingStore.close().catch(() => {})
@@ -634,17 +704,30 @@ class RoomManager extends EventEmitter {
       admissionClaim: paired.admissionClaim
     })
     this.rooms.set(roomId, room)
+    this._touchRoom(roomId)
     try {
       await room.open({ requireMembership: true })
       await this.presence.addRoom(room)
-      await this.account.putRoom({
+      const preview = paired.parsed.preview
+      const record = {
         roomId,
-        fixtureId: String(paired.parsed.preview.fixture.id),
+        fixtureId: String(preview.fixture.id),
         bootstrapKey: b4a.toString(room.base.key, 'hex'),
         discoveryKey: b4a.toString(room.base.discoveryKey, 'hex'),
-        joinedAt: Date.now()
-      })
-      return room.project()
+        joinedAt: Date.now(),
+        roomName: preview.roomName,
+        createdBy: preview.createdBy,
+        createdAt: preview.createdAt,
+        memberCount: preview.memberCount
+      }
+      await this.account.putRoom(record)
+      this.roomRecords.set(roomId, record)
+      const roomView = this._catalogRoom(record)
+      this.roomCatalog.set(roomId, roomView)
+      // Admission is complete once the actual writer membership and protected
+      // catalog record are durable. Historical projection remains available
+      // through room.get/state and must not hold the join response hostage.
+      return { roomView }
     } catch (error) {
       this.rooms.delete(roomId)
       await this.presence.removeRoom(roomId).catch(() => {})
@@ -685,16 +768,28 @@ class RoomManager extends EventEmitter {
 
   async _openRecord (record) {
     if (!record?.roomId || this.rooms.has(record.roomId)) return this.rooms.get(record.roomId)
+    await this._makeRoomCapacity(record.roomId)
     const room = this._makeRoom({
       roomId: record.roomId,
       ...(record.bootstrapKey ? { bootstrapKey: b4a.from(record.bootstrapKey, 'hex') } : {})
     })
     this.rooms.set(record.roomId, room)
+    this._touchRoom(record.roomId)
     try {
       await room.open({ waitForUpdate: false })
       const projection = await room.project()
       await this.fixturePlane.assertVerifiedSnapshotAfterSync(projection.roomView.fixture)
       await this.presence.addRoom(room)
+      this.roomCatalog.set(record.roomId, projection.roomView)
+      const catalogRecord = {
+        ...record,
+        roomName: projection.roomView.room.name,
+        createdBy: projection.roomView.room.createdBy,
+        createdAt: projection.roomView.room.createdAt,
+        memberCount: projection.roomView.members
+      }
+      this.roomRecords.set(record.roomId, catalogRecord)
+      await this.account.putRoom(catalogRecord)
       return room
     } catch (error) {
       this.rooms.delete(record.roomId)
@@ -710,6 +805,7 @@ class RoomManager extends EventEmitter {
       swarm: this.swarm,
       pairing: this.pairing,
       account: this.account,
+      operationClock: this.operationClock,
       ...options
     })
     room.on('update', (projection) => {
@@ -720,6 +816,19 @@ class RoomManager extends EventEmitter {
   }
 
   async _handleRoomUpdate (room, projection) {
+      this.roomCatalog.set(room.roomId, projection.roomView)
+      const record = this.roomRecords.get(room.roomId)
+      if (record) {
+        const catalogRecord = {
+          ...record,
+          roomName: projection.roomView.room.name,
+          createdBy: projection.roomView.room.createdBy,
+          createdAt: projection.roomView.room.createdAt,
+          memberCount: projection.roomView.members
+        }
+        this.roomRecords.set(room.roomId, catalogRecord)
+        await this.account.putRoom(catalogRecord)
+      }
       void this.presence?.roomUpdated(room).catch((error) => this._emitRoomError(room.roomId, error, true))
       void this._queueRemoteMessageNotifications(room, projection).catch((error) => this._emitRoomError(room.roomId, error, true))
       const enriched = await projectRoomIntelligence({
@@ -745,6 +854,89 @@ class RoomManager extends EventEmitter {
         details: enriched.details,
         at
       })
+  }
+
+  async ensureRoom (roomId) {
+    const open = this.rooms.get(roomId)
+    if (open) {
+      this._touchRoom(roomId)
+      return open
+    }
+    const pending = this.openingRooms.get(roomId)
+    if (pending) return pending
+    const record = this.roomRecords.get(roomId)
+    if (!record) throw new Error('Room is not available on this device')
+    const opening = this._openRecord(record)
+    this.openingRooms.set(roomId, opening)
+    try {
+      return await opening
+    } finally {
+      this.openingRooms.delete(roomId)
+    }
+  }
+
+  _touchRoom (roomId) {
+    if (this.rooms.has(roomId)) this.roomLastUsed.set(roomId, Date.now())
+  }
+
+  _acquireRoomLease (roomId) {
+    this.roomLeases.set(roomId, (this.roomLeases.get(roomId) || 0) + 1)
+  }
+
+  _releaseRoomLease (roomId) {
+    const count = this.roomLeases.get(roomId) || 0
+    if (count <= 1) this.roomLeases.delete(roomId)
+    else this.roomLeases.set(roomId, count - 1)
+  }
+
+  async _makeRoomCapacity (targetRoomId) {
+    while (this.rooms.size >= this.maxActiveRoomHandles && !this.rooms.has(targetRoomId)) {
+      const victim = this._leastRecentlyUsedIdleRoom(targetRoomId)
+      if (!victim) {
+        throw codedError('ROOM_CAPACITY_BUSY', 'All active encrypted rooms are busy; retry when the current room operation finishes')
+      }
+      await this.suspendRoom(victim)
+    }
+  }
+
+  async _trimActiveRooms (preferredRoomId) {
+    while (this.rooms.size > this.maxActiveRoomHandles) {
+      const victim = this._leastRecentlyUsedIdleRoom(preferredRoomId)
+      if (!victim) return
+      await this.suspendRoom(victim)
+    }
+  }
+
+  _leastRecentlyUsedIdleRoom (excludedRoomId) {
+    let selected = null
+    let selectedAt = Infinity
+    for (const roomId of this.rooms.keys()) {
+      if (roomId === excludedRoomId || this.roomLeases.has(roomId) || this.openingRooms.has(roomId) || this.joining.has(roomId)) continue
+      const usedAt = this.roomLastUsed.get(roomId) || 0
+      if (usedAt < selectedAt) {
+        selected = roomId
+        selectedAt = usedAt
+      }
+    }
+    return selected
+  }
+
+  _catalogRoom (record) {
+    const fixture = this.fixturePlane.requireFixture(String(record.fixtureId))
+    return {
+      room: {
+        id: record.roomId,
+        fixtureId: String(fixture.id),
+        type: 'private',
+        name: typeof record.roomName === 'string' && record.roomName.trim() ? record.roomName : 'Private room',
+        ...(typeof record.createdBy === 'string' ? { createdBy: record.createdBy } : {}),
+        ...(Number.isSafeInteger(record.createdAt) ? { createdAt: record.createdAt } : {})
+      },
+      fixture,
+      phase: phaseOf(fixture.status),
+      members: Number.isSafeInteger(record.memberCount) && record.memberCount >= 0 ? record.memberCount : 0,
+      loading: !this.rooms.has(record.roomId)
+    }
   }
 
   async _refreshRoomIntelligence () {
@@ -797,7 +989,10 @@ class RoomManager extends EventEmitter {
   }
 
   _emit (event) {
-    this.emit('event', { version: 2, ...event })
+    // Projections deliberately share immutable fixture/member objects in
+    // memory. IPC is a JSON boundary, so materialize the exact JSON tree here
+    // before the strict frame validator checks it for shared references.
+    this.emit('event', JSON.parse(JSON.stringify({ version: 2, ...event })))
   }
 
   async _queueRemoteMessageNotifications (room, projection) {
@@ -834,6 +1029,19 @@ class RoomManager extends EventEmitter {
       }
     }
   }
+}
+
+const ROOM_ACTIONS_WITHOUT_OPEN = new Set([
+  'room.list',
+  'room.preview-invite',
+  'room.create',
+  'room.join'
+])
+
+function dispatchRoomId (action, payload) {
+  if (!action.startsWith('room.') || ROOM_ACTIONS_WITHOUT_OPEN.has(action) || !payload ||
+      typeof payload !== 'object' || Array.isArray(payload) || typeof payload.roomId !== 'string') return null
+  return payload.roomId
 }
 
 function requiredObject (value, key) {

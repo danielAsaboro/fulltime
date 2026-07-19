@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17926765",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781793900000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1781793900000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1781793960000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1781794020000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1781794080000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1781794800000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Teams begin second games — South Africa v Czechia later today”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067395835537616907",
+        "url": "https://x.com/lesiamolibeli/status/2067395835537616907",
+        "observedAt": "2026-06-17 23:55"
+      }
+    },
+    {
+      "at": 1781794860000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Czech Republic may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1781795100000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Czechia vs South Africa Prediction — Group Stage betting preview”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067394416117965271",
+        "url": "https://x.com/SportsZooo59057/status/2067394416117965271",
+        "observedAt": "2026-06-17 23:50"
+      }
+    },
+    {
+      "at": 1781795130000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781795220000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Czech Republic, South Africa, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1781795700000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Czech Republic or South Africa?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Czech Republic"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "South Africa"
+        }
+      ]
+    },
+    {
+      "at": 1781795706000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781795712000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1781795718000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1781795724000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1781798421041,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17926765:15:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1781798416041,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781798426041,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17926765:15:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1781798416041,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781798431041,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17926765:15:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1781798416041,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781798808376,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "7' GOAL — Czech Republic. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 67,
+        "sourceTs": 1781798803376,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1781798813376,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781798818376,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "Inside ten minutes. The opening-goal yes receipts land immediately."
+    },
+    {
+      "at": 1781801394817,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Czechia looked set for victory before South Africa late 1-1”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067756008588632307",
+        "url": "https://x.com/Laraib_Fatiima/status/2067756008588632307",
+        "observedAt": "2026-06-18 23:47"
+      }
+    },
+    {
+      "at": 1781801429817,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Czech Republic 1-0 South Africa. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 445,
+        "sourceTs": 1781801424817,
+        "action": "halftime_finalised",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1781801434817,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1781805878155,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Czech Republic 1-1 South Africa. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 973,
+        "sourceTs": 1781805873155,
+        "action": "game_finalised",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1781805883155,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781805893155,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 1-1. No scrollback archaeology required."
+    },
+    {
+      "at": 1781805903155,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “SA last-minute pen 1-1 — Teboho Mokoena converts after handball”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068101547251077352",
+        "url": "https://x.com/stayjustintime/status/2068101547251077352",
+        "observedAt": "2026-06-19 22:40"
+      }
+    },
+    {
+      "at": 1781805908155,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17926765-czech-republic-vs-south-africa/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17926765-czech-republic-vs-south-africa/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17926765-czech-republic-vs-south-africa/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/lesiamolibeli/status/2067395835537616907",
+      "https://x.com/i/status/2067395835537616907",
+      "https://x.com/SportsZooo59057/status/2067394416117965271",
+      "https://x.com/i/status/2067394416117965271",
+      "https://x.com/The_king_VIRAT/status/2067393900948676694",
+      "https://x.com/i/status/2067393900948676694",
+      "https://x.com/RLGBets/status/2067381782891073828",
+      "https://x.com/i/status/2067381782891073828",
+      "https://x.com/The_king_VIRAT/status/2067393407832797659",
+      "https://x.com/i/status/2067393407832797659",
+      "https://x.com/Laraib_Fatiima/status/2067756008588632307",
+      "https://x.com/i/status/2067756008588632307"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 1-1 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

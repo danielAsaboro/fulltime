@@ -1,0 +1,376 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588232",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782053100000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782053100000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782053160000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782053220000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782053280000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782054000000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Saudi ruined a favorite before; Yamal vs upset risk; pred ask”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068478463841849438",
+        "url": "https://x.com/i/status/2068478463841849438",
+        "observedAt": "2026-06-20 23:37"
+      }
+    },
+    {
+      "at": 1782054060000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Spain may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782054300000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “SPAIN VS SAUDI ARABIA Group H card”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068479229411332096",
+        "url": "https://x.com/i/status/2068479229411332096",
+        "observedAt": "2026-06-20 23:40"
+      }
+    },
+    {
+      "at": 1782054330000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782054420000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Spain, Saudi Arabia, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782054900000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Spain or Saudi Arabia?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Spain"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Saudi Arabia"
+        }
+      ]
+    },
+    {
+      "at": 1782054906000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782054912000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782054918000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782054924000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782057663902,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588232:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782057658902,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782057668902,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588232:16:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782057658902,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782057673902,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588232:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782057658902,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782058332970,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "12' GOAL — Spain. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 133,
+        "sourceTs": 1782058327970,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1782058337970,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782058342970,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1782058989919,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "23' GOAL — Spain. 2-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 249,
+        "sourceTs": 1782058984919,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1782058994919,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782059108222,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "25' GOAL — Spain. 3-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 265,
+        "sourceTs": 1782059103222,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "3-0"
+      }
+    },
+    {
+      "at": 1782059113222,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782060999322,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Saudi OG; Spain lead 4-0”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068846294416728235",
+        "url": "https://x.com/i/status/2068846294416728235",
+        "observedAt": "2026-06-21 23:59"
+      }
+    },
+    {
+      "at": 1782061034322,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Spain 3-0 Saudi Arabia. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 531,
+        "sourceTs": 1782061029322,
+        "action": "halftime_finalised",
+        "score": "3-0"
+      }
+    },
+    {
+      "at": 1782061039322,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782061953719,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "goal-4",
+      "text": "72' GOAL — Spain. 4-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 570,
+        "sourceTs": 1782061948719,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Own",
+        "score": "4-0"
+      }
+    },
+    {
+      "at": 1782061958719,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "goal-4",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782065270682,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Spain 4-0 Saudi Arabia. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 967,
+        "sourceTs": 1782065265682,
+        "action": "game_finalised",
+        "score": "4-0"
+      }
+    },
+    {
+      "at": 1782065275682,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782065285682,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 4-0. No scrollback archaeology required."
+    },
+    {
+      "at": 1782065295682,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Spain training vibes after dominant 4-0”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069181903173804146",
+        "url": "https://x.com/i/status/2069181903173804146",
+        "observedAt": "2026-06-22 22:13"
+      }
+    },
+    {
+      "at": 1782065300682,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588232-spain-vs-saudi-arabia/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588232-spain-vs-saudi-arabia/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588232-spain-vs-saudi-arabia/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/i/status/2068478463841849438",
+      "https://x.com/i/status/2068479229411332096",
+      "https://x.com/i/status/2068482953361985639",
+      "https://x.com/i/status/2068476718499897622",
+      "https://x.com/i/status/2068477599647703263",
+      "https://x.com/i/status/2068476679127736336",
+      "https://x.com/i/status/2068482729016995884",
+      "https://x.com/i/status/2068477374165848529",
+      "https://x.com/i/status/2068846294416728235",
+      "https://x.com/i/status/2068846264704180652",
+      "https://x.com/i/status/2068844151626772934",
+      "https://x.com/i/status/2068843658921849078"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 4-0 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

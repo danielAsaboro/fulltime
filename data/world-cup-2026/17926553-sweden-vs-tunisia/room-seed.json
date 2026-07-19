@@ -1,0 +1,422 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17926553",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781484300000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1781484300000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1781484360000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1781484420000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1781484480000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1781485200000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Sweden-Tunisia World Cup Betting Edge… clear tactical advantage over a struggling Tunisian side”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2066309339598430427",
+        "url": "https://x.com/letmebet_com/status/2066309339598430427",
+        "observedAt": "2026-06-14 23:58"
+      }
+    },
+    {
+      "at": 1781485260000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Sweden may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1781485500000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Sweden enters their Group F opener against Tunisia as the clear favorite… superior attacking talent”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2066309073469858041",
+        "url": "https://x.com/letmebet_com/status/2066309073469858041",
+        "observedAt": "2026-06-14 23:57"
+      }
+    },
+    {
+      "at": 1781485530000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781485620000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Sweden, Tunisia, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1781486100000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Sweden or Tunisia?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Sweden"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Tunisia"
+        }
+      ]
+    },
+    {
+      "at": 1781486106000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781486112000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1781486118000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781486124000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1781488852747,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17926553:19:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 19,
+        "sourceTs": 1781488847747,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781488857747,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17926553:19:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 19,
+        "sourceTs": 1781488847747,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781488862747,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17926553:19:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 19,
+        "sourceTs": 1781488847747,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781489295761,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "8' GOAL — Sweden. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 89,
+        "sourceTs": 1781489290761,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1781489300761,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781489305761,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "Inside ten minutes. The opening-goal yes receipts land immediately."
+    },
+    {
+      "at": 1781490666553,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "31' GOAL — Sweden. 2-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 316,
+        "sourceTs": 1781490661553,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1781490671553,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781491455450,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "44' GOAL — Tunisia. 2-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 450,
+        "sourceTs": 1781491450450,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Head",
+        "score": "2-1"
+      }
+    },
+    {
+      "at": 1781491460450,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781492020509,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Sweden schooled Tunisia 5-1 and that led to the sack of their coach, sad.”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2066664126156337456",
+        "url": "https://x.com/greater_glory20/status/2066664126156337456",
+        "observedAt": "2026-06-15 23:28"
+      }
+    },
+    {
+      "at": 1781492055509,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Sweden 2-1 Tunisia. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 526,
+        "sourceTs": 1781492050509,
+        "action": "halftime_finalised",
+        "score": "2-1"
+      }
+    },
+    {
+      "at": 1781492060509,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1781493644182,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "goal-4",
+      "text": "80' GOAL — Sweden. 3-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 692,
+        "sourceTs": 1781493639182,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "3-1"
+      }
+    },
+    {
+      "at": 1781493649182,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "goal-4",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781495216293,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-5",
+      "text": "107' GOAL — Sweden. 4-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 921,
+        "sourceTs": 1781495211293,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "4-1"
+      }
+    },
+    {
+      "at": 1781495221293,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-5",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781495831071,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-6",
+      "text": "117' GOAL — Sweden. 5-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1024,
+        "sourceTs": 1781495826071,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "5-1"
+      }
+    },
+    {
+      "at": 1781495836071,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-6",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781496235049,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Sweden 5-1 Tunisia. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1031,
+        "sourceTs": 1781496230049,
+        "action": "game_finalised",
+        "score": "5-1"
+      }
+    },
+    {
+      "at": 1781496240049,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1781496250049,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 5-1. No scrollback archaeology required."
+    },
+    {
+      "at": 1781496260049,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Renard Arrives for Tunisia Rescue Mission… after Sabri Lamouchi's departure following the 5-1 defeat to Sweden. First challenge? Japan on June 21.”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067028756167032960",
+        "url": "https://x.com/dube_mthoko/status/2067028756167032960",
+        "observedAt": "2026-06-16 23:37"
+      }
+    },
+    {
+      "at": 1781496265049,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17926553-sweden-vs-tunisia/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17926553-sweden-vs-tunisia/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17926553-sweden-vs-tunisia/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/letmebet_com/status/2066309339598430427",
+      "https://x.com/i/status/2066309339598430427",
+      "https://x.com/letmebet_com/status/2066309073469858041",
+      "https://x.com/i/status/2066309073469858041",
+      "https://x.com/oumypersonality/status/2066308817944789261",
+      "https://x.com/i/status/2066308817944789261",
+      "https://x.com/CoachJoesView/status/2066308050445602920",
+      "https://x.com/i/status/2066308050445602920",
+      "https://x.com/UtdRedDevils20/status/2066307972397977790",
+      "https://x.com/i/status/2066307972397977790",
+      "https://x.com/unitedfanban/status/2066307598190608881",
+      "https://x.com/i/status/2066307598190608881"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 5-1 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

@@ -19,6 +19,7 @@ const packageRoot = path.resolve(__dirname, '..')
 const runtimePath = path.join(packageRoot, '.local-development', 'replay-runtime.json')
 const storagePath = path.join(packageRoot, '.local-development', 'fixture-relay')
 const port = 59638
+const proofWindow = 64
 
 async function main () {
   const runtime = JSON.parse(fs.readFileSync(runtimePath, 'utf8'))
@@ -40,12 +41,25 @@ async function main () {
   const upstreamDiscovery = upstream.join(core.discoveryKey, { server: false, client: true })
 
   const sockets = new Set()
+  let connectionSequence = 0
   let closing = false
   const server = net.createServer((socket) => {
+    const connectionId = ++connectionSequence
     sockets.add(socket)
-    socket.once('close', () => sockets.delete(socket))
-    socket.once('error', () => {})
-    void serveProofs(socket, core, () => closing).catch((error) => {
+    socket.once('close', () => {
+      sockets.delete(socket)
+      console.log(`[fulltime fixture relay] client ${connectionId} closed`)
+    })
+    socket.once('error', (error) => {
+      console.error(`[fulltime fixture relay] client ${connectionId} error: ${error.message}`)
+    })
+    console.log(`[fulltime fixture relay] client ${connectionId} connected`)
+    void serveProofs(socket, core, () => closing, (index) => {
+      if (index % 4096 === 0 || index === core.length) {
+        console.log(`[fulltime fixture relay] client ${connectionId} verified through block ${index}/${core.length}`)
+      }
+    }).catch((error) => {
+      console.error(`[fulltime fixture relay] client ${connectionId} stream failed: ${error.message}`)
       if (!socket.destroyed) socket.destroy(error)
     })
   })
@@ -77,7 +91,7 @@ async function main () {
   process.once('SIGTERM', () => { void close() })
 }
 
-async function serveProofs (socket, core, isClosing) {
+async function serveProofs (socket, core, isClosing, onProgress) {
   const request = await readProofRequest(socket)
   let remoteLength = request.length
   let index = request.start
@@ -87,19 +101,27 @@ async function serveProofs (socket, core, isClosing) {
       continue
     }
     const headLength = core.length
-    const options = { block: { index, nodes: 0 } }
-    if (remoteLength < headLength) {
-      options.upgrade = { start: remoteLength, length: headLength - remoteLength }
-      remoteLength = headLength
+    const batchEnd = Math.min(headLength, index + proofWindow)
+    let sent = 0
+    while (index < batchEnd && !socket.destroyed) {
+      const options = { block: { index, nodes: 0 } }
+      if (remoteLength < headLength) {
+        options.upgrade = { start: remoteLength, length: headLength - remoteLength }
+        remoteLength = headLength
+      }
+      const block = await core.get(index)
+      const proof = await core.proof(options)
+      proof.block.value = block
+      proof.manifest = core.core.header.manifest
+      const frame = frameFixtureProof(encodeFixtureProof({ index, proof }))
+      if (!socket.write(frame)) await once(socket, 'drain')
+      index++
+      sent++
     }
-    const block = await core.get(index)
-    const proof = await core.proof(options)
-    proof.block.value = block
-    proof.manifest = core.core.header.manifest
-    const frame = frameFixtureProof(encodeFixtureProof({ index, proof }))
-    if (!socket.write(frame)) await once(socket, 'drain')
-    await readProofAck(socket)
-    index++
+    if (sent > 0) {
+      await readProofAcks(socket, sent)
+      onProgress(index)
+    }
   }
 }
 
@@ -157,20 +179,27 @@ function waitForAppend (core, socket) {
   })
 }
 
-function readProofAck (socket) {
+function readProofAcks (socket, expected) {
   return new Promise((resolve, reject) => {
+    let received = 0
     const cleanup = () => {
       socket.removeListener('data', onData)
       socket.removeListener('close', onClose)
       socket.removeListener('error', onError)
     }
-    const onClose = () => { cleanup(); reject(new Error('Fixture proof client closed before acknowledging a block')) }
+    const onClose = () => { cleanup(); reject(new Error('Fixture proof client closed before acknowledging the proof window')) }
     const onError = (error) => { cleanup(); reject(error) }
     const onData = (chunk) => {
-      cleanup()
-      if (chunk.byteLength !== 1 || chunk[0] !== 0x06) {
-        reject(new TypeError('Fixture proof client sent an invalid acknowledgement'))
-      } else {
+      for (const value of chunk) {
+        if (value !== 0x06 || received >= expected) {
+          cleanup()
+          reject(new TypeError('Fixture proof client sent an invalid acknowledgement'))
+          return
+        }
+        received++
+      }
+      if (received === expected) {
+        cleanup()
         resolve()
       }
     }

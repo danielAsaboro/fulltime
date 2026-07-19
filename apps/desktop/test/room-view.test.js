@@ -133,6 +133,14 @@ test('deterministic room view authenticates invites/admissions and materializes 
     emoji: '🔥'
   }, inviteTime + 6))
 
+  const quoteMessage = createOperation('message.add', {
+    id: 'item-quote-1',
+    messageId: 'message-quote-1',
+    text: 'You really called it.',
+    quotedItemId: 'item-message-1'
+  }, inviteTime + 7)
+  await apply(view, host, creatorWriter, quoteMessage)
+
   const fiveOptionPoll = createOperation('poll.create', {
     id: 'item-market-poll-1',
     pollId: 'poll-market-1',
@@ -167,6 +175,11 @@ test('deterministic room view authenticates invites/admissions and materializes 
   assert.equal(projectedMessage.replies.length, 1)
   assert.deepEqual(projectedMessage.reactions, [{ emoji: '🔥', count: 1, reactedByMe: true }])
   assert.equal(projectedMessage.author.displayName, 'Grace Hopper')
+  const projectedQuote = projection.state.items.find((item) => item.id === 'item-quote-1')
+  assert.equal(projectedQuote.quote.itemId, 'item-message-1')
+  assert.equal(projectedQuote.quote.text, 'Goal!')
+  assert.equal(projectedQuote.quote.author.displayName, 'Grace Hopper')
+  assert.equal(projectedQuote.quote.author.isCurrentUser, false)
   const projectedPoll = projection.state.items.find((item) => item.id === 'item-market-poll-1')
   assert.equal(projectedPoll.poll.options.length, 5)
   assert.equal(projectedPoll.poll.marketReference.rulebookHash, marketReference.rulebookHash)

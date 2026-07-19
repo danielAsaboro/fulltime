@@ -94,6 +94,36 @@ if (command === "inspect") {
   if (!invite?.code) throw new Error("Regenerated desktop room invite is unavailable");
   await fs.writeFile(filename, `${invite.code}\n`, { mode: 0o600 });
   output = { filename, roomId, inviteId: invite.id, status: invite.status };
+} else if (command === "join-invites") {
+  const filename = process.argv[3];
+  if (!filename) throw new Error("Provisioned rooms JSON path is required");
+  const provisioned = JSON.parse(await fs.readFile(filename, "utf8"));
+  if (!Array.isArray(provisioned.rooms) || provisioned.rooms.length === 0) {
+    throw new Error("Provisioned rooms JSON contains no rooms");
+  }
+  const existing = await evaluate("window.fullTimePeers.request('room.list', null)");
+  const joinedIds = new Set(existing.map((entry) => entry?.room?.id).filter(Boolean));
+  const joined = [];
+  const alreadyPresent = [];
+  for (const room of provisioned.rooms) {
+    if (typeof room.roomId !== "string" || typeof room.inviteCode !== "string") {
+      throw new Error("Provisioned room entry is invalid");
+    }
+    if (joinedIds.has(room.roomId)) {
+      alreadyPresent.push(room.roomId);
+      continue;
+    }
+    const result = await evaluate(`window.fullTimePeers.request('room.join', ${JSON.stringify({ code: room.inviteCode })})`);
+    const roomId = result?.room?.id ?? result?.roomId ?? result?.id;
+    if (roomId !== room.roomId) throw new Error(`Desktop joined unexpected room for fixture ${room.fixtureId}`);
+    joined.push({ fixtureId: room.fixtureId, roomId });
+    joinedIds.add(roomId);
+  }
+  const verified = await evaluate("window.fullTimePeers.request('room.list', null)");
+  const verifiedIds = new Set(verified.map((entry) => entry?.room?.id).filter(Boolean));
+  const missing = provisioned.rooms.map((room) => room.roomId).filter((roomId) => !verifiedIds.has(roomId));
+  if (missing.length) throw new Error(`Desktop room verification is missing ${missing.length} room(s)`);
+  output = { joined, alreadyPresent, verifiedRoomCount: provisioned.rooms.length };
 } else {
   throw new Error(`Unsupported command: ${command}`);
 }

@@ -1,0 +1,422 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588319",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782333900000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782333900000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782333960000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782334020000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782334080000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782334800000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Backing Morocco TO WIN vs Haiti”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069570340314050667",
+        "url": "https://x.com/ckl1258/status/2069570340314050667",
+        "observedAt": "2026-06-23 23:56"
+      }
+    },
+    {
+      "at": 1782334860000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Morocco may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782335100000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Grenadye yo… Haiti 🇭🇹 vs Morocco 🇲🇦 (fan hype)”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069569788423135561",
+        "url": "https://x.com/Mart_Bryant24/status/2069569788423135561",
+        "observedAt": "2026-06-23 23:54"
+      }
+    },
+    {
+      "at": 1782335130000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782335220000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Morocco, Haiti, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782335700000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Morocco or Haiti?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Morocco"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Haiti"
+        }
+      ]
+    },
+    {
+      "at": 1782335706000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782335712000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782335718000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782335724000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782338465832,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588319:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782338460832,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782338470832,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588319:16:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782338460832,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782338475832,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588319:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782338460832,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782339114804,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "11' GOAL — Haiti. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 127,
+        "sourceTs": 1782339109804,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782339119804,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782339124804,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1782340848603,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "40' GOAL — Morocco. 1-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 430,
+        "sourceTs": 1782340843603,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1782340853603,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782341068090,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "44' GOAL — Haiti. 1-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 472,
+        "sourceTs": 1782341063090,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "1-2"
+      }
+    },
+    {
+      "at": 1782341073090,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782341217176,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "goal-4",
+      "text": "46' GOAL — Morocco. 2-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 496,
+        "sourceTs": 1782341212176,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "2-2"
+      }
+    },
+    {
+      "at": 1782341222176,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "goal-4",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782341591588,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Morocco 4-2 Haiti scorers: Joseph, Hakimi, Isidor, Sabiri, Rahimi, Gessime”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069933576485822863",
+        "url": "https://x.com/moustic2000/status/2069933576485822863",
+        "observedAt": "2026-06-24 23:59"
+      }
+    },
+    {
+      "at": 1782341626588,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Morocco 2-2 Haiti. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 560,
+        "sourceTs": 1782341621588,
+        "action": "halftime_finalised",
+        "score": "2-2"
+      }
+    },
+    {
+      "at": 1782341631588,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782344478612,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-5",
+      "text": "101' GOAL — Morocco. 3-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 896,
+        "sourceTs": 1782344473612,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "3-2"
+      }
+    },
+    {
+      "at": 1782344483612,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-5",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782345207231,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-6",
+      "text": "113' GOAL — Morocco. 4-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1019,
+        "sourceTs": 1782345202231,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "4-2"
+      }
+    },
+    {
+      "at": 1782345212231,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-6",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782346088977,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Morocco 4-2 Haiti. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1103,
+        "sourceTs": 1782346083977,
+        "action": "game_finalised",
+        "score": "4-2"
+      }
+    },
+    {
+      "at": 1782346093977,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782346103977,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 4-2. No scrollback archaeology required."
+    },
+    {
+      "at": 1782346113977,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Morocco 4-2 Haiti: Hakimi, Saibari, Rahimi, Gessime; came from behind twice; Haiti first WC goals”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070289200612622781",
+        "url": "https://x.com/KopFrequency/status/2070289200612622781",
+        "observedAt": "2026-06-25 23:33"
+      }
+    },
+    {
+      "at": 1782346118977,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588319-morocco-vs-haiti/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588319-morocco-vs-haiti/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588319-morocco-vs-haiti/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/ckl1258/status/2069570340314050667",
+      "https://x.com/i/status/2069570340314050667",
+      "https://x.com/Mart_Bryant24/status/2069569788423135561",
+      "https://x.com/i/status/2069569788423135561",
+      "https://x.com/asutdegreat/status/2069566974732955937",
+      "https://x.com/i/status/2069566974732955937",
+      "https://x.com/roobetpredicts/status/2069565639099125792",
+      "https://x.com/i/status/2069565639099125792",
+      "https://x.com/CodyBrownBets/status/2069566573518410022",
+      "https://x.com/i/status/2069566573518410022",
+      "https://x.com/CFGrin/status/2069563946667835724",
+      "https://x.com/i/status/2069563946667835724"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 4-2 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

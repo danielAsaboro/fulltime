@@ -1,0 +1,217 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588396",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781308920000
+  },
+  "personas": [
+    { "id": "fan_a", "displayName": "Amina", "joinedAt": 1781308920000, "creator": true },
+    { "id": "fan_b", "displayName": "Tunde", "joinedAt": 1781308980000 },
+    { "id": "fan_c", "displayName": "Maya", "joinedAt": 1781309040000 },
+    { "id": "fan_d", "displayName": "Jo", "joinedAt": 1781309100000 }
+  ],
+  "actions": [
+    {
+      "at": 1781309400000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-dominant-usa",
+      "text": "Co-hosts, home crowd, first night at SoFi. I am locking a dominant USA win—three goals if they start quickly.",
+      "source": { "kind": "x-post", "postId": "2065221465205821517", "url": "https://x.com/CryptoEmpressX/status/2065221465205821517" }
+    },
+    {
+      "at": 1781309460000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-dominant-usa",
+      "text": "They lost both matches they played in this stadium last year. Paraguay will turn this into a trap game: 2-2."
+    },
+    {
+      "at": 1781309520000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-two-nil",
+      "text": "USA 2-0. Paraguay will make it awkward, but the hosts have too much in the final third.",
+      "source": { "kind": "x-post", "postId": "2065221866302709793", "url": "https://x.com/marmoushEra/status/2065221866302709793" }
+    },
+    {
+      "at": 1781309580000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-sofi-warning",
+      "item": "amina-dominant-usa",
+      "text": "The SoFi warning is real, but I still have USA by one. If it becomes a rout, Amina owns the room.",
+      "source": { "kind": "x-post", "postId": "2065584933716812206", "url": "https://x.com/somosdeporte91/status/2065584933716812206" }
+    },
+    { "at": 1781309610000, "actor": "fan_a", "type": "reaction", "item": "jo-sofi-warning", "emoji": "👏" },
+    {
+      "at": 1781309700000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "usa-opener-result",
+      "question": "How does the USA opener finish?",
+      "options": [
+        { "key": "usa-two-plus", "label": "USA by 2+" },
+        { "key": "usa-one", "label": "USA by 1" },
+        { "key": "draw", "label": "Draw" },
+        { "key": "paraguay", "label": "Paraguay" }
+      ]
+    },
+    { "at": 1781309705000, "actor": "fan_a", "type": "vote", "poll": "usa-opener-result", "option": "usa-two-plus" },
+    { "at": 1781309710000, "actor": "fan_b", "type": "vote", "poll": "usa-opener-result", "option": "draw" },
+    { "at": 1781309715000, "actor": "fan_c", "type": "vote", "poll": "usa-opener-result", "option": "usa-two-plus" },
+    { "at": 1781309720000, "actor": "fan_d", "type": "vote", "poll": "usa-opener-result", "option": "usa-one" },
+    {
+      "at": 1781312546024,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-first-goal-home",
+      "callId": "call:17588396:18:phase:kickoff:first-goal",
+      "option": "home",
+      "source": { "kind": "archive-event", "sequence": 18, "sourceTs": 1781312541024, "action": "kickoff" }
+    },
+    {
+      "at": 1781312551024,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-first-goal-away",
+      "callId": "call:17588396:18:phase:kickoff:first-goal",
+      "option": "away",
+      "source": { "kind": "archive-event", "sequence": 18, "sourceTs": 1781312541024, "action": "kickoff" }
+    },
+    {
+      "at": 1781312556024,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588396:18:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 18, "sourceTs": 1781312541024, "action": "kickoff" }
+    },
+    {
+      "at": 1781312561024,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-opening-goal-no",
+      "callId": "call:17588396:18:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 18, "sourceTs": 1781312541024, "action": "kickoff" }
+    },
+    {
+      "at": 1781313022427,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "usa-one-nil",
+      "text": "6' USA 1-0. An own goal opens it immediately—home first goal and an opening goal inside ten both settle yes.",
+      "source": { "kind": "archive-event", "sequence": 95, "sourceTs": 1781313017427, "action": "own-goal", "participant": 1, "clockSeconds": 393, "score": "1-0" }
+    },
+    { "at": 1781313027427, "actor": "fan_c", "type": "reaction", "item": "usa-one-nil", "emoji": "⚽" },
+    {
+      "at": 1781313032427,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "usa-one-nil",
+      "text": "My Paraguay-first call lasted six minutes. The 2-2 can still survive, but this is already too open."
+    },
+    {
+      "at": 1781314428974,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "usa-two-nil",
+      "text": "30' USA 2-0. My exact score is on the board before half-time; now please stop scoring.",
+      "source": { "kind": "archive-event", "sequence": 281, "sourceTs": 1781314423974, "action": "goal", "participant": 1, "clockSeconds": 1839, "score": "2-0" }
+    },
+    { "at": 1781314433974, "actor": "fan_a", "type": "reaction", "item": "usa-two-nil", "emoji": "🔥" },
+    {
+      "at": 1781315561965,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "amina-three-nil",
+      "item": "amina-dominant-usa",
+      "text": "49' USA 3-0. I said three if they started quickly. That is the call—before the half-time state is even signed.",
+      "source": { "kind": "archive-event", "sequence": 463, "sourceTs": 1781315556965, "action": "goal", "participant": 1, "clockSeconds": 2940, "score": "3-0" }
+    },
+    {
+      "at": 1781315570100,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "halftime-three-nil",
+      "text": "Half-time: USA 3-0 Paraguay. Amina has the read; every cautious scoreline in this room is already gone.",
+      "source": { "kind": "archive-event", "sequence": 465, "sourceTs": 1781315565100, "action": "half-time", "score": "3-0" }
+    },
+    { "at": 1781315575100, "actor": "fan_b", "type": "reaction", "item": "halftime-three-nil", "emoji": "😮" },
+    {
+      "at": 1781318270919,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "paraguay-goal",
+      "text": "72' Paraguay pull one back: 3-1. My draw is dead, but at least they have finally punished the space.",
+      "source": { "kind": "archive-event", "sequence": 751, "sourceTs": 1781318265919, "action": "goal", "participant": 2, "clockSeconds": 4351, "score": "3-1" }
+    },
+    {
+      "at": 1781318275919,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-score-gone",
+      "item": "maya-two-nil",
+      "text": "Correct winner, comfortable margin, completely wrong exact score. That distinction is why the timestamp matters."
+    },
+    {
+      "at": 1781319747721,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "usa-four-one",
+      "text": "97' USA 4-1. This stopped being comfortable a long time ago; it is a statement.",
+      "source": { "kind": "archive-event", "sequence": 1012, "sourceTs": 1781319742721, "action": "goal", "participant": 1, "clockSeconds": 5841, "score": "4-1" }
+    },
+    { "at": 1781319752721, "actor": "fan_d", "type": "reaction", "item": "usa-four-one", "emoji": "🔥" },
+    {
+      "at": 1781320292107,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "fulltime-four-one",
+      "text": "Finalised: USA 4-1 Paraguay. Four home goals, one reply, and every result is now on the signed timeline.",
+      "source": { "kind": "archive-event", "sequence": 1018, "sourceTs": 1781320287107, "action": "game_finalised", "score": "4-1" }
+    },
+    {
+      "at": 1781320297107,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "amina-final-receipt",
+      "item": "amina-dominant-usa",
+      "text": "Dominant USA win was the take. Four-one is more emphatic than I promised, and the room kept the receipt."
+    },
+    {
+      "at": 1781320302107,
+      "actor": "fan_b",
+      "type": "quote",
+      "key": "tunde-wrong-receipt",
+      "item": "usa-one-nil",
+      "text": "I had 2-2 and Paraguay to score first. Wrong twice, in public, with no edits. Fair play."
+    },
+    { "at": 1781320307107, "actor": "fan_c", "type": "reaction", "item": "amina-final-receipt", "emoji": "👏" },
+    {
+      "at": 1781320312107,
+      "actor": "fan_c",
+      "type": "reply",
+      "item": "amina-final-receipt",
+      "text": "I had USA 2-0. Directionally right is not exactly right; the 4-1 result owns the argument.",
+      "source": { "kind": "x-post", "postId": "2065943013306614041", "url": "https://x.com/Dhavidtips/status/2065943013306614041" }
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588396-usa-vs-paraguay/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588396-usa-vs-paraguay/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588396-usa-vs-paraguay/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/CryptoEmpressX/status/2065221465205821517",
+      "https://x.com/marmoushEra/status/2065221866302709793",
+      "https://x.com/Hullabaloo_WPN/status/2065218749712511369",
+      "https://x.com/somosdeporte91/status/2065584933716812206",
+      "https://x.com/Dhavidtips/status/2065943013306614041"
+    ],
+    "sourcePolicy": "The authenticated TxLINE archive is authoritative for fixture identity, kickoff, five confirmed scoring events, phases, and the 4-1 terminal result. Pre-match takes are concise fictional-room restagings informed by the cited public X posts; the personas do not impersonate source authors. Calls are submitted only against canonical calls opened by signed fixture events. The stale rescheduled fixture 17588394 is excluded because its provenance-valid capture contains zero records and no terminal state."
+  }
+}

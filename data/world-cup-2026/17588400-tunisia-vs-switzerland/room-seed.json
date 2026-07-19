@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588400",
+  "room": {
+    "name": "Fixture check",
+    "createdAt": 1782417600000
+  },
+  "personas": [
+    { "id": "fan_a", "displayName": "Amina", "joinedAt": 1782417600000, "creator": true },
+    { "id": "fan_b", "displayName": "Tunde", "joinedAt": 1782417660000 },
+    { "id": "fan_c", "displayName": "Maya", "joinedAt": 1782417720000 },
+    { "id": "fan_d", "displayName": "Jo", "joinedAt": 1782417780000 }
+  ],
+  "actions": [
+    {
+      "at": 1782418200000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-fixture-question",
+      "text": "Why is Tunisia–Switzerland on the board? Every matchday list has Tunisia playing the Netherlands tonight.",
+      "source": { "kind": "x-post", "postId": "2069888305349480802", "url": "https://x.com/TrueGemHunter/status/2069888305349480802" }
+    },
+    {
+      "at": 1782418260000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-fixture-question",
+      "text": "And Switzerland are already listed as qualified. I am not making a score prediction until the feed proves this fixture is real."
+    },
+    {
+      "at": 1782418320000,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-qualified-list",
+      "item": "amina-fixture-question",
+      "text": "The qualification board has Switzerland through and Tunisia eliminated. This looks like stale catalogue data, not a match.",
+      "source": { "kind": "x-post", "postId": "2069893733684838517", "url": "https://x.com/punctae/status/2069893733684838517" }
+    },
+    { "at": 1782418380000, "actor": "fan_d", "type": "reaction", "item": "maya-qualified-list", "emoji": "😮" },
+    {
+      "at": 1782418440000,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "jo-no-invention",
+      "text": "Keep the room, keep the timestamp, but do not manufacture a kickoff or result. No signed match events means no match story."
+    },
+    { "at": 1782418500000, "actor": "fan_a", "type": "reaction", "item": "jo-no-invention", "emoji": "👏" },
+    {
+      "at": 1782418560000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "fixture-disposition",
+      "question": "What should FullTime show for this scheduled listing?",
+      "options": [
+        { "key": "scheduled", "label": "Scheduled, no result" },
+        { "key": "hide", "label": "Hide it" },
+        { "key": "guess", "label": "Guess a result" }
+      ]
+    },
+    { "at": 1782418565000, "actor": "fan_a", "type": "vote", "poll": "fixture-disposition", "option": "scheduled" },
+    { "at": 1782418570000, "actor": "fan_b", "type": "vote", "poll": "fixture-disposition", "option": "scheduled" },
+    { "at": 1782418575000, "actor": "fan_c", "type": "vote", "poll": "fixture-disposition", "option": "scheduled" },
+    { "at": 1782418580000, "actor": "fan_d", "type": "vote", "poll": "fixture-disposition", "option": "scheduled" },
+    {
+      "at": 1782421200000,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "tunde-roundup-check",
+      "text": "The live roundup still says Tunisia–Netherlands and Japan–Sweden. There is no Tunisia–Switzerland play-by-play.",
+      "source": { "kind": "x-post", "postId": "2070205109628526643", "url": "https://x.com/dogeofficialceo/status/2070205109628526643" }
+    },
+    {
+      "at": 1782421260000,
+      "actor": "fan_c",
+      "type": "reply",
+      "item": "tunde-roundup-check",
+      "text": "Good. The honest receipt here is that nobody pretended the empty event stream was a played match."
+    },
+    { "at": 1782421320000, "actor": "fan_a", "type": "reaction", "item": "tunde-roundup-check", "emoji": "👏" }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588400-tunisia-vs-switzerland/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588400-tunisia-vs-switzerland",
+    "provenance": "../resources/fixtures/world-cup-2026/fixtures.snapshot.json.provenance.json",
+    "socialSources": [
+      "https://x.com/TrueGemHunter/status/2069888305349480802",
+      "https://x.com/punctae/status/2069893733684838517",
+      "https://x.com/dogeofficialceo/status/2070205109628526643"
+    ],
+    "sourcePolicy": "The SHA-256-verified authenticated fixture snapshot proves only the scheduled Tunisia–Switzerland catalogue entry. Its score snapshot and historical SSE are provenance-valid but empty. The room therefore contains sourced pre-match data-integrity discussion, no canonical calls, no live events, no score, and no invented post-match outcome."
+  }
+}

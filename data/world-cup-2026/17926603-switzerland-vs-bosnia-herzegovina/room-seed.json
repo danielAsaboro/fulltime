@@ -1,0 +1,376 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17926603",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781804700000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1781804700000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1781804760000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1781804820000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1781804880000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1781805600000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “\"I'll cover my first World Cup on Thurs. when Switzerland and Bosnia and Herzegovina meet at noon in Inglewood. Group B (incl. Qatar and Canada) is wide open.\"”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067395657812619730",
+        "url": "https://x.com/i/status/2067395657812619730",
+        "observedAt": "2026-06-17 23:55"
+      }
+    },
+    {
+      "at": 1781805660000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Switzerland may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1781805900000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Betting tips link: Switzerland vs Bosnia & Herzegovina 2026 World Cup”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067393678063071424",
+        "url": "https://x.com/i/status/2067393678063071424",
+        "observedAt": "2026-06-17 23:47"
+      }
+    },
+    {
+      "at": 1781805930000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781806020000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Switzerland, Bosnia & Herzegovina, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1781806500000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Switzerland or Bosnia & Herzegovina?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Switzerland"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Bosnia & Herzegovina"
+        }
+      ]
+    },
+    {
+      "at": 1781806506000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781806512000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1781806518000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781806524000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1781809212244,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17926603:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1781809207244,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781809217244,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17926603:17:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1781809207244,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781809222244,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17926603:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1781809207244,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781812179447,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “\"FT: Switzerland 4-1 Bosnia & Herzegovina… all five late goals / red card narrative\"”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067758809293246593",
+        "url": "https://x.com/i/status/2067758809293246593",
+        "observedAt": "2026-06-18 23:58"
+      }
+    },
+    {
+      "at": 1781812214447,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Switzerland 0-0 Bosnia & Herzegovina. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 539,
+        "sourceTs": 1781812209447,
+        "action": "halftime_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1781812219447,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1781814871624,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "95' GOAL — Switzerland. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 845,
+        "sourceTs": 1781814866624,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1781814876624,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781814881624,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1781815456753,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "105' GOAL — Switzerland. 2-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 945,
+        "sourceTs": 1781815451753,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1781815461753,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781815795211,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "110' GOAL — Switzerland. 3-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1000,
+        "sourceTs": 1781815790211,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "3-0"
+      }
+    },
+    {
+      "at": 1781815800211,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781815975853,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "goal-4",
+      "text": "113' GOAL — Bosnia & Herzegovina. 3-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1025,
+        "sourceTs": 1781815970853,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "3-1"
+      }
+    },
+    {
+      "at": 1781815980853,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "goal-4",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781816450953,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Switzerland 4-1 Bosnia & Herzegovina. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1062,
+        "sourceTs": 1781816445953,
+        "action": "game_finalised",
+        "score": "4-1"
+      }
+    },
+    {
+      "at": 1781816455953,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1781816465953,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 4-1. No scrollback archaeology required."
+    },
+    {
+      "at": 1781816475953,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Vargas game-changer off bench at 0-0; goal + assist in 4-1”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068099338228682889",
+        "url": "https://x.com/i/status/2068099338228682889",
+        "observedAt": "2026-06-19 22:31"
+      }
+    },
+    {
+      "at": 1781816480953,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17926603-switzerland-vs-bosnia-herzegovina/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17926603-switzerland-vs-bosnia-herzegovina/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17926603-switzerland-vs-bosnia-herzegovina/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/i/status/2067395657812619730",
+      "https://x.com/i/status/2067393678063071424",
+      "https://x.com/i/status/2067379067125748012",
+      "https://x.com/i/status/2067392846567756104",
+      "https://x.com/i/status/2067758809293246593",
+      "https://x.com/i/status/2067756882157047914",
+      "https://x.com/i/status/2067756008588632307",
+      "https://x.com/i/status/2067753452407779444",
+      "https://x.com/i/status/2067759025085923648",
+      "https://x.com/i/status/2067758525955387824",
+      "https://x.com/i/status/2067757569074995420",
+      "https://x.com/i/status/2068099338228682889"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 4-1 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

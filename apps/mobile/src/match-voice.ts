@@ -108,6 +108,7 @@ export function boothClipsForReleasedEvent(input: {
     "red-card": "red card",
     "second-yellow": "red card",
     "half-time": "half-time",
+    "end-of-regulation": "end of regulation",
     "full-time": "full-time",
     kickoff: "kickoff",
     "second-half-start": "second half",

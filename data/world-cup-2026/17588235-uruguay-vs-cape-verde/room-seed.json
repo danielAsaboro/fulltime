@@ -1,0 +1,376 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588235",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782074700000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782074700000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782074760000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782074820000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782074880000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782075600000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Cape Verde head into second WC game vs Uruguay in Miami full of belief after holding Spain 0-0; Bubista diaspora squad, Vozinha story”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068483281889190262",
+        "url": "https://x.com/AfricaisHOME2/status/2068483281889190262",
+        "observedAt": "2026-06-20 23:56"
+      }
+    },
+    {
+      "at": 1782075660000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Uruguay may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782075900000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “WORLD CUP PREDICTIONS… 🇺🇾 Uruguay 3-0 🇨🇻 Cape Verde”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068482729016995884",
+        "url": "https://x.com/1000xgirl/status/2068482729016995884",
+        "observedAt": "2026-06-20 23:54"
+      }
+    },
+    {
+      "at": 1782075930000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782076020000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Uruguay, Cape Verde, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782076500000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Uruguay or Cape Verde?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Uruguay"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Cape Verde"
+        }
+      ]
+    },
+    {
+      "at": 1782076506000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782076512000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782076518000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782076524000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782079247299,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588235:19:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 19,
+        "sourceTs": 1782079242299,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782079252299,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588235:19:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 19,
+        "sourceTs": 1782079242299,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782079257299,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588235:19:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 19,
+        "sourceTs": 1782079242299,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782080559639,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "22' GOAL — Cape Verde. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 234,
+        "sourceTs": 1782080554639,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782080564639,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782080569639,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1782081938213,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "45' GOAL — Uruguay. 1-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 429,
+        "sourceTs": 1782081933213,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Head",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1782081943213,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782082322257,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "52' GOAL — Uruguay. 2-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 474,
+        "sourceTs": 1782082317257,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "2-1"
+      }
+    },
+    {
+      "at": 1782082327257,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782082468443,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Cape Verde approaching Uruguay box; commentators thought Cabo scored but Uruguay shot”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068846410141679729",
+        "url": "https://x.com/djunlockedfr/status/2068846410141679729",
+        "observedAt": "2026-06-21 23:59"
+      }
+    },
+    {
+      "at": 1782082503443,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Uruguay 2-1 Cape Verde. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 499,
+        "sourceTs": 1782082498443,
+        "action": "halftime_finalised",
+        "score": "2-1"
+      }
+    },
+    {
+      "at": 1782082508443,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782084447813,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "goal-4",
+      "text": "87' GOAL — Cape Verde. 2-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 656,
+        "sourceTs": 1782084442813,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "2-2"
+      }
+    },
+    {
+      "at": 1782084452813,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "goal-4",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782086871956,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Uruguay 2-2 Cape Verde. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1004,
+        "sourceTs": 1782086866956,
+        "action": "game_finalised",
+        "score": "2-2"
+      }
+    },
+    {
+      "at": 1782086876956,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782086886956,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 2-2. No scrollback archaeology required."
+    },
+    {
+      "at": 1782086896956,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Cape Verde produce another WC shock as Varela strike seals Uruguay draw (Guardian)”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069200616321077311",
+        "url": "https://x.com/EmiKevin/status/2069200616321077311",
+        "observedAt": "2026-06-22 23:27"
+      }
+    },
+    {
+      "at": 1782086901956,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588235-uruguay-vs-cape-verde/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588235-uruguay-vs-cape-verde/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588235-uruguay-vs-cape-verde/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/AfricaisHOME2/status/2068483281889190262",
+      "https://x.com/i/status/2068483281889190262",
+      "https://x.com/1000xgirl/status/2068482729016995884",
+      "https://x.com/i/status/2068482729016995884",
+      "https://x.com/PoedeFallar/status/2068482050915467407",
+      "https://x.com/i/status/2068482050915467407",
+      "https://x.com/whalebettors/status/2068481751215931615",
+      "https://x.com/i/status/2068481751215931615",
+      "https://x.com/ikecosmas/status/2068481062578143554",
+      "https://x.com/i/status/2068481062578143554",
+      "https://x.com/Bopel2Official/status/2068480547207467132",
+      "https://x.com/i/status/2068480547207467132"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 2-2 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

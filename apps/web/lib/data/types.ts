@@ -93,6 +93,11 @@ export interface TextMessage extends RoomFeedItemBase {
   kind: "text";
   messageId: MessageId;
   text: string;
+  quote?: {
+    itemId: RoomItemId;
+    text: string;
+    author: RoomItemAuthor;
+  };
   attachment?: RoomAttachment;
 }
 
@@ -423,6 +428,7 @@ export interface CreateRoomInput {
 
 export interface SendMessageInput {
   text: string;
+  quotedItemId?: string;
 }
 
 export interface CreatePollInput {

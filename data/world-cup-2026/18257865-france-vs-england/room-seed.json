@@ -1,0 +1,275 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "18257865",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1784403000000
+  },
+  "personas": [
+    { "id": "fan_a", "displayName": "Amina", "joinedAt": 1784403000000, "creator": true },
+    { "id": "fan_b", "displayName": "Tunde", "joinedAt": 1784403060000 },
+    { "id": "fan_c", "displayName": "Maya", "joinedAt": 1784403120000 },
+    { "id": "fan_d", "displayName": "Jo", "joinedAt": 1784403180000 }
+  ],
+  "actions": [
+    {
+      "at": 1784403300000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-france-two-one",
+      "text": "Both back lines are compromised, but France still score more and hold the recent head-to-head. France 2-1, low confidence.",
+      "source": { "kind": "workspace-prediction-dialogue", "file": "resources/repo/WC2026/predictions/2026-07-18/FRA-vs-ENG/dialogue.md", "turn": 11 }
+    },
+    {
+      "at": 1784403360000,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "tunde-england-two-one",
+      "text": "England want a first World Cup bronze and France are still carrying Spain. England 2-1, Bellingham scores.",
+      "source": { "kind": "workspace-prediction-dialogue", "file": "resources/repo/WC2026/predictions/2026-07-18/FRA-vs-ENG/dialogue.md", "turn": 12 }
+    },
+    {
+      "at": 1784403420000,
+      "actor": "fan_c",
+      "type": "reply",
+      "item": "tunde-england-two-one",
+      "text": "Both of you saw broken defences and somehow stopped counting at three goals."
+    },
+    {
+      "at": 1784403480000,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "jo-chaos-call",
+      "text": "Third-place games are chaos. I have England 3-2 and even that feels conservative."
+    },
+    { "at": 1784403510000, "actor": "fan_a", "type": "reaction", "item": "jo-chaos-call", "emoji": "🔥" },
+    {
+      "at": 1784403540000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-saliba-warning",
+      "text": "Saliba is out again. The exact condition behind France's only defensive collapse has returned against England's 14-goal attack.",
+      "source": { "kind": "workspace-prediction-dialogue", "file": "resources/repo/WC2026/predictions/2026-07-18/FRA-vs-ENG/dialogue.md", "turn": 4 }
+    },
+    {
+      "at": 1784403600000,
+      "actor": "fan_d",
+      "type": "poll",
+      "key": "bronze-winner",
+      "question": "Who takes World Cup bronze?",
+      "options": [
+        { "key": "france", "label": "France" },
+        { "key": "england", "label": "England" },
+        { "key": "draw90", "label": "Level after 90" }
+      ]
+    },
+    { "at": 1784403605000, "actor": "fan_a", "type": "vote", "poll": "bronze-winner", "option": "france" },
+    { "at": 1784403610000, "actor": "fan_b", "type": "vote", "poll": "bronze-winner", "option": "england" },
+    { "at": 1784403615000, "actor": "fan_c", "type": "vote", "poll": "bronze-winner", "option": "england" },
+    { "at": 1784403620000, "actor": "fan_d", "type": "vote", "poll": "bronze-winner", "option": "draw90" },
+    {
+      "at": 1784408423751,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-first-goal-france",
+      "callId": "call:18257865:16:phase:kickoff:first-goal",
+      "option": "home",
+      "source": { "kind": "archive-event", "sequence": 16, "sourceTs": 1784408413751, "action": "kickoff" }
+    },
+    {
+      "at": 1784408428751,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-first-goal-england",
+      "callId": "call:18257865:16:phase:kickoff:first-goal",
+      "option": "away",
+      "source": { "kind": "archive-event", "sequence": 16, "sourceTs": 1784408413751, "action": "kickoff" }
+    },
+    {
+      "at": 1784408635197,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "england-first-goal",
+      "text": "3' ENGLAND. First attack, first goal, first receipt.",
+      "source": { "kind": "archive-event", "sequence": 52, "sourceTs": 1784408630197, "action": "goal", "participant": 2, "clockSeconds": 171, "score": "0-1" }
+    },
+    {
+      "at": 1784408640197,
+      "actor": "fan_b",
+      "type": "quote",
+      "key": "tunde-first-goal-receipt",
+      "item": "tunde-england-two-one",
+      "text": "Bellingham later. England first now."
+    },
+    { "at": 1784408645197, "actor": "fan_c", "type": "reaction", "item": "tunde-first-goal-receipt", "emoji": "👏" },
+    {
+      "at": 1784409565602,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "england-second-goal",
+      "text": "18' England again. 0-2. Jo's supposedly wild 3-2 is already looking timid.",
+      "source": { "kind": "archive-event", "sequence": 251, "sourceTs": 1784409560602, "action": "goal", "participant": 2, "clockSeconds": 1079, "score": "0-2" }
+    },
+    {
+      "at": 1784410688800,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "england-third-goal",
+      "text": "37' VAR, then the goal stands. France 0-3 England. This is no longer a bronze match; it is a live autopsy.",
+      "source": { "kind": "archive-event", "sequence": 457, "sourceTs": 1784410683800, "action": "goal", "participant": 2, "clockSeconds": 2218, "score": "0-3" }
+    },
+    { "at": 1784410693800, "actor": "fan_a", "type": "reaction", "item": "england-third-goal", "emoji": "😮" },
+    {
+      "at": 1784411262795,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "england-fourth-goal",
+      "text": "45' FOUR. England are 4-0 up before the interval. Delete every sensible prediction.",
+      "source": { "kind": "archive-event", "sequence": 575, "sourceTs": 1784411257795, "action": "goal", "participant": 2, "clockSeconds": 2734, "score": "0-4" }
+    },
+    {
+      "at": 1784411401216,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "amina-halftime-wrong",
+      "item": "amina-france-two-one",
+      "text": "Half-time 0-4. I correctly identified the broken defences and then predicted one England goal."
+    },
+    {
+      "at": 1784411406216,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-next-goal-france",
+      "callId": "call:18257865:601:phase:half-time:next-goal-second-half",
+      "option": "home",
+      "source": { "kind": "archive-event", "sequence": 601, "sourceTs": 1784411396216, "action": "half-time", "score": "0-4" }
+    },
+    {
+      "at": 1784411411216,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-next-goal-england",
+      "callId": "call:18257865:601:phase:half-time:next-goal-second-half",
+      "option": "away",
+      "source": { "kind": "archive-event", "sequence": 601, "sourceTs": 1784411396216, "action": "half-time", "score": "0-4" }
+    },
+    {
+      "at": 1784412691262,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "france-first-goal",
+      "text": "48' France pull one back. 1-4, and the half-time next-goal receipt belongs to Amina.",
+      "source": { "kind": "archive-event", "sequence": 653, "sourceTs": 1784412686262, "action": "goal", "participant": 1, "clockSeconds": 2878, "score": "1-4" }
+    },
+    {
+      "at": 1784412696262,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "amina-next-goal-receipt",
+      "item": "amina-halftime-wrong",
+      "text": "Not a comeback yet. But the next goal was blue."
+    },
+    {
+      "at": 1784413071722,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "france-second-goal",
+      "text": "54' France again. 2-4. Nobody is allowed to call this game finished.",
+      "source": { "kind": "archive-event", "sequence": 737, "sourceTs": 1784413066722, "action": "goal", "participant": 1, "clockSeconds": 3223, "score": "2-4" }
+    },
+    {
+      "at": 1784413807844,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "france-third-goal",
+      "text": "66' 3-4. France were dead at half-time and now England are defending a one-goal lead with twenty-five minutes left.",
+      "source": { "kind": "archive-event", "sequence": 896, "sourceTs": 1784413802844, "action": "goal", "participant": 1, "clockSeconds": 3945, "score": "3-4" }
+    },
+    { "at": 1784413812844, "actor": "fan_b", "type": "reaction", "item": "france-third-goal", "emoji": "🔥" },
+    {
+      "at": 1784415067186,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "england-penalty-fifth",
+      "text": "87' England score the penalty. 3-5. The comeback breathes out.",
+      "source": { "kind": "archive-event", "sequence": 1061, "sourceTs": 1784415062186, "action": "penalty_outcome", "outcome": "Scored", "participant": 2, "clockSeconds": 5193, "score": "3-5" }
+    },
+    {
+      "at": 1784415072186,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-another-goal-yes",
+      "callId": "call:18257865:1061:penalty-scored:another-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 1061, "sourceTs": 1784415062186, "action": "penalty-scored" }
+    },
+    {
+      "at": 1784415077186,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-another-goal-no",
+      "callId": "call:18257865:1061:penalty-scored:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 1061, "sourceTs": 1784415062186, "action": "penalty-scored" }
+    },
+    {
+      "at": 1784415572104,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "france-fourth-goal",
+      "text": "96' France make it 4-5. Ten minutes ago 'another goal' sounded greedy. It just settled yes.",
+      "source": { "kind": "archive-event", "sequence": 1165, "sourceTs": 1784415567104, "action": "goal", "participant": 1, "clockSeconds": 5732, "score": "4-5" }
+    },
+    {
+      "at": 1784415577104,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-another-goal-receipt",
+      "item": "france-third-goal",
+      "text": "The room said chaos. The match keeps asking how much."
+    },
+    {
+      "at": 1784415693045,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "england-sixth-goal",
+      "text": "98' ENGLAND SIX. France 4-6 England. Ten goals, because apparently nine lacked ambition.",
+      "source": { "kind": "archive-event", "sequence": 1186, "sourceTs": 1784415688045, "action": "goal", "participant": 2, "clockSeconds": 5845, "score": "4-6" }
+    },
+    {
+      "at": 1784415707961,
+      "actor": "fan_b",
+      "type": "quote",
+      "key": "tunde-england-receipt",
+      "item": "tunde-england-two-one",
+      "text": "Winner right. Bellingham right. Scoreline short by seven goals. England take bronze, 6-4."
+    },
+    {
+      "at": 1784415712961,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "amina-chaos-recap",
+      "item": "amina-france-two-one",
+      "text": "I saw the mechanism and ignored the consequence. Two broken defences gave us ten goals."
+    },
+    { "at": 1784415717961, "actor": "fan_d", "type": "reaction", "item": "tunde-england-receipt", "emoji": "👏" },
+    { "at": 1784415722961, "actor": "fan_c", "type": "reaction", "item": "amina-chaos-recap", "emoji": "⚽" },
+    {
+      "at": 1784416019839,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "tunde-england-receipt",
+      "text": "The feed has finalised it: France 4-6 England. Bronze and every receipt secured.",
+      "source": { "kind": "archive-event", "sequence": 1195, "sourceTs": 1784416014839, "action": "game_finalised", "score": "4-6" }
+    }
+  ],
+  "evidence": {
+    "fixture": "archive/fixture.json",
+    "archive": "archive/scores.historical.sse",
+    "provenance": "archive/provenance.json",
+    "predictionDialogue": "../../../../resources/repo/WC2026/predictions/2026-07-18/FRA-vs-ENG/dialogue.md",
+    "predictionRecap": "../../../../resources/repo/WC2026/predictions/2026-07-18/FRA-vs-ENG/recap.md",
+    "sourcePolicy": "The authenticated TxLINE archive is authoritative for kickoff, participant sides, phase transitions, confirmed incidents, and the 4-6 terminal score. It proves England's four first-half goals, France's three-goal second-half comeback, England's scored penalty, and the two stoppage-time goals. Pre-match and post-match football arguments are concise restagings of the cited workspace prediction dialogue and recap. Showcase personas are disclosed fictional participants. Real archive gaps remain preserved and only calls with total signed settlements are seeded."
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17926696",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781217000000
+  },
+  "personas": [
+    { "id": "fan_a", "displayName": "Amina", "joinedAt": 1781217000000, "creator": true },
+    { "id": "fan_b", "displayName": "Tunde", "joinedAt": 1781217120000 },
+    { "id": "fan_c", "displayName": "Maya", "joinedAt": 1781217240000 },
+    { "id": "fan_d", "displayName": "Jo", "joinedAt": 1781217360000 }
+  ],
+  "actions": [
+    {
+      "at": 1781221885000,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "jo-stay-up",
+      "text": "Nearly 2am and Korea–Czechia is not going to watch itself.",
+      "source": { "kind": "x-post", "postId": "2065220390368993324", "url": "https://x.com/drealbigvirg/status/2065220390368993324" }
+    },
+    {
+      "at": 1781221977000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-korea-call",
+      "text": "Son starts and the model has Korea at 74%. Korea win. Lock it.",
+      "source": { "kind": "x-post", "postId": "2065220777490751564", "url": "https://x.com/alea_vici/status/2065220777490751564" }
+    },
+    {
+      "at": 1781221987000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-korea-call",
+      "text": "The model gives Czechia ten percent. That is exactly why I am nervous."
+    },
+    { "at": 1781221997000, "actor": "fan_d", "type": "reaction", "item": "amina-korea-call", "emoji": "🔥" },
+    {
+      "at": 1781222028000,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "tunde-czech-dnb",
+      "text": "Czech draw-no-bet. Both sides need the points and this stays tight.",
+      "source": { "kind": "x-post", "postId": "2065220988355108876", "url": "https://x.com/G9_Locks/status/2065220988355108876" }
+    },
+    {
+      "at": 1781222237000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-one-one",
+      "text": "I have 1-1 on the card. Bookmark it before anyone gets clever.",
+      "source": { "kind": "x-post", "postId": "2065221866302709793", "url": "https://x.com/marmoushEra/status/2065221866302709793" }
+    },
+    { "at": 1781222247000, "actor": "fan_a", "type": "reaction", "item": "maya-one-one", "emoji": "😮" },
+    {
+      "at": 1781222361000,
+      "actor": "fan_d",
+      "type": "poll",
+      "key": "guadalajara-winner",
+      "question": "Who takes the points in Guadalajara?",
+      "options": [
+        { "key": "korea", "label": "South Korea" },
+        { "key": "czechia", "label": "Czechia" },
+        { "key": "draw", "label": "Draw" }
+      ],
+      "source": { "kind": "x-post", "postId": "2065222385326809107", "url": "https://x.com/Centerball_X/status/2065222385326809107" }
+    },
+    { "at": 1781222370000, "actor": "fan_a", "type": "vote", "poll": "guadalajara-winner", "option": "korea" },
+    { "at": 1781222375000, "actor": "fan_b", "type": "vote", "poll": "guadalajara-winner", "option": "czechia" },
+    { "at": 1781222380000, "actor": "fan_c", "type": "vote", "poll": "guadalajara-winner", "option": "draw" },
+    { "at": 1781222385000, "actor": "fan_d", "type": "vote", "poll": "guadalajara-winner", "option": "korea" },
+    {
+      "at": 1781232553471,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-second-half-fast-start-no",
+      "callId": "call:17926696:463:phase:half-time:second-half-fast-start",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 463, "sourceTs": 1781232543471, "action": "half-time" }
+    },
+    {
+      "at": 1781232558471,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-second-half-fast-start-yes",
+      "callId": "call:17926696:463:phase:half-time:second-half-fast-start",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 463, "sourceTs": 1781232543471, "action": "half-time" }
+    },
+    {
+      "at": 1781234326635,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "czech-opener",
+      "text": "59' KREJČÍ. Czechia lead. Ten-percent team, apparently.",
+      "source": { "kind": "archive-event", "sequence": 604, "sourceTs": 1781234321635, "action": "goal", "participant": 2, "clockSeconds": 3493 }
+    },
+    {
+      "at": 1781234336635,
+      "actor": "fan_b",
+      "type": "quote",
+      "key": "tunde-model-gotcha",
+      "item": "amina-korea-call",
+      "text": "How is that 74% looking now?"
+    },
+    { "at": 1781234346635, "actor": "fan_c", "type": "reaction", "item": "tunde-model-gotcha", "emoji": "🔥" },
+    {
+      "at": 1781234842506,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "hwang-equaliser",
+      "text": "67' HWANG IN-BEOM. 1-1. We are back.",
+      "source": { "kind": "archive-event", "sequence": 672, "sourceTs": 1781234837506, "action": "goal", "participant": 1, "clockSeconds": 4007 }
+    },
+    { "at": 1781234852506, "actor": "fan_d", "type": "reaction", "item": "hwang-equaliser", "emoji": "⚽" },
+    {
+      "at": 1781235362760,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "czech-disallowed",
+      "text": "Czechia score at 1-1 and it is chalked off. This match is cruel.",
+      "source": { "kind": "archive-event", "sequence": 717, "sourceTs": 1781235357760, "action": "goal", "participant": 2, "clockSeconds": 4613, "confirmed": false }
+    },
+    {
+      "at": 1781235372760,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "czech-disallowed",
+      "text": "If Korea score next, I am turning this off."
+    },
+    {
+      "at": 1781235570980,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "oh-winner",
+      "text": "80' OH HYEON-GYU. Korea 2-1. The stay-up crew has been rewarded.",
+      "source": { "kind": "archive-event", "sequence": 748, "sourceTs": 1781235565980, "action": "goal", "participant": 1, "clockSeconds": 4766 }
+    },
+    { "at": 1781235580980, "actor": "fan_a", "type": "reaction", "item": "oh-winner", "emoji": "🔥" },
+    {
+      "at": 1781236783281,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "amina-korea-receipt",
+      "item": "amina-korea-call",
+      "text": "Korea win, 2-1. The model survives the group chat.",
+      "source": { "kind": "archive-event", "sequence": 919, "sourceTs": 1781236778281, "action": "game_finalised", "score": "2-1" }
+    },
+    {
+      "at": 1781236793281,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-draw-miss",
+      "item": "maya-one-one",
+      "text": "My 1-1 lasted thirteen minutes. I accept the miss."
+    },
+    { "at": 1781236803281, "actor": "fan_b", "type": "reaction", "item": "maya-draw-miss", "emoji": "😮" },
+    {
+      "at": 1781308457000,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "thirteen-percent",
+      "text": "Only 13% nailed 2-1. Everyone else suddenly remembers having it.",
+      "source": { "kind": "x-post", "postId": "2065583500028248525", "url": "https://x.com/kicklineapp/status/2065583500028248525" }
+    },
+    {
+      "at": 1781386472000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "asia-europe",
+      "text": "Korea beat Czechia, Qatar held Switzerland. Asia are making this interesting.",
+      "source": { "kind": "x-post", "postId": "2065910719129034917", "url": "https://x.com/rizkimuhadi/status/2065910719129034917" }
+    }
+  ],
+  "evidence": {
+    "fixture": "../../../../resources/fixtures/world-cup-2026/17926696-south-korea-vs-czech-republic/fixture.json",
+    "archive": "../../../../resources/fixtures/world-cup-2026/17926696-south-korea-vs-czech-republic/scores.historical-intervals.json",
+    "conversation": "../../../../resources/fixtures/world-cup-2026/17926696-south-korea-vs-czech-republic/conversation-weave.json",
+    "sourcePolicy": "Archive event timestamps, confirmation state, participant identities, and terminal score remain authoritative. X-derived language is restaged into the four disclosed showcase personas and retains its source reference only in this seed file."
+  }
+}

@@ -1,0 +1,353 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588398",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782333960000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782333960000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782334020000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782334080000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782334140000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782334860000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “🇧🇷🏴󠁧󠁢󠁳󠁣󠁴󠁿 Bringing back the World Cup giveaways… Predict the score of Brazil vs Scotland… Can Neymar live up to his past? 👀”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069569313611083833",
+        "url": "https://x.com/GoGoGoldWin/status/2069569313611083833",
+        "observedAt": "2026-06-23 23:52"
+      }
+    },
+    {
+      "at": 1782334920000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Scotland may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782335160000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Scotland vs. Brazil #WorldCup Match Preview”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069564591730725055",
+        "url": "https://x.com/_TJKC_/status/2069564591730725055",
+        "observedAt": "2026-06-23 23:33"
+      }
+    },
+    {
+      "at": 1782335190000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782335280000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Scotland, Brazil, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782335760000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Scotland or Brazil?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Scotland"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Brazil"
+        }
+      ]
+    },
+    {
+      "at": 1782335766000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782335772000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782335778000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782335784000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782338482583,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588398:19:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 19,
+        "sourceTs": 1782338477583,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782338487583,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588398:19:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 19,
+        "sourceTs": 1782338477583,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782338492583,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588398:19:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 19,
+        "sourceTs": 1782338477583,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782338979729,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "9' GOAL — Brazil. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 98,
+        "sourceTs": 1782338974729,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782338984729,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782338989729,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "Inside ten minutes. The opening-goal yes receipts land immediately."
+    },
+    {
+      "at": 1782341444896,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "50' GOAL — Brazil. 0-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 446,
+        "sourceTs": 1782341439896,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Head",
+        "score": "0-2"
+      }
+    },
+    {
+      "at": 1782341449896,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782341732828,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Matheus Cunha is on fire at the World Cup! 🔥 ⚽⚽ vs Haiti ⚽ vs Scotland Brazil may have finally found their No. 9. 💥🇧🇷”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069933552787984803",
+        "url": "https://x.com/sportsislife77/status/2069933552787984803",
+        "observedAt": "2026-06-24 23:59"
+      }
+    },
+    {
+      "at": 1782341767828,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Scotland 0-2 Brazil. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 482,
+        "sourceTs": 1782341762828,
+        "action": "halftime_finalised",
+        "score": "0-2"
+      }
+    },
+    {
+      "at": 1782341772828,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782343615666,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "86' GOAL — Brazil. 0-3. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 653,
+        "sourceTs": 1782343610666,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-3"
+      }
+    },
+    {
+      "at": 1782343620666,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782347022597,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Scotland 0-3 Brazil. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 980,
+        "sourceTs": 1782347017597,
+        "action": "game_finalised",
+        "score": "0-3"
+      }
+    },
+    {
+      "at": 1782347027597,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782347037597,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 0-3. No scrollback archaeology required."
+    },
+    {
+      "at": 1782347047597,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “🇧🇷 Brazil v 🏴󠁧󠁢󠁳󠁣󠁴󠁿Scotland — Vicious Vinícius Sparks Brazil’s Dominant 3-0 Win as Scotland’s Knockout Hopes Hang by a Thread… Hard Rock Stadium Miami”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070294903620297170",
+        "url": "https://x.com/Pztidnt11/status/2070294903620297170",
+        "observedAt": "2026-06-25 23:55"
+      }
+    },
+    {
+      "at": 1782347052597,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588398-scotland-vs-brazil/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588398-scotland-vs-brazil/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588398-scotland-vs-brazil/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/GoGoGoldWin/status/2069569313611083833",
+      "https://x.com/i/status/2069569313611083833",
+      "https://x.com/_TJKC_/status/2069564591730725055",
+      "https://x.com/i/status/2069564591730725055",
+      "https://x.com/FitbaFocus/status/2069557994199580931",
+      "https://x.com/i/status/2069557994199580931",
+      "https://x.com/Sanity829873/status/2069545040708264413",
+      "https://x.com/i/status/2069545040708264413",
+      "https://x.com/zachh_1010/status/2069569129388917229",
+      "https://x.com/i/status/2069569129388917229",
+      "https://x.com/sportsislife77/status/2069933552787984803",
+      "https://x.com/i/status/2069933552787984803"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 0-3 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

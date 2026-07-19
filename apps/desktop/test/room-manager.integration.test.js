@@ -28,6 +28,7 @@ test('three encrypted room peers pair, replicate chat, replies, reactions, polls
   const thirdDeviceSecret = crypto.randomBytes(32)
   const offlineDeviceSecret = crypto.randomBytes(32)
   const lateDeviceSecret = crypto.randomBytes(32)
+  const interruptedDeviceSecret = crypto.randomBytes(32)
   const testnet = await createTestnet(3, { host: '127.0.0.1' })
   const fixture = {
     id: 'fixture-1',
@@ -67,6 +68,7 @@ test('three encrypted room peers pair, replicate chat, replies, reactions, polls
   let restartedCreator = null
   let offlineMember = null
   let lateMember = null
+  let interruptedMember = null
   creator.on('event', (event) => {
     if (event.type === 'room.error') console.error('[creator room error]', event)
   })
@@ -339,7 +341,7 @@ test('three encrypted room peers pair, replicate chat, replies, reactions, polls
     try {
       await waitFor(async () => {
         try {
-          const restartedRoom = restartedCreator.requireRoom(details.room.id)
+          const restartedRoom = await restartedCreator.ensureRoom(details.room.id)
           await restartedRoom.base.update()
           await restartedRoom.base.ack()
           await offlineMember.requireRoom(details.room.id).base.update()
@@ -379,6 +381,37 @@ test('three encrypted room peers pair, replicate chat, replies, reactions, polls
     const lateJoin = await lateMember.dispatch('room.join', { code: regenerated.code })
     assert.equal(lateJoin.room.id, details.room.id)
 
+    // Reproduce a process interruption after the encrypted namespace and
+    // writer admission exist but before the account room catalog survives.
+    // A retry must authenticate through Blind Pairing with that same writer;
+    // it must neither erase the namespace nor invent a local room record.
+    interruptedMember = new RoomManager({
+      storagePath: path.join(root, 'interrupted-member'),
+      displayName: 'Interrupted member',
+      fixtureFeedKey: publisher.key,
+      deviceSecret: interruptedDeviceSecret,
+      bootstrap: testnet.bootstrap
+    })
+    await interruptedMember.open()
+    await waitFor(async () => Boolean(await interruptedMember.dispatch('fixture.get', { fixtureId: fixture.id })), 'interrupted member fixture verification')
+    const interruptedJoin = await interruptedMember.dispatch('room.join', { code: regenerated.code })
+    assert.equal(interruptedJoin.room.id, details.room.id)
+    await interruptedMember.suspendRoom(details.room.id)
+    await interruptedMember.account.db.del(`room/${details.room.id}`)
+    await interruptedMember.close()
+    interruptedMember = new RoomManager({
+      storagePath: path.join(root, 'interrupted-member'),
+      displayName: 'Ignored on interrupted restart',
+      fixtureFeedKey: publisher.key,
+      deviceSecret: interruptedDeviceSecret,
+      bootstrap: testnet.bootstrap
+    })
+    await interruptedMember.open()
+    assert.equal((await interruptedMember.dispatch('room.list', null)).length, 0)
+    const recoveredInterruptedJoin = await interruptedMember.dispatch('room.join', { code: regenerated.code })
+    assert.equal(recoveredInterruptedJoin.room.id, details.room.id)
+    assert.equal((await interruptedMember.dispatch('room.list', null)).length, 1)
+
     const lateSession = await lateMember.dispatch('session.get', null)
     let admittedMemberIds = []
     try {
@@ -417,7 +450,12 @@ test('three encrypted room peers pair, replicate chat, replies, reactions, polls
         roomId: details.room.id,
         input: { text: 'should not append' }
       }),
-      /write access/i
+      /write access|applying the room change/i
+    )
+    assert.equal(
+      (await restartedCreator.dispatch('room.state', { roomId: details.room.id })).items
+        .some((item) => item.kind === 'text' && item.text === 'should not append'),
+      false
     )
 
     const restored = await restartedCreator.dispatch('room.state', { roomId: details.room.id })
@@ -435,7 +473,8 @@ test('three encrypted room peers pair, replicate chat, replies, reactions, polls
       third.close(),
       restartedCreator?.close(),
       offlineMember?.close(),
-      lateMember?.close()
+      lateMember?.close(),
+      interruptedMember?.close()
     ])
     await publisher.close()
     await testnet.destroy().catch(() => {})
@@ -445,6 +484,7 @@ test('three encrypted room peers pair, replicate chat, replies, reactions, polls
     thirdDeviceSecret.fill(0)
     offlineDeviceSecret.fill(0)
     lateDeviceSecret.fill(0)
+    interruptedDeviceSecret.fill(0)
   }
 })
 

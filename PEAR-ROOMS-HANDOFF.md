@@ -707,10 +707,14 @@ Final verification after these changes:
   `FULLTIME_ANDROID_DOWNLOAD_URL`; malformed, non-HTTPS, or credential-bearing URLs fail the
   production build instead of producing an unsafe link.
 - The GitHub repository is public, and desktop/mobile consumer release configs now pin the live
-  authority documented below. The verified beta artifacts are published at
-  `https://github.com/danielAsaboro/fulltime/releases/tag/v0.1.0-beta.1`; the website defaults to
-  those exact macOS and Android assets and links iPhone users to the real Xcode source-build path.
-  The local-development APK remains outside that release boundary.
+  authority documented below. The current verified artifacts are published at
+  `https://github.com/danielAsaboro/fulltime/releases/tag/v0.1.0-beta.3`; the Vercel production site
+  at `https://www.usefulltime.xyz/` renders those exact macOS and Android asset URLs and links iPhone
+  users to the real Xcode source-build path. The beta.3 GitHub asset digests match
+  `release/SHA256SUMS`: macOS
+  `d11ef268c2f850ccbc8d4ffe80a231b2e59f45769d01c78ab723ed7d0a66ba4d`, Android
+  `07a2125f0bcac4fb06c3eaa527d080c3e206ed8b460853df382cb117110a5643`. The
+  local-development APK remains outside that release boundary.
 
 ### Live release authority
 
@@ -728,3 +732,271 @@ Final verification after these changes:
 - The Android release signing identity is not stored in Git. Its root-only recovery copy is at
   `/opt/fulltime-operator/secrets/android-release/` on the DigitalOcean host. Preserve that identity
   for every direct APK update; rotating it would prevent installed copies from upgrading in place.
+
+## Authenticated World Cup showcase rooms (2026-07-19/20)
+
+- Generated showcase inputs live under `data/world-cup-2026/`; the workspace evidence under
+  `../resources/fixtures/world-cup-2026/` remains untouched. Every completed seed names its raw
+  authenticated archive and provenance and is replayed through the production fixture normalizer,
+  publisher, answer attestor, Blind Pairing admission, and encrypted Autobase room operations. The
+  personas are disclosed fictional room participants; fixture state, event time, calls, settlements,
+  and receipts are restricted to what the signed capture proves.
+- One hundred and three terminally captured fixtures now have complete chronological room seeds. Seventeen are
+  already persisted in the promotion-device ledger: the first three tournament fixtures, USA–Paraguay,
+  Qatar–Switzerland, Brazil–Morocco, Haiti–Scotland, Australia–Turkey, Germany–Curaçao,
+  Netherlands–Japan, all four quarter-finals, France–Spain's semi-final, France–England's third-place match, and
+  Spain–Argentina's final. The
+  chronological corpus is `data/world-cup-2026/showcase-corpus.json`. The final archive was fetched at
+  `2026-07-20T01:05:26.622Z`; its authenticated raw SSE contains 1,387 source records and terminal
+  `game_finalised` sequence 1385. Its SHA-256 is
+  `cd1efa51cd6f6d0b8acae88df69a14f2d32c248fa02791636ab70057c29b8e62`.
+- Spain–Argentina exposed a production normalization defect: TxLINE status 5 is end of regulation,
+  not necessarily terminal. Shared validation and the worker reducer now model `end-of-regulation`
+  separately, map signed `game_finalised`/status 100 to `full-time`, and retain later extra-time phases.
+  Archived red-card confirmations are also emitted exactly once. Production replay now proves the
+  Argentina red card, 0–0 after regulation, Spain's one confirmed 106th-minute goal, discarded
+  provisional goals, and the signed 1–0 final state without hand-authored fixture facts.
+- USA–Paraguay fixture `17588396` is the first room added during the full-corpus continuation. Its
+  provenance-valid archive contains 1,017 source records, five confirmed scoring events, and terminal
+  `game_finalised` sequence 1018 proving USA 4–1 Paraguay. The earlier schedule entry `17588394` is not
+  a played match: its provenance hashes verify, but its SSE is zero bytes and its snapshot and interval
+  captures contain zero records. It is retained as immutable evidence and excluded from room creation
+  rather than being turned into synthetic history. The USA–Paraguay seed contains 31 chronological
+  actions, four canonical call answers, sourced pre-match positions, a poll, quotes, replies,
+  reactions, archive-timed match beats, and right/wrong receipts; its real signed-fixture/attestor/
+  pairing/Autobase integration passed in 64.6 seconds.
+- Qatar–Switzerland fixture `17588308` is backed by a provenance-valid interval archive SHA-256
+  `1f3be380f325a4dc286b9b2e9b0f3cad8993a27f37284998dd375499a4345244` with 984 source records and
+  terminal `game_finalised` sequence 983. It proves Switzerland's 16th-minute penalty score state,
+  Qatar's confirmed headed equaliser at 93:59, and the 1–1 final. The room contains 31 chronological
+  actions and six answers across two settled canonical calls. Its first integration attempt correctly
+  rejected an answer submitted four seconds after the goal call's 30-second lock; all three answers
+  were moved inside the real post-confirmation window, and the full integration then passed in 95.7
+  seconds. Kickoff calls voided by preserved archive gaps are not answered or rewritten.
+- Brazil–Morocco fixture `17588386` is backed by 982 provenance-valid source records and terminal
+  `game_finalised` sequence 982. Every captured artifact hash matches its sidecar provenance. Production
+  replay proves Morocco's 20th-minute opening goal, Brazil's 31st-minute equaliser, the 1–1 half-time and
+  terminal states, and settled kickoff and half-time calls; calls voided by preserved feed gaps are omitted.
+  Its room has 32 chronological actions, seven attested answers, pre-match scoreline positions, a poll,
+  replies, quotes, supported reactions, stoppage-time pressure, and exact-result/right-wrong receipts. The
+  real signed publisher, Blind Pairing, Autobase, and answer-attestor integration passed after the room's
+  join/pre-match timestamps were aligned to its actual kickoff order.
+- Haiti–Scotland fixture `17588316` is backed by 960 provenance-valid historical records, a single
+  confirmed Scotland goal at 27:56, and terminal `game_finalised` sequence 960 proving Haiti 0–1
+  Scotland. Its seed has 36 chronological actions, nine answers across three settled canonical calls,
+  clear-favourite and exact-score positions, a poll, supporter atmosphere, Haiti's four-corner
+  second-half pressure, a socially sourced penalty grievance kept separate from fixture truth, and
+  right/wrong receipts. The real signed fixture, Blind Pairing, encrypted Autobase, and attestor
+  integration passed in 84.1 seconds.
+- Australia–Turkey fixture `17926689` is backed by 1,054 provenance-valid historical records, two
+  confirmed Australia goals, and terminal `game_finalised` sequence 1054 proving Australia 2–0
+  Turkey. The room contains 39 chronological actions and twelve attested answers across four settled
+  calls, with pre-match Turkey hype/overs positions contrasted against an exact 2–0 Australia call,
+  VAR and half-time beats, the second goal, and preserved right/wrong receipts. The real signed
+  fixture, Blind Pairing, encrypted Autobase, and attestor integration passed in 56.7 seconds.
+- Germany–Curaçao fixture `17588318` is backed by nine provenance-valid captured artifacts. The
+  production replay consumer parses 974 preserved interval records ending at sequence 994 and proves
+  seven confirmed Germany goals, Curaçao's confirmed 20th-minute equaliser, and terminal Germany 7–1
+  Curaçao; the separately derived analysis reports 994 historical sequence positions. The room has 58
+  chronological actions: 13 messages, six replies, six quotes, seven supported reactions, a four-way
+  poll with four votes, and 21 attested answers across seven settled canonical calls. Its central
+  receipt arc contrasts public 3–0/5–0 and win-to-nil consensus with Maya's pre-match Curaçao-goal call
+  and Amina's five-plus-margin poll vote. The first real integration correctly rejected one half-time
+  answer at 35 seconds, beyond the signed call's 30-second lock; moving the six taps inside 8–28 seconds
+  produced a complete signed-fixture, Blind Pairing, encrypted Autobase, and attestor pass in 81.4
+  seconds. Calls voided by preserved feed gaps remain omitted.
+- Netherlands–Japan fixture `17588305` is backed by nine provenance-valid captured artifacts. The
+  production replay consumer parses 862 preserved interval records ending at sequence 881 and proves a
+  0–0 half-time state, four confirmed second-half goals, Japan equalising twice, and the terminal 2–2;
+  the derived analysis reports 881 historical sequence positions. Its 47-action room contains 11
+  messages, six replies, six quotes, seven supported reactions, a three-way result poll with four votes,
+  and 12 attested answers across four settled canonical calls. The narrative preserves the public viral
+  pre-match 2–2 prediction through four score changes, exposes a Netherlands-clean-sheet rewrite attempt,
+  and ends on the exact-score receipt. Kickoff and goal calls voided by preserved feed gaps are omitted.
+  The real signed fixture, Blind Pairing, encrypted Autobase, and answer-attestor integration passed in
+  67.0 seconds.
+- `scripts/build-world-cup-showcase-corpus.mjs` now walks the immutable fixture index strictly in kickoff
+  order, verifies every available provenance sidecar against its target bytes, parses the raw interval
+  JSON or SSE transcript, requires a matching terminal `game_finalised` record, and writes only under
+  `data/world-cup-2026/`. It preserves the eighteen hand-authored showcase rooms and generated the other
+  eighty-five played-match rooms from authenticated match events plus each fixture's sourced before/live/
+  after X research. Every one of the 103 seeds contains messages, a quote, replies, supported reactions,
+  a poll and votes, canonical kickoff-call answers, and archive-timed match/final facts. The audit is
+  `data/world-cup-2026/showcase-generation-report.json`. Schedule entries `17588394` (the stale duplicate
+  USA–Paraguay entry) and `17588400` (Tunisia–Switzerland) each have zero transcript records and no
+  terminal state; their seven provenance sidecars verify, but they are excluded rather than converted
+  into invented match history. A generated Sweden–Tunisia room passed the real signed publisher, local
+  HyperDHT, Blind Pairing, encrypted Autobase replication, production call projection, answer-attestor,
+  settlement, and receipt path with 34 actions and four members. The remaining generated corpus still
+  needs the single persistent provisioning and device-verification pass described below.
+- The earlier interrupted Ivory Coast–Ecuador append left two unreferenced real local rooms while its
+  global opening-goal call had already settled. `apps/desktop/scripts/recover-ivory-coast-showcase.js`
+  locates the unique four-member partial room with three attested opening-call answers, replays the
+  remaining authenticated archive through the same publisher, appends only the missing durable actions,
+  verifies replication, regenerates admission, and atomically records the room. It recovered fixture
+  `17588239` with all 35 current seed actions without deleting either partial room or manufacturing a
+  retroactive answer. The persistent ledger therefore contains eighteen completed rooms before the
+  remaining first-time fixtures are provisioned.
+- The persistent provisioner ledger is
+  `apps/desktop/.local-development/historical-showcase/rooms.json`; it contains protected invite
+  material and must not be printed or committed. The provisioner's console summary now deliberately
+  omits invite codes. During sequential provisioning, operator-created managers skip reopening old
+  room handles and suspend each newly completed handle after its durable state has replicated; account
+  records and encrypted Autobases remain intact and are reopened normally by the public/device runtime.
+  If a room's last sourced conversation action precedes the final archive row, the operator publishes
+  the remaining authenticated records through the production replay and waits for terminal fixture
+  replication before recording the room; it does not invent a post-match action to advance the feed.
+  The mode-0600 ledger retains invite codes for device admission. All seventeen rooms
+  were verified in the running desktop
+  projection with `scripts/desktop-cdp.mjs`, then joined sequentially and verified on the physical
+  Infinix X683 with `scripts/android-join-showcase.mjs` and
+  `scripts/android-verify-showcase.mjs`. Android reported all seventeen expected fixture IDs from its own
+  persisted room list. Nine signed physical-iPhone XCTest joins also passed individually, with result
+  bundles under `evidence/physical-e2e/ios-showcase-*.xcresult`. The iPhone 12 Pro Max became paired and
+  available after room sixteen, but the accumulated room-list XCTest timed out while enabling automation
+  mode before the test body could run; the failure bundle is retained at
+  `evidence/physical-e2e/ios-showcase-room-list-1784542336946.xcresult`. The iPad and iPhone XS remained
+  unavailable, so no new iOS success is claimed.
+- Cross-runtime proof replay now derives the expected Hypercore key from the serialized manifest and
+  compares canonical hex values; it never relies on Node/Bare Buffer identity. Mobile startup also
+  prefers a newer verified bundled manifest over an older verified device cache, preventing a stale
+  authority pin from shadowing a valid app update. The Android local build forces Metro's release
+  bundle task after regenerating its Bare worker so an old embedded worker cannot survive a rebuild.
+- Desktop packaging now hard-excludes `.local-development` before Electron Packager traverses the app
+  tree. This prevents active peer stores, invite ledgers, device identities, and transient Electron
+  singleton files from entering or racing a public artifact. Packaging with the pinned live manifest
+  URL/public key produced `release/FullTime-darwin-arm64` successfully, and the packaged standalone
+  UI/loopback-host smoke test passed against that exact bundle. Nested package-manager `.bin` links are
+  stripped from staged runtime dependencies so no absolute developer path enters the app and strict
+  ad-hoc code-sign verification succeeds.
+- The current Android release was built with the preserved release identity and verified with APK
+  Signature Scheme v2; signer certificate SHA-256 remains
+  `66c3bb39cb2c3a36ba5431c209e20570194120ce110aa0dd995043fea5de6407`.
+  The temporary recovery copies were deleted after the build. Installing this artifact over the
+  attached development-signed app correctly failed with `INSTALL_FAILED_UPDATE_INCOMPATIBLE`; the
+  device was not uninstalled or cleared, so its accumulated showcase state remains intact. Android
+  invite automation now clears the Compose field to a verified empty value and enters long canonical
+  invites as paced, prefix-checked chunks without retapping and relocating the horizontal cursor.
+- A cold Android restart with eleven rooms exposed a real scale boundary: `RoomManager.open()` reopened
+  persisted Autobase rooms serially and the mobile controller abandoned readiness after 60 seconds.
+  Persisted rooms now reopen with bounded concurrency four, and mobile allows up to five minutes for a
+  legitimate large-corpus cold start. The regenerated Bare worker was embedded in a local Release APK,
+  installed in place without clearing data, and reached the room list in 32.3 seconds with eleven rooms.
+  After Qatar–Switzerland joined, a second physical cold restart reached ready in 31.2 seconds and the
+  verifier again observed all twelve fixture IDs. Brazil–Morocco admission then exposed a second scale
+  boundary: bursty durable room projections caused the mobile UI to launch overlapping room, detail,
+  history, fixture, and room-list reads until the controller's 128-request safety ceiling correctly
+  rejected another join. Mobile projection revisions are now debounced and both home and room refreshes
+  coalesce onto a single in-flight read set instead of weakening that ceiling. The corrected local Release
+  APK installed in place, cold-started the prior twelve stores in 30 seconds, admitted Brazil–Morocco
+  through live Blind Pairing, and verified all thirteen persisted fixture IDs. Haiti–Scotland then
+  admitted through the same path; Android verified all fourteen room IDs and cold-started those stores
+  in 36 seconds. The admission driver now retries the in-app back control during room refreshes and
+  safely dismisses only the carrier `com.android.stk` promotion with `CANCEL` plus system Back, never
+  selecting an offer or using Android Back for FullTime's internal navigation. It now also reads
+  Android's input-method visibility before sending Back, so an already-hidden keyboard cannot
+  background FullTime, and requires observable `Joining` or target-fixture state before starting its
+  pairing timeout. Australia–Turkey admitted through that corrected path; all fifteen IDs verified and
+  a cold start reopened them in 35 seconds. Germany–Curaçao pairing admitted the Android writer and
+  replicated its membership, but the mobile bridge timed out while opening/projecting the new history.
+  After the pending operation returned its precise timeout, a process-only restart reopened the admitted
+  room from protected storage; the physical Release app then verified all sixteen fixture IDs without
+  clearing or replacing any device data. Netherlands–Japan followed the same observable path: shared
+  Autobase membership proved admission, the bridge returned its explicit projection timeout, and a
+  process-only restart reopened the seventeenth room from protected storage. Android then verified all
+  seventeen IDs without clearing or replacing device data.
+- Verification during this handoff passed all 19 mobile tests, mobile typecheck, desktop syntax checks,
+  14 focused fixture-proof/room-operation/projection tests, six authenticated archive/reducer tests,
+  and the real four-room historical integration
+  through signed fixture discovery, Blind Pairing, replicated Autobase operations, and attested receipts
+  (`FULLTIME_RUN_PEAR_INTEGRATION=1 node --test apps/desktop/test/historical-room-seeder.integration.test.js`,
+  469 seconds). A complete `npm test` also passed (51 shared, 2 attestor plus 1 gated,
+  92 desktop plus 14 gated, 19 mobile, 18 web, and 24 worker), as did the complete workspace
+  `npm run typecheck`, repository-wide `npm run lint`, and the full Next.js production build
+  (rerun outside the sandbox because Turbopack requires a local worker port). The final room separately
+  passed the real fixture/pairing/Autobase/attestor integration in 66 seconds; Germany–Curaçao separately
+  passed the same boundary in 81.4 seconds; Netherlands–Japan passed in 67.0 seconds. The physical iPhone
+  has not joined the final, USA–Paraguay, Qatar–Switzerland, Brazil–Morocco, Haiti–Scotland,
+  Australia–Turkey, Germany–Curaçao, or Netherlands–Japan. This does not
+  invalidate the nine retained per-room XCTest result bundles, but the seventeen-room accumulated assertion
+  still needs a successful automation session with `scripts/ios-verify-showcase.mjs`.
+
+### Complete World Cup showcase corpus and beta 3 release (2026-07-20)
+
+- The sequential persistent provisioning pass is now complete in
+  `apps/desktop/.local-development/historical-showcase-complete-v2/`: 103 unique authenticated
+  terminal fixtures, 2,964 durable conversation actions, four real Autobase members per room, and a
+  non-empty `seedSha256` for every ledger entry. The protected mode-0600 `rooms.json` contains live
+  Blind Pairing admission material and must not be printed or committed. The two captured schedule
+  entries without terminal archive state remain excluded; no result or conversation was invented.
+- Fixture replay remains online through the protocol-compatible LAN relay at `192.168.1.53:59638`,
+  serving the pinned authenticated feed
+  `b59c49ce933b942f17d75f224f9ecfacf124224665cac07cd78e114139dc0c4f`. The physical Infinix X683
+  runs the corrected serially-built Android app without the earlier cross-platform addon-bundle race;
+  a real fixture-room admission smoke run completed without a native crash. The physical iPhone 12 Pro
+  Max fully synchronized all 107,458 authenticated feed blocks through that production proof consumer,
+  and retained Release XCTest bundles prove eleven distinct fixture-room admissions through the real
+  invite, Blind Pairing, signed-fixture, encrypted-store, projection, and composer path. The resumable
+  driver is `scripts/ios-join-showcase-all.mjs`; it never logs invite bytes, recognizes a fixture only
+  after both teams and the room composer render, and resumes from retained markers. Universal Clipboard
+  automation was attempted and failed without marking a room complete; the verifier therefore retains
+  XCTest secure typing as its deterministic production-field fallback. The remaining 92 repetitive
+  physical admissions have not completed, so an exhaustive 103/103 iPhone assertion is not claimed.
+- Subsequent resumable physical-iPhone sessions reached 46 distinct persisted rooms. Host-side
+  mode-0600 checkpoint files now retain each `FULLTIME_SHOWCASE_JOINED` marker before Xcode finalizes
+  or discards staging logs, without storing or printing invite codes. At 46 rooms, a clean Release app
+  launch repeatedly exceeded the verifier's five-minute production readiness allowance before
+  `YOUR ROOMS` rendered (`ios-showcase-all-1784576402647.xcresult`, assertion at
+  `FullTimeUITests.swift:43`). This is the current exhaustive-iPhone blocker: the corpus and signed
+  feed are present, but iOS cannot cold-open/project all persisted Autobases within the bounded startup
+  window. No 103-room iPhone claim is made. The shared mobile `Button` now exposes its real button role,
+  label, and disabled state, fixing the accessibility defect discovered while diagnosing invite submit.
+- GitHub prerelease `v0.1.0-beta.3` is live at
+  `https://github.com/danielAsaboro/fulltime/releases/tag/v0.1.0-beta.3`. GitHub's stored asset digests
+  match the locally verified macOS SHA-256
+  `d11ef268c2f850ccbc8d4ffe80a231b2e59f45769d01c78ab723ed7d0a66ba4d` and Android SHA-256
+  `07a2125f0bcac4fb06c3eaa527d080c3e206ed8b460853df382cb117110a5643`.
+  `https://www.usefulltime.xyz/` was deployed with those beta 3 desktop and Android download URLs and
+  the real Xcode source-build path for iPhone.
+
+### Corrected 104-match World Cup corpus (2026-07-20)
+
+- The complete showcase corpus is **104 unique fixtures**, not 103. The added fixture is authenticated
+  scheduled listing `17588400` (Tunisia–Switzerland). Its root `fixtures.snapshot.json` bytes match the
+  recorded SHA-256 provenance and contain the exact `fixture.json` record; its score/SSE captures are
+  empty. Replay therefore publishes only the verified scheduled fixture and never invents a result,
+  match event, call, settlement, or receipt. Stale duplicate schedule entry `17588394` remains excluded;
+  captured fixture `17588396` is the actual USA–Paraguay room.
+- `data/world-cup-2026/showcase-corpus.json`, its seed directories, and the protected desktop catalog at
+  `apps/desktop/.local-development/historical-showcase-complete-v2/rooms.json` independently contain 104
+  unique fixture IDs. Final `18257739` (Spain–Argentina) is present. Room lists sort by kickoff newest
+  first so the final is immediately visible instead of hidden at the bottom of a 104-row list.
+- The scheduled-only creator room is deliberately kept warm within the six-handle LRU after operator
+  startup so Blind Pairing can answer its signed invite. Physical Release XCTest evidence
+  `evidence/physical-e2e/ios-showcase-all-1784587447618.xcresult` completed the final admission and reports
+  **104/104 verified, 0 remaining**. No invite bytes are recorded in evidence or logs.
+- Physical Android device `061342509H000347` now also holds the complete protected catalog. Every missing
+  room was admitted through the production signed-invite, Blind Pairing, writable Autobase membership,
+  encrypted account record, and native room projection path; the app was updated in place and its data was
+  never cleared. The independent virtualized-list traversal in `scripts/android-verify-showcase.mjs`
+  returned **`verifiedRoomCount: 104`**, including final fixture `18257739`.
+- Large catalogs no longer eagerly reopen every Autobase at process startup. `RoomManager` keeps a bounded
+  LRU of six active handles, renders the protected verified fixture catalog without opening each room, and
+  lazily deduplicates real encrypted room opens. A completed admission persists its protected catalog entry
+  after writer membership is established and returns without blocking on full historical projection; the
+  room state/history boundary performs that projection when opened. Mobile coalesces replay-driven UI
+  refreshes to a two-second cadence so a 104-room archive does not continuously redraw the native
+  accessibility tree. The Android admission driver uses paced 96-character canonical invite batches with
+  a final byte-for-byte field check and never prints invite material.
+- GitHub prerelease `v0.1.0-beta.4` is live at
+  `https://github.com/danielAsaboro/fulltime/releases/tag/v0.1.0-beta.4`. GitHub's stored asset digests
+  match the locally verified macOS SHA-256
+  `4a3ad2b8fe15d0d0a2f46bef21a119499d63b12d59e58a6a008808199948505a` and Android SHA-256
+  `1864d8b8157bc416069b2dcf67fa6219061604dec4e546b9fd0559dcd05fb648`. The Android artifact is signed
+  with the preserved release identity (certificate SHA-256
+  `66c3bb39cb2c3a36ba5431c209e20570194120ce110aa0dd995043fea5de6407`) and verified with APK Signature
+  Scheme v2. Temporary keystore copies were deleted after the build. The ad-hoc-signed macOS bundle
+  passed strict code-sign verification and its standalone packaged UI/loopback-host smoke test.
+- Vercel production deployment `dpl_Ffp4djPj3LorScmTy1QpV1yhKecq` is READY and aliased to
+  `https://www.usefulltime.xyz/`. The rendered homepage exposes the beta.4 macOS and Android URLs, and
+  both public asset endpoints resolve to GitHub's release-asset service.

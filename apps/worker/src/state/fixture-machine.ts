@@ -23,7 +23,7 @@ const PHASE_EVENT_BY_CODE: Record<number, MatchEventKind> = {
   2: "kickoff",
   3: "half-time",
   4: "second-half-start",
-  5: "full-time",
+  5: "end-of-regulation",
   7: "extra-time-start",
   12: "penalty-shootout-start",
   15: "abandoned",
@@ -31,7 +31,37 @@ const PHASE_EVENT_BY_CODE: Record<number, MatchEventKind> = {
   17: "abandoned",
   18: "abandoned",
   19: "abandoned",
+  100: "full-time",
 };
+
+const TERMINAL_STATUSES = new Set(["full-time", "abandoned", "postponed", "cancelled"]);
+
+// TxLINE amendments can repeat an incident with an obsolete phase StatusId.
+// Phase progression is monotonic; accepting a stale H1 status after H2 would
+// manufacture another kickoff and second-half transition during replay/live ingest.
+const STATUS_PHASE_ORDER: Record<number, number> = {
+  1: 0,
+  2: 1,
+  3: 2,
+  4: 3,
+  5: 4,
+  6: 5,
+  7: 6,
+  8: 7,
+  9: 8,
+  10: 9,
+  11: 10,
+  12: 11,
+  13: 12,
+  100: 13,
+};
+
+function isPhaseRegression(previous: number | null, next: number | null): boolean {
+  if (previous === null || next === null) return false;
+  const previousOrder = STATUS_PHASE_ORDER[previous];
+  const nextOrder = STATUS_PHASE_ORDER[next];
+  return previousOrder !== undefined && nextOrder !== undefined && nextOrder < previousOrder;
+}
 
 export interface FixtureStepResult {
   state: FixtureState;
@@ -97,11 +127,16 @@ export class FixtureMachine {
     }
 
     const gap = this.detectGap(update);
-    const events = [...this.phaseEvents(update), ...update.incidents];
+    const terminalRegression = TERMINAL_STATUSES.has(this.state.status) && !TERMINAL_STATUSES.has(update.status);
+    const phaseRegression = isPhaseRegression(this.lastStatusCode, update.statusCode);
+    const preservePhase = terminalRegression || phaseRegression;
+    const events = terminalRegression
+      ? []
+      : [...(phaseRegression ? [] : this.phaseEvents(update)), ...update.incidents];
 
     this.state = {
       ...this.state,
-      status: update.status,
+      status: preservePhase ? this.state.status : update.status,
       minute: update.minute ?? this.state.minute,
       score: update.hasScore ? update.score : this.state.score,
       lastFeedTs: update.feedTs,
@@ -109,7 +144,7 @@ export class FixtureMachine {
       gaps: gap ? [...this.state.gaps, gap] : this.state.gaps,
     };
     this.lastSeq = update.seq;
-    this.lastStatusCode = update.statusCode;
+    if (!preservePhase) this.lastStatusCode = update.statusCode;
 
     return { state: this.state, events, duplicate: false, outOfOrder: false, gap };
   }
@@ -120,7 +155,10 @@ export class FixtureMachine {
     return {
       fromFeedTs: this.state.lastFeedTs,
       toFeedTs: update.feedTs,
-      detectedAt: Date.now(),
+      // The gap becomes known at this signed feed message. Keeping that source
+      // timestamp makes live ingest and authenticated historical replay fold to
+      // the same state instead of leaking the replay machine's wall clock.
+      detectedAt: update.feedTs,
     };
   }
 

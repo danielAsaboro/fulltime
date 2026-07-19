@@ -1,0 +1,399 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17926593",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782434700000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782434700000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782434760000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782434820000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782434880000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782435600000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “At the world cup, USA vs Turkey game.”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070295891987357815",
+        "url": "https://x.com/JameRM10/status/2070295891987357815",
+        "observedAt": "2026-06-25 23:59"
+      }
+    },
+    {
+      "at": 1782435660000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Turkey may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782435900000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Ya, I ran into fans getting into limos to go to the LA Stadium for the USA vs Turkey game...... but seriously??? There are better games to watch today for me 🧐”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070295728690430096",
+        "url": "https://x.com/fangirlscreams/status/2070295728690430096",
+        "observedAt": "2026-06-25 23:59"
+      }
+    },
+    {
+      "at": 1782435930000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782436020000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Turkey, USA, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782436500000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Turkey or USA?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Turkey"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "USA"
+        }
+      ]
+    },
+    {
+      "at": 1782436506000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782436512000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782436518000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782436524000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782439217299,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17926593:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1782439212299,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782439222299,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17926593:17:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1782439212299,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782439227299,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17926593:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1782439212299,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782439415471,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "4' GOAL — USA. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 46,
+        "sourceTs": 1782439410471,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782439420471,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782439425471,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "Inside ten minutes. The opening-goal yes receipts land immediately."
+    },
+    {
+      "at": 1782439864165,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "11' GOAL — Turkey. 1-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 134,
+        "sourceTs": 1782439859165,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1782439869165,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782441116583,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "32' GOAL — Turkey. 2-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 325,
+        "sourceTs": 1782441111583,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "2-1"
+      }
+    },
+    {
+      "at": 1782441121583,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782442577351,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “✅ Türkiye vs USA – Over 1.5 Goals … Clean sweep for a 1.76x cash!”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070654789575229471",
+        "url": "https://x.com/grossTerr45/status/2070654789575229471",
+        "observedAt": "2026-06-26 23:45"
+      }
+    },
+    {
+      "at": 1782442612351,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Turkey 2-1 USA. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 545,
+        "sourceTs": 1782442607351,
+        "action": "halftime_finalised",
+        "score": "2-1"
+      }
+    },
+    {
+      "at": 1782442617351,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782443533254,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "goal-4",
+      "text": "72' GOAL — USA. 2-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 600,
+        "sourceTs": 1782443528254,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "2-2"
+      }
+    },
+    {
+      "at": 1782443538254,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "goal-4",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782446531489,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-5",
+      "text": "122' GOAL — Turkey. 3-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1089,
+        "sourceTs": 1782446526489,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "3-2"
+      }
+    },
+    {
+      "at": 1782446536489,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-5",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782446915128,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Turkey 3-2 USA. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1096,
+        "sourceTs": 1782446910128,
+        "action": "game_finalised",
+        "score": "3-2"
+      }
+    },
+    {
+      "at": 1782446920128,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782446930128,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 3-2. No scrollback archaeology required."
+    },
+    {
+      "at": 1782446940128,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: ““Turkey? Turk…E…A? I don't know. I don't care. And I also don't care about this final score.” @adamschein on USMNT vs whoever-you-call-them…”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070651705759514858",
+        "url": "https://x.com/nypostsports/status/2070651705759514858",
+        "observedAt": "2026-06-26 23:33"
+      }
+    },
+    {
+      "at": 1782446945128,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17926593-turkey-vs-usa/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17926593-turkey-vs-usa/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17926593-turkey-vs-usa/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/JameRM10/status/2070295891987357815",
+      "https://x.com/i/status/2070295891987357815",
+      "https://x.com/fangirlscreams/status/2070295728690430096",
+      "https://x.com/i/status/2070295728690430096",
+      "https://x.com/BitBullVault/status/2070295613476925853",
+      "https://x.com/i/status/2070295613476925853",
+      "https://x.com/Adam_Susman/status/2070295604732027009",
+      "https://x.com/i/status/2070295604732027009",
+      "https://x.com/Cherylovus1/status/2070295537887093033",
+      "https://x.com/i/status/2070295537887093033",
+      "https://x.com/SpartyFrank1992/status/2070295473706188994",
+      "https://x.com/i/status/2070295473706188994"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 3-2 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

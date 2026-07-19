@@ -1,0 +1,376 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17926766",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782323100000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782323100000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782323160000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782323220000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782323280000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782324000000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Correct score Bosnia 2-0 Qatar (main)”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069565366326423622",
+        "url": "https://x.com/asutdegreat/status/2069565366326423622",
+        "observedAt": "2026-06-23 23:36"
+      }
+    },
+    {
+      "at": 1782324060000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Bosnia & Herzegovina may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782324300000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Backing DRAW Bosnia & Herzegovina vs Qatar”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069570229538263490",
+        "url": "https://x.com/ckl1258/status/2069570229538263490",
+        "observedAt": "2026-06-23 23:56"
+      }
+    },
+    {
+      "at": 1782324330000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782324420000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Bosnia & Herzegovina, Qatar, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782324900000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Bosnia & Herzegovina or Qatar?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Bosnia & Herzegovina"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Qatar"
+        }
+      ]
+    },
+    {
+      "at": 1782324906000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782324912000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782324918000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782324924000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782327632895,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17926766:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1782327627895,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782327637895,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17926766:17:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1782327627895,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782327642895,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17926766:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1782327627895,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782329399235,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "30' GOAL — Bosnia & Herzegovina. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 243,
+        "sourceTs": 1782329394235,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1782329404235,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782329409235,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1782329708494,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "35' GOAL — Bosnia & Herzegovina. 2-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 283,
+        "sourceTs": 1782329703494,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Own",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1782329713494,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782330182585,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "43' GOAL — Qatar. 2-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 349,
+        "sourceTs": 1782330177585,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "2-1"
+      }
+    },
+    {
+      "at": 1782330187585,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782330938117,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Bosnia 3-1 Qatar: Alajbegović, OG, Mahmić; Qatar bow out”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069932074044367217",
+        "url": "https://x.com/FOLINTV/status/2069932074044367217",
+        "observedAt": "2026-06-24 23:53"
+      }
+    },
+    {
+      "at": 1782330973117,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Bosnia & Herzegovina 2-1 Qatar. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 433,
+        "sourceTs": 1782330968117,
+        "action": "halftime_finalised",
+        "score": "2-1"
+      }
+    },
+    {
+      "at": 1782330978117,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782333806776,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "goal-4",
+      "text": "103' GOAL — Bosnia & Herzegovina. 3-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 739,
+        "sourceTs": 1782333801776,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "3-1"
+      }
+    },
+    {
+      "at": 1782333811776,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "goal-4",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782335033719,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Bosnia & Herzegovina 3-1 Qatar. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 880,
+        "sourceTs": 1782335028719,
+        "action": "game_finalised",
+        "score": "3-1"
+      }
+    },
+    {
+      "at": 1782335038719,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782335048719,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 3-1. No scrollback archaeology required."
+    },
+    {
+      "at": 1782335058719,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “XI poses: Bosnia-Herzegovina vs Qatar 3-1”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070295964221689975",
+        "url": "https://x.com/amsul288/status/2070295964221689975",
+        "observedAt": "2026-06-25 23:59"
+      }
+    },
+    {
+      "at": 1782335063719,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17926766-bosnia-herzegovina-vs-qatar/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17926766-bosnia-herzegovina-vs-qatar/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17926766-bosnia-herzegovina-vs-qatar/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/asutdegreat/status/2069565366326423622",
+      "https://x.com/i/status/2069565366326423622",
+      "https://x.com/ckl1258/status/2069570229538263490",
+      "https://x.com/i/status/2069570229538263490",
+      "https://x.com/alkassenglish/status/2069570080321454465",
+      "https://x.com/i/status/2069570080321454465",
+      "https://x.com/CmdCurrency/status/2069568362573697303",
+      "https://x.com/i/status/2069568362573697303",
+      "https://x.com/CodyBrownBets/status/2069566573518410022",
+      "https://x.com/i/status/2069566573518410022",
+      "https://x.com/CFGrin/status/2069563946667835724",
+      "https://x.com/i/status/2069563946667835724"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 3-1 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

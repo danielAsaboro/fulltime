@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17926688",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781919900000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1781919900000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1781919960000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1781920020000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1781920080000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1781920800000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “\"Lose tonight and World Cup all but over.\" Both on zero; Türkiye 30 shots no goal opener”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068117530301133114",
+        "url": "https://x.com/i/status/2068117530301133114",
+        "observedAt": "2026-06-19 23:43"
+      }
+    },
+    {
+      "at": 1781920860000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Turkey may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1781921100000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “TURKEY VS PARAGUAY Group D card”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068115807490421045",
+        "url": "https://x.com/i/status/2068115807490421045",
+        "observedAt": "2026-06-19 23:36"
+      }
+    },
+    {
+      "at": 1781921130000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781921220000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Turkey, Paraguay, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1781921700000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Turkey or Paraguay?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Turkey"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Paraguay"
+        }
+      ]
+    },
+    {
+      "at": 1781921706000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781921712000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1781921718000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1781921724000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1781924415097,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17926688:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1781924410097,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781924420097,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17926688:16:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1781924410097,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781924425097,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17926688:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1781924410097,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781924544323,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "3' GOAL — Paraguay. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 35,
+        "sourceTs": 1781924539323,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1781924549323,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781924554323,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "Inside ten minutes. The opening-goal yes receipts land immediately."
+    },
+    {
+      "at": 1781927832725,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “TÜR 0–1 PAR; 48' red for Paraguay still couldn't convert”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068466506216636844",
+        "url": "https://x.com/i/status/2068466506216636844",
+        "observedAt": "2026-06-20 22:50"
+      }
+    },
+    {
+      "at": 1781927867725,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Turkey 0-1 Paraguay. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 582,
+        "sourceTs": 1781927862725,
+        "action": "halftime_finalised",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1781927872725,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1781932567769,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Turkey 0-1 Paraguay. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1174,
+        "sourceTs": 1781932562769,
+        "action": "game_finalised",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1781932572769,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1781932582769,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 0-1. No scrollback archaeology required."
+    },
+    {
+      "at": 1781932592769,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “\"Paraguay 1-0 Turkey\" in USMNT cope list”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068481976093274562",
+        "url": "https://x.com/i/status/2068481976093274562",
+        "observedAt": "2026-06-20 23:51"
+      }
+    },
+    {
+      "at": 1781932597769,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17926688-turkey-vs-paraguay/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17926688-turkey-vs-paraguay/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17926688-turkey-vs-paraguay/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/i/status/2068117530301133114",
+      "https://x.com/i/status/2068115807490421045",
+      "https://x.com/i/status/2068118463365656729",
+      "https://x.com/i/status/2068117448428237155",
+      "https://x.com/i/status/2068466506216636844",
+      "https://x.com/i/status/2068464166814236925",
+      "https://x.com/i/status/2068470318356951369",
+      "https://x.com/i/status/2068479377952649700",
+      "https://x.com/i/status/2068481976093274562",
+      "https://x.com/i/status/2068472815372632458",
+      "https://x.com/i/status/2068833638892896399",
+      "https://x.com/i/status/2068814880530948447"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 0-1 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

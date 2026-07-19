@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17926604",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781220000000
+  },
+  "personas": [
+    { "id": "fan_a", "displayName": "Amina", "joinedAt": 1781220000000, "creator": true },
+    { "id": "fan_b", "displayName": "Tunde", "joinedAt": 1781220120000 },
+    { "id": "fan_c", "displayName": "Maya", "joinedAt": 1781220240000 },
+    { "id": "fan_d", "displayName": "Jo", "joinedAt": 1781220360000 }
+  ],
+  "actions": [
+    {
+      "at": 1781221140000,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "jo-home-swagger",
+      "text": "Home opener. Canada are taking Bosnia down. First World Cup win incoming.",
+      "source": { "kind": "x-post", "postId": "2065217336941101124", "url": "https://x.com/oilersjayscan/status/2065217336941101124" }
+    },
+    {
+      "at": 1781221260000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-davies-out",
+      "text": "Davies is out. That changes the whole left side and the confidence level.",
+      "source": { "kind": "x-post", "postId": "2065217878224232678", "url": "https://x.com/chinemerem56/status/2065217878224232678", "media": "photo" }
+    },
+    {
+      "at": 1781221680000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-canada-two-one",
+      "text": "Even without Davies: Canada 2-1. The home crowd gets them over the line.",
+      "source": { "kind": "x-post", "postId": "2065219670613889521", "url": "https://x.com/itsoyewole/status/2065219670613889521" }
+    },
+    { "at": 1781221690000, "actor": "fan_d", "type": "reaction", "item": "amina-canada-two-one", "emoji": "🔥" },
+    {
+      "at": 1781222220000,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "tunde-one-one",
+      "text": "I have Canada 1-1 Bosnia. Locking the exact score before kickoff.",
+      "source": { "kind": "x-post", "postId": "2065221866302709793", "url": "https://x.com/marmoushEra/status/2065221866302709793" }
+    },
+    {
+      "at": 1781222230000,
+      "actor": "fan_a",
+      "type": "reply",
+      "item": "tunde-one-one",
+      "text": "At home? That is extremely cautious."
+    },
+    { "at": 1781222240000, "actor": "fan_c", "type": "reaction", "item": "tunde-one-one", "emoji": "😮" },
+    {
+      "at": 1781222300000,
+      "actor": "fan_d",
+      "type": "poll",
+      "key": "toronto-opener",
+      "question": "How does Canada's home opener end?",
+      "options": [
+        { "key": "canada", "label": "Canada win" },
+        { "key": "draw", "label": "Draw" },
+        { "key": "bosnia", "label": "Bosnia win" }
+      ],
+      "source": { "kind": "x-post", "postId": "2065218590895112251", "url": "https://x.com/UTDcondara/status/2065218590895112251" }
+    },
+    { "at": 1781222310000, "actor": "fan_a", "type": "vote", "poll": "toronto-opener", "option": "canada" },
+    { "at": 1781222315000, "actor": "fan_b", "type": "vote", "poll": "toronto-opener", "option": "draw" },
+    { "at": 1781222320000, "actor": "fan_c", "type": "vote", "poll": "toronto-opener", "option": "draw" },
+    { "at": 1781222325000, "actor": "fan_d", "type": "vote", "poll": "toronto-opener", "option": "canada" },
+    {
+      "at": 1781290955311,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17926604:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 17, "sourceTs": 1781290945311, "action": "kickoff" }
+    },
+    {
+      "at": 1781290960311,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17926604:17:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 17, "sourceTs": 1781290945311, "action": "kickoff" }
+    },
+    {
+      "at": 1781292252616,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "bosnia-opener",
+      "text": "21' Bosnia lead. The home-win calls are already under pressure.",
+      "source": { "kind": "archive-event", "sequence": 252, "sourceTs": 1781292247616, "action": "goal", "participant": 2, "clockSeconds": 1217 }
+    },
+    {
+      "at": 1781292262616,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-home-swagger-gotcha",
+      "item": "jo-home-swagger",
+      "text": "I would like to withdraw the phrase 'taking Bosnia down'."
+    },
+    { "at": 1781292272616, "actor": "fan_b", "type": "reaction", "item": "jo-home-swagger-gotcha", "emoji": "😮" },
+    {
+      "at": 1781293896242,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-second-half-fast-start-yes",
+      "callId": "call:17926604:547:phase:half-time:second-half-fast-start",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 547, "sourceTs": 1781293886242, "action": "half-time" }
+    },
+    {
+      "at": 1781293901242,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-second-half-fast-start-no",
+      "callId": "call:17926604:547:phase:half-time:second-half-fast-start",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 547, "sourceTs": 1781293886242, "action": "half-time" }
+    },
+    {
+      "at": 1781296857165,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "larin-equaliser",
+      "text": "79' LARIN. Canada 1-1. My exact score is alive.",
+      "source": { "kind": "archive-event", "sequence": 925, "sourceTs": 1781296852165, "action": "goal", "participant": 1, "clockSeconds": 4682, "socialUrl": "https://x.com/FanZoneDekko/status/2065583546161316142" }
+    },
+    { "at": 1781296867165, "actor": "fan_a", "type": "reaction", "item": "larin-equaliser", "emoji": "⚽" },
+    {
+      "at": 1781296877165,
+      "actor": "fan_b",
+      "type": "quote",
+      "key": "tunde-score-alive",
+      "item": "tunde-one-one",
+      "text": "Do not touch this scoreline now."
+    },
+    {
+      "at": 1781297883021,
+      "actor": "fan_b",
+      "type": "quote",
+      "key": "tunde-exact-receipt",
+      "item": "tunde-one-one",
+      "text": "Full-time 1-1. Exact score, posted yesterday. Scroll wherever you like.",
+      "source": { "kind": "archive-event", "sequence": 1113, "sourceTs": 1781297878021, "action": "full-time", "score": "1-1" }
+    },
+    {
+      "at": 1781297893021,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "amina-two-one-miss",
+      "item": "amina-canada-two-one",
+      "text": "One goal short and two points dropped. I got carried by the home crowd."
+    },
+    { "at": 1781297903021, "actor": "fan_c", "type": "reaction", "item": "tunde-exact-receipt", "emoji": "👏" },
+    {
+      "at": 1781308440000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "history-versus-disappointment",
+      "text": "First World Cup point is history. At home against Bosnia, it still feels like two dropped.",
+      "source": { "kind": "x-post", "postId": "2065583546161316142", "url": "https://x.com/FanZoneDekko/status/2065583546161316142", "media": "photo" }
+    },
+    {
+      "at": 1781308740000,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "draw-under-hit",
+      "text": "Draw and under 2.5 both landed. Tunde is going to be unbearable.",
+      "source": { "kind": "x-post", "postId": "2065584740426535299", "url": "https://x.com/SimEdgebet/status/2065584740426535299" }
+    },
+    {
+      "at": 1781392140000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "group-math-regret",
+      "text": "Could not win at home. The Group B maths already look ugly.",
+      "source": { "kind": "x-post", "postId": "2065934508084334878", "url": "https://x.com/Morriswanchuk11/status/2065934508084334878" }
+    },
+    {
+      "at": 1781394120000,
+      "actor": "fan_b",
+      "type": "quote",
+      "key": "prediction-board-proof",
+      "item": "tunde-exact-receipt",
+      "text": "Prediction board says done. FullTime said it first.",
+      "source": { "kind": "x-post", "postId": "2065943013306614041", "url": "https://x.com/Dhavidtips/status/2065943013306614041", "media": "photo" }
+    }
+  ],
+  "evidence": {
+    "fixture": "../../../../resources/fixtures/world-cup-2026/17926604-canada-vs-bosnia-herzegovina/fixture.json",
+    "archive": "../../../../resources/fixtures/world-cup-2026/17926604-canada-vs-bosnia-herzegovina/scores.historical-intervals.json",
+    "conversation": "../../../../resources/fixtures/world-cup-2026/17926604-canada-vs-bosnia-herzegovina/conversation-weave.json",
+    "sourcePolicy": "Archive timestamps, confirmation state, participants, and terminal score remain authoritative. The archive confirms Bosnia's participant-side opener and Canada's equaliser; the Larin attribution is separately sourced from the linked public post. X-derived language is restaged into disclosed showcase personas."
+  }
+}

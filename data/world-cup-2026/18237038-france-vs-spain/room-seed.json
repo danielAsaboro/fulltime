@@ -1,0 +1,215 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "18237038",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1784050200000
+  },
+  "personas": [
+    { "id": "fan_a", "displayName": "Amina", "joinedAt": 1784050200000, "creator": true },
+    { "id": "fan_b", "displayName": "Tunde", "joinedAt": 1784050260000 },
+    { "id": "fan_c", "displayName": "Maya", "joinedAt": 1784050320000 },
+    { "id": "fan_d", "displayName": "Jo", "joinedAt": 1784050380000 }
+  ],
+  "actions": [
+    {
+      "at": 1784050500000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-spain-complete",
+      "text": "I had Spain as the most complete side before the tournament: Pedri, Yamal, Nico, depth everywhere. I am not moving now.",
+      "source": { "kind": "x-post", "postId": "2062633985264505209", "url": "https://x.com/Eleojo_Afc/status/2062633985264505209" }
+    },
+    {
+      "at": 1784050560000,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "tunde-france-clean-sheet",
+      "text": "France have won six from six and conceded nothing in three knockout matches. France 2-0 Spain.",
+      "source": { "kind": "workspace-prediction-dialogue", "file": "resources/repo/WC2026/predictions/2026-07-14/FRA-vs-ESP/dialogue.md", "turn": 9 }
+    },
+    {
+      "at": 1784050620000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-spain-two-one",
+      "text": "Spain beat this system 2-1 in the Euro semi and have scored in every knockout match here. Spain 2-1 France.",
+      "source": { "kind": "workspace-prediction-dialogue", "file": "resources/repo/WC2026/predictions/2026-07-14/FRA-vs-ESP/dialogue.md", "turn": 2 }
+    },
+    {
+      "at": 1784050680000,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "maya-spain-two-one",
+      "text": "That is history talking. France's form is happening now."
+    },
+    { "at": 1784050710000, "actor": "fan_a", "type": "reaction", "item": "maya-spain-two-one", "emoji": "🔥" },
+    {
+      "at": 1784050740000,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "jo-france-axis",
+      "text": "Mbappé and Dembélé against a doubtful Nico Williams situation? France 2-1. Marginal favourite, decisive attack.",
+      "source": { "kind": "workspace-prediction-dialogue", "file": "resources/repo/WC2026/predictions/2026-07-14/FRA-vs-ESP/dialogue.md", "turn": 3 }
+    },
+    {
+      "at": 1784050800000,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-flips-france",
+      "item": "maya-spain-two-one",
+      "text": "Fine. My probabilities say France by a hair, so I will stop arguing with my own numbers: France 2-1."
+    },
+    { "at": 1784050830000, "actor": "fan_b", "type": "reaction", "item": "maya-flips-france", "emoji": "👏" },
+    {
+      "at": 1784050860000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "maya-flips-france",
+      "text": "The room has reached consensus. Save the earlier message just in case."
+    },
+    {
+      "at": 1784050920000,
+      "actor": "fan_d",
+      "type": "poll",
+      "key": "semifinal-winner",
+      "question": "Who reaches the World Cup final?",
+      "options": [
+        { "key": "france", "label": "France" },
+        { "key": "spain", "label": "Spain" },
+        { "key": "penalties", "label": "Decided on penalties" }
+      ]
+    },
+    { "at": 1784050925000, "actor": "fan_a", "type": "vote", "poll": "semifinal-winner", "option": "spain" },
+    { "at": 1784050930000, "actor": "fan_b", "type": "vote", "poll": "semifinal-winner", "option": "france" },
+    { "at": 1784050935000, "actor": "fan_c", "type": "vote", "poll": "semifinal-winner", "option": "france" },
+    { "at": 1784050940000, "actor": "fan_d", "type": "vote", "poll": "semifinal-winner", "option": "france" },
+    {
+      "at": 1784055618958,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-first-goal-spain",
+      "callId": "call:18237038:17:phase:kickoff:first-goal",
+      "option": "away",
+      "source": { "kind": "archive-event", "sequence": 17, "sourceTs": 1784055608958, "action": "kickoff" }
+    },
+    {
+      "at": 1784055623958,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-first-goal-france",
+      "callId": "call:18237038:17:phase:kickoff:first-goal",
+      "option": "home",
+      "source": { "kind": "archive-event", "sequence": 17, "sourceTs": 1784055608958, "action": "kickoff" }
+    },
+    {
+      "at": 1784056963796,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "spain-penalty-lead",
+      "text": "22' Spain score the penalty. The one Spain first-goal call is already a receipt.",
+      "source": { "kind": "archive-event", "sequence": 221, "sourceTs": 1784056962796, "action": "penalty_outcome", "outcome": "Scored", "participant": 2, "clockSeconds": 1313, "score": "0-1" }
+    },
+    {
+      "at": 1784056965796,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "amina-first-goal-receipt",
+      "item": "amina-spain-complete",
+      "text": "Spain first. Complete enough for you?"
+    },
+    { "at": 1784056967796, "actor": "fan_d", "type": "reaction", "item": "amina-first-goal-receipt", "emoji": "😮" },
+    {
+      "at": 1784056969796,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-original-call-alive",
+      "item": "maya-spain-two-one",
+      "text": "My original call was doing fine until all of you held a committee meeting on it."
+    },
+    {
+      "at": 1784058696035,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "halftime-france-zero",
+      "text": "Half-time, France 0-1 Spain. The three-match clean-sheet argument has vanished in twenty-two minutes.",
+      "source": { "kind": "archive-event", "sequence": 475, "sourceTs": 1784058691035, "action": "half-time", "score": "0-1" }
+    },
+    {
+      "at": 1784058701035,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "halftime-france-zero",
+      "text": "One goal is not a verdict. France only need one transition."
+    },
+    {
+      "at": 1784060483302,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "spain-second-goal",
+      "text": "58' Spain again. 0-2. The favourites are not chasing the game now; they are chasing Spain's shadows.",
+      "source": { "kind": "archive-event", "sequence": 618, "sourceTs": 1784060478302, "action": "goal", "participant": 2, "clockSeconds": 3455, "score": "0-2" }
+    },
+    {
+      "at": 1784060488302,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-flip-regret",
+      "item": "maya-flips-france",
+      "text": "This is why you do not let the group chat bully you out of your ball knowledge."
+    },
+    { "at": 1784060493302, "actor": "fan_b", "type": "reaction", "item": "maya-flip-regret", "emoji": "😮" },
+    {
+      "at": 1784060567861,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "var-court",
+      "text": "60' VAR check. France need a lifeline; the room has opened referee court instead.",
+      "source": { "kind": "archive-event", "sequence": 640, "sourceTs": 1784060562861, "action": "var", "score": "0-2" }
+    },
+    {
+      "at": 1784062747471,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "amina-spain-fulltime",
+      "item": "amina-spain-complete",
+      "text": "Full-time: France 0-2 Spain. Everyone picked France. Spain picked France apart.",
+      "source": { "kind": "archive-event", "sequence": 1022, "sourceTs": 1784062742471, "action": "full-time", "score": "0-2" }
+    },
+    {
+      "at": 1784062752471,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-accepts-receipt",
+      "item": "maya-spain-two-one",
+      "text": "I had Spain, changed it to France, and got punished for distrusting the read. Keep both receipts."
+    },
+    {
+      "at": 1784062757471,
+      "actor": "fan_b",
+      "type": "quote",
+      "key": "tunde-france-wrong",
+      "item": "tunde-france-clean-sheet",
+      "text": "I predicted the right score in the wrong direction. That somehow feels worse."
+    },
+    { "at": 1784062762471, "actor": "fan_d", "type": "reaction", "item": "amina-spain-fulltime", "emoji": "👏" },
+    { "at": 1784062767471, "actor": "fan_a", "type": "reaction", "item": "maya-accepts-receipt", "emoji": "⚽" },
+    {
+      "at": 1784063059751,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "amina-spain-fulltime",
+      "text": "Finalised by the feed. Spain are in the final; the receipts stay exactly where we left them.",
+      "source": { "kind": "archive-event", "sequence": 1026, "sourceTs": 1784063054751, "action": "game_finalised", "score": "0-2" }
+    }
+  ],
+  "evidence": {
+    "fixture": "archive/fixture.json",
+    "archive": "archive/scores.historical.sse",
+    "provenance": "archive/provenance.json",
+    "predictionDialogue": "../../../../resources/repo/WC2026/predictions/2026-07-14/FRA-vs-ESP/dialogue.md",
+    "reactionResearch": "../../../../resources/matches/world-cup-2026-match-reactions-and-hooks.md",
+    "sourcePolicy": "The authenticated TxLINE archive is authoritative for kickoff, participant sides, phase transitions, confirmed incidents, and terminal score. It proves Spain's scored penalty at 21:53, second goal at 57:35, and the 0-2 terminal result. Pre-match football arguments are concise restagings of the cited workspace prediction dialogue; the June Spain-favourite line retains its public X source. Showcase personas are disclosed fictional participants and do not impersonate source authors. The archive's real feed gaps remain preserved by replay and are not rewritten as successful calls."
+  }
+}

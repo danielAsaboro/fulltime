@@ -15,7 +15,7 @@ type DownloadEnvironment = Partial<Record<
   string | undefined
 >>;
 
-const GITHUB_RELEASE_ROOT = "https://github.com/danielAsaboro/fulltime/releases/download/v0.1.0-beta.1";
+const GITHUB_RELEASE_ROOT = "https://github.com/danielAsaboro/fulltime/releases/download/v0.1.0-beta.4";
 const DEFAULT_DESKTOP_DOWNLOAD_URL = `${GITHUB_RELEASE_ROOT}/FullTime-0.1.0-macos-arm64.zip`;
 const DEFAULT_ANDROID_DOWNLOAD_URL = `${GITHUB_RELEASE_ROOT}/FullTime-0.1.0-android.apk`;
 

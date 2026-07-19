@@ -1,0 +1,376 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588241",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781567280000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1781567280000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1781567340000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1781567400000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1781567460000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1781568180000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Middle East cooking this WC — reckon Iran beat New Zealand”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2066672049615966706",
+        "url": "https://x.com/Rjdhd90/status/2066672049615966706",
+        "observedAt": "2026-06-15 23:59"
+      }
+    },
+    {
+      "at": 1781568240000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Iran may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1781568480000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Iran vs New Zealand Live Score — Iran to play WC opener on US soil”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2066671993903079549",
+        "url": "https://x.com/IndianExpress/status/2066671993903079549",
+        "observedAt": "2026-06-15 23:59"
+      }
+    },
+    {
+      "at": 1781568510000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781568600000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Iran, New Zealand, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1781569080000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Iran or New Zealand?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Iran"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "New Zealand"
+        }
+      ]
+    },
+    {
+      "at": 1781569086000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781569092000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1781569098000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1781569104000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1781571843963,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588241:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1781571838963,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781571848963,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588241:16:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1781571838963,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781571853963,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588241:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1781571838963,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781572319258,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "8' GOAL — New Zealand. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 102,
+        "sourceTs": 1781572314258,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1781572324258,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781572329258,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "Inside ten minutes. The opening-goal yes receipts land immediately."
+    },
+    {
+      "at": 1781573835432,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "34' GOAL — Iran. 1-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 310,
+        "sourceTs": 1781573830432,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1781573840432,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781575232856,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Dramatic 2-2 draw at SoFi — overshadowed by goal celebration debate”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067032170162721264",
+        "url": "https://x.com/globriefs/status/2067032170162721264",
+        "observedAt": "2026-06-16 23:50"
+      }
+    },
+    {
+      "at": 1781575267856,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Iran 1-1 New Zealand. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 472,
+        "sourceTs": 1781575262856,
+        "action": "halftime_finalised",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1781575272856,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1781576582310,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "79' GOAL — New Zealand. 1-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 569,
+        "sourceTs": 1781576577310,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "1-2"
+      }
+    },
+    {
+      "at": 1781576587310,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781577126831,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "goal-4",
+      "text": "89' GOAL — Iran. 2-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 667,
+        "sourceTs": 1781577121831,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Head",
+        "score": "2-2"
+      }
+    },
+    {
+      "at": 1781577131831,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "goal-4",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781579372591,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Iran 2-2 New Zealand. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 954,
+        "sourceTs": 1781579367591,
+        "action": "game_finalised",
+        "score": "2-2"
+      }
+    },
+    {
+      "at": 1781579377591,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781579387591,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 2-2. No scrollback archaeology required."
+    },
+    {
+      "at": 1781579397591,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Iran and New Zealand battle to entertaining 2-2”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067375935888728260",
+        "url": "https://x.com/VermoSports/status/2067375935888728260",
+        "observedAt": "2026-06-17 22:36"
+      }
+    },
+    {
+      "at": 1781579402591,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588241-iran-vs-new-zealand/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588241-iran-vs-new-zealand/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588241-iran-vs-new-zealand/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/Rjdhd90/status/2066672049615966706",
+      "https://x.com/i/status/2066672049615966706",
+      "https://x.com/IndianExpress/status/2066671993903079549",
+      "https://x.com/i/status/2066671993903079549",
+      "https://x.com/BET99Sportsbook/status/2066671509611929716",
+      "https://x.com/i/status/2066671509611929716",
+      "https://x.com/albahaasite/status/2066671409275765183",
+      "https://x.com/i/status/2066671409275765183",
+      "https://x.com/Ize_EV/status/2066671172394098728",
+      "https://x.com/i/status/2066671172394098728",
+      "https://x.com/AyoguChris15484/status/2066671171760750908",
+      "https://x.com/i/status/2066671171760750908"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 2-2 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

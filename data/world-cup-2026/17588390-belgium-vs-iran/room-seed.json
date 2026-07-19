@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588390",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782063900000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782063900000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782063960000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782064020000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782064080000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782064800000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Iran practice in Carson ahead of Belgium”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068481972633206797",
+        "url": "https://x.com/i/status/2068481972633206797",
+        "observedAt": "2026-06-20 23:51"
+      }
+    },
+    {
+      "at": 1782064860000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Belgium may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782065100000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Fixture card Belgium vs Iran 02:00 WIB listing”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068480547207467132",
+        "url": "https://x.com/i/status/2068480547207467132",
+        "observedAt": "2026-06-20 23:46"
+      }
+    },
+    {
+      "at": 1782065130000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782065220000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Belgium, Iran, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782065700000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Belgium or Iran?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Belgium"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Iran"
+        }
+      ]
+    },
+    {
+      "at": 1782065706000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782065712000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782065718000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782065724000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782068415526,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588390:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782068410526,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782068420526,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588390:16:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782068410526,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782068425526,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588390:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782068410526,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782071883704,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Quote Red Devils FT: level; Iran 2 draws; BEL 10 men, 20+ shots”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068846005878153481",
+        "url": "https://x.com/i/status/2068846005878153481",
+        "observedAt": "2026-06-21 23:58"
+      }
+    },
+    {
+      "at": 1782071918704,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Belgium 0-0 Iran. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 603,
+        "sourceTs": 1782071913704,
+        "action": "halftime_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1782071923704,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782076042406,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Belgium 0-0 Iran. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1166,
+        "sourceTs": 1782076037406,
+        "action": "game_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1782076047406,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782076057406,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 0-0. No scrollback archaeology required."
+    },
+    {
+      "at": 1782076067406,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Iran locker-room note: pride, honor, dignity, peace among nations”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069193967581974635",
+        "url": "https://x.com/i/status/2069193967581974635",
+        "observedAt": "2026-06-22 23:01"
+      }
+    },
+    {
+      "at": 1782076072406,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588390-belgium-vs-iran/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588390-belgium-vs-iran/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588390-belgium-vs-iran/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/i/status/2068481972633206797",
+      "https://x.com/i/status/2068480547207467132",
+      "https://x.com/i/status/2068479300135698670",
+      "https://x.com/i/status/2068482729016995884",
+      "https://x.com/i/status/2068475986350571852",
+      "https://x.com/i/status/2068475427593523475",
+      "https://x.com/i/status/2068477374165848529",
+      "https://x.com/i/status/2068846005878153481",
+      "https://x.com/i/status/2068845597894017383",
+      "https://x.com/i/status/2068845590192992695",
+      "https://x.com/i/status/2068845332692164925",
+      "https://x.com/i/status/2068845033982201920"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 0-0 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

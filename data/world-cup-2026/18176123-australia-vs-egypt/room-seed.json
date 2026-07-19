@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "18176123",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1783097100000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1783097100000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1783097160000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1783097220000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1783097280000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1783098000000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Ahmed Shobeir reacts to Mostafa’s WC run ahead of Australia”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2072832294445052029",
+        "url": "https://x.com/News_Hari_Ini/status/2072832294445052029",
+        "observedAt": "2026-07-02 23:58"
+      }
+    },
+    {
+      "at": 1783098060000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Australia may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1783098300000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Egypt have a route into this if they survive the opening pressure.”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2072823631005077626",
+        "url": "https://x.com/LSAlert_Main/status/2072823631005077626",
+        "observedAt": "2026-07-02 23:23"
+      }
+    },
+    {
+      "at": 1783098330000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1783098420000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Australia, Egypt, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1783098900000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Australia or Egypt?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Australia"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Egypt"
+        }
+      ]
+    },
+    {
+      "at": 1783098906000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1783098912000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1783098918000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1783098924000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1783101614455,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:18176123:15:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1783101609455,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783101619455,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:18176123:15:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1783101609455,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783101624455,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:18176123:15:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1783101609455,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783102435570,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "14' GOAL — Egypt. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 142,
+        "sourceTs": 1783102430570,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Head",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1783102440570,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1783102445570,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1783104662944,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Egypt history: first R16; FT AUS 1-1 EGY (PK 2-4); Ashour 13', Hany OG 55'”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2073195067771179035",
+        "url": "https://x.com/cloudninesports/status/2073195067771179035",
+        "observedAt": "2026-07-03 23:59"
+      }
+    },
+    {
+      "at": 1783104697944,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Australia 0-1 Egypt. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 492,
+        "sourceTs": 1783104692944,
+        "action": "halftime_finalised",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1783104702944,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1783106244038,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "78' GOAL — Australia. 1-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 588,
+        "sourceTs": 1783106239038,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Own",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1783106249038,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1783112132602,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Australia 1-1 Egypt. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1352,
+        "sourceTs": 1783112127602,
+        "action": "game_finalised",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1783112137602,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "😮"
+    },
+    {
+      "at": 1783112147602,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 1-1. No scrollback archaeology required."
+    },
+    {
+      "at": 1783112157602,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Emam Ashour open; Hany OG; pens 4-2 Egypt to R16”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2073548642061860985",
+        "url": "https://x.com/Bappa_Tee/status/2073548642061860985",
+        "observedAt": "2026-07-04 23:24"
+      }
+    },
+    {
+      "at": 1783112162602,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/18176123-australia-vs-egypt/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/18176123-australia-vs-egypt/scores.historical.sse",
+    "provenance": "../resources/fixtures/world-cup-2026/18176123-australia-vs-egypt/scores.historical.sse.provenance.json",
+    "socialSources": [
+      "https://x.com/News_Hari_Ini/status/2072832294445052029",
+      "https://x.com/i/status/2072832294445052029",
+      "https://x.com/LSAlert_Main/status/2072823631005077626",
+      "https://x.com/i/status/2072823631005077626",
+      "https://x.com/TeksFootball/status/2072824183415853401",
+      "https://x.com/i/status/2072824183415853401",
+      "https://x.com/gaffer_agent/status/2072826399661125698",
+      "https://x.com/i/status/2072826399661125698",
+      "https://x.com/ocimaher/status/2072826421685420231",
+      "https://x.com/i/status/2072826421685420231",
+      "https://x.com/cloudninesports/status/2073195067771179035",
+      "https://x.com/i/status/2073195067771179035"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 1-1 result. 8 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

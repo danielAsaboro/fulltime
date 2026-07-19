@@ -1,0 +1,422 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588326",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782607500000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782607500000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782607560000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782607620000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782607680000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782608400000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Algeria look stronger on paper, but this tournament keeps punishing certainty.”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071020664526631326",
+        "url": "https://x.com/pandabtc818/status/2071020664526631326",
+        "observedAt": "2026-06-27 23:59"
+      }
+    },
+    {
+      "at": 1782608460000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Algeria may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782608700000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Ghana RO32 path may hit Switzerland/Iran/Austria/Algeria”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071017508182581493",
+        "url": "https://x.com/DanielA31363715/status/2071017508182581493",
+        "observedAt": "2026-06-27 23:47"
+      }
+    },
+    {
+      "at": 1782608730000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782608820000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Algeria, Austria, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782609300000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Algeria or Austria?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Algeria"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Austria"
+        }
+      ]
+    },
+    {
+      "at": 1782609306000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782609312000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782609318000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782609324000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782612053939,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588326:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782612048939,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782612058939,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588326:16:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782612048939,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782612063939,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588326:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782612048939,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782613787019,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "29' GOAL — Austria. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 277,
+        "sourceTs": 1782613782019,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782613792019,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782613797019,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1782614779490,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "46' GOAL — Algeria. 1-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 473,
+        "sourceTs": 1782614774490,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1782614784490,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782615002698,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Austria held Algeria 3-3 then other scorelines banter”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071382194459717807",
+        "url": "https://x.com/Boneofmybon/status/2071382194459717807",
+        "observedAt": "2026-06-28 23:56"
+      }
+    },
+    {
+      "at": 1782615037698,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Algeria 1-1 Austria. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 514,
+        "sourceTs": 1782615032698,
+        "action": "halftime_finalised",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1782615042698,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782616691469,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "78' GOAL — Austria. 1-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 629,
+        "sourceTs": 1782616686469,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "1-2"
+      }
+    },
+    {
+      "at": 1782616696469,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782616959675,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "goal-4",
+      "text": "82' GOAL — Algeria. 2-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 676,
+        "sourceTs": 1782616954675,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "2-2"
+      }
+    },
+    {
+      "at": 1782616964675,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "goal-4",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782618962341,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-5",
+      "text": "116' GOAL — Algeria. 3-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 952,
+        "sourceTs": 1782618957341,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "3-2"
+      }
+    },
+    {
+      "at": 1782618967341,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-5",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782619141407,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-6",
+      "text": "119' GOAL — Austria. 3-3. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 976,
+        "sourceTs": 1782619136407,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Head",
+        "score": "3-3"
+      }
+    },
+    {
+      "at": 1782619146407,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-6",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782619418637,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Algeria 3-3 Austria. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 985,
+        "sourceTs": 1782619413637,
+        "action": "game_finalised",
+        "score": "3-3"
+      }
+    },
+    {
+      "at": 1782619423637,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782619433637,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 3-3. No scrollback archaeology required."
+    },
+    {
+      "at": 1782619443637,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “If Portugal topped group they’d face Algeria/Austria path banter”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071733255523745840",
+        "url": "https://x.com/Ajaraiestan/status/2071733255523745840",
+        "observedAt": "2026-06-29 23:11"
+      }
+    },
+    {
+      "at": 1782619448637,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588326-algeria-vs-austria/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588326-algeria-vs-austria/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588326-algeria-vs-austria/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/pandabtc818/status/2071020664526631326",
+      "https://x.com/i/status/2071020664526631326",
+      "https://x.com/DanielA31363715/status/2071017508182581493",
+      "https://x.com/i/status/2071017508182581493",
+      "https://x.com/cory_kowitz/status/2071017032326209966",
+      "https://x.com/i/status/2071017032326209966",
+      "https://x.com/_owurakuampofo/status/2071016139413422420",
+      "https://x.com/i/status/2071016139413422420",
+      "https://x.com/bolavipus/status/2071015700395606212",
+      "https://x.com/i/status/2071015700395606212",
+      "https://x.com/Boneofmybon/status/2071382194459717807",
+      "https://x.com/i/status/2071382194459717807"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 3-3 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

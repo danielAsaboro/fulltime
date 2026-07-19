@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "18188721",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1783194480000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1783194480000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1783194540000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1783194600000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1783194660000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1783195380000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “R16 underway; France/Mbappé face Paraguay; Mbappé could chase Messi’s WC goals record”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2073192689944977504",
+        "url": "https://x.com/i/status/2073192689944977504",
+        "observedAt": "2026-07-03 23:50"
+      }
+    },
+    {
+      "at": 1783195440000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Paraguay may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1783195680000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Ticket resale: France vs Paraguay R16 seats”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2073192284271542729",
+        "url": "https://x.com/i/status/2073192284271542729",
+        "observedAt": "2026-07-03 23:48"
+      }
+    },
+    {
+      "at": 1783195710000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1783195800000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Paraguay, France, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1783196280000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Paraguay or France?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Paraguay"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "France"
+        }
+      ]
+    },
+    {
+      "at": 1783196286000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1783196292000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1783196298000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1783196304000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1783199040837,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:18188721:15:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1783199035837,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783199045837,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:18188721:15:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1783199035837,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783199050837,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:18188721:15:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1783199035837,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783202018313,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Fairy-tale run ends 1-0; Mbappé pen, 19th WC goal”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2073557466755772565",
+        "url": "https://x.com/i/status/2073557466755772565",
+        "observedAt": "2026-07-04 23:59"
+      }
+    },
+    {
+      "at": 1783202053313,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Paraguay 0-0 France. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 468,
+        "sourceTs": 1783202048313,
+        "action": "halftime_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1783202058313,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1783206895273,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Paraguay 0-1 France. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 964,
+        "sourceTs": 1783206890273,
+        "action": "game_finalised",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1783206900273,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1783206910273,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 0-1. No scrollback archaeology required."
+    },
+    {
+      "at": 1783206920273,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Accuses Paraguay of dirty play / “thug match””",
+      "source": {
+        "kind": "x-post",
+        "postId": "2073919135310922142",
+        "url": "https://x.com/i/status/2073919135310922142",
+        "observedAt": "2026-07-05 23:57"
+      }
+    },
+    {
+      "at": 1783206925273,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/18188721-paraguay-vs-france/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/18188721-paraguay-vs-france/scores.historical.sse",
+    "provenance": "../resources/fixtures/world-cup-2026/18188721-paraguay-vs-france/scores.historical.sse.provenance.json",
+    "socialSources": [
+      "https://x.com/i/status/2073192689944977504",
+      "https://x.com/i/status/2073192284271542729",
+      "https://x.com/i/status/2073191326091243535",
+      "https://x.com/i/status/2073191319812632734",
+      "https://x.com/i/status/2073188868807901612",
+      "https://x.com/i/status/2073188729884410137",
+      "https://x.com/i/status/2073187611871420845",
+      "https://x.com/i/status/2073186624108638288",
+      "https://x.com/i/status/2073557466755772565",
+      "https://x.com/i/status/2073557440201941171",
+      "https://x.com/i/status/2073557106968678591",
+      "https://x.com/i/status/2073556621075058724"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 0-1 result. 8 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

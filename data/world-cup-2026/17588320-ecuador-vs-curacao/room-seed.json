@@ -1,0 +1,272 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588320",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781995500000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1781995500000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1781995560000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1781995620000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1781995680000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1781996400000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Watchalong Ecuador vs Curacao YouTube”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068483827920478611",
+        "url": "https://x.com/i/status/2068483827920478611",
+        "observedAt": "2026-06-20 23:59"
+      }
+    },
+    {
+      "at": 1781996460000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Ecuador may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1781996700000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “CONMEBOL president Domínguez in attendance; Ecuador must-win”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068483798983905653",
+        "url": "https://x.com/i/status/2068483798983905653",
+        "observedAt": "2026-06-20 23:59"
+      }
+    },
+    {
+      "at": 1781996730000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781996820000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Ecuador, Curacao, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1781997300000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Ecuador or Curacao?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Ecuador"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Curacao"
+        }
+      ]
+    },
+    {
+      "at": 1781997306000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781997312000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1781997318000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1781997324000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782000016599,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588320:18:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 18,
+        "sourceTs": 1782000011599,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782000021599,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588320:18:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 18,
+        "sourceTs": 1782000011599,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782000026599,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588320:18:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 18,
+        "sourceTs": 1782000011599,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782003199609,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Narrative dominated by clean sheet / 15 saves”",
+      "source": null
+    },
+    {
+      "at": 1782003234609,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Ecuador 0-0 Curacao. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 551,
+        "sourceTs": 1782003229609,
+        "action": "halftime_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1782003239609,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782007421876,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Ecuador 0-0 Curacao. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1113,
+        "sourceTs": 1782007416876,
+        "action": "game_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1782007426876,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782007436876,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 0-0. No scrollback archaeology required."
+    },
+    {
+      "at": 1782007446876,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Eloy Room 15 saves; USL Miami FC keeper validates ecosystem”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068842186230399085",
+        "url": "https://x.com/i/status/2068842186230399085",
+        "observedAt": "2026-06-21 23:43"
+      }
+    },
+    {
+      "at": 1782007451876,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588320-ecuador-vs-curacao/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588320-ecuador-vs-curacao/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588320-ecuador-vs-curacao/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/i/status/2068483827920478611",
+      "https://x.com/i/status/2068483798983905653",
+      "https://x.com/i/status/2068483670222995518",
+      "https://x.com/i/status/2068483377162838491",
+      "https://x.com/i/status/2068482729016995884",
+      "https://x.com/i/status/2068842983785480358",
+      "https://x.com/i/status/2068842186230399085",
+      "https://x.com/i/status/2068837662237331740",
+      "https://x.com/i/status/2068835249962856895",
+      "https://x.com/i/status/2068831080883319258",
+      "https://x.com/i/status/2069208513117614289",
+      "https://x.com/i/status/2069190651371987226"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 0-0 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

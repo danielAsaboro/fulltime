@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "18179552",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1783043100000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1783043100000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1783043160000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1783043220000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1783043280000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1783044000000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Algeria fans gather ahead of R32 vs Switzerland”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2072831024346677643",
+        "url": "https://x.com/alkassenglish/status/2072831024346677643",
+        "observedAt": "2026-07-02 23:53"
+      }
+    },
+    {
+      "at": 1783044060000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Switzerland may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1783044300000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Switzerland vs Algeria bet-builder helpsheet”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2072830336900255829",
+        "url": "https://x.com/TLBETS_/status/2072830336900255829",
+        "observedAt": "2026-07-02 23:50"
+      }
+    },
+    {
+      "at": 1783044330000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1783044420000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Switzerland, Algeria, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1783044900000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Switzerland or Algeria?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Switzerland"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Algeria"
+        }
+      ]
+    },
+    {
+      "at": 1783044906000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1783044912000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1783044918000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1783044924000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1783047621707,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:18179552:19:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 19,
+        "sourceTs": 1783047616707,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783047626707,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:18179552:19:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 19,
+        "sourceTs": 1783047616707,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783047631707,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:18179552:19:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 19,
+        "sourceTs": 1783047616707,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783048312147,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "12' GOAL — Switzerland. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 144,
+        "sourceTs": 1783048307147,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1783048317147,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1783048322147,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1783050742106,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Recently completed: Switzerland 2-0 Algeria”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2073194587691114768",
+        "url": "https://x.com/SolomonFoskaay/status/2073194587691114768",
+        "observedAt": "2026-07-03 23:58"
+      }
+    },
+    {
+      "at": 1783050777106,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Switzerland 1-0 Algeria. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 520,
+        "sourceTs": 1783050772106,
+        "action": "halftime_finalised",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1783050782106,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1783051638527,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "67' GOAL — Switzerland. 2-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 541,
+        "sourceTs": 1783051633527,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1783051643527,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1783054810521,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Switzerland 2-0 Algeria. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1070,
+        "sourceTs": 1783054805521,
+        "action": "game_finalised",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1783054815521,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1783054825521,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 2-0. No scrollback archaeology required."
+    },
+    {
+      "at": 1783054835521,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Algeria performance “disgrace”; Cabo Verde/Congo admiration contrast”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2073208773267657016",
+        "url": "https://x.com/LyesBouzidi10/status/2073208773267657016",
+        "observedAt": "2026-07-04 00:54"
+      }
+    },
+    {
+      "at": 1783054840521,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/18179552-switzerland-vs-algeria/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/18179552-switzerland-vs-algeria/scores.historical.sse",
+    "provenance": "../resources/fixtures/world-cup-2026/18179552-switzerland-vs-algeria/scores.historical.sse.provenance.json",
+    "socialSources": [
+      "https://x.com/alkassenglish/status/2072831024346677643",
+      "https://x.com/i/status/2072831024346677643",
+      "https://x.com/TLBETS_/status/2072830336900255829",
+      "https://x.com/i/status/2072830336900255829",
+      "https://x.com/NMehdid/status/2072828435886399998",
+      "https://x.com/i/status/2072828435886399998",
+      "https://x.com/YeeTak8/status/2072828183351845170",
+      "https://x.com/i/status/2072828183351845170",
+      "https://x.com/maxsbetclub/status/2072827980502470716",
+      "https://x.com/i/status/2072827980502470716",
+      "https://x.com/CavershamUnited/status/2072827299502621015",
+      "https://x.com/i/status/2072827299502621015"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 2-0 result. 8 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

@@ -36,6 +36,7 @@ export type FixtureStatus =
   | "first-half"
   | "half-time"
   | "second-half"
+  | "end-of-regulation"
   | "extra-time"
   | "penalty-shootout"
   | "full-time"

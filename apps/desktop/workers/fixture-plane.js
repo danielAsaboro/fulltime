@@ -501,9 +501,13 @@ class FixturePlane extends EventEmitter {
         const { index, proof } = decodeFixtureProof(payload)
         if (proof.manifest) {
           const manifestKey = Hypercore.key(proof.manifest)
+          // Bare Kit can reject byte-identical buffers originating from the
+          // native Hypercore proof decoder. Compare the canonical 32-byte key
+          // representation instead; the signed network manifest already pins
+          // this exact lowercase hex value.
           const manifestKeyHex = b4a.toString(manifestKey, 'hex')
           if (manifestKeyHex !== this.publicKey) {
-            throw new Error(`Fixture proof manifest resolves to ${b4a.toString(manifestKey, 'hex')} instead of the pinned feed key`)
+            throw new Error(`Fixture proof manifest resolves to ${manifestKeyHex} instead of pinned ${this.publicKey}`)
           }
           if (!this.feed.manifest) await this.feed.core.setManifest(proof.manifest)
         }

@@ -1,0 +1,438 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588318",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781452800000
+  },
+  "personas": [
+    { "id": "fan_a", "displayName": "Amina", "joinedAt": 1781452800000, "creator": true },
+    { "id": "fan_b", "displayName": "Tunde", "joinedAt": 1781452860000 },
+    { "id": "fan_c", "displayName": "Maya", "joinedAt": 1781452920000 },
+    { "id": "fan_d", "displayName": "Jo", "joinedAt": 1781452980000 }
+  ],
+  "actions": [
+    {
+      "at": 1781453400000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-germany-five-zero",
+      "text": "Germany 5-0. The viral board has gone big, but against a debutant this might still be conservative.",
+      "source": { "kind": "x-post", "postId": "2065337895590690914", "url": "https://x.com/Dhavidtips/status/2065337895590690914" }
+    },
+    {
+      "at": 1781453460000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-germany-five-zero",
+      "text": "I have 3-0, over 2.5 and Germany to win to nil. Five feels like promotion-video arithmetic."
+    },
+    {
+      "at": 1781453520000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-curacao-goal",
+      "text": "Everyone is pricing Curaçao out of the story. Germany win, but Curaçao score: 4-1. Save this before kickoff."
+    },
+    {
+      "at": 1781453580000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-germany-four-zero",
+      "item": "maya-curacao-goal",
+      "text": "A Curaçao goal is the brave bit. Neuer is confirmed, so I am taking 4-0 and the clean sheet."
+    },
+    { "at": 1781453610000, "actor": "fan_b", "type": "reaction", "item": "maya-curacao-goal", "emoji": "😮" },
+    {
+      "at": 1781453700000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "neuer-confirmed",
+      "text": "Neuer confirmed in goal. Germany cannot afford a slow opener; the first ten minutes tell us whether this becomes a procession.",
+      "source": { "kind": "x-post", "postId": "2065944826479018341", "url": "https://x.com/cfbayern/status/2065944826479018341" }
+    },
+    {
+      "at": 1781453760000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "germany-curacao-margin",
+      "question": "How big is Germany's winning margin?",
+      "options": [
+        { "key": "one-two", "label": "One or two" },
+        { "key": "three-four", "label": "Three or four" },
+        { "key": "five-plus", "label": "Five or more" },
+        { "key": "no-germany-win", "label": "Germany do not win" }
+      ]
+    },
+    { "at": 1781453765000, "actor": "fan_a", "type": "vote", "poll": "germany-curacao-margin", "option": "five-plus" },
+    { "at": 1781453770000, "actor": "fan_b", "type": "vote", "poll": "germany-curacao-margin", "option": "three-four" },
+    { "at": 1781453775000, "actor": "fan_c", "type": "vote", "poll": "germany-curacao-margin", "option": "three-four" },
+    { "at": 1781453780000, "actor": "fan_d", "type": "vote", "poll": "germany-curacao-margin", "option": "three-four" },
+    {
+      "at": 1781456522832,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588318:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 17, "sourceTs": 1781456517832, "action": "kickoff" }
+    },
+    {
+      "at": 1781456527832,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-yes",
+      "callId": "call:17588318:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 17, "sourceTs": 1781456517832, "action": "kickoff" }
+    },
+    {
+      "at": 1781456532832,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-no",
+      "callId": "call:17588318:17:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 17, "sourceTs": 1781456517832, "action": "kickoff" }
+    },
+    {
+      "at": 1781456537832,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-first-goal-home",
+      "callId": "call:17588318:17:phase:kickoff:first-goal",
+      "option": "home",
+      "source": { "kind": "archive-event", "sequence": 17, "sourceTs": 1781456517832, "action": "kickoff" }
+    },
+    {
+      "at": 1781456542832,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-first-goal-home",
+      "callId": "call:17588318:17:phase:kickoff:first-goal",
+      "option": "home",
+      "source": { "kind": "archive-event", "sequence": 17, "sourceTs": 1781456517832, "action": "kickoff" }
+    },
+    {
+      "at": 1781456546832,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-first-goal-away",
+      "callId": "call:17588318:17:phase:kickoff:first-goal",
+      "option": "away",
+      "source": { "kind": "archive-event", "sequence": 17, "sourceTs": 1781456517832, "action": "kickoff" }
+    },
+    {
+      "at": 1781456910470,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "germany-one-zero",
+      "text": "5' GERMANY 1-0. Fast-goal call lands and the first-goal receipt is already settled.",
+      "source": { "kind": "archive-event", "sequence": 94, "sourceTs": 1781456905470, "action": "goal", "participant": 1, "clockSeconds": 305, "goalType": "Shot", "score": "1-0" }
+    },
+    { "at": 1781456915470, "actor": "fan_b", "type": "reaction", "item": "germany-one-zero", "emoji": "⚽" },
+    {
+      "at": 1781456920470,
+      "actor": "fan_c",
+      "type": "reply",
+      "item": "germany-one-zero",
+      "text": "My slow-start call is gone. The 4-1 is still very much alive."
+    },
+    {
+      "at": 1781457843447,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "curacao-equaliser",
+      "text": "20' CURAÇAO 1-1. There is the goal everybody said could not happen. Clean-sheet calls deleted by the match, preserved by the room.",
+      "source": { "kind": "archive-event", "sequence": 266, "sourceTs": 1781457838447, "action": "goal", "participant": 2, "clockSeconds": 1213, "goalType": "Shot", "score": "1-1" }
+    },
+    { "at": 1781457848447, "actor": "fan_a", "type": "reaction", "item": "curacao-equaliser", "emoji": "😮" },
+    {
+      "at": 1781457853447,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-clean-sheet-gone",
+      "item": "jo-germany-four-zero",
+      "text": "My 4-0 lasted twenty minutes. Maya saw the one thing the consensus missed."
+    },
+    {
+      "at": 1781458837943,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "germany-two-one",
+      "text": "37' GERMANY 2-1. Order restored, but every pre-match clean-sheet expert has already been caught.",
+      "source": { "kind": "archive-event", "sequence": 382, "sourceTs": 1781458832943, "action": "goal", "participant": 1, "clockSeconds": 2267, "goalType": "Head", "score": "2-1" }
+    },
+    {
+      "at": 1781458842943,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-another-after-two-one-yes",
+      "callId": "call:17588318:382:goal:another-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 382, "sourceTs": 1781458832943, "action": "goal" }
+    },
+    {
+      "at": 1781458847943,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-another-after-two-one-no",
+      "callId": "call:17588318:382:goal:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 382, "sourceTs": 1781458832943, "action": "goal" }
+    },
+    {
+      "at": 1781458852943,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-another-after-two-one-no",
+      "callId": "call:17588318:382:goal:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 382, "sourceTs": 1781458832943, "action": "goal" }
+    },
+    {
+      "at": 1781459437943,
+      "actor": "fan_c",
+      "type": "reply",
+      "item": "germany-two-one",
+      "text": "Ten minutes without another goal. The locked no lands; Amina's procession has to wait."
+    },
+    {
+      "at": 1781459510514,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "germany-three-one",
+      "text": "49' penalty scored: Germany 3-1. Just late enough to lose my ten-minute call, just early enough to wreck Maya's 4-1 nerves.",
+      "source": { "kind": "archive-event", "sequence": 489, "sourceTs": 1781459505514, "action": "penalty-scored", "participant": 1, "score": "3-1" }
+    },
+    {
+      "at": 1781459542668,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "halftime-three-one",
+      "text": "Half-time: Germany 3-1 Curaçao. One shock, four pre-match scorelines still fighting for survival.",
+      "source": { "kind": "archive-event", "sequence": 492, "sourceTs": 1781459537668, "action": "half-time", "score": "3-1" }
+    },
+    {
+      "at": 1781459545668,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-next-second-half-home",
+      "callId": "call:17588318:492:phase:half-time:next-goal-second-half",
+      "option": "home",
+      "source": { "kind": "archive-event", "sequence": 492, "sourceTs": 1781459537668, "action": "half-time" }
+    },
+    {
+      "at": 1781459549668,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-next-second-half-home",
+      "callId": "call:17588318:492:phase:half-time:next-goal-second-half",
+      "option": "home",
+      "source": { "kind": "archive-event", "sequence": 492, "sourceTs": 1781459537668, "action": "half-time" }
+    },
+    {
+      "at": 1781459553668,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-next-second-half-away",
+      "callId": "call:17588318:492:phase:half-time:next-goal-second-half",
+      "option": "away",
+      "source": { "kind": "archive-event", "sequence": 492, "sourceTs": 1781459537668, "action": "half-time" }
+    },
+    {
+      "at": 1781459557668,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-fast-start-yes",
+      "callId": "call:17588318:492:phase:half-time:second-half-fast-start",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 492, "sourceTs": 1781459537668, "action": "half-time" }
+    },
+    {
+      "at": 1781459561668,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-fast-start-no",
+      "callId": "call:17588318:492:phase:half-time:second-half-fast-start",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 492, "sourceTs": 1781459537668, "action": "half-time" }
+    },
+    {
+      "at": 1781459565668,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-fast-start-no",
+      "callId": "call:17588318:492:phase:half-time:second-half-fast-start",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 492, "sourceTs": 1781459537668, "action": "half-time" }
+    },
+    {
+      "at": 1781460648849,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "germany-four-one",
+      "text": "46' of the second half: Germany 4-1. Next-goal home receipts land; Maya's exact call is on the screen.",
+      "source": { "kind": "archive-event", "sequence": 518, "sourceTs": 1781460643849, "action": "goal", "participant": 1, "clockSeconds": 2806, "goalType": "Shot", "score": "4-1" }
+    },
+    { "at": 1781460653849, "actor": "fan_c", "type": "reaction", "item": "germany-four-one", "emoji": "🔥" },
+    {
+      "at": 1781460658849,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-four-one-live",
+      "item": "maya-curacao-goal",
+      "text": "4-1 exactly. Stop the count and award the ball-knowledge trophy now."
+    },
+    {
+      "at": 1781460663849,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-another-after-four-one-yes",
+      "callId": "call:17588318:518:goal:another-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 518, "sourceTs": 1781460643849, "action": "goal" }
+    },
+    {
+      "at": 1781460668849,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-another-after-four-one-no",
+      "callId": "call:17588318:518:goal:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 518, "sourceTs": 1781460643849, "action": "goal" }
+    },
+    {
+      "at": 1781460672849,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-another-after-four-one-no",
+      "callId": "call:17588318:518:goal:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 518, "sourceTs": 1781460643849, "action": "goal" }
+    },
+    {
+      "at": 1781461248849,
+      "actor": "fan_c",
+      "type": "reply",
+      "item": "maya-four-one-live",
+      "text": "Ten minutes pass, no fifth. Another locked no lands and 4-1 survives—for now."
+    },
+    {
+      "at": 1781461963787,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "germany-five-one",
+      "text": "67' GERMANY 5-1. The five-goal margin vote is one goal away, and the 5-0 board somehow underestimated the chaos.",
+      "source": { "kind": "archive-event", "sequence": 752, "sourceTs": 1781461958787, "action": "goal", "participant": 1, "clockSeconds": 4070, "goalType": "Shot", "score": "5-1" }
+    },
+    { "at": 1781461968787, "actor": "fan_d", "type": "reaction", "item": "germany-five-one", "emoji": "👏" },
+    {
+      "at": 1781462508131,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "germany-six-one",
+      "text": "77' GERMANY 6-1. Amina's five-plus margin is home; my cautious 3-0 has aged beyond recognition.",
+      "source": { "kind": "archive-event", "sequence": 807, "sourceTs": 1781462503131, "action": "goal", "participant": 1, "clockSeconds": 4665, "goalType": "Shot", "score": "6-1" }
+    },
+    {
+      "at": 1781462513131,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-another-after-six-one-yes",
+      "callId": "call:17588318:807:goal:another-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 807, "sourceTs": 1781462503131, "action": "goal" }
+    },
+    {
+      "at": 1781462518131,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-another-after-six-one-no",
+      "callId": "call:17588318:807:goal:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 807, "sourceTs": 1781462503131, "action": "goal" }
+    },
+    {
+      "at": 1781462523131,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-another-after-six-one-no",
+      "callId": "call:17588318:807:goal:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 807, "sourceTs": 1781462503131, "action": "goal" }
+    },
+    {
+      "at": 1781463108131,
+      "actor": "fan_c",
+      "type": "reply",
+      "item": "germany-six-one",
+      "text": "The ten-minute market closes on no. Amina misses by seconds while the room keeps the receipt exact."
+    },
+    {
+      "at": 1781463148411,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "germany-seven-one",
+      "text": "87' GERMANY 7-1. Seven again. The old 7-1 memory just entered every conversation at once.",
+      "source": { "kind": "archive-event", "sequence": 918, "sourceTs": 1781463143411, "action": "goal", "participant": 1, "clockSeconds": 5268, "goalType": "Shot", "score": "7-1" }
+    },
+    { "at": 1781463153411, "actor": "fan_b", "type": "reaction", "item": "germany-seven-one", "emoji": "🔥" },
+    {
+      "at": 1781463158411,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-2014-memory",
+      "item": "germany-seven-one",
+      "text": "A 7-1 Germany scoreline and the entire timeline hears 2014 whispering back.",
+      "source": { "kind": "x-post", "postId": "2066667190200549713", "url": "https://x.com/jiroote_ingo1/status/2066667190200549713" }
+    },
+    {
+      "at": 1781463872350,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "fulltime-seven-one",
+      "text": "Finalised: Germany 7-1 Curaçao. Seven confirmed Germany goals, one confirmed Curaçao goal, and a five-plus winning margin.",
+      "source": { "kind": "archive-event", "sequence": 994, "sourceTs": 1781463867350, "action": "game_finalised", "score": "7-1" }
+    },
+    {
+      "at": 1781463877350,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-curacao-receipt",
+      "item": "maya-curacao-goal",
+      "text": "Wrong exact score, right on the detail nobody else gave Curaçao: they scored. That is why the early call matters."
+    },
+    { "at": 1781463882350, "actor": "fan_a", "type": "reaction", "item": "maya-curacao-receipt", "emoji": "👏" },
+    {
+      "at": 1781463887350,
+      "actor": "fan_b",
+      "type": "quote",
+      "key": "tunde-wrong-receipt",
+      "item": "amina-germany-five-zero",
+      "text": "I called 3-0 and win to nil. Wrong total, wrong score, wrong clean sheet. Amina called five-plus and owns this room."
+    },
+    {
+      "at": 1781463892350,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "fulltime-seven-one",
+      "text": "The giant won exactly as expected; the route there shocked every supposedly safe prediction. That is the whole tournament in one room."
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588318-germany-vs-curacao/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588318-germany-vs-curacao/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588318-germany-vs-curacao/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/Dhavidtips/status/2065337895590690914",
+      "https://x.com/ace_predict/status/2065947210664042625",
+      "https://x.com/ClarkyTips/status/2065944292552507766",
+      "https://x.com/cfbayern/status/2065944826479018341",
+      "https://x.com/emelucrypto/status/2065217903583015087",
+      "https://x.com/jiroote_ingo1/status/2066667190200549713"
+    ],
+    "sourcePolicy": "The authenticated TxLINE archive is authoritative for fixture identity, kickoff, the seven confirmed Germany goals, Curaçao's confirmed goal, match phases, and the 7-1 terminal result. Pre-match scorelines, team-news discussion, clean-sheet consensus, 2014 comparisons, and interpretation are concise fictional-room restagings informed by the cited public X posts; personas do not impersonate source authors. Player attribution appears only in sourced social discussion, not as an archive-event claim. All nine available provenance sidecars match their corresponding raw bytes. The production replay consumer parses 974 preserved interval records ending at sequence 994; the derived analysis reports 994 historical sequence positions. Calls voided by preserved feed gaps are omitted, and only settled canonical markets are answered."
+  }
+}

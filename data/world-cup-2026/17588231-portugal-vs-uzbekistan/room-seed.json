@@ -1,0 +1,399 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588231",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782229500000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782229500000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782229560000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782229620000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782229680000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782230400000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “In Houston for Portugal vs Uzbekistan coverage”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069207683614265792",
+        "url": "https://x.com/VAVELesp/status/2069207683614265792",
+        "observedAt": "2026-06-22 23:55"
+      }
+    },
+    {
+      "at": 1782230460000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Portugal may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782230700000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Grup K: PORTUGAL 🆚 UZBEKISTAN fixture promo”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069206212101681301",
+        "url": "https://x.com/gitaryour/status/2069206212101681301",
+        "observedAt": "2026-06-22 23:49"
+      }
+    },
+    {
+      "at": 1782230730000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782230820000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Portugal, Uzbekistan, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782231300000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Portugal or Uzbekistan?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Portugal"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Uzbekistan"
+        }
+      ]
+    },
+    {
+      "at": 1782231306000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782231312000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782231318000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782231324000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782234018274,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588231:18:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 18,
+        "sourceTs": 1782234013274,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782234023274,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588231:18:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 18,
+        "sourceTs": 1782234013274,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782234028274,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588231:18:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 18,
+        "sourceTs": 1782234013274,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782234463330,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "8' GOAL — Portugal. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 94,
+        "sourceTs": 1782234458330,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1782234468330,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782234473330,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "Inside ten minutes. The opening-goal yes receipts land immediately."
+    },
+    {
+      "at": 1782235072518,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "18' GOAL — Portugal. 2-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 177,
+        "sourceTs": 1782235067518,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1782235077518,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782236397922,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "40' GOAL — Portugal. 3-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 409,
+        "sourceTs": 1782236392922,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "3-0"
+      }
+    },
+    {
+      "at": 1782236402922,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782237087932,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “PT 5-0 UZB: Ronaldo 6’ 39’, Mendes 17’, OG 60’, Leão 87’”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069570977810252116",
+        "url": "https://x.com/Nadiedeperu/status/2069570977810252116",
+        "observedAt": "2026-06-23 23:59"
+      }
+    },
+    {
+      "at": 1782237122932,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Portugal 3-0 Uzbekistan. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 571,
+        "sourceTs": 1782237117932,
+        "action": "halftime_finalised",
+        "score": "3-0"
+      }
+    },
+    {
+      "at": 1782237127932,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782239080066,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "goal-4",
+      "text": "85' GOAL — Portugal. 4-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 730,
+        "sourceTs": 1782239075066,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Own",
+        "score": "4-0"
+      }
+    },
+    {
+      "at": 1782239085066,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "goal-4",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782240762268,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-5",
+      "text": "113' GOAL — Portugal. 5-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1060,
+        "sourceTs": 1782240757268,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "5-0"
+      }
+    },
+    {
+      "at": 1782240767268,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-5",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782241629997,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Portugal 5-0 Uzbekistan. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1166,
+        "sourceTs": 1782241624997,
+        "action": "game_finalised",
+        "score": "5-0"
+      }
+    },
+    {
+      "at": 1782241634997,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782241644997,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 5-0. No scrollback archaeology required."
+    },
+    {
+      "at": 1782241654997,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “CR7 breaks major records as Portugal crushes Uzbekistan 5-0”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069571066683404580",
+        "url": "https://x.com/PrameyaEnglish/status/2069571066683404580",
+        "observedAt": "2026-06-23 23:59"
+      }
+    },
+    {
+      "at": 1782241659997,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588231-portugal-vs-uzbekistan/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588231-portugal-vs-uzbekistan/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588231-portugal-vs-uzbekistan/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/VAVELesp/status/2069207683614265792",
+      "https://x.com/i/status/2069207683614265792",
+      "https://x.com/gitaryour/status/2069206212101681301",
+      "https://x.com/i/status/2069206212101681301",
+      "https://x.com/honest_bets/status/2069205100577333708",
+      "https://x.com/i/status/2069205100577333708",
+      "https://x.com/ayubafootball/status/2069204655892992493",
+      "https://x.com/i/status/2069204655892992493",
+      "https://x.com/MARCAinENGLISH/status/2069203840398659645",
+      "https://x.com/i/status/2069203840398659645",
+      "https://x.com/asutdegreat/status/2069200007283032285",
+      "https://x.com/i/status/2069200007283032285"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 5-0 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

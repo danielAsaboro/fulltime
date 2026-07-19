@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588309",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782524700000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782524700000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782524760000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782524820000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782524880000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782525600000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Salah: goal or assist in ALL 4 WC games 🇪🇬 — goes again vs Iran #EGYvIRN”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070658267785678967",
+        "url": "https://x.com/_JacobEvans/status/2070658267785678967",
+        "observedAt": "2026-06-26 23:59"
+      }
+    },
+    {
+      "at": 1782525660000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Egypt may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782525900000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “What was FIFA thinking making WC “Pride Match” Seattle — Iran vs Egypt?”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070658114983018575",
+        "url": "https://x.com/GaysForTrump/status/2070658114983018575",
+        "observedAt": "2026-06-26 23:59"
+      }
+    },
+    {
+      "at": 1782525930000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782526020000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Egypt, Iran, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782526500000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Egypt or Iran?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Egypt"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Iran"
+        }
+      ]
+    },
+    {
+      "at": 1782526506000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782526512000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782526518000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782526524000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782529258484,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588309:14:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 14,
+        "sourceTs": 1782529253484,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782529263484,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588309:14:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 14,
+        "sourceTs": 1782529253484,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782529268484,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588309:14:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 14,
+        "sourceTs": 1782529253484,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782529603031,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "6' GOAL — Egypt. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 75,
+        "sourceTs": 1782529598031,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1782529608031,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782529613031,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "Inside ten minutes. The opening-goal yes receipts land immediately."
+    },
+    {
+      "at": 1782530144022,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "15' GOAL — Iran. 1-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 147,
+        "sourceTs": 1782530139022,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1782530149022,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782532533313,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “2010 Mexico offside parallel to Iran’s goal vs Egypt — offside law explain”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071018822266392842",
+        "url": "https://x.com/sekgwariz/status/2071018822266392842",
+        "observedAt": "2026-06-27 23:52"
+      }
+    },
+    {
+      "at": 1782532568313,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Egypt 1-1 Iran. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 559,
+        "sourceTs": 1782532563313,
+        "action": "halftime_finalised",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1782532573313,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782536942695,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Egypt 1-1 Iran. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1140,
+        "sourceTs": 1782536937695,
+        "action": "game_finalised",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1782536947695,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782536957695,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 1-1. No scrollback archaeology required."
+    },
+    {
+      "at": 1782536967695,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Lost interest after Iran eliminated; will track Egypt progress”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071378812802339082",
+        "url": "https://x.com/z_hammie/status/2071378812802339082",
+        "observedAt": "2026-06-28 23:42"
+      }
+    },
+    {
+      "at": 1782536972695,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588309-egypt-vs-iran/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588309-egypt-vs-iran/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588309-egypt-vs-iran/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/_JacobEvans/status/2070658267785678967",
+      "https://x.com/i/status/2070658267785678967",
+      "https://x.com/GaysForTrump/status/2070658114983018575",
+      "https://x.com/i/status/2070658114983018575",
+      "https://x.com/scarlettjo57692/status/2070658066652201330",
+      "https://x.com/i/status/2070658066652201330",
+      "https://x.com/Allthatandmor/status/2070657736690291097",
+      "https://x.com/i/status/2070657736690291097",
+      "https://x.com/THECASHCONFLICT/status/2070656980167839893",
+      "https://x.com/i/status/2070656980167839893",
+      "https://x.com/TylerPreston20/status/2070656872533627124",
+      "https://x.com/i/status/2070656872533627124"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 1-1 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

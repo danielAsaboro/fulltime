@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17926686",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782423900000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782423900000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782423960000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782424020000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782424080000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782424800000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “I don’t want to watch Brazil vs Japan hopefully Sweden comes second”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069933403227431139",
+        "url": "https://x.com/AJ_segun/status/2069933403227431139",
+        "observedAt": "2026-06-24 23:59"
+      }
+    },
+    {
+      "at": 1782424860000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Japan may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782425100000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “actively predicting on TopNod… Japan vs Sweden (June 25) → called Japan to win 🇯🇵”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069932570993717499",
+        "url": "https://x.com/Jamestflx/status/2069932570993717499",
+        "observedAt": "2026-06-24 23:55"
+      }
+    },
+    {
+      "at": 1782425130000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782425220000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Japan, Sweden, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782425700000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Japan or Sweden?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Japan"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Sweden"
+        }
+      ]
+    },
+    {
+      "at": 1782425706000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782425712000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782425718000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782425724000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782428414557,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17926686:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782428409557,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782428419557,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17926686:16:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782428409557,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782428424557,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17926686:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782428409557,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782431757110,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “HT: JAPAN 0-0 SWEDEN”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070295964120686613",
+        "url": "https://x.com/Anabel_Chi326/status/2070295964120686613",
+        "observedAt": "2026-06-25 23:59"
+      }
+    },
+    {
+      "at": 1782431792110,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Japan 0-0 Sweden. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 445,
+        "sourceTs": 1782431787110,
+        "action": "halftime_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1782431797110,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782433019947,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "77' GOAL — Japan. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 553,
+        "sourceTs": 1782433014947,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1782433024947,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782433029947,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1782433371217,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "83' GOAL — Sweden. 1-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 596,
+        "sourceTs": 1782433366217,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1782433376217,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782435826992,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Japan 1-1 Sweden. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 884,
+        "sourceTs": 1782435821992,
+        "action": "game_finalised",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1782435831992,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782435841992,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 1-1. No scrollback archaeology required."
+    },
+    {
+      "at": 1782435851992,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Tokyo, Japan Football fans celebrate after Japan’s 1-1 draw against Sweden… securing both teams’ progression… Photograph: Philip Fong/AFP/Getty Images”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070652509069385934",
+        "url": "https://x.com/toot5000/status/2070652509069385934",
+        "observedAt": "2026-06-26 23:36"
+      }
+    },
+    {
+      "at": 1782435856992,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17926686-japan-vs-sweden/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17926686-japan-vs-sweden/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17926686-japan-vs-sweden/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/AJ_segun/status/2069933403227431139",
+      "https://x.com/i/status/2069933403227431139",
+      "https://x.com/Jamestflx/status/2069932570993717499",
+      "https://x.com/i/status/2069932570993717499",
+      "https://x.com/jeongwoose/status/2069931778136248790",
+      "https://x.com/i/status/2069931778136248790",
+      "https://x.com/studiometaxx/status/2069931686402416698",
+      "https://x.com/i/status/2069931686402416698",
+      "https://x.com/AmJustAbdul/status/2069928772149686499",
+      "https://x.com/i/status/2069928772149686499",
+      "https://x.com/TueOnayczc/status/2069927146391216592",
+      "https://x.com/i/status/2069927146391216592"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 1-1 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

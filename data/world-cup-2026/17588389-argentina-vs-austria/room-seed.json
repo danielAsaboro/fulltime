@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588389",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782143100000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782143100000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782143160000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782143220000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782143280000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782144000000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Huge bet: $777,000 on Argentina ML -215 vs Austria at Red Rock Casino”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068844137823056215",
+        "url": "https://x.com/BFawkes22/status/2068844137823056215",
+        "observedAt": "2026-06-21 23:50"
+      }
+    },
+    {
+      "at": 1782144060000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Argentina may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782144300000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Argentina fans have taken over Dallas ahead of clash vs Austria 🇦🇷”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068843422673158383",
+        "url": "https://x.com/CrewsMat10/status/2068843422673158383",
+        "observedAt": "2026-06-21 23:48"
+      }
+    },
+    {
+      "at": 1782144330000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782144420000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Argentina, Austria, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782144900000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Argentina or Austria?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Argentina"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Austria"
+        }
+      ]
+    },
+    {
+      "at": 1782144906000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782144912000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782144918000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782144924000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782147669922,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588389:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782147664922,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782147674922,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588389:16:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782147664922,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782147679922,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588389:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782147664922,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782150016469,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "40' GOAL — Argentina. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 301,
+        "sourceTs": 1782150011469,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1782150021469,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782150026469,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1782150791655,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Messi becomes WC all-time leading scorer; brace as Argentina 2-0 Austria into last 32”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069148389971816723",
+        "url": "https://x.com/TRTWorldNow/status/2069148389971816723",
+        "observedAt": "2026-06-22 19:59"
+      }
+    },
+    {
+      "at": 1782150826655,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Argentina 1-0 Austria. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 416,
+        "sourceTs": 1782150821655,
+        "action": "halftime_finalised",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1782150831655,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782154806545,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "119' GOAL — Argentina. 2-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 880,
+        "sourceTs": 1782154801545,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1782154811545,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782155275678,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Argentina 2-0 Austria. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 905,
+        "sourceTs": 1782155270678,
+        "action": "game_finalised",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1782155280678,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782155290678,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 2-0. No scrollback archaeology required."
+    },
+    {
+      "at": 1782155300678,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “MESSI WIRA ARGENTINA BENAM AUSTRIA — FT 2-0; Messi 38’, 90+2”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069208390581240297",
+        "url": "https://x.com/433Malaysia/status/2069208390581240297",
+        "observedAt": "2026-06-22 23:58"
+      }
+    },
+    {
+      "at": 1782155305678,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588389-argentina-vs-austria/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588389-argentina-vs-austria/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588389-argentina-vs-austria/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/BFawkes22/status/2068844137823056215",
+      "https://x.com/i/status/2068844137823056215",
+      "https://x.com/CrewsMat10/status/2068843422673158383",
+      "https://x.com/i/status/2068843422673158383",
+      "https://x.com/Javi_arik/status/2068846352138674656",
+      "https://x.com/i/status/2068846352138674656",
+      "https://x.com/TRTWorldNow/status/2069148389971816723",
+      "https://x.com/i/status/2069148389971816723",
+      "https://x.com/JuegoDePelotaGT/status/2069148387400642971",
+      "https://x.com/i/status/2069148387400642971",
+      "https://x.com/hayek01234/status/2069148370376052923",
+      "https://x.com/i/status/2069148370376052923"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 2-0 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

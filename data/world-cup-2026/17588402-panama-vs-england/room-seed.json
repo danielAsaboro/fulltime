@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588402",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782589500000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782589500000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782589560000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782589620000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782589680000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782590400000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “22:00 Panama vs England — prediction poll #PANENG”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070657957633696163",
+        "url": "https://x.com/LSAlert_Main/status/2070657957633696163",
+        "observedAt": "2026-06-26 23:58"
+      }
+    },
+    {
+      "at": 1782590460000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Panama may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782590700000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Saka ready to start vs Panama despite Reece James injury”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070656708007838156",
+        "url": "https://x.com/MSports_all/status/2070656708007838156",
+        "observedAt": "2026-06-26 23:53"
+      }
+    },
+    {
+      "at": 1782590730000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782590820000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Panama, England, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782591300000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Panama or England?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Panama"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "England"
+        }
+      ]
+    },
+    {
+      "at": 1782591306000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782591312000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782591318000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782591324000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782594058607,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588402:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782594053607,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782594063607,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588402:16:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782594053607,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782594068607,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588402:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782594053607,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782596973014,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “England 2-0 Panama: Bellingham and Kane score — Three Lions top group”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071020651784114249",
+        "url": "https://x.com/avecozave/status/2071020651784114249",
+        "observedAt": "2026-06-27 23:59"
+      }
+    },
+    {
+      "at": 1782597008014,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Panama 0-0 England. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 573,
+        "sourceTs": 1782597003014,
+        "action": "halftime_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1782597013014,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782598931020,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "82' GOAL — England. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 783,
+        "sourceTs": 1782598926020,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782598936020,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782598941020,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1782599239107,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "87' GOAL — England. 0-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 850,
+        "sourceTs": 1782599234107,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Head",
+        "score": "0-2"
+      }
+    },
+    {
+      "at": 1782599244107,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782601113501,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Panama 0-2 England. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1180,
+        "sourceTs": 1782601108501,
+        "action": "game_finalised",
+        "score": "0-2"
+      }
+    },
+    {
+      "at": 1782601118501,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782601128501,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 0-2. No scrollback archaeology required."
+    },
+    {
+      "at": 1782601138501,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Jude MOTM form — poacher vs Panama + create Kane goal”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071379937681109374",
+        "url": "https://x.com/WillSadaoVi/status/2071379937681109374",
+        "observedAt": "2026-06-28 23:47"
+      }
+    },
+    {
+      "at": 1782601143501,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588402-panama-vs-england/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588402-panama-vs-england/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588402-panama-vs-england/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/LSAlert_Main/status/2070657957633696163",
+      "https://x.com/i/status/2070657957633696163",
+      "https://x.com/MSports_all/status/2070656708007838156",
+      "https://x.com/i/status/2070656708007838156",
+      "https://x.com/MSports_all/status/2070656623685586949",
+      "https://x.com/i/status/2070656623685586949",
+      "https://x.com/dreamteamfc/status/2070656183082364970",
+      "https://x.com/i/status/2070656183082364970",
+      "https://x.com/TeksFootball/status/2070655391902400722",
+      "https://x.com/i/status/2070655391902400722",
+      "https://x.com/ZionhillSlugger/status/2070652382870913313",
+      "https://x.com/i/status/2070652382870913313"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 0-2 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

@@ -1,0 +1,353 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588245",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782589500000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782589500000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782589560000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782589620000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782589680000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782590400000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Hundreds of Croatia fans storm Center City with 100-meter flag ahead of Ghana match”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070657644595917275",
+        "url": "https://x.com/CBSPhiladelphia/status/2070657644595917275",
+        "observedAt": "2026-06-26 23:57"
+      }
+    },
+    {
+      "at": 1782590460000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Croatia may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782590700000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “22:00 Croatia vs Ghana — prediction poll #CROGHA”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070655037102031129",
+        "url": "https://x.com/LSAlert_Main/status/2070655037102031129",
+        "observedAt": "2026-06-26 23:46"
+      }
+    },
+    {
+      "at": 1782590730000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782590820000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Croatia, Ghana, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782591300000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Croatia or Ghana?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Croatia"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Ghana"
+        }
+      ]
+    },
+    {
+      "at": 1782591306000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782591312000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782591318000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782591324000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782594084380,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588245:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782594079380,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782594089380,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588245:16:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782594079380,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782594094380,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588245:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782594079380,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782596019769,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "33' GOAL — Croatia. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 317,
+        "sourceTs": 1782596014769,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1782596024769,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782596029769,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1782596996153,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Job done England; much better Croatia vs Ghana #CROGHA”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071020590916391342",
+        "url": "https://x.com/26YearsofFergie/status/2071020590916391342",
+        "observedAt": "2026-06-27 23:59"
+      }
+    },
+    {
+      "at": 1782597031153,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Croatia 1-0 Ghana. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 502,
+        "sourceTs": 1782597026153,
+        "action": "halftime_finalised",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1782597036153,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782599891841,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "97' GOAL — Ghana. 1-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 772,
+        "sourceTs": 1782599886841,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1782599896841,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782600293351,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "104' GOAL — Croatia. 2-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 820,
+        "sourceTs": 1782600288351,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Head",
+        "score": "2-1"
+      }
+    },
+    {
+      "at": 1782600298351,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782601418579,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Croatia 2-1 Ghana. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 988,
+        "sourceTs": 1782601413579,
+        "action": "game_finalised",
+        "score": "2-1"
+      }
+    },
+    {
+      "at": 1782601423579,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782601433579,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 2-1. No scrollback archaeology required."
+    },
+    {
+      "at": 1782601443579,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “RO32 scoresheet includes Colombia 3-1 Ghana prediction slate”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071363764994093061",
+        "url": "https://x.com/olamidefesojaye/status/2071363764994093061",
+        "observedAt": "2026-06-28 22:43"
+      }
+    },
+    {
+      "at": 1782601448579,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588245-croatia-vs-ghana/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588245-croatia-vs-ghana/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588245-croatia-vs-ghana/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/CBSPhiladelphia/status/2070657644595917275",
+      "https://x.com/i/status/2070657644595917275",
+      "https://x.com/LSAlert_Main/status/2070655037102031129",
+      "https://x.com/i/status/2070655037102031129",
+      "https://x.com/nicktargets/status/2070651330146734448",
+      "https://x.com/i/status/2070651330146734448",
+      "https://x.com/6abc/status/2070650872032325681",
+      "https://x.com/i/status/2070650872032325681",
+      "https://x.com/spfltourist/status/2070655550933626898",
+      "https://x.com/i/status/2070655550933626898",
+      "https://x.com/26YearsofFergie/status/2071020590916391342",
+      "https://x.com/i/status/2071020590916391342"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 2-1 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

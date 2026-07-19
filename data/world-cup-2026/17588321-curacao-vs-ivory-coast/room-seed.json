@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588321",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782413100000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782413100000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782413160000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782413220000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782413280000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782414000000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Nah, Ivory Coast vs. Curaçao in Philly tomorrow is still commanding a premium. People really just want to experience a World Cup match.”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069932742788173960",
+        "url": "https://x.com/pgoings/status/2069932742788173960",
+        "observedAt": "2026-06-24 23:56"
+      }
+    },
+    {
+      "at": 1782414060000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Curacao may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782414300000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Faé à la conférence de presse Côte d’Ivoire vs Curaçao. Emerse Faé : « Ndicka sera disponible et sélectionnable pour le match de demain. »”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069931200349692414",
+        "url": "https://x.com/Alainxx0v/status/2069931200349692414",
+        "observedAt": "2026-06-24 23:50"
+      }
+    },
+    {
+      "at": 1782414330000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782414420000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Curacao, Ivory Coast, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782414900000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Curacao or Ivory Coast?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Curacao"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Ivory Coast"
+        }
+      ]
+    },
+    {
+      "at": 1782414906000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782414912000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782414918000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782414924000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782417665749,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588321:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1782417660749,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782417670749,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588321:17:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1782417660749,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782417675749,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588321:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1782417660749,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782418108781,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "8' GOAL — Ivory Coast. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 103,
+        "sourceTs": 1782418103781,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782418113781,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782418118781,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "Inside ten minutes. The opening-goal yes receipts land immediately."
+    },
+    {
+      "at": 1782420784907,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “GOAL. Nicolas PEPE, 7' — Curaçao 0-1 Côte d'Ivoire. #WorldCup2026 #CURIVO”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070295102656770153",
+        "url": "https://x.com/onurftbl/status/2070295102656770153",
+        "observedAt": "2026-06-25 23:56"
+      }
+    },
+    {
+      "at": 1782420819907,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Curacao 0-1 Ivory Coast. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 557,
+        "sourceTs": 1782420814907,
+        "action": "halftime_finalised",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782420824907,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782422765087,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "85' GOAL — Ivory Coast. 0-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 795,
+        "sourceTs": 1782422760087,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-2"
+      }
+    },
+    {
+      "at": 1782422770087,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782424929895,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Curacao 0-2 Ivory Coast. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1137,
+        "sourceTs": 1782424924895,
+        "action": "game_finalised",
+        "score": "0-2"
+      }
+    },
+    {
+      "at": 1782424934895,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782424944895,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 0-2. No scrollback archaeology required."
+    },
+    {
+      "at": 1782424954895,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “FT Group E - MD 3 Curacao 0-2 Ivory Coast ⚽⚽ Nicolas Pepe 7', 64' … mengunci tiket lolos dari fase grup!”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070633200942985571",
+        "url": "https://x.com/papabolabola/status/2070633200942985571",
+        "observedAt": "2026-06-26 22:20"
+      }
+    },
+    {
+      "at": 1782424959895,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588321-curacao-vs-ivory-coast/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588321-curacao-vs-ivory-coast/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588321-curacao-vs-ivory-coast/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/pgoings/status/2069932742788173960",
+      "https://x.com/i/status/2069932742788173960",
+      "https://x.com/Alainxx0v/status/2069931200349692414",
+      "https://x.com/i/status/2069931200349692414",
+      "https://x.com/_TJKC_/status/2069928249883275458",
+      "https://x.com/i/status/2069928249883275458",
+      "https://x.com/UtdRedDevils20/status/2069924595059097835",
+      "https://x.com/i/status/2069924595059097835",
+      "https://x.com/WC26Hub/status/2069922958097682593",
+      "https://x.com/i/status/2069922958097682593",
+      "https://x.com/onurftbl/status/2070295102656770153",
+      "https://x.com/i/status/2070295102656770153"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 0-2 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

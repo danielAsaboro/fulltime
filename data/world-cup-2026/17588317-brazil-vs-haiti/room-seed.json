@@ -1,0 +1,348 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588317",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781910900000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1781910900000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1781910960000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1781911020000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1781911080000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1781911800000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Quote of Brazil XI: fail to beat Haiti = end of WC”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068121490545906089",
+        "url": "https://x.com/i/status/2068121490545906089",
+        "observedAt": "2026-06-19 23:59"
+      }
+    },
+    {
+      "at": 1781911860000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Brazil may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1781912100000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Bets: O3.5, BTTS, Bruno TSOA; score pred 4-1 Brazil”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068121461072785462",
+        "url": "https://x.com/i/status/2068121461072785462",
+        "observedAt": "2026-06-19 23:59"
+      }
+    },
+    {
+      "at": 1781912130000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781912220000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Brazil, Haiti, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1781912700000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Brazil or Haiti?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Brazil"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Haiti"
+        }
+      ]
+    },
+    {
+      "at": 1781912706000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781912712000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1781912718000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781912724000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1781915563253,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588317:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1781915558253,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781915568253,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588317:17:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1781915558253,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781915573253,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588317:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1781915558253,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781917001183,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "24' GOAL — Brazil. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 272,
+        "sourceTs": 1781916996183,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1781917006183,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781917011183,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1781917756952,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "37' GOAL — Brazil. 2-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 369,
+        "sourceTs": 1781917751952,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1781917761952,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781918467242,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "49' GOAL — Brazil. 3-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 474,
+        "sourceTs": 1781918462242,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "3-0"
+      }
+    },
+    {
+      "at": 1781918472242,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781918698572,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Live conversation denser in FT/MOTM recaps same day”",
+      "source": null
+    },
+    {
+      "at": 1781918733572,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Brazil 3-0 Haiti. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 516,
+        "sourceTs": 1781918728572,
+        "action": "halftime_finalised",
+        "score": "3-0"
+      }
+    },
+    {
+      "at": 1781918738572,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1781923288342,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Brazil 3-0 Haiti. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1046,
+        "sourceTs": 1781923283342,
+        "action": "game_finalised",
+        "score": "3-0"
+      }
+    },
+    {
+      "at": 1781923293342,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1781923303342,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 3-0. No scrollback archaeology required."
+    },
+    {
+      "at": 1781923313342,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “MOTM Vinícius Júnior; Brazil cruise 3-0; two goal involvements”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068469822766129604",
+        "url": "https://x.com/i/status/2068469822766129604",
+        "observedAt": "2026-06-20 23:03"
+      }
+    },
+    {
+      "at": 1781923318342,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588317-brazil-vs-haiti/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588317-brazil-vs-haiti/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588317-brazil-vs-haiti/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/i/status/2068121490545906089",
+      "https://x.com/i/status/2068121461072785462",
+      "https://x.com/i/status/2068121255270916533",
+      "https://x.com/i/status/2068121187473899731",
+      "https://x.com/i/status/2068121028531024362",
+      "https://x.com/i/status/2068120986856169787",
+      "https://x.com/i/status/2068482206192861484",
+      "https://x.com/i/status/2068469822766129604",
+      "https://x.com/i/status/2068464044680380822",
+      "https://x.com/i/status/2068457715576328346",
+      "https://x.com/i/status/2068814226160857091",
+      "https://x.com/i/status/2068823531282997363"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 3-0 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

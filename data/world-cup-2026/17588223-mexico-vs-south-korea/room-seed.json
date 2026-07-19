@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588223",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781826300000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1781826300000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1781826360000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1781826420000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1781826480000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1781827200000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Official Mexico XI vs South Korea”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067759029531635936",
+        "url": "https://x.com/i/status/2067759029531635936",
+        "observedAt": "2026-06-18 23:59"
+      }
+    },
+    {
+      "at": 1781827260000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Mexico may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1781827500000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Betting card Mexico vs South Korea — singles/doubles”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067758847926640870",
+        "url": "https://x.com/i/status/2067758847926640870",
+        "observedAt": "2026-06-18 23:58"
+      }
+    },
+    {
+      "at": 1781827530000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781827620000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Mexico, South Korea, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1781828100000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Mexico or South Korea?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Mexico"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "South Korea"
+        }
+      ]
+    },
+    {
+      "at": 1781828106000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781828112000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1781828118000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781828124000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1781830851063,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588223:19:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 19,
+        "sourceTs": 1781830846063,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781830856063,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588223:19:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 19,
+        "sourceTs": 1781830846063,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781830861063,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588223:19:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 19,
+        "sourceTs": 1781830846063,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781833801385,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “\"GOAL. Luis ROMO, 50' — Mexico 1-0 Korea Republic.\"”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068108185391497360",
+        "url": "https://x.com/i/status/2068108185391497360",
+        "observedAt": "2026-06-19 23:06"
+      }
+    },
+    {
+      "at": 1781833836385,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Mexico 0-0 South Korea. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 531,
+        "sourceTs": 1781833831385,
+        "action": "halftime_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1781833841385,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1781835071068,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "71' GOAL — Mexico. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 593,
+        "sourceTs": 1781835066068,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1781835076068,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781835081068,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1781838107157,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Mexico 1-0 South Korea. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1024,
+        "sourceTs": 1781838102157,
+        "action": "game_finalised",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1781838112157,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1781838122157,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 1-0. No scrollback archaeology required."
+    },
+    {
+      "at": 1781838132157,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Groups A/B: Mexico top with perfect record after two”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068115946670367147",
+        "url": "https://x.com/i/status/2068115946670367147",
+        "observedAt": "2026-06-19 23:37"
+      }
+    },
+    {
+      "at": 1781838137157,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588223-mexico-vs-south-korea/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588223-mexico-vs-south-korea/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588223-mexico-vs-south-korea/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/i/status/2067759029531635936",
+      "https://x.com/i/status/2067758847926640870",
+      "https://x.com/i/status/2067758816528302095",
+      "https://x.com/i/status/2067758613288853881",
+      "https://x.com/i/status/2067758473111032265",
+      "https://x.com/i/status/2067758720302379289",
+      "https://x.com/i/status/2067758827823329683",
+      "https://x.com/i/status/2068108185391497360",
+      "https://x.com/i/status/2068109070892978238",
+      "https://x.com/i/status/2068107742217384088",
+      "https://x.com/i/status/2068115946670367147",
+      "https://x.com/i/status/2068096706143535215"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 1-0 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

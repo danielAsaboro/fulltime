@@ -295,6 +295,15 @@ function FeedItem({
         <div className={cn("w-full max-w-[92%] sm:max-w-[86%]", item.author?.isCurrentUser && "ml-auto")}>
           {item.kind === "text" ? (
             <div className={cn("rounded-[18px] bg-white/65 px-4 py-3", item.author?.isCurrentUser && "bg-periwinkle-mist/65")}>
+              {item.quote ? (
+                <a
+                  href={`#${String(item.quote.itemId)}`}
+                  className="mb-2 block border-l-2 border-off-black/35 bg-parchment/65 px-3 py-2 text-body-sm text-smoke transition hover:border-off-black/70"
+                >
+                  <span className="block text-caption font-semibold text-off-black">{item.quote.author.displayName}</span>
+                  <span className="line-clamp-2">{item.quote.text}</span>
+                </a>
+              ) : null}
               {item.text ? <MessageContent text={item.text} /> : null}
               {item.attachment ? <AttachmentView itemId={String(item.id)} attachment={item.attachment} onDownload={onDownloadAttachment} /> : null}
             </div>

@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588401",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782251100000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782251100000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782251160000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782251220000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782251280000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782252000000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Tuesday best plays include Croatia vs Panama (Baturina angle)”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069205585518809472",
+        "url": "https://x.com/SmithersPicks/status/2069205585518809472",
+        "observedAt": "2026-06-22 23:47"
+      }
+    },
+    {
+      "at": 1782252060000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Panama may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782252300000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Panama vs Croatia BTTS @ 2.02”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069205100577333708",
+        "url": "https://x.com/honest_bets/status/2069205100577333708",
+        "observedAt": "2026-06-22 23:45"
+      }
+    },
+    {
+      "at": 1782252330000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782252420000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Panama, Croatia, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782252900000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Panama or Croatia?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Panama"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Croatia"
+        }
+      ]
+    },
+    {
+      "at": 1782252906000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782252912000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782252918000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782252924000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782255614500,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588401:14:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 14,
+        "sourceTs": 1782255609500,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782255619500,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588401:14:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 14,
+        "sourceTs": 1782255609500,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782255624500,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588401:14:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 14,
+        "sourceTs": 1782255609500,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782258619285,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “0-0 HT tactical stalemate; can Modrić decide second half?”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069571159461384641",
+        "url": "https://x.com/AlMdrjSports/status/2069571159461384641",
+        "observedAt": "2026-06-23 23:59"
+      }
+    },
+    {
+      "at": 1782258654285,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Panama 0-0 Croatia. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 416,
+        "sourceTs": 1782258649285,
+        "action": "halftime_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1782258659285,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782260017535,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "74' GOAL — Croatia. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 502,
+        "sourceTs": 1782260012535,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782260022535,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782260027535,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1782262614011,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Panama 0-1 Croatia. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 865,
+        "sourceTs": 1782262609011,
+        "action": "game_finalised",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782262619011,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782262629011,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 0-1. No scrollback archaeology required."
+    },
+    {
+      "at": 1782262639011,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Croatia 1-0 Panama; Budimir second-half strike; Group L alive”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069918532691738928",
+        "url": "https://x.com/BuzzerFan/status/2069918532691738928",
+        "observedAt": "2026-06-24 23:00"
+      }
+    },
+    {
+      "at": 1782262644011,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588401-panama-vs-croatia/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588401-panama-vs-croatia/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588401-panama-vs-croatia/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/SmithersPicks/status/2069205585518809472",
+      "https://x.com/i/status/2069205585518809472",
+      "https://x.com/honest_bets/status/2069205100577333708",
+      "https://x.com/i/status/2069205100577333708",
+      "https://x.com/asutdegreat/status/2069200007283032285",
+      "https://x.com/i/status/2069200007283032285",
+      "https://x.com/_TJKC_/status/2069194443203190851",
+      "https://x.com/i/status/2069194443203190851",
+      "https://x.com/FormPicks/status/2069194133173092469",
+      "https://x.com/i/status/2069194133173092469",
+      "https://x.com/IfeoluwaAj11/status/2069551879877718480",
+      "https://x.com/i/status/2069551879877718480"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 0-1 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}
