@@ -33,7 +33,10 @@ export function DownloadSection({ downloads }: { downloads: FullTimeDownload[] }
                 <PlatformIcon className="size-6 text-off-black" aria-hidden />
                 <h3 className="mt-8 text-subheading text-off-black">{release.name}</h3>
                 <p className="mt-3 flex-1 font-mono text-body-sm text-graphite">{release.description}</p>
-                <Button href={release.url} variant="ghost" size="sm" className="mt-8 self-start">
+                <p className="mt-6 font-mono text-caption uppercase tracking-[0.08em] text-smoke">
+                  {release.storeNote}
+                </p>
+                <Button href={release.url} variant="ghost" size="sm" className="mt-4 self-start">
                   {release.delivery === "source" ? (
                     <Code2 className="size-4" aria-hidden />
                   ) : (

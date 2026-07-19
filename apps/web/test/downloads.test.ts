@@ -28,6 +28,7 @@ test("publishes only configured downloads plus the real iPhone source build", ()
       delivery: "source",
       name: "iPhone",
       description: "Build the native app with Xcode using your own Apple signing team.",
+      storeNote: "App Store version coming soon.",
       action: "Build from source",
       url: "https://github.com/danielAsaboro/fulltime/blob/main/apps/mobile/README.md#iphone-build-from-source",
     },

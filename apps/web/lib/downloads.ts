@@ -3,6 +3,7 @@ export type FullTimeDownload = {
   delivery: "download" | "source";
   name: string;
   description: string;
+  storeNote: string;
   action: string;
   url: string;
 };
@@ -24,6 +25,7 @@ const RELEASES = [
     delivery: "download",
     name: "Desktop",
     description: "Run your Pear room worker and encrypted room history on your computer.",
+    storeNote: "Mac App Store version coming soon.",
     action: "Download desktop app",
     env: "FULLTIME_DESKTOP_DOWNLOAD_URL",
   },
@@ -32,6 +34,7 @@ const RELEASES = [
     delivery: "download",
     name: "iPhone",
     description: "Join rooms, scan invites, and keep up with the match from your iPhone.",
+    storeNote: "App Store version coming soon.",
     action: "Download iPhone app",
     env: "FULLTIME_IOS_DOWNLOAD_URL",
   },
@@ -40,6 +43,7 @@ const RELEASES = [
     delivery: "download",
     name: "Android",
     description: "Bring the same encrypted room, polls, and reactions to Android.",
+    storeNote: "Google Play version coming soon.",
     action: "Download Android app",
     env: "FULLTIME_ANDROID_DOWNLOAD_URL",
   },
@@ -50,6 +54,7 @@ const IOS_SOURCE: FullTimeDownload = {
   delivery: "source",
   name: "iPhone",
   description: "Build the native app with Xcode using your own Apple signing team.",
+  storeNote: "App Store version coming soon.",
   action: "Build from source",
   url: "https://github.com/danielAsaboro/fulltime/blob/main/apps/mobile/README.md#iphone-build-from-source",
 };
