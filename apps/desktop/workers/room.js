@@ -348,8 +348,29 @@ class Room extends EventEmitter {
       return
     }
     const claim = this.admissionClaim
+
+    // The admitting peer has already appended member.admit, whose reducer adds
+    // this candidate's writer to Autobase. Wait until that system change reaches
+    // the candidate before publishing the claim. Appending optimistically while
+    // the writer is still unauthorized can strand the claim on a local head
+    // which Autobase cannot index, most visibly when a member rejoins with a
+    // rotated writer key.
+    const authorizationDeadline = Date.now() + PAIRING_TIMEOUT_MS
+    while (!this.base.writable && Date.now() < authorizationDeadline) {
+      await this.base.update()
+      if (await this._hasLocalMembership()) {
+        this.admissionClaim = null
+        return
+      }
+      await delay(50)
+    }
+    if (!this.base.writable) {
+      const writerKey = b4a.toString(this.base.local.key, 'hex')
+      throw new Error(`Timed out waiting for admitted writer authorization (localWriter=${writerKey}, length=${this.base.length}, signedLength=${this.base.signedLength})`)
+    }
+
     const operation = createOperation('member.claim', claim, claim.issuedAt)
-    await this.base.append(operation, { optimistic: true })
+    await this.base.append(operation)
     const marker = await this._waitForOperation(operation.id)
     if (!marker.applied) throw new Error(marker.reason || 'The room rejected the signed admission claim')
     this.admissionClaim = null

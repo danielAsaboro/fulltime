@@ -1,5 +1,109 @@
 # FullTime handoff
 
+## Physical desktop + Android + iPhone E2E (2026-07-19)
+
+- A real Electron host, Infinix X683 Android 10 device
+  (`061342509H000347`), and iPhone 12 Pro Max on iOS 26.5.2
+  (`00008101-001035013468801E`) exercised the same encrypted room. The room is
+  `room_f307c05efd534701fbede8d28901180d`; desktop created it, Android and iPhone
+  were admitted through BlindPairing, and the desktop Autobase projection
+  contains three active durable members.
+- The standalone authenticated archive authority replayed the immutable Norway
+  vs England capture for fixture `18213979`. A freshly relaunched authority was
+  verified through its signed HTTPS manifest and published feed
+  `58e8203149b11e6cb0f5462bf4bab0bfd2b6eb7cecb750564cac905ddfb66882`.
+  The physical iPhone Release artifact was inspected before execution and
+  confirmed to embed that exact verified local feed key.
+- The terminal signed projection reached Norway 1–2 England with kickoff,
+  corners, goals, half-time, substitutions, VAR, extra time, a yellow card,
+  calls, and settlements. The capture has no configured answer attestor, so
+  `attestationAvailable` is honestly false and no receipt was fabricated.
+- Android sent `Hello from Android E2E`; iPhone sent
+  `Hello from iPhone E2E`. Both messages were then read from the desktop's
+  durable room projection. The final physical iPhone XCTest passed, and Android
+  recovered its persisted encrypted room after force-stop/relaunch.
+- Mobile `room.join` now has a 180-second outer IPC bound because its real
+  internal bounds can total 150 seconds (verified fixture sync, BlindPairing,
+  then durable membership open). Other mobile requests remain at 60 seconds.
+- Physical-device build products, peer stores, screenshots, recordings, and
+  `.xcresult` bundles remain local only. `/evidence/physical-e2e/` is now
+  gitignored alongside the existing mobile/desktop `.local-development`
+  directories. The small rerunnable control scripts remain source-visible.
+  The installed local Android Release APK SHA-256 is
+  `aabb3a768cf875650dfbd41599eace9affc33d2e79cb34abb70764da7527d162`.
+- Normal teardown stopped the temporary replay authority, Electron host/Bare
+  worker, and Android app process. Their persisted stores were retained.
+
+Verification completed for this run:
+
+    npm run mobile:test                         # 18 passed
+    npm run desktop:test                        # 91 passed, 12 explicit gates
+    npm run desktop:test:integration            # 5 passed, 2 explicit Pear interop gates
+    npm run typecheck                           # passed
+    npm run lint                                # passed
+    npm run build                               # passed
+    env FULLTIME_MOBILE_PROFILE=local xcodebuild -workspace apps/mobile/ios/FullTime.xcworkspace -scheme FullTime -configuration Release -destination id=00008101-001035013468801E -derivedDataPath apps/mobile/.local-development/ios-ui-test-derived-data -allowProvisioningUpdates build-for-testing -quiet
+    node scripts/ios-physical-e2e.mjs            # passed on the physical iPhone
+
+The first restricted integration attempt failed with UDX `EPERM`; it was
+stopped and rerun with local socket permission, where all enabled real
+HyperDHT/Corestore cases passed. This was an environment denial, not a mocked
+or skipped transport result.
+
+## Consumer matchday pass (2026-07-19)
+
+- `/app` now leads with the real live or next signed fixture instead of a generic
+  room directory. A live room belonging to the viewer takes priority over other
+  live fixtures, so returning users resume the active social context in one tap.
+- The hero exposes one dominant real action, an invite fast path, the current
+  signed score when available, and the honest FullTime loop: follow the signed
+  match, invite peers, answer only when signed calls are active, then retain the
+  resulting receipt. It does not simulate a call or invent fixture data.
+- Feed failure, no-fixture, loading, first-room, and returning-room states each
+  have a specific explanation and next action. Finished fixtures never become a
+  cold-start hero.
+- Settled call cards now make the outcome legible at a glance (`You called it`
+  or `Not this time`), surface Fan IQ as the payoff, and retain the receipt as a
+  minimum-size keyboard/touch target. Proof language and receipt state remain
+  unchanged and conservative.
+- Native mobile keeps its device-identity onboarding, then moves the generic
+  welcome/actions below a single real matchday hero. An active live room wins;
+  otherwise the first live or earliest upcoming signed fixture becomes the
+  setup action. Finished fixtures and mismatched room/fixture data never become
+  the hero, and the empty state says the signed schedule is unavailable rather
+  than fabricating a match.
+- Selection policy is isolated in `apps/web/lib/matchday.ts` with deterministic
+  coverage in `apps/web/test/matchday.test.ts`.
+- The real multi-peer room lifecycle now completes across leave/rejoin, creator
+  shutdown, ordinary-member admission, creator restart, invite rotation, stale
+  invite rejection, late admission, and room closure. Admitted active writers
+  participate as Autobase indexers, while all product authorization remains
+  tied to the reducer's authenticated source writer. A joining peer waits for
+  durable writer authorization before publishing its signed admission claim,
+  preventing an unauthorized optimistic head from becoming stranded locally.
+
+Verification for this slice:
+
+    npm --workspace @fulltime/web test
+    npm --workspace @fulltime/web run typecheck
+    npm --workspace @fulltime/web run lint
+    npm --workspace @fulltime/web run build -- --webpack
+    npm --workspace @fulltime/desktop test
+    npm --workspace @fulltime/mobile test
+    npm --workspace @fulltime/mobile run typecheck
+    FULLTIME_RUN_PEAR_INTEGRATION=1 node --test apps/desktop/test/room-manager.integration.test.js
+
+Full workspace verification after the complete pass:
+
+    npm test
+    npm run typecheck
+    npm run lint
+    npm run build
+
+All four commands passed. The focused real HyperDHT room lifecycle passed 1/1
+in 78.2 seconds. Explicit credential/socket/package gates remain skipped by the
+ordinary workspace test command and are not represented as passing.
+
 ## Current product surface
 
 - `apps/worker` is an operator-only TxLINE publisher. It persists the signed

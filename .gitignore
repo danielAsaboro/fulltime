@@ -48,6 +48,9 @@ release/
 /apps/mobile/ios/
 /apps/mobile/android/
 
+# Physical-device E2E output (screenshots, XCTest result bundles, device captures)
+/evidence/physical-e2e/
+
 # Editors
 .idea/
 *.swp

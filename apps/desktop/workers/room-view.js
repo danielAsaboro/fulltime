@@ -311,7 +311,12 @@ async function applyMemberAdmission (operation, actor, room, db, host) {
   const writerKeyHex = b4a.toString(candidate.writerKey, 'hex')
   const writerOwner = await valueAt(db, `writer/${writerKeyHex}`)
   if (writerOwner && writerOwner.userId !== candidate.userId) return false
-  if (!wasActive) await host.addWriter(candidate.writerKey, { indexer: false })
+  // Every admitted room writer participates in Autobase indexing so an active
+  // member can durably admit the next peer even while the creator is offline.
+  // This is transport availability, not a product role: creator/moderator
+  // authority continues to come exclusively from the authenticated actor
+  // projected for the operation's actual source writer.
+  if (!wasActive) await host.addWriter(candidate.writerKey, { indexer: true })
 
   if (member && !wasActive && member.writerKey !== writerKeyHex) {
     const oldWriterOwner = await valueAt(db, `writer/${member.writerKey}`)

@@ -13,6 +13,7 @@ const crypto = require('hypercore-crypto')
 
 const { encodeBaseInvite, previewBytes } = require('../lib/invite-code.js')
 const { RoomManager } = require('../workers/room-manager.js')
+const { valueAt } = require('../workers/room-view.js')
 const { SignedFixturePublisher } = require('./signed-fixture-publisher.js')
 
 const enabled = process.env.FULLTIME_RUN_PEAR_INTEGRATION === '1'
@@ -277,12 +278,22 @@ test('three encrypted room peers pair, replicate chat, replies, reactions, polls
       member.dispatch('room.invite.revoke', { roomId: details.room.id }),
       /rejected/i
     )
-    await creatorRoom.base.ack()
+    const rejoinedRoom = member.requireRoom(details.room.id)
+    const rejoinedSession = await member.dispatch('session.get', null)
+    const rejoinedWriterKey = b4a.toString(rejoinedRoom.base.local.key, 'hex')
+    await Promise.all([
+      creatorRoom.base.ack(),
+      rejoinedRoom.base.ack(),
+      third.requireRoom(details.room.id).base.ack()
+    ])
     await waitFor(async () => {
       await creatorRoom.base.update()
-      await member.requireRoom(details.room.id).base.update()
-      return creatorRoom.base.signedLength >= creatorRoom.base.length
-    }, 'signed member writer authorization')
+      await rejoinedRoom.base.update()
+      const projectedMember = await valueAt(creatorRoom.view, `member/${rejoinedSession.userId}`)
+      return rejoinedRoom.base.writable &&
+        projectedMember?.active === true &&
+        projectedMember.writerKey === rejoinedWriterKey
+    }, 'authenticated member writer authorization')
 
     const creatorSession = await creator.dispatch('session.get', null)
     await creator.close()

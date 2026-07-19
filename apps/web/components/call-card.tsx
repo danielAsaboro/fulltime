@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { CheckCircle2, XCircle } from "lucide-react";
 
 import type { RoomCallView } from "@/lib/data";
 import { cn } from "@/lib/cn";
@@ -47,6 +48,8 @@ export function CallCard({
   const winning = view.settlement?.outcome.status === "settled" ? view.settlement.outcome.winningOption : null;
   const difficulty = view.call.difficulty != null ? `${Math.round(view.call.difficulty * 100)}% chance` : view.call.template;
   const statusPill = view.status === "open" ? "open" : view.status === "locked" ? "locked" : view.status === "void" ? "void" : "settled";
+  const correct = view.outcome === "correct";
+  const incorrect = view.outcome === "incorrect";
 
   const choose = async (optionId: string) => {
     if (!selectable || !onSelect) return;
@@ -62,7 +65,13 @@ export function CallCard({
   };
 
   return (
-    <section className={cn("rounded-card border bg-parchment p-5", view.status === "settled" ? "border-off-black" : "border-ash", className)}>
+    <section
+      className={cn(
+        "rounded-card border bg-parchment p-5",
+        correct ? "border-lake-blue bg-periwinkle-mist/25" : view.status === "settled" ? "border-off-black" : "border-ash",
+        className,
+      )}
+    >
       <div className="mb-3 flex items-start justify-between gap-4">
         <div className="space-y-2">
           <div className="flex flex-wrap items-center gap-2">
@@ -77,6 +86,21 @@ export function CallCard({
         </div>
         {view.status === "open" ? <CountdownRing progress={progress} center={String(left)} tone={left <= 5 ? "urgent" : "ink"} /> : <StatePill state={statusPill} />}
       </div>
+      {correct || incorrect ? (
+        <div
+          className={cn(
+            "mb-4 flex items-center justify-between gap-4 rounded-lg border px-4 py-3",
+            correct ? "border-lake-blue/35 bg-lake-blue text-parchment" : "border-ash bg-white/45 text-off-black",
+          )}
+          aria-live="polite"
+        >
+          <span className="flex items-center gap-2 font-mono text-body-sm font-medium">
+            {correct ? <CheckCircle2 className="size-4" aria-hidden /> : <XCircle className="size-4 text-smoke" aria-hidden />}
+            {correct ? "You called it" : "Not this time"}
+          </span>
+          <span className={cn("font-mono text-body-sm tabular", correct ? "text-parchment" : "text-smoke")}>{correct ? `+${view.points} Fan IQ` : "Streak reset"}</span>
+        </div>
+      ) : null}
       <div className="space-y-2">
         {view.call.options.map((option) => {
           const share = percent(view.tally[option.id] ?? 0, view.total);
@@ -93,12 +117,12 @@ export function CallCard({
         <div className="mt-4 flex items-center justify-between gap-3 border-t border-ash pt-4">
           <div className="flex items-center gap-2">
             <StatePill state={view.myAnswer.outcome === "accepted" ? "accepted" : view.myAnswer.outcome === "void" ? "void" : view.myAnswer.outcome} />
-            {view.points > 0 ? <span className="font-mono text-body-sm font-medium tabular text-off-black">+{view.points} IQ</span> : null}
+            {view.myAnswer.outcome === "accepted" ? <span className="font-mono text-caption text-smoke">Your signed stand is locked</span> : null}
           </div>
           <ReceiptChip state={view.myAnswer.receiptState} roomId={roomId} receiptId={view.myAnswer.receiptId} />
         </div>
       ) : null}
-      {error ? <p className="mt-3 font-mono text-caption text-crimson">{error}</p> : null}
+      {error ? <p className="mt-3 font-mono text-caption text-crimson" role="alert">{error}</p> : null}
       {view.status === "open" && !view.myAnswer ? <p className="mt-3 font-mono text-caption text-smoke">{!attestationAvailable ? "Live calls need a configured pinned answer attestor." : !canSelect ? "Sign in and join the room to answer." : busy ? "Waiting for the signed attestor receipt…" : "The attestor decides the signed lock; this clock is presentation only."}</p> : null}
     </section>
   );

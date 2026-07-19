@@ -8,6 +8,12 @@ import type { SignedNetworkManifest } from "./network-manifest";
 const PROTOCOL_VERSION = 2;
 const MAX_REQUESTS = 128;
 const REQUEST_TIMEOUT_MS = 60_000;
+// Joining can legitimately consume the fixture plane's 60-second verified
+// snapshot sync, BlindPairing's 45-second admission window, and the room's
+// 45-second durable membership-open window. Keep the bridge outside those
+// real protocol bounds so it returns the precise stage failure instead of
+// masking it with a generic IPC timeout.
+const ROOM_JOIN_REQUEST_TIMEOUT_MS = 180_000;
 
 export type PeerEvent = Record<string, unknown> & { version: 2; type: string };
 
@@ -105,10 +111,11 @@ export class MobilePeerController {
     if (this.pending.size >= MAX_REQUESTS) throw new MobilePeerError("TOO_MANY_REQUESTS", "Too many peer requests are active");
     const id = `mobile:${Date.now().toString(36)}:${(++this.sequence).toString(36)}`;
     return new Promise<T>((resolve, reject) => {
+      const timeoutMs = action === "room.join" ? ROOM_JOIN_REQUEST_TIMEOUT_MS : REQUEST_TIMEOUT_MS;
       const timer = setTimeout(() => {
         this.pending.delete(id);
         reject(new MobilePeerError("REQUEST_TIMEOUT", `Peer request ${action} timed out`));
-      }, REQUEST_TIMEOUT_MS);
+      }, timeoutMs);
       this.pending.set(id, { resolve: resolve as (value: unknown) => void, reject, timer });
       this.pipe?.write(b4a.from(JSON.stringify({ version: PROTOCOL_VERSION, id, action, payload }), "utf8"));
     });

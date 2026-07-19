@@ -101,7 +101,7 @@ test('deterministic room view authenticates invites/admissions and materializes 
   await apply(view, host, creatorWriter, admission)
 
   assert.equal((await valueAt(view, `operation/${admission.id}`)).applied, true)
-  assert.deepEqual(host.added.map(({ options }) => options), [{ indexer: false }])
+  assert.deepEqual(host.added.map(({ options }) => options), [{ indexer: true }])
   assert.equal((await valueAt(view, 'meta/room')).memberCount, 2)
   assert.equal((await valueAt(view, `member/${userIdFromPublicKey(joiner.publicKey)}`)).role, 'member')
 

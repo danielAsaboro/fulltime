@@ -62,12 +62,18 @@ def fullTimeReleaseStorePassword = System.getenv('FULLTIME_ANDROID_KEYSTORE_PASS
 def fullTimeReleaseKeyAlias = System.getenv('FULLTIME_ANDROID_KEY_ALIAS')
 def fullTimeReleaseKeyPassword = System.getenv('FULLTIME_ANDROID_KEY_PASSWORD')
 def fullTimeReleaseSigningConfigured = [fullTimeReleaseStoreFile, fullTimeReleaseStorePassword, fullTimeReleaseKeyAlias, fullTimeReleaseKeyPassword].every { it }
+def fullTimeLocalProfile = System.getenv('FULLTIME_MOBILE_PROFILE') == 'local'
 
 android {
     ndkVersion rootProject.ext.ndkVersion`
     if (!contents.includes('def fullTimeReleaseStoreFile')) {
       if (!contents.includes(anchor)) throw new Error('Could not locate Android configuration for release signing')
       contents = contents.replace(anchor, variables)
+    }
+    if (!contents.includes('def fullTimeLocalProfile')) {
+      const configuredLine = "def fullTimeReleaseSigningConfigured = [fullTimeReleaseStoreFile, fullTimeReleaseStorePassword, fullTimeReleaseKeyAlias, fullTimeReleaseKeyPassword].every { it }"
+      if (!contents.includes(configuredLine)) throw new Error('Could not locate Android release signing variables')
+      contents = contents.replace(configuredLine, `${configuredLine}\ndef fullTimeLocalProfile = System.getenv('FULLTIME_MOBILE_PROFILE') == 'local'`)
     }
 
     const signingAnchor = `        debug {
@@ -109,6 +115,25 @@ android {
     if (!contents.includes('signingConfig signingConfigs.fullTimeRelease')) {
       if (!contents.includes(releaseAnchor)) throw new Error('Could not locate Android release build type')
       contents = contents.replace(releaseAnchor, releaseReplacement)
+    }
+    const strictReleaseSigning = `        release {
+            if (!fullTimeReleaseSigningConfigured) {
+                throw new GradleException('Release signing requires FULLTIME_ANDROID_KEYSTORE_PATH, FULLTIME_ANDROID_KEYSTORE_PASSWORD, FULLTIME_ANDROID_KEY_ALIAS, and FULLTIME_ANDROID_KEY_PASSWORD')
+            }
+            signingConfig signingConfigs.fullTimeRelease`
+    const localAwareReleaseSigning = `        release {
+            if (fullTimeLocalProfile) {
+                // The local profile embeds only verified development authority
+                // pins and is installed directly on a connected test device.
+                signingConfig signingConfigs.debug
+            } else {
+                if (!fullTimeReleaseSigningConfigured) {
+                    throw new GradleException('Release signing requires FULLTIME_ANDROID_KEYSTORE_PATH, FULLTIME_ANDROID_KEYSTORE_PASSWORD, FULLTIME_ANDROID_KEY_ALIAS, and FULLTIME_ANDROID_KEY_PASSWORD')
+                }
+                signingConfig signingConfigs.fullTimeRelease
+            }`
+    if (contents.includes(strictReleaseSigning)) {
+      contents = contents.replace(strictReleaseSigning, localAwareReleaseSigning)
     }
     next.modResults.contents = contents
     return next

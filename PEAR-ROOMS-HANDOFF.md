@@ -1,5 +1,34 @@
 # Pear rooms — implementation handoff
 
+## Physical three-device verification (2026-07-19)
+
+Electron, a connected Infinix X683 (`061342509H000347`), and a connected
+iPhone 12 Pro Max (`00008101-001035013468801E`) joined the same real room
+`room_f307c05efd534701fbede8d28901180d`. Android and iPhone each wrote a unique
+message through their native UI; both appeared in the desktop Autobase
+projection. The iPhone Release XCTest completed successfully, and Android
+reopened persisted encrypted room state after a force-stop/relaunch.
+
+The physical iOS test must be built with `FULLTIME_MOBILE_PROFILE=local` after
+`npm run mobile:configure:local`. `scripts/ios-physical-e2e.mjs` now refuses to
+run unless the signed Release app's embedded Expo config contains the same
+fixture feed key as the freshly verified local authority cache. This closes a
+misleading failure mode where a correctly signed app silently exercised the
+production publisher while the local replay used a newly generated feed.
+
+`MobilePeerController` gives only `room.join` a 180-second bridge timeout. The
+worker may legitimately use 60 seconds for an exact signed fixture snapshot,
+45 seconds for BlindPairing, and 45 seconds to open durable membership. The
+previous generic 60-second bridge bound could mask those precise worker-stage
+errors. All other actions retain the 60-second request bound.
+
+Final checks: mobile 18/18, desktop unit 91 passed with 12 explicit gates, real
+desktop integration 5 passed with 2 explicit Pear-interop gates, plus complete
+workspace typecheck, lint, and production build. The replay did not configure
+an answer attestor; calls and settlements were projected, while receipts
+correctly remained unavailable. Test teardown stopped the temporary authority,
+Electron/Bare host, and Android process while retaining encrypted stores.
+
 ## Entry points
 
 | Concern | Source |
@@ -17,6 +46,11 @@
 | Operator publisher and HTTPS manifest | `apps/worker/src/index.ts`, `apps/worker/src/network-manifest.ts` |
 | Local operator development authority | `apps/worker/src/local-development.ts`, `apps/worker/scripts/start-local-live.cjs`, `apps/desktop/scripts/start-local-config.js` |
 | Native mobile peer host | `apps/mobile/src/peer-controller.ts`, `apps/mobile/src/network-manifest.ts`, `apps/mobile/app/index.tsx` |
+
+The web matchday entry at `apps/web/components/app-dashboard.tsx` is a renderer
+projection only. Its live/next focus policy reads signed `fixture.list` data and
+local `room.list` projections through the existing bridge; it does not move
+fixture authority, native modules, or room creation into the browser.
 
 ## Authority and startup
 
@@ -55,10 +89,13 @@ Hyperblobs, signed Protomux presence, encrypted media, and notification state.
 The renderer receives only serializable projected data through the validated
 bridge. A room opens an encrypted Autobase; admission proves a peer identity
 through BlindPairing; writer authorization is derived from the actual Autobase
-source writer key rather than an authored user ID. When an Autobase indexer
-serves an admission, it appends an acknowledgement head after adding the
-writer, so the writer-set change survives an indexer restart before the signed
-claim is returned to the joining peer.
+source writer key rather than an authored user ID. Admitted active writers also
+participate as Autobase indexers so any online member can durably admit the next
+peer while the creator is offline. Indexer participation is transport state,
+not a product role: creator and moderator authority remains reducer-enforced
+from the authenticated source writer. An indexer serving an admission appends
+an acknowledgement head after adding the writer, so the writer-set change is
+committed before the signed claim is returned to the joining peer.
 
 Fixture records, canonical calls, settlements, odds, and receipts require the
 operator-pinned authorities. Social writers can reference those records but
@@ -161,7 +198,9 @@ encrypted Hyperblob replication, and the PearRuntime IPC boundary, but its
 multi-peer room test timed out waiting for late-member admission replication.
 A focused retry also failed, this time waiting for invite-rotation replication
 despite both peers having three live connections and the same discovery key.
-This is an open real-Autobase replication defect, not a mocked or skipped pass.
+Those were real failures at that checkpoint, not mocked or skipped passes. The
+focused lifecycle was fixed and rerun successfully on 2026-07-19; see the
+current verification note below.
 
 The packed SDK consumer contract imports only `@slip/sdk`; its default graph was
 also loaded in isolation without sibling-repository access or server-only
@@ -539,7 +578,9 @@ desktop tests (89 passed, 12 explicitly gated, 0 failed), Slip SDK tests
 `build-for-testing`, and the real archived-root Surfpool lifecycle. The full
 real Pear integration run passed four tests, skipped two explicit gates, and
 failed the three-peer room test once at admission-claim application during
-rejoin; that failure remains unresolved and is not described as passing.
+rejoin. That historical failure was resolved on 2026-07-19 by waiting for the
+admitted writer authorization before publishing the claim and making active
+room writers Autobase indexers independently of their product role.
 
 ### Terminal two-device wager dogfood result
 
@@ -599,8 +640,16 @@ Final verification after these changes:
   2 failed. The late-member case timed out with the late writer at length 88
   while the creator signed length remained 82. The separate Bare worker case
   reached an online peer connection but did not receive fixture `bare-fixture`
-  before its test deadline. These socket-bound failures remain open and are not
-  described as passing.
+  before its test deadline. This records the 2026-07-14 aggregate run; it is not
+  rewritten as a pass.
+- Current 2026-07-19 focused verification:
+  `FULLTIME_RUN_PEAR_INTEGRATION=1 node --test apps/desktop/test/room-manager.integration.test.js`
+  passed 1/1 in 78.2 seconds against a real local HyperDHT testnet. It covers
+  authenticated multi-writer replication, leave/rejoin with writer rotation,
+  creator-offline admission by an ordinary member, creator restart, invitation
+  rotation, old-invite rejection, late-member replication, and terminal invite
+  shutdown. The separate Bare worker fixture deadline from the older aggregate
+  run has not been rerun by this focused command and is not claimed fixed.
 
 - Do not expose native Holepunch objects to the renderer.
 - Do not add a per-browser Pear worker, browser session identity, or web gateway

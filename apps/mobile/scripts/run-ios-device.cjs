@@ -28,6 +28,7 @@ run('xcodebuild', [
   '-configuration', 'Release',
   '-destination', `id=${device}`,
   '-derivedDataPath', derivedData,
+  '-allowProvisioningUpdates',
   'build'
 ])
 const appPath = path.join(derivedData, 'Build', 'Products', 'Release-iphoneos', 'FullTime.app')
