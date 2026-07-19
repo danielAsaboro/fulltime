@@ -1,5 +1,5 @@
 import { address } from "@solana/kit";
-import { createSlipClient, type SlipNetwork } from "@slip/sdk";
+import { createSlipClient, type SlipNetwork } from "@mutinylabs/slip";
 
 export interface SlipBrowserConfiguration {
   network: SlipNetwork;

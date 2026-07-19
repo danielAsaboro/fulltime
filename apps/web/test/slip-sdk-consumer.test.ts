@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { address } from "@solana/kit";
-import { calculateRulebookHash, createSlipClient, type CompiledRulebook } from "@slip/sdk";
+import { calculateRulebookHash, createSlipClient, type CompiledRulebook } from "@mutinylabs/slip";
 
 test("FullTime consumes only the packed public SDK for a five-outcome creation", async () => {
   const base: Omit<CompiledRulebook, "hash"> = {

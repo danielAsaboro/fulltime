@@ -26,7 +26,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { formatAmount, parseAmount, type CompiledRulebook, type MarketReferenceV1, type MarketSnapshot, type TicketSnapshot } from "@slip/sdk";
+import { formatAmount, parseAmount, type CompiledRulebook, type MarketReferenceV1, type MarketSnapshot, type TicketSnapshot } from "@mutinylabs/slip";
 
 import { downloadAndShareAttachment, pickAndUploadAttachment } from "../src/media-transfer";
 import { MobilePeerController, MobilePeerError, type PeerEvent } from "../src/peer-controller";

@@ -1,4 +1,4 @@
-import { SlipCompilerError, type CompiledRulebook, type SlipClient } from "@slip/sdk";
+import { SlipCompilerError, type CompiledRulebook, type SlipClient } from "@mutinylabs/slip";
 
 import type { SlipBrowserConfiguration } from "@/lib/slip/config";
 

@@ -52,7 +52,7 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
-    "@slip/sdk": "file:vendor/slip-sdk-0.2.0.tgz",
+    "@mutinylabs/slip": "^0.2.0",
     "@solana/kit": "^6.10.0",
     "@wallet-standard/app": "^1.1.0"
   }

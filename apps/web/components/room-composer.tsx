@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { Fixture, RoomMarketReference } from "@fulltime/shared";
-import type { CompiledRulebook } from "@slip/sdk";
+import type { CompiledRulebook } from "@mutinylabs/slip";
 import type { CreatePollInput, PollFeedItem, SendMessageInput } from "@/lib/data";
 import { cn } from "@/lib/cn";
 import { createFullTimeSlipClient, slipBrowserConfiguration } from "@/lib/slip/config";

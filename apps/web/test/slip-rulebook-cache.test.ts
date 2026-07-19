@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { SlipCompilerError, type CompiledRulebook, type SlipClient } from "@slip/sdk";
+import { SlipCompilerError, type CompiledRulebook, type SlipClient } from "@mutinylabs/slip";
 
 import { resolvePollRulebook } from "../lib/slip/rulebook-cache";
 

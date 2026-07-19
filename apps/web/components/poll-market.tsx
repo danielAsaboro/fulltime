@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { address } from "@solana/kit";
-import { calculateMarket, formatAmount, parseAmount, type CompiledRulebook, type MarketReferenceV1, type MarketSnapshot, type TicketSnapshot } from "@slip/sdk";
+import { calculateMarket, formatAmount, parseAmount, type CompiledRulebook, type MarketReferenceV1, type MarketSnapshot, type TicketSnapshot } from "@mutinylabs/slip";
 import type { Fixture, Poll, RoomMarketReference } from "@fulltime/shared";
 import { Check, Coins, Info, LoaderCircle, WalletCards, X } from "lucide-react";
 

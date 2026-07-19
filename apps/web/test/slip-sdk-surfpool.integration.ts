@@ -13,7 +13,7 @@ import {
   type KeyPairSigner,
 } from "@solana/kit";
 import { Surfnet } from "@solana/surfpool";
-import { calculateRulebookHash, createSlipClient, type ArchivedTxlineScoresProofV3, type CompiledRulebook } from "@slip/sdk";
+import { calculateRulebookHash, createSlipClient, type ArchivedTxlineScoresProofV3, type CompiledRulebook } from "@mutinylabs/slip";
 import { sendSlipInstructions, type ConnectedSlipWallet } from "../lib/slip/wallet";
 
 const PROGRAM = address("8VNZ5VseAcFaYhAZxetgE5N8eiD17ZZNchGhoatYUUXw");

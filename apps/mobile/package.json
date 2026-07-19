@@ -25,7 +25,7 @@
     "@ethersproject/shims": "^5.8.0",
     "@privy-io/expo": "^0.70.2",
     "@privy-io/expo-native-extensions": "^0.0.12",
-    "@slip/sdk": "file:../../vendor/slip-sdk-0.2.0.tgz",
+    "@mutinylabs/slip": "^0.2.0",
     "@solana/kit": "^6.10.0",
     "b4a": "^1.6.7",
     "expo": "~55.0.23",

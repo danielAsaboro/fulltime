@@ -1,4 +1,4 @@
-import { calculateRulebookHash, createMarketReference, type CompiledRulebook, type MarketReferenceV1 } from "@slip/sdk";
+import { calculateRulebookHash, createMarketReference, type CompiledRulebook, type MarketReferenceV1 } from "@mutinylabs/slip";
 
 import { createFullTimeSlipClient, slipBrowserConfiguration } from "@/lib/slip/config";
 import { sendSlipInstructions, type ConnectedSlipWallet } from "@/lib/slip/wallet";

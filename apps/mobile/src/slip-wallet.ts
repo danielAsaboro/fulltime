@@ -25,7 +25,7 @@ import {
   type MarketReferenceV1,
   type MarketSnapshot,
   type TicketSnapshot,
-} from "@slip/sdk";
+} from "@mutinylabs/slip";
 
 const WALLET_KEY = "fulltime.slip-wallet.v1";
 const verifiedReferences = new Map<string, Promise<void>>();
