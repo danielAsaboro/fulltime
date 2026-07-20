@@ -707,10 +707,14 @@ Final verification after these changes:
   `FULLTIME_ANDROID_DOWNLOAD_URL`; malformed, non-HTTPS, or credential-bearing URLs fail the
   production build instead of producing an unsafe link.
 - The GitHub repository is public, and desktop/mobile consumer release configs now pin the live
-  authority documented below. The verified beta artifacts are published at
-  `https://github.com/danielAsaboro/fulltime/releases/tag/v0.1.0-beta.1`; the website defaults to
-  those exact macOS and Android assets and links iPhone users to the real Xcode source-build path.
-  The local-development APK remains outside that release boundary.
+  authority documented below. The current verified artifacts are published at
+  `https://github.com/danielAsaboro/fulltime/releases/tag/v0.1.0-beta.2`; the Vercel production site
+  at `https://www.usefulltime.xyz/` renders those exact macOS and Android asset URLs and links iPhone
+  users to the real Xcode source-build path. The beta.2 GitHub asset digests match
+  `release/SHA256SUMS`: macOS
+  `0cbd9a22c12fdd8afc041b80c45a09ee5bf6a3bda2b3564af4be0c5a61c3d56e`, Android
+  `d30380cadc94a34a5b0a5ee820ef2ac3b4176c09ab909e5aaf31add7bd996ae8`. The
+  local-development APK remains outside that release boundary.
 
 ### Live release authority
 
