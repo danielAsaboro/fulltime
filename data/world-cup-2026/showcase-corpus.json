@@ -44,6 +44,11 @@
       "archive": "../resources/fixtures/world-cup-2026/17926689-australia-vs-turkey"
     },
     {
+      "fixtureId": "17588318",
+      "seed": "data/world-cup-2026/17588318-germany-vs-curacao/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588318-germany-vs-curacao"
+    },
+    {
       "fixtureId": "18209181",
       "seed": "data/world-cup-2026/18209181-france-vs-morocco/room-seed.json",
       "archive": "../resources/fixtures/world-cup-2026/18209181-france-vs-morocco"

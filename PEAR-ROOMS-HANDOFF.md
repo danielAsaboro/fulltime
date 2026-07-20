@@ -741,8 +741,8 @@ Final verification after these changes:
   publisher, answer attestor, Blind Pairing admission, and encrypted Autobase room operations. The
   personas are disclosed fictional room participants; fixture state, event time, calls, settlements,
   and receipts are restricted to what the signed capture proves.
-- Fifteen rooms are complete and persisted: the first three tournament fixtures, USA–Paraguay,
-  Qatar–Switzerland, Brazil–Morocco, Haiti–Scotland, Australia–Turkey, all four quarter-finals, France–Spain's semi-final, France–England's third-place match, and
+- Sixteen rooms are complete and persisted: the first three tournament fixtures, USA–Paraguay,
+  Qatar–Switzerland, Brazil–Morocco, Haiti–Scotland, Australia–Turkey, Germany–Curaçao, all four quarter-finals, France–Spain's semi-final, France–England's third-place match, and
   Spain–Argentina's final. The
   chronological corpus is `data/world-cup-2026/showcase-corpus.json`. The final archive was fetched at
   `2026-07-20T01:05:26.622Z`; its authenticated raw SSE contains 1,387 source records and terminal
@@ -792,17 +792,31 @@ Final verification after these changes:
   calls, with pre-match Turkey hype/overs positions contrasted against an exact 2–0 Australia call,
   VAR and half-time beats, the second goal, and preserved right/wrong receipts. The real signed
   fixture, Blind Pairing, encrypted Autobase, and attestor integration passed in 56.7 seconds.
+- Germany–Curaçao fixture `17588318` is backed by nine provenance-valid captured artifacts. The
+  production replay consumer parses 974 preserved interval records ending at sequence 994 and proves
+  seven confirmed Germany goals, Curaçao's confirmed 20th-minute equaliser, and terminal Germany 7–1
+  Curaçao; the separately derived analysis reports 994 historical sequence positions. The room has 58
+  chronological actions: 13 messages, six replies, six quotes, seven supported reactions, a four-way
+  poll with four votes, and 21 attested answers across seven settled canonical calls. Its central
+  receipt arc contrasts public 3–0/5–0 and win-to-nil consensus with Maya's pre-match Curaçao-goal call
+  and Amina's five-plus-margin poll vote. The first real integration correctly rejected one half-time
+  answer at 35 seconds, beyond the signed call's 30-second lock; moving the six taps inside 8–28 seconds
+  produced a complete signed-fixture, Blind Pairing, encrypted Autobase, and attestor pass in 81.4
+  seconds. Calls voided by preserved feed gaps remain omitted.
 - The persistent provisioner ledger is
   `apps/desktop/.local-development/historical-showcase/rooms.json`; it contains protected invite
   material and must not be printed or committed. The provisioner's console summary now deliberately
-  omits invite codes while the mode-0600 ledger retains them for device admission. All fifteen rooms
+  omits invite codes while the mode-0600 ledger retains them for device admission. All sixteen rooms
   were verified in the running desktop
   projection with `scripts/desktop-cdp.mjs`, then joined sequentially and verified on the physical
   Infinix X683 with `scripts/android-join-showcase.mjs` and
-  `scripts/android-verify-showcase.mjs`. Android reported all fifteen expected fixture IDs from its own
+  `scripts/android-verify-showcase.mjs`. Android reported all sixteen expected fixture IDs from its own
   persisted room list. Nine signed physical-iPhone XCTest joins also passed individually, with result
-  bundles under `evidence/physical-e2e/ios-showcase-*.xcresult`; all three Apple mobile devices were
-  offline on 2026-07-20 when the eleventh through fifteenth rooms were ready, so no new iOS success is claimed.
+  bundles under `evidence/physical-e2e/ios-showcase-*.xcresult`. The iPhone 12 Pro Max became paired and
+  available after room sixteen, but the accumulated room-list XCTest timed out while enabling automation
+  mode before the test body could run; the failure bundle is retained at
+  `evidence/physical-e2e/ios-showcase-room-list-1784542336946.xcresult`. The iPad and iPhone XS remained
+  unavailable, so no new iOS success is claimed.
 - Cross-runtime proof replay now derives the expected Hypercore key from the serialized manifest and
   compares canonical hex values; it never relies on Node/Bare Buffer identity. Mobile startup also
   prefers a newer verified bundled manifest over an older verified device cache, preventing a stale
@@ -843,7 +857,11 @@ Final verification after these changes:
   Android's input-method visibility before sending Back, so an already-hidden keyboard cannot
   background FullTime, and requires observable `Joining` or target-fixture state before starting its
   pairing timeout. Australia–Turkey admitted through that corrected path; all fifteen IDs verified and
-  a cold start reopened them in 35 seconds.
+  a cold start reopened them in 35 seconds. Germany–Curaçao pairing admitted the Android writer and
+  replicated its membership, but the mobile bridge timed out while opening/projecting the new history.
+  After the pending operation returned its precise timeout, a process-only restart reopened the admitted
+  room from protected storage; the physical Release app then verified all sixteen fixture IDs without
+  clearing or replacing any device data.
 - Verification during this handoff passed all 19 mobile tests, mobile typecheck, desktop syntax checks,
   14 focused fixture-proof/room-operation/projection tests, six authenticated archive/reducer tests,
   and the real four-room historical integration
@@ -853,7 +871,8 @@ Final verification after these changes:
   92 desktop plus 14 gated, 19 mobile, 18 web, and 24 worker), as did the complete workspace
   `npm run typecheck`, repository-wide `npm run lint`, and the full Next.js production build
   (rerun outside the sandbox because Turbopack requires a local worker port). The final room separately
-  passed the real fixture/pairing/Autobase/attestor integration in 66 seconds. The physical iPhone
-  remained offline before it could join the final, USA–Paraguay, Qatar–Switzerland, Brazil–Morocco, Haiti–Scotland, or Australia–Turkey; this does not
-  invalidate the nine retained per-room XCTest result bundles, but a fifteen-room accumulated assertion should be run
-  after reconnecting it with `scripts/ios-verify-showcase.mjs`.
+  passed the real fixture/pairing/Autobase/attestor integration in 66 seconds; Germany–Curaçao separately
+  passed the same boundary in 81.4 seconds. The physical iPhone has not joined the final, USA–Paraguay,
+  Qatar–Switzerland, Brazil–Morocco, Haiti–Scotland, Australia–Turkey, or Germany–Curaçao. This does not
+  invalidate the nine retained per-room XCTest result bundles, but the sixteen-room accumulated assertion
+  still needs a successful automation session with `scripts/ios-verify-showcase.mjs`.
