@@ -49,6 +49,11 @@
       "archive": "../resources/fixtures/world-cup-2026/17588318-germany-vs-curacao"
     },
     {
+      "fixtureId": "17588305",
+      "seed": "data/world-cup-2026/17588305-netherlands-vs-japan/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588305-netherlands-vs-japan"
+    },
+    {
       "fixtureId": "18209181",
       "seed": "data/world-cup-2026/18209181-france-vs-morocco/room-seed.json",
       "archive": "../resources/fixtures/world-cup-2026/18209181-france-vs-morocco"

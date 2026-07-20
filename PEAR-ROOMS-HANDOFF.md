@@ -741,8 +741,9 @@ Final verification after these changes:
   publisher, answer attestor, Blind Pairing admission, and encrypted Autobase room operations. The
   personas are disclosed fictional room participants; fixture state, event time, calls, settlements,
   and receipts are restricted to what the signed capture proves.
-- Sixteen rooms are complete and persisted: the first three tournament fixtures, USA–Paraguay,
-  Qatar–Switzerland, Brazil–Morocco, Haiti–Scotland, Australia–Turkey, Germany–Curaçao, all four quarter-finals, France–Spain's semi-final, France–England's third-place match, and
+- Seventeen rooms are complete and persisted: the first three tournament fixtures, USA–Paraguay,
+  Qatar–Switzerland, Brazil–Morocco, Haiti–Scotland, Australia–Turkey, Germany–Curaçao,
+  Netherlands–Japan, all four quarter-finals, France–Spain's semi-final, France–England's third-place match, and
   Spain–Argentina's final. The
   chronological corpus is `data/world-cup-2026/showcase-corpus.json`. The final archive was fetched at
   `2026-07-20T01:05:26.622Z`; its authenticated raw SSE contains 1,387 source records and terminal
@@ -803,14 +804,24 @@ Final verification after these changes:
   answer at 35 seconds, beyond the signed call's 30-second lock; moving the six taps inside 8–28 seconds
   produced a complete signed-fixture, Blind Pairing, encrypted Autobase, and attestor pass in 81.4
   seconds. Calls voided by preserved feed gaps remain omitted.
+- Netherlands–Japan fixture `17588305` is backed by nine provenance-valid captured artifacts. The
+  production replay consumer parses 862 preserved interval records ending at sequence 881 and proves a
+  0–0 half-time state, four confirmed second-half goals, Japan equalising twice, and the terminal 2–2;
+  the derived analysis reports 881 historical sequence positions. Its 47-action room contains 11
+  messages, six replies, six quotes, seven supported reactions, a three-way result poll with four votes,
+  and 12 attested answers across four settled canonical calls. The narrative preserves the public viral
+  pre-match 2–2 prediction through four score changes, exposes a Netherlands-clean-sheet rewrite attempt,
+  and ends on the exact-score receipt. Kickoff and goal calls voided by preserved feed gaps are omitted.
+  The real signed fixture, Blind Pairing, encrypted Autobase, and answer-attestor integration passed in
+  67.0 seconds.
 - The persistent provisioner ledger is
   `apps/desktop/.local-development/historical-showcase/rooms.json`; it contains protected invite
   material and must not be printed or committed. The provisioner's console summary now deliberately
-  omits invite codes while the mode-0600 ledger retains them for device admission. All sixteen rooms
+  omits invite codes while the mode-0600 ledger retains them for device admission. All seventeen rooms
   were verified in the running desktop
   projection with `scripts/desktop-cdp.mjs`, then joined sequentially and verified on the physical
   Infinix X683 with `scripts/android-join-showcase.mjs` and
-  `scripts/android-verify-showcase.mjs`. Android reported all sixteen expected fixture IDs from its own
+  `scripts/android-verify-showcase.mjs`. Android reported all seventeen expected fixture IDs from its own
   persisted room list. Nine signed physical-iPhone XCTest joins also passed individually, with result
   bundles under `evidence/physical-e2e/ios-showcase-*.xcresult`. The iPhone 12 Pro Max became paired and
   available after room sixteen, but the accumulated room-list XCTest timed out while enabling automation
@@ -861,7 +872,10 @@ Final verification after these changes:
   replicated its membership, but the mobile bridge timed out while opening/projecting the new history.
   After the pending operation returned its precise timeout, a process-only restart reopened the admitted
   room from protected storage; the physical Release app then verified all sixteen fixture IDs without
-  clearing or replacing any device data.
+  clearing or replacing any device data. Netherlands–Japan followed the same observable path: shared
+  Autobase membership proved admission, the bridge returned its explicit projection timeout, and a
+  process-only restart reopened the seventeenth room from protected storage. Android then verified all
+  seventeen IDs without clearing or replacing device data.
 - Verification during this handoff passed all 19 mobile tests, mobile typecheck, desktop syntax checks,
   14 focused fixture-proof/room-operation/projection tests, six authenticated archive/reducer tests,
   and the real four-room historical integration
@@ -872,7 +886,8 @@ Final verification after these changes:
   `npm run typecheck`, repository-wide `npm run lint`, and the full Next.js production build
   (rerun outside the sandbox because Turbopack requires a local worker port). The final room separately
   passed the real fixture/pairing/Autobase/attestor integration in 66 seconds; Germany–Curaçao separately
-  passed the same boundary in 81.4 seconds. The physical iPhone has not joined the final, USA–Paraguay,
-  Qatar–Switzerland, Brazil–Morocco, Haiti–Scotland, Australia–Turkey, or Germany–Curaçao. This does not
-  invalidate the nine retained per-room XCTest result bundles, but the sixteen-room accumulated assertion
+  passed the same boundary in 81.4 seconds; Netherlands–Japan passed in 67.0 seconds. The physical iPhone
+  has not joined the final, USA–Paraguay, Qatar–Switzerland, Brazil–Morocco, Haiti–Scotland,
+  Australia–Turkey, Germany–Curaçao, or Netherlands–Japan. This does not
+  invalidate the nine retained per-room XCTest result bundles, but the seventeen-room accumulated assertion
   still needs a successful automation session with `scripts/ios-verify-showcase.mjs`.
