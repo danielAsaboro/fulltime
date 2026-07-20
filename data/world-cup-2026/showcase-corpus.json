@@ -34,6 +34,11 @@
       "archive": "../resources/fixtures/world-cup-2026/17588386-brazil-vs-morocco"
     },
     {
+      "fixtureId": "17588316",
+      "seed": "data/world-cup-2026/17588316-haiti-vs-scotland/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588316-haiti-vs-scotland"
+    },
+    {
       "fixtureId": "18209181",
       "seed": "data/world-cup-2026/18209181-france-vs-morocco/room-seed.json",
       "archive": "../resources/fixtures/world-cup-2026/18209181-france-vs-morocco"

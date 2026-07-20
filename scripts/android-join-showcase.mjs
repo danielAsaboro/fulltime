@@ -57,6 +57,7 @@ function nodes(hierarchy) {
     const bounds = attribute("bounds").match(/^\[(\d+),(\d+)\]\[(\d+),(\d+)\]$/);
     return {
       tag,
+      package: decodeXml(attribute("package")),
       text: decodeXml(attribute("text")),
       description: decodeXml(attribute("content-desc")),
       clickable: attribute("clickable") === "true",
@@ -132,19 +133,40 @@ function waitForAll(values, timeoutMs, failureNeedles = []) {
 }
 
 function ensureHome() {
-  let hierarchy = xml();
-  if (nodes(hierarchy).some((node) => matches(node, "HAVE AN INVITE?"))) return;
-  const back = nodes(hierarchy).find((node) => node.clickable && node.bounds && (node.text === "‹" || node.description.toLowerCase().includes("back")));
-  if (back?.bounds) {
-    const [left, top, right, bottom] = back.bounds;
-    adb("shell", "input", "tap", String(Math.round((left + right) / 2)), String(Math.round((top + bottom) / 2)));
-  } else {
-    // Some room headers render their back glyph as a non-accessible canvas
-    // node. Tap the visible top-left room control; Android's system back exits
-    // the single-activity app instead of navigating its internal room state.
-    adb("shell", "input", "tap", "55", "155");
+  const deadline = Date.now() + 60_000;
+  while (Date.now() < deadline) {
+    const hierarchy = xml();
+    const current = nodes(hierarchy);
+    const carrierCancel = current.find((node) => node.package === "com.android.stk" && node.clickable && node.bounds && node.text === "CANCEL");
+    if (carrierCancel?.bounds) {
+      const [left, top, right, bottom] = carrierCancel.bounds;
+      adb("shell", "input", "tap", String(Math.round((left + right) / 2)), String(Math.round((top + bottom) / 2)));
+      sleep(1_500);
+      continue;
+    }
+    if (current.some((node) => node.package === "com.android.stk")) {
+      // CANCEL can leave the carrier's own offer menu in the foreground. Use
+      // system Back only for this explicit package so no offer option is
+      // selected and FullTime's internal room navigation remains untouched.
+      adb("shell", "input", "keyevent", "4");
+      sleep(1_500);
+      continue;
+    }
+    if (current.some((node) => matches(node, "HAVE AN INVITE?"))) return;
+    const back = current.find((node) => node.clickable && node.bounds && (node.text === "‹" || node.description === "‹" || node.description.toLowerCase().includes("back")));
+    if (back?.bounds) {
+      const [left, top, right, bottom] = back.bounds;
+      adb("shell", "input", "tap", String(Math.round((left + right) / 2)), String(Math.round((top + bottom) / 2)));
+    } else {
+      // A long virtualized home list can place its invite CTA outside the
+      // accessibility window. Scroll toward the top before assuming that the
+      // app is still inside a room. If a room header is temporarily absent
+      // while refreshing, the next pass will find and tap it.
+      adb("shell", "input", "swipe", "360", "350", "360", "1250", "180");
+    }
+    sleep(1_500);
   }
-  waitFor("HAVE AN INVITE?", 15_000);
+  throw new Error("Android did not reach the FullTime home screen within 60000ms");
 }
 
 function inviteInput() {
