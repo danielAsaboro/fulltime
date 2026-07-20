@@ -96,6 +96,7 @@ async function main () {
             provisionedAt: Date.now()
           }
           await saveState(persisted, seedNetwork.descriptor.key, seedNetwork.answerAttestor)
+          await Promise.all(seedNetwork.managers.map((manager) => manager.suspendRoom(result.roomId)))
           process.stdout.write(`[showcase] provisioned ${fixture.fixtureId} as ${result.roomId}\n`)
         }
       } finally {
@@ -204,6 +205,7 @@ async function openNetwork (modules, corpus, persisted, bootstrap, attestorClock
         deviceSecret: loadOrCreateDeviceSecret(persona.id),
         ...(bootstrap ? { bootstrap } : {}),
         notificationsEnabled: false,
+        openPersistedRooms: !bootstrap,
         operationClock: clock.now,
         answerAttestor
       })

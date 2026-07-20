@@ -840,7 +840,10 @@ Final verification after these changes:
 - The persistent provisioner ledger is
   `apps/desktop/.local-development/historical-showcase/rooms.json`; it contains protected invite
   material and must not be printed or committed. The provisioner's console summary now deliberately
-  omits invite codes while the mode-0600 ledger retains them for device admission. All seventeen rooms
+  omits invite codes. During sequential provisioning, operator-created managers skip reopening old
+  room handles and suspend each newly completed handle after its durable state has replicated; account
+  records and encrypted Autobases remain intact and are reopened normally by the public/device runtime.
+  The mode-0600 ledger retains invite codes for device admission. All seventeen rooms
   were verified in the running desktop
   projection with `scripts/desktop-cdp.mjs`, then joined sequentially and verified on the physical
   Infinix X683 with `scripts/android-join-showcase.mjs` and

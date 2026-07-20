@@ -37,6 +37,7 @@ class RoomManager extends EventEmitter {
     fixtureRelay = undefined,
     answerAttestor = null,
     notificationsEnabled = true,
+    openPersistedRooms = true,
     operationClock = Date.now
   }) {
     super()
@@ -58,6 +59,8 @@ class RoomManager extends EventEmitter {
     this.answerAttestorConfig = answerAttestor
     if (typeof notificationsEnabled !== 'boolean') throw new TypeError('Room manager notificationsEnabled must be a boolean')
     this.notificationsEnabled = notificationsEnabled
+    if (typeof openPersistedRooms !== 'boolean') throw new TypeError('Room manager openPersistedRooms must be a boolean')
+    this.openPersistedRooms = openPersistedRooms
 
     this.store = null
     this.swarm = null
@@ -132,14 +135,16 @@ class RoomManager extends EventEmitter {
       await this.answerAttestor.open()
     }
 
-    const records = await this.account.listRooms()
-    await forEachConcurrent(records, PERSISTED_ROOM_OPEN_CONCURRENCY, async (record) => {
-      try {
-        await this._openRecord(record)
-      } catch (error) {
-        this._emitRoomError(record.roomId, error, true)
-      }
-    })
+    if (this.openPersistedRooms) {
+      const records = await this.account.listRooms()
+      await forEachConcurrent(records, PERSISTED_ROOM_OPEN_CONCURRENCY, async (record) => {
+        try {
+          await this._openRecord(record)
+        } catch (error) {
+          this._emitRoomError(record.roomId, error, true)
+        }
+      })
+    }
     this._emit({
       type: 'bridge.ready',
       mode: 'pear-p2p-rooms',
@@ -170,6 +175,15 @@ class RoomManager extends EventEmitter {
     await this.account?.close().catch(() => {})
     await this.store?.close().catch(() => {})
     this.removeAllListeners()
+  }
+
+  async suspendRoom (roomId) {
+    const room = this.rooms.get(roomId)
+    if (!room) return false
+    this.rooms.delete(roomId)
+    await this.presence.removeRoom(roomId).catch(() => {})
+    await room.close()
+    return true
   }
 
   async dispatch (action, payload = null) {
