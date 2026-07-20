@@ -43,7 +43,9 @@ async function main () {
     ignore: (source) => {
       const normalized = String(source).replace(/\\/g, '/')
       const absolute = path.isAbsolute(source) ? source : path.resolve(desktopRoot, source)
-      return /(^|\/)dist(?:\/|$)/.test(normalized) || absolute.startsWith(stageRoot) ||
+      return /(^|\/)dist(?:\/|$)/.test(normalized) ||
+        /(^|\/)\.local-development(?:\/|$)/.test(normalized) ||
+        absolute.startsWith(stageRoot) ||
         /(^|\/)test(?:\/|$)/.test(normalized) || absolute.includes(`${path.sep}test${path.sep}`)
     }
   })
@@ -75,6 +77,26 @@ function stageRuntimeDependencies (destinationRoot) {
       ...(metadata.peerDependencies || {})
     })) {
       if (fs.existsSync(packageDirectory(rootNodeModules, dependency))) queue.push(dependency)
+    }
+  }
+  removePackageManagerBins(destinationRoot)
+}
+
+// npm workspace `.bin` entries are build-time command links. Some nested
+// packages contain absolute links back into the developer checkout; carrying
+// those into a macOS bundle both leaks a local path and makes strict code-sign
+// verification reject the app. Runtime imports never resolve through `.bin`.
+function removePackageManagerBins (root) {
+  const queue = [root]
+  while (queue.length) {
+    const directory = queue.pop()
+    for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+      const filename = path.join(directory, entry.name)
+      if (entry.name === '.bin') {
+        fs.rmSync(filename, { recursive: true, force: true })
+      } else if (entry.isDirectory()) {
+        queue.push(filename)
+      }
     }
   }
 }

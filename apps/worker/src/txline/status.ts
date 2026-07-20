@@ -17,7 +17,9 @@ const STATUS_BY_CODE: Record<number, FixtureStatus> = {
   2: "first-half",
   3: "half-time",
   4: "second-half",
-  5: "full-time",
+  // TxLINE code 5 marks the end of regulation. It is not terminal when the
+  // competition proceeds to extra time; the signed game_finalised record is.
+  5: "end-of-regulation",
   6: "extra-time",
   7: "extra-time",
   8: "extra-time",
@@ -32,6 +34,7 @@ const STATUS_BY_CODE: Record<number, FixtureStatus> = {
   17: "abandoned",
   18: "abandoned",
   19: "abandoned",
+  100: "full-time",
 };
 
 const CODE_LABEL: Record<number, string> = {
@@ -48,6 +51,7 @@ const CODE_LABEL: Record<number, string> = {
   11: "WPE",
   12: "PE",
   13: "FPE",
+  100: "FINAL",
 };
 
 export function statusFromCode(code: number | null | undefined): FixtureStatus {

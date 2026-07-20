@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomCorpus",
+  "name": "World Cup 2026 promotion rooms",
+  "fixtures": [
+    {
+      "fixtureId": "17588227",
+      "seed": "data/world-cup-2026/17588227-mexico-vs-south-africa/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588227-mexico-vs-south-africa"
+    },
+    {
+      "fixtureId": "17926696",
+      "seed": "data/world-cup-2026/17926696-south-korea-vs-czech-republic/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17926696-south-korea-vs-czech-republic"
+    },
+    {
+      "fixtureId": "17926604",
+      "seed": "data/world-cup-2026/17926604-canada-vs-bosnia-herzegovina/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17926604-canada-vs-bosnia-herzegovina"
+    },
+    {
+      "fixtureId": "18209181",
+      "seed": "data/world-cup-2026/18209181-france-vs-morocco/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18209181-france-vs-morocco"
+    },
+    {
+      "fixtureId": "18218149",
+      "seed": "data/world-cup-2026/18218149-spain-vs-belgium/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18218149-spain-vs-belgium"
+    },
+    {
+      "fixtureId": "18213979",
+      "seed": "data/world-cup-2026/18213979-norway-vs-england/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18213979-norway-vs-england"
+    },
+    {
+      "fixtureId": "18222446",
+      "seed": "data/world-cup-2026/18222446-argentina-vs-switzerland/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/18222446-argentina-vs-switzerland"
+    },
+    {
+      "fixtureId": "18237038",
+      "seed": "data/world-cup-2026/18237038-france-vs-spain/room-seed.json",
+      "archive": "data/world-cup-2026/18237038-france-vs-spain/archive"
+    },
+    {
+      "fixtureId": "18257865",
+      "seed": "data/world-cup-2026/18257865-france-vs-england/room-seed.json",
+      "archive": "data/world-cup-2026/18257865-france-vs-england/archive"
+    },
+    {
+      "fixtureId": "18257739",
+      "seed": "data/world-cup-2026/18257739-spain-vs-argentina/room-seed.json",
+      "archive": "data/world-cup-2026/18257739-spain-vs-argentina/archive"
+    }
+  ]
+}

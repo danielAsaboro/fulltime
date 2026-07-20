@@ -33,6 +33,23 @@ test("mobile uses only a reverified cached or bundled manifest when refresh is u
   assert.equal(second.stale, true);
 });
 
+test("mobile replaces an older verified cache with a newer signed bundled manifest", async () => {
+  const { keys, publicKey, manifest } = fixture();
+  const newer = signNetworkManifest(
+    { version: 1, issuedAt: manifest.issuedAt + 1, fixtureFeedKey: "cd".repeat(32) },
+    keys.privateKey,
+    manifest.issuedAt + 1,
+  );
+  let cache: string | null = JSON.stringify(manifest);
+  const storage = { read: async () => cache, write: async (value: string) => { cache = value; } };
+
+  const resolution = await resolveNetworkManifest({ endpoint: null, publicKey, initialManifest: newer }, storage);
+
+  assert.equal(resolution.source, "bundled-cache");
+  assert.equal(resolution.manifest.fixtureFeedKey, "cd".repeat(32));
+  assert.equal(JSON.parse(cache!).fixtureFeedKey, "cd".repeat(32));
+});
+
 test("mobile fails precisely with no trust root or verified cache", async () => {
   await assert.rejects(resolveNetworkManifest({ endpoint: null, publicKey: null, initialManifest: null }, { read: async () => null, write: async () => undefined }), /no network trust root/);
 });

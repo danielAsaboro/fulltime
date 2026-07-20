@@ -1,0 +1,257 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "18257739",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1784480700000
+  },
+  "personas": [
+    { "id": "fan_a", "displayName": "Amina", "joinedAt": 1784480700000, "creator": true },
+    { "id": "fan_b", "displayName": "Tunde", "joinedAt": 1784480760000 },
+    { "id": "fan_c", "displayName": "Maya", "joinedAt": 1784480820000 },
+    { "id": "fan_d", "displayName": "Jo", "joinedAt": 1784480880000 }
+  ],
+  "actions": [
+    {
+      "at": 1784481000000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-spain-favourites",
+      "text": "Spain were my most complete team before this tournament. They were the favourites then and I am not changing on final day: Spain 2-1.",
+      "source": { "kind": "x-post", "postId": "2062633985264505209", "url": "https://x.com/Eleojo_Afc/status/2062633985264505209" }
+    },
+    {
+      "at": 1784481060000,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "tunde-argentina-legacy",
+      "text": "Everyone has spent a month explaining Spain. Argentina have spent a month surviving. One more Messi night: Argentina on penalties.",
+      "source": { "kind": "x-post", "postId": "2063591803165569276", "url": "https://x.com/RotoWireSoccer/status/2063591803165569276" }
+    },
+    {
+      "at": 1784481120000,
+      "actor": "fan_c",
+      "type": "reply",
+      "item": "tunde-argentina-legacy",
+      "text": "That is a story, not a match read. Spain will make Argentina defend for two hours."
+    },
+    { "at": 1784481150000, "actor": "fan_a", "type": "reaction", "item": "tunde-argentina-legacy", "emoji": "😮" },
+    {
+      "at": 1784481180000,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "jo-low-scoring",
+      "text": "The market loved Spain before kickoff, but finals tighten. I have 0-0 after ninety and Spain finding it in extra time.",
+      "source": { "kind": "x-post", "postId": "2062599168699593145", "url": "https://x.com/Tophadff/status/2062599168699593145" }
+    },
+    {
+      "at": 1784481240000,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-messi-yamal",
+      "item": "tunde-argentina-legacy",
+      "text": "The cancelled Finalissima never gave us Messi against Spain. Football saved it for the World Cup final—and Spain win 1-0."
+    },
+    { "at": 1784481270000, "actor": "fan_b", "type": "reaction", "item": "maya-messi-yamal", "emoji": "🔥" },
+    {
+      "at": 1784481300000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "final-winner",
+      "question": "Who lifts the World Cup?",
+      "options": [
+        { "key": "spain", "label": "Spain" },
+        { "key": "argentina", "label": "Argentina" },
+        { "key": "penalties", "label": "Decided on penalties" }
+      ]
+    },
+    { "at": 1784481305000, "actor": "fan_a", "type": "vote", "poll": "final-winner", "option": "spain" },
+    { "at": 1784481310000, "actor": "fan_b", "type": "vote", "poll": "final-winner", "option": "penalties" },
+    { "at": 1784481315000, "actor": "fan_c", "type": "vote", "poll": "final-winner", "option": "spain" },
+    { "at": 1784481320000, "actor": "fan_d", "type": "vote", "poll": "final-winner", "option": "spain" },
+    {
+      "at": 1784487970318,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:18257739:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 17, "sourceTs": 1784487960318, "action": "kickoff" }
+    },
+    {
+      "at": 1784487975318,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:18257739:17:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 17, "sourceTs": 1784487960318, "action": "kickoff" }
+    },
+    {
+      "at": 1784487980318,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-no",
+      "callId": "call:18257739:17:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 17, "sourceTs": 1784487960318, "action": "kickoff" }
+    },
+    {
+      "at": 1784488565318,
+      "actor": "fan_b",
+      "type": "quote",
+      "key": "tunde-opening-receipt",
+      "item": "jo-low-scoring",
+      "text": "Ten minutes, no goal. The first locked call settles no. Jo's final read has started exactly as advertised."
+    },
+    { "at": 1784488570318, "actor": "fan_d", "type": "reaction", "item": "tunde-opening-receipt", "emoji": "👏" },
+    {
+      "at": 1784490909941,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-halftime",
+      "text": "Half-time: Spain 0-0 Argentina. Lots of control, no breakthrough. This final is refusing everybody's easy script.",
+      "source": { "kind": "archive-event", "sequence": 465, "sourceTs": 1784490904941, "action": "half-time", "score": "0-0" }
+    },
+    {
+      "at": 1784490914941,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-fast-start-no",
+      "callId": "call:18257739:465:phase:half-time:second-half-fast-start",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 465, "sourceTs": 1784490904941, "action": "half-time" }
+    },
+    {
+      "at": 1784490919941,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-fast-start-yes",
+      "callId": "call:18257739:465:phase:half-time:second-half-fast-start",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 465, "sourceTs": 1784490904941, "action": "half-time" }
+    },
+    {
+      "at": 1784490924941,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-fast-start-no",
+      "callId": "call:18257739:465:phase:half-time:second-half-fast-start",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 465, "sourceTs": 1784490904941, "action": "half-time" }
+    },
+    {
+      "at": 1784491509941,
+      "actor": "fan_a",
+      "type": "reply",
+      "item": "maya-halftime",
+      "text": "Another ten-minute window closes without a goal. No wins again; this has extra time written all over it."
+    },
+    {
+      "at": 1784495403821,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "argentina-red-card",
+      "text": "93' RED CARD ARGENTINA. A final that would not open has just changed shape completely.",
+      "source": { "kind": "archive-event", "sequence": 942, "sourceTs": 1784495398821, "action": "red_card", "participant": 2, "clockSeconds": 5552, "score": "0-0" }
+    },
+    { "at": 1784495408821, "actor": "fan_a", "type": "reaction", "item": "argentina-red-card", "emoji": "😮" },
+    {
+      "at": 1784495752689,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-regulation-receipt",
+      "item": "jo-low-scoring",
+      "text": "End of regulation: 0-0. My extra-time call is alive, and Argentina have to survive it with ten.",
+      "source": { "kind": "archive-event", "sequence": 975, "sourceTs": 1784495747689, "action": "end-of-regulation", "score": "0-0" }
+    },
+    { "at": 1784495757689, "actor": "fan_c", "type": "reaction", "item": "jo-regulation-receipt", "emoji": "👏" },
+    {
+      "at": 1784495952804,
+      "actor": "fan_c",
+      "type": "reply",
+      "item": "jo-regulation-receipt",
+      "text": "Extra time starts. If Spain score now, you own the room."
+    },
+    {
+      "at": 1784496566307,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "first-goal-disallowed",
+      "text": "Spain thought they had it in the first extra-time period—VAR check, then the goal is discarded. Still 0-0.",
+      "source": { "kind": "archive-amendment", "possibleSequence": 1049, "varSequence": 1052, "discardSequence": 1061, "sourceTs": 1784496561307, "score": "0-0" }
+    },
+    { "at": 1784496571307, "actor": "fan_b", "type": "reaction", "item": "first-goal-disallowed", "emoji": "😮" },
+    {
+      "at": 1784497452926,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-spain-one-nil",
+      "item": "maya-messi-yamal",
+      "text": "106' SPAIN 1-0. I put that score in the room before kickoff. Do not lose the timestamp.",
+      "source": { "kind": "archive-event", "sequence": 1187, "sourceTs": 1784497447926, "action": "goal", "participant": 1, "clockSeconds": 6339, "score": "1-0" }
+    },
+    {
+      "at": 1784497457926,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-extra-time-right",
+      "item": "jo-low-scoring",
+      "text": "0-0 after ninety, Spain in extra time. That is the whole call. Receipts, please."
+    },
+    { "at": 1784497462926, "actor": "fan_a", "type": "reaction", "item": "jo-extra-time-right", "emoji": "🔥" },
+    {
+      "at": 1784497829006,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "second-goal-disallowed",
+      "text": "Spain celebrate a second, VAR checks it, and the feed rolls it back. Argentina are still one moment from forcing another rewrite.",
+      "source": { "kind": "archive-amendment", "possibleSequence": 1256, "varSequence": 1259, "discardSequence": 1262, "sourceTs": 1784497824006, "score": "1-0" }
+    },
+    {
+      "at": 1784498527334,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "extra-time-ended",
+      "text": "Extra time ends Spain 1-0 Argentina. Spain have won the World Cup; now wait for the signed final state.",
+      "source": { "kind": "archive-event", "sequence": 1382, "sourceTs": 1784498522334, "action": "after-extra-time", "score": "1-0" }
+    },
+    {
+      "at": 1784498869700,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-messi-yamal",
+      "text": "Finalised: Spain 1-0 Argentina. Called before kickoff, survived two VAR scares, and locked forever.",
+      "source": { "kind": "archive-event", "sequence": 1385, "sourceTs": 1784498864700, "action": "game_finalised", "score": "1-0" }
+    },
+    {
+      "at": 1784498874700,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-final-receipt",
+      "item": "jo-low-scoring",
+      "text": "My exact route: 0-0 after ninety, Spain win in extra time. This is why the call had to exist before the match."
+    },
+    { "at": 1784498879700, "actor": "fan_b", "type": "reaction", "item": "maya-final-receipt", "emoji": "⚽" },
+    {
+      "at": 1784498884700,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "maya-final-receipt",
+      "text": "I had Argentina on penalties. Wrong in public, no edits, no excuses. That is the game."
+    }
+  ],
+  "evidence": {
+    "fixture": "archive/fixture.json",
+    "archive": "archive/scores.historical.sse",
+    "provenance": "archive/provenance.json",
+    "socialSources": [
+      "https://x.com/Eleojo_Afc/status/2062633985264505209",
+      "https://x.com/RotoWireSoccer/status/2063591803165569276",
+      "https://x.com/Tophadff/status/2062599168699593145"
+    ],
+    "sourcePolicy": "The authenticated TxLINE archive is authoritative for fixture identity, kickoff, phases, the Argentina red card, provisional-event amendments, Spain's confirmed 106th-minute goal, and the 1-0 terminal result. Pre-match takes are concise fictional-room restagings informed by the cited public X posts; the personas do not impersonate source authors. Calls are submitted only against canonical calls opened by signed fixture events. The source archive's real feed gaps remain preserved, so unsupported calls void rather than being rewritten as wins."
+  }
+}

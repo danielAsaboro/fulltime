@@ -37,6 +37,8 @@ export interface AnswerAttestorOptions {
   expectedReceiptFeedKey?: string;
   bootstrap?: BootstrapNode[];
   maxPeers?: number;
+  /** Authoritative receive clock; archive import binds this to replay feed time. */
+  clock?: () => number;
 }
 
 export interface AnswerAttestorDescriptor {
@@ -66,6 +68,7 @@ export class AnswerAttestorService {
   private receiptLog: ReceiptLog | null = null;
   private readonly connections = new Map<ConnectionLike, ConnectionState>();
   private handleTail: Promise<void> = Promise.resolve();
+  private readonly clock: () => number;
   private opened = false;
   private closed = false;
 
@@ -78,7 +81,9 @@ export class AnswerAttestorService {
     if (options.expectedReceiptFeedKey && !HEX_KEY.test(options.expectedReceiptFeedKey)) {
       throw new TypeError("Expected receipt feed key must be 32-byte lowercase hex");
     }
+    if (options.clock !== undefined && typeof options.clock !== "function") throw new TypeError("Answer attestor clock must be a function");
     this.options = { ...options };
+    this.clock = options.clock ?? Date.now;
   }
 
   get descriptor(): AnswerAttestorDescriptor {
@@ -226,7 +231,7 @@ export class AnswerAttestorService {
     const requestMessage = channel.addMessage({
       encoding: compactEncoding.buffer,
       onmessage: (bytes) => {
-        const receivedAt = Date.now();
+        const receivedAt = this.clock();
         let value: SignedAnswerSubmission;
         try {
           value = decodeSignedAnswerSubmission(bytes);

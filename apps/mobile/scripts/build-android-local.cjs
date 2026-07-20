@@ -47,6 +47,10 @@ run(process.execPath, [path.join(appRoot, 'scripts', 'configure-local.cjs')])
 run(process.execPath, [path.join(appRoot, 'scripts', 'bundle-worker.cjs'), 'android'])
 run(process.execPath, [path.join(appRoot, 'scripts', 'link-android-addons.cjs')])
 run(process.execPath, [require.resolve('expo/bin/cli'), 'prebuild', '--platform', 'android'])
+// The React Native Gradle task does not declare the generated Bare worker as
+// an input. Force the JS asset task so every local APK embeds the worker that
+// was produced immediately above rather than a stale Metro output.
+run(path.join(appRoot, 'android', 'gradlew'), [':app:createBundleReleaseJsAndAssets', '--rerun-tasks'], { cwd: path.join(appRoot, 'android') })
 run(path.join(appRoot, 'android', 'gradlew'), ['assembleRelease'], { cwd: path.join(appRoot, 'android') })
 
 const builtApk = path.join(appRoot, 'android', 'app', 'build', 'outputs', 'apk', 'release', 'app-release.apk')

@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "18218149",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1783641000000
+  },
+  "personas": [
+    { "id": "fan_a", "displayName": "Amina", "joinedAt": 1783641000000, "creator": true },
+    { "id": "fan_b", "displayName": "Tunde", "joinedAt": 1783641060000 },
+    { "id": "fan_c", "displayName": "Maya", "joinedAt": 1783641120000 },
+    { "id": "fan_d", "displayName": "Jo", "joinedAt": 1783641180000 }
+  ],
+  "actions": [
+    {
+      "at": 1783641240000,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "jo-quarterfinal-breakdown",
+      "text": "Spain will have the ball. Belgium have to turn every transition into a chance. This could stay tight for a long time.",
+      "source": { "kind": "x-post", "postId": "2075368133796204716", "url": "https://x.com/i/status/2075368133796204716", "media": "video" }
+    },
+    {
+      "at": 1783641300000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-spain-consensus",
+      "text": "Nearly all the money is on Spain to advance. I agree with the crowd: Spain win, but Belgium make them earn it.",
+      "source": { "kind": "x-post", "postId": "2075368378311835801", "url": "https://x.com/i/status/2075368378311835801" }
+    },
+    {
+      "at": 1783641305000,
+      "actor": "fan_c",
+      "type": "reply",
+      "item": "amina-spain-consensus",
+      "text": "That much consensus is exactly why I want the upset."
+    },
+    { "at": 1783641310000, "actor": "fan_b", "type": "reaction", "item": "amina-spain-consensus", "emoji": "🔥" },
+    {
+      "at": 1783641420000,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "tunde-form-case",
+      "text": "Spain are 4-1-0 in their last five; Belgium are 3-2-0. The numbers say Spain, not a walkover.",
+      "source": { "kind": "x-post", "postId": "2075368812937908332", "url": "https://x.com/i/status/2075368812937908332" }
+    },
+    {
+      "at": 1783641480000,
+      "actor": "fan_c",
+      "type": "poll",
+      "key": "atlanta-quarterfinal",
+      "question": "Who reaches the semi-final?",
+      "options": [
+        { "key": "spain", "label": "Spain" },
+        { "key": "belgium", "label": "Belgium" },
+        { "key": "penalties", "label": "Decided on penalties" }
+      ],
+      "source": { "kind": "x-post", "postId": "2075368328378630540", "url": "https://x.com/i/status/2075368328378630540" }
+    },
+    { "at": 1783641485000, "actor": "fan_a", "type": "vote", "poll": "atlanta-quarterfinal", "option": "spain" },
+    { "at": 1783641490000, "actor": "fan_b", "type": "vote", "poll": "atlanta-quarterfinal", "option": "spain" },
+    { "at": 1783641495000, "actor": "fan_c", "type": "vote", "poll": "atlanta-quarterfinal", "option": "belgium" },
+    { "at": 1783641500000, "actor": "fan_d", "type": "vote", "poll": "atlanta-quarterfinal", "option": "penalties" },
+    {
+      "at": 1783711879785,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-after-spain-goal-yes",
+      "callId": "call:18218149:325:goal:another-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 325, "sourceTs": 1783711874785, "action": "goal", "participant": 1, "clockSeconds": 1774, "score": "1-0" }
+    },
+    {
+      "at": 1783711884785,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-after-spain-goal-no",
+      "callId": "call:18218149:325:goal:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 325, "sourceTs": 1783711874785, "action": "goal", "participant": 1, "clockSeconds": 1774, "score": "1-0" }
+    },
+    {
+      "at": 1783711889785,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "spain-opener",
+      "text": "30' Spain lead. The favourites have the first goal; now Belgium have to come out.",
+      "source": { "kind": "archive-event", "sequence": 325, "sourceTs": 1783711874785, "action": "goal", "participant": 1, "clockSeconds": 1774, "score": "1-0" }
+    },
+    {
+      "at": 1783712484785,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-no-goal-receipt",
+      "item": "spain-opener",
+      "text": "Ten-minute window closed. No second goal. That was control, not chaos."
+    },
+    {
+      "at": 1783712531258,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "belgium-equaliser",
+      "text": "41' BELGIUM. Jo's receipt survived by less than a minute, and now it is 1-1.",
+      "source": { "kind": "archive-event", "sequence": 422, "sourceTs": 1783712526258, "action": "goal", "participant": 2, "clockSeconds": 2428, "score": "1-1" }
+    },
+    { "at": 1783712536258, "actor": "fan_a", "type": "reaction", "item": "belgium-equaliser", "emoji": "😮" },
+    {
+      "at": 1783712541258,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-consensus-gotcha",
+      "item": "amina-spain-consensus",
+      "text": "You said Belgium would make them earn it. Here is the invoice."
+    },
+    {
+      "at": 1783713055067,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-fast-start-yes",
+      "callId": "call:18218149:519:phase:half-time:second-half-fast-start",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 519, "sourceTs": 1783713045067, "action": "half-time", "score": "1-1" }
+    },
+    {
+      "at": 1783713060067,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-fast-start-no",
+      "callId": "call:18218149:519:phase:half-time:second-half-fast-start",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 519, "sourceTs": 1783713045067, "action": "half-time", "score": "1-1" }
+    },
+    {
+      "at": 1783716674187,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-after-winner-yes",
+      "callId": "call:18218149:967:goal:another-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 967, "sourceTs": 1783716669187, "action": "goal", "participant": 1, "clockSeconds": 5257, "score": "2-1" }
+    },
+    {
+      "at": 1783716679187,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-after-winner-no",
+      "callId": "call:18218149:967:goal:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 967, "sourceTs": 1783716669187, "action": "goal", "participant": 1, "clockSeconds": 5257, "score": "2-1" }
+    },
+    {
+      "at": 1783716684187,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "spain-late-winner",
+      "text": "88' SPAIN. A late winner when Belgium were already thinking about extra time. 2-1.",
+      "source": { "kind": "archive-event", "sequence": 967, "sourceTs": 1783716669187, "action": "goal", "participant": 1, "clockSeconds": 5257, "score": "2-1" }
+    },
+    { "at": 1783716689187, "actor": "fan_b", "type": "reaction", "item": "spain-late-winner", "emoji": "⚽" },
+    {
+      "at": 1783717165170,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "amina-spain-receipt",
+      "item": "amina-spain-consensus",
+      "text": "Full-time 2-1. Spain advance, Belgium made every minute expensive.",
+      "source": { "kind": "archive-event", "sequence": 1083, "sourceTs": 1783717160170, "action": "full-time", "score": "2-1" }
+    },
+    {
+      "at": 1783717170170,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-belgium-miss",
+      "item": "maya-consensus-gotcha",
+      "text": "My upset lived until the 88th minute. That somehow hurts more."
+    },
+    { "at": 1783717175170, "actor": "fan_d", "type": "reaction", "item": "amina-spain-receipt", "emoji": "👏" },
+    {
+      "at": 1783727160000,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "merino-winner-context",
+      "text": "Merino with the late winner after the spill. Spain are in their first World Cup semi-final since 2010.",
+      "source": { "kind": "x-post", "postId": "2075728494714356050", "url": "https://x.com/i/status/2075728494714356050" }
+    },
+    {
+      "at": 1783811460000,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "exact-score-social-proof",
+      "text": "The 2-1 correct-score receipts are everywhere now. Posting after the whistle is easy; the room has the before.",
+      "source": { "kind": "x-post", "postId": "2076081986179936608", "url": "https://x.com/i/status/2076081986179936608", "media": "photo" }
+    }
+  ],
+  "evidence": {
+    "fixture": "../../../../resources/fixtures/world-cup-2026/18218149-spain-vs-belgium/fixture.json",
+    "archive": "../../../../resources/fixtures/world-cup-2026/18218149-spain-vs-belgium/scores.historical.sse",
+    "conversation": "../../../../resources/fixtures/world-cup-2026/18218149-spain-vs-belgium/conversation-weave.json",
+    "sourcePolicy": "Archive timestamps, participant sides, confirmed goals, and terminal score remain authoritative. The archive confirms Spain goals at 29:34 and 87:37, Belgium's equaliser at 40:28, and the 2-1 terminal state. The Merino attribution and post-match exact-score culture are sourced from linked public posts. X-derived language is restaged into disclosed showcase personas."
+  }
+}

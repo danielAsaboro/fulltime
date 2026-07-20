@@ -13,7 +13,7 @@ import {
   manifestVerificationPublicKey,
   startNetworkManifestService,
 } from "./network-manifest.js";
-import { ArchivedScoresAdapter, parseArchivedScoresSse } from "./replay/archived-scores.js";
+import { ArchivedScoresAdapter, parseArchivedScoresJson, parseArchivedScoresSse, type ArchivedScoreRecord } from "./replay/archived-scores.js";
 import type { TxFixture } from "./txline/types.js";
 
 const delaySeconds = positiveNumber(process.env.FULLTIME_REPLAY_START_DELAY_SECONDS ?? "45", "FULLTIME_REPLAY_START_DELAY_SECONDS");
@@ -30,15 +30,17 @@ const log = createLogger("info");
 const controller = new AbortController();
 
 async function main(): Promise<void> {
-  const [fixtureSource, scoresSource, signingKey] = await Promise.all([
+  const [fixtureSource, archivedScores, signingKey] = await Promise.all([
     fsPromises.readFile(path.join(archiveDir, "fixture.json"), "utf8"),
-    fsPromises.readFile(path.join(archiveDir, "scores.historical.sse"), "utf8"),
+    loadArchivedScores(archiveDir),
     loadManifestSigningKey(requiredPath("FULLTIME_MANIFEST_SIGNING_KEY_PATH")),
   ]);
   const fixtureWire = JSON.parse(fixtureSource) as TxFixture;
   const fixture = normalizeFixture(fixtureWire);
-  const records = parseArchivedScoresSse(scoresSource);
-  const matchRecords = records.filter((record) => record.StatusId !== undefined && (record.StatusId >= 2 || record.Action === "game_finalised"));
+  const records = archivedScores.records;
+  const matchRecords = records.filter((record) =>
+    (record.StatusId !== undefined && record.StatusId >= 2) || record.Action === "game_finalised"
+  );
   if (!matchRecords.length) throw new Error("Replay archive has no in-match TxLINE records");
 
   const publisher = new FixturePlanePublisher({ storageDir, log });
@@ -67,7 +69,7 @@ async function main(): Promise<void> {
     armed: !autostart,
     startedAt: Date.now(),
   });
-  log.info("Authenticated TxLINE replay ready", { fixtureId: fixture.id, records: matchRecords.length, delaySeconds, durationSeconds, armed: !autostart, manifest: manifestService.url });
+  log.info("Authenticated TxLINE replay ready", { fixtureId: fixture.id, records: matchRecords.length, archiveFormat: archivedScores.format, delaySeconds, durationSeconds, armed: !autostart, manifest: manifestService.url });
 
   const close = async (): Promise<void> => {
     controller.abort();
@@ -107,6 +109,29 @@ async function main(): Promise<void> {
   await publisher.flush();
   log.info("Authenticated TxLINE replay reached terminal state", { fixtureId: fixture.id, score: machine.snapshot.score, sourceFeedTs: machine.snapshot.lastFeedTs });
   await new Promise<void>((resolve) => controller.signal.addEventListener("abort", () => resolve(), { once: true }));
+}
+
+async function loadArchivedScores(directory: string): Promise<{ records: ArchivedScoreRecord[]; format: "historical-sse" | "historical-interval-json" }> {
+  const ssePath = path.join(directory, "scores.historical.sse");
+  try {
+    const source = await fsPromises.readFile(ssePath, "utf8");
+    const records = parseArchivedScoresSse(source);
+    if (records.length) return { records, format: "historical-sse" };
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+  }
+
+  const intervalPath = path.join(directory, "scores.historical-intervals.json");
+  try {
+    const records = parseArchivedScoresJson(await fsPromises.readFile(intervalPath, "utf8"));
+    if (!records.length) throw new Error(`Archived TxLINE interval capture is empty: ${intervalPath}`);
+    return { records, format: "historical-interval-json" };
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      throw new Error(`Replay archive has neither a populated scores.historical.sse nor scores.historical-intervals.json: ${directory}`);
+    }
+    throw error;
+  }
 }
 
 function requiredPath(name: string): string {

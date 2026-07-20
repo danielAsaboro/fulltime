@@ -32,6 +32,7 @@ export type MatchEventKind =
   | "foul"
   | "half-time"
   | "second-half-start"
+  | "end-of-regulation"
   | "extra-time-start"
   | "penalty-shootout-start"
   | "full-time"

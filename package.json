@@ -17,6 +17,7 @@
     "desktop:dev": "npm --workspace @fulltime/desktop run start --",
     "desktop:local-config": "npm --workspace @fulltime/desktop run start:local-config",
     "desktop:replay": "npm --workspace @fulltime/desktop run start:replay-config",
+    "showcase:provision": "npm --workspace @fulltime/desktop run showcase:provision",
     "desktop:package:web": "npm --workspace @fulltime/web run build && npm --workspace @fulltime/desktop run package:web",
     "desktop:package": "npm --workspace @fulltime/desktop run package",
     "desktop:smoke": "npm --workspace @fulltime/desktop run smoke",

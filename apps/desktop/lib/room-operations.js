@@ -46,6 +46,7 @@ const OPERATION_TYPES = new Set([
 ])
 
 const ID_PATTERN = /^[a-zA-Z0-9._:-]{3,180}$/
+const OPTION_ID_PATTERN = /^[a-zA-Z0-9._:-]{1,180}$/
 const HEX_32_PATTERN = /^[a-f0-9]{64}$/
 const HEX_64_PATTERN = /^[a-f0-9]{128}$/
 const REACTION_EMOJIS = new Set(['🔥', '⚽', '👏', '😮'])
@@ -199,9 +200,10 @@ function validateAdmission (payload) {
 }
 
 function validateMessage (payload) {
-  onlyFields(payload, ['id', 'messageId', 'text', 'attachment'], 'Message')
+  onlyFields(payload, ['id', 'messageId', 'text', 'attachment', 'quotedItemId'], 'Message')
   identifier(payload.id, 'Message item ID')
   identifier(payload.messageId, 'Message ID')
+  if (Object.hasOwn(payload, 'quotedItemId')) identifier(payload.quotedItemId, 'Quoted item ID')
   if (typeof payload.text !== 'string') throw new TypeError('Message must be a string')
   if (!Object.hasOwn(payload, 'attachment')) {
     boundedText(payload.text, 'Message', 1, MAX_MESSAGE_LENGTH)
@@ -294,7 +296,9 @@ function validateAnswerReference (payload) {
   identifier(payload.userId, 'Answer user ID')
   identifier(payload.answerId, 'Answer ID')
   identifier(payload.callId, 'Answer call ID')
-  identifier(payload.optionId, 'Answer option ID')
+  if (typeof payload.optionId !== 'string' || !OPTION_ID_PATTERN.test(payload.optionId)) {
+    throw new TypeError('Answer option ID is invalid')
+  }
 }
 
 function boundedText (value, label, minimum, maximum) {

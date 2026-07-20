@@ -728,3 +728,63 @@ Final verification after these changes:
 - The Android release signing identity is not stored in Git. Its root-only recovery copy is at
   `/opt/fulltime-operator/secrets/android-release/` on the DigitalOcean host. Preserve that identity
   for every direct APK update; rotating it would prevent installed copies from upgrading in place.
+
+## Authenticated World Cup showcase rooms (2026-07-19/20)
+
+- Generated showcase inputs live under `data/world-cup-2026/`; the workspace evidence under
+  `../resources/fixtures/world-cup-2026/` remains untouched. Every completed seed names its raw
+  authenticated archive and provenance and is replayed through the production fixture normalizer,
+  publisher, answer attestor, Blind Pairing admission, and encrypted Autobase room operations. The
+  personas are disclosed fictional room participants; fixture state, event time, calls, settlements,
+  and receipts are restricted to what the signed capture proves.
+- Ten rooms are complete and persisted: the first three tournament fixtures, all four quarter-finals,
+  France–Spain's semi-final, France–England's third-place match, and Spain–Argentina's final. The
+  chronological corpus is `data/world-cup-2026/showcase-corpus.json`. The final archive was fetched at
+  `2026-07-20T01:05:26.622Z`; its authenticated raw SSE contains 1,387 source records and terminal
+  `game_finalised` sequence 1385. Its SHA-256 is
+  `cd1efa51cd6f6d0b8acae88df69a14f2d32c248fa02791636ab70057c29b8e62`.
+- Spain–Argentina exposed a production normalization defect: TxLINE status 5 is end of regulation,
+  not necessarily terminal. Shared validation and the worker reducer now model `end-of-regulation`
+  separately, map signed `game_finalised`/status 100 to `full-time`, and retain later extra-time phases.
+  Archived red-card confirmations are also emitted exactly once. Production replay now proves the
+  Argentina red card, 0–0 after regulation, Spain's one confirmed 106th-minute goal, discarded
+  provisional goals, and the signed 1–0 final state without hand-authored fixture facts.
+- The persistent provisioner ledger is
+  `apps/desktop/.local-development/historical-showcase/rooms.json`; it contains protected invite
+  material and must not be printed or committed. All ten rooms were verified in the running desktop
+  projection with `scripts/desktop-cdp.mjs`, then joined sequentially and verified on the physical
+  Infinix X683 with `scripts/android-join-showcase.mjs` and
+  `scripts/android-verify-showcase.mjs`. Android reported all ten expected fixture IDs from its own
+  persisted room list. Nine signed physical-iPhone XCTest joins also passed individually, with result
+  bundles under `evidence/physical-e2e/ios-showcase-*.xcresult`.
+- Cross-runtime proof replay now derives the expected Hypercore key from the serialized manifest and
+  compares canonical hex values; it never relies on Node/Bare Buffer identity. Mobile startup also
+  prefers a newer verified bundled manifest over an older verified device cache, preventing a stale
+  authority pin from shadowing a valid app update. The Android local build forces Metro's release
+  bundle task after regenerating its Bare worker so an old embedded worker cannot survive a rebuild.
+- Desktop packaging now hard-excludes `.local-development` before Electron Packager traverses the app
+  tree. This prevents active peer stores, invite ledgers, device identities, and transient Electron
+  singleton files from entering or racing a public artifact. Packaging with the pinned live manifest
+  URL/public key produced `release/FullTime-darwin-arm64` successfully, and the packaged standalone
+  UI/loopback-host smoke test passed against that exact bundle. Nested package-manager `.bin` links are
+  stripped from staged runtime dependencies so no absolute developer path enters the app and strict
+  ad-hoc code-sign verification succeeds.
+- The current Android release was built with the preserved release identity and verified with APK
+  Signature Scheme v2; signer certificate SHA-256 remains
+  `66c3bb39cb2c3a36ba5431c209e20570194120ce110aa0dd995043fea5de6407`.
+  The temporary recovery copies were deleted after the build. Installing this artifact over the
+  attached development-signed app correctly failed with `INSTALL_FAILED_UPDATE_INCOMPATIBLE`; the
+  device was not uninstalled or cleared, so its ten-room showcase state remains intact.
+- Verification during this handoff passed all 19 mobile tests, mobile typecheck, desktop syntax checks,
+  14 focused fixture-proof/room-operation/projection tests, six authenticated archive/reducer tests,
+  and the real four-room historical integration
+  through signed fixture discovery, Blind Pairing, replicated Autobase operations, and attested receipts
+  (`FULLTIME_RUN_PEAR_INTEGRATION=1 node --test apps/desktop/test/historical-room-seeder.integration.test.js`,
+  469 seconds). A complete `npm test` also passed (51 shared, 2 attestor plus 1 gated,
+  92 desktop plus 14 gated, 19 mobile, 18 web, and 24 worker), as did the complete workspace
+  `npm run typecheck`, repository-wide `npm run lint`, and the full Next.js production build
+  (rerun outside the sandbox because Turbopack requires a local worker port). The final room separately
+  passed the real fixture/pairing/Autobase/attestor integration in 66 seconds. The physical iPhone
+  remained offline before it could join the final; this does not invalidate the nine
+  retained per-room XCTest result bundles, but a final ten-room accumulated assertion should be run
+  after reconnecting it with `scripts/ios-verify-showcase.mjs`.

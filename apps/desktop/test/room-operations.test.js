@@ -56,6 +56,18 @@ test('text, authenticated media descriptors, polls, reactions, and admission lim
     () => createOperation('message.add', { id: 'item-nul-1', messageId: 'message-nul-1', text: 'bad\u0000text' }),
     /1-1000/
   )
+  assert.equal(createOperation('message.add', {
+    id: 'item-quote-1',
+    messageId: 'message-quote-1',
+    text: 'You really said that.',
+    quotedItemId: 'item-text-1'
+  }).payload.quotedItemId, 'item-text-1')
+  assert.throws(() => createOperation('message.add', {
+    id: 'item-quote-2',
+    messageId: 'message-quote-2',
+    text: 'Bad quote.',
+    quotedItemId: 'x'
+  }), /Quoted item ID/)
 
   const attachment = {
     version: 1,
@@ -171,6 +183,7 @@ test('answer references are closed, receipt-index bound, and never carry a token
     optionId: 'yes'
   }
   assert.equal(createOperation('answer.reference', reference).type, 'answer.reference')
+  assert.equal(createOperation('answer.reference', { ...reference, optionId: 'no' }).payload.optionId, 'no')
   assert.throws(
     () => createOperation('answer.reference', { ...reference, receiptIndex: 8 }),
     /token ID/

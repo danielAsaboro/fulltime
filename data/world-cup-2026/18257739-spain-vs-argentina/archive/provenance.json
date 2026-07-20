@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.authenticatedFixtureArchive.provenance",
+  "fixtureId": "18257739",
+  "fetchedAt": "2026-07-20T01:05:26.622Z",
+  "source": {
+    "origin": "https://txline.txodds.com",
+    "fixtureRequest": "https://txline.txodds.com/api/fixtures/snapshot?startEpochDay=20653&competitionId=72",
+    "scoresRequest": "https://txline.txodds.com/api/scores/historical/18257739",
+    "authentication": "Bearer JWT plus X-Api-Token; credentials intentionally omitted"
+  },
+  "validation": {
+    "fixtureIdentityMatched": true,
+    "kickoffMatched": true,
+    "scoreRecordCount": 1387,
+    "scoreSequenceRange": [
+      0,
+      1386
+    ],
+    "terminalAction": "game_finalised",
+    "terminalStatusId": 100,
+    "terminalTimestamp": 1784498864700
+  },
+  "files": {
+    "fixtures.snapshot.raw.json": {
+      "bytes": 274,
+      "sha256": "c89033d0e97562b931d581991c7595dfe260ef4f8b0ca698f4899d529feffdf5",
+      "contentType": "application/json"
+    },
+    "fixture.json": {
+      "bytes": 322,
+      "sha256": "1131876ae468e640f6f48ef3b72044a8e4d4a7bb63ed89b205d337a9b7d2e143",
+      "contentType": "application/json; extracted from fixtures.snapshot.raw.json"
+    },
+    "scores.historical.sse": {
+      "bytes": 1483935,
+      "sha256": "cd1efa51cd6f6d0b8acae88df69a14f2d32c248fa02791636ab70057c29b8e62",
+      "contentType": "text/event-stream"
+    }
+  }
+}

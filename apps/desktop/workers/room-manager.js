@@ -34,7 +34,8 @@ class RoomManager extends EventEmitter {
     bootstrap = undefined,
     fixtureRelay = undefined,
     answerAttestor = null,
-    notificationsEnabled = true
+    notificationsEnabled = true,
+    operationClock = Date.now
   }) {
     super()
     this.storagePath = storagePath
@@ -46,6 +47,8 @@ class RoomManager extends EventEmitter {
     this.deviceSecret = b4a.from(deviceSecret)
     this.bootstrap = bootstrap
     this.fixtureRelay = fixtureRelay
+    if (typeof operationClock !== 'function') throw new TypeError('Room manager operation clock must be a function')
+    this.operationClock = operationClock
     if (answerAttestor !== null && (!answerAttestor || typeof answerAttestor !== 'object' ||
         typeof answerAttestor.servicePublicKey !== 'string' || typeof answerAttestor.receiptFeedKey !== 'string')) {
       throw new TypeError('Room manager answer attestor configuration is invalid')
@@ -102,10 +105,7 @@ class RoomManager extends EventEmitter {
       this._emit({
         type: 'fixture.updated',
         fixtureId: String(card.fixture.id),
-        // Fixture projections deliberately reuse immutable objects internally.
-        // IPC is a JSON boundary, so materialize an independent tree before
-        // the strict validator rejects those shared references.
-        card: JSON.parse(JSON.stringify(card)),
+        card,
         at: Date.now()
       })
       void this._refreshRoomIntelligence()
@@ -410,7 +410,7 @@ class RoomManager extends EventEmitter {
       answerId: operationId('answer'),
       callId,
       optionId,
-      submittedAt: Date.now()
+      submittedAt: this.operationClock()
     })
     const claims = token.claims
     const reference = {
@@ -710,6 +710,7 @@ class RoomManager extends EventEmitter {
       swarm: this.swarm,
       pairing: this.pairing,
       account: this.account,
+      operationClock: this.operationClock,
       ...options
     })
     room.on('update', (projection) => {
@@ -797,7 +798,10 @@ class RoomManager extends EventEmitter {
   }
 
   _emit (event) {
-    this.emit('event', { version: 2, ...event })
+    // Projections deliberately share immutable fixture/member objects in
+    // memory. IPC is a JSON boundary, so materialize the exact JSON tree here
+    // before the strict frame validator checks it for shared references.
+    this.emit('event', JSON.parse(JSON.stringify({ version: 2, ...event })))
   }
 
   async _queueRemoteMessageNotifications (room, projection) {

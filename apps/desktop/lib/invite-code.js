@@ -23,6 +23,7 @@ const FIXTURE_STATUSES = new Set([
   'first-half',
   'half-time',
   'second-half',
+  'end-of-regulation',
   'extra-time',
   'penalty-shootout',
   'full-time',

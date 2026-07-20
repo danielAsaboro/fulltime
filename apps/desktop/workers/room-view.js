@@ -487,6 +487,18 @@ async function applyMessage (operation, actor, room, db) {
   if (await valueAt(db, `item-id/${payload.id}`)) return false
   if (await valueAt(db, `message-id/${payload.messageId}`)) return false
   let attachment = null
+  let quote = null
+  if (payload.quotedItemId) {
+    const quotedPointer = await valueAt(db, `item-id/${payload.quotedItemId}`)
+    if (!quotedPointer || quotedPointer.kind !== 'text') return false
+    const quotedItem = await valueAt(db, quotedPointer.key)
+    if (!quotedItem || quotedItem.kind !== 'text' || typeof quotedItem.text !== 'string' || !quotedItem.authorId) return false
+    quote = {
+      itemId: quotedItem.id,
+      authorId: quotedItem.authorId,
+      text: quotedItem.text
+    }
+  }
   if (Object.hasOwn(payload, 'attachment')) {
     try {
       attachment = validateMediaDescriptor(payload.attachment)
@@ -509,6 +521,7 @@ async function applyMessage (operation, actor, room, db) {
     authorId: actor.userId,
     createdAt: operation.createdAt,
     text,
+    ...(quote ? { quote } : {}),
     ...(attachment ? { attachment } : {})
   })
   await db.put(`item-id/${payload.id}`, { key, kind: 'text' })
@@ -1077,6 +1090,19 @@ function projectItem (item, members, currentUserId, rawReactions, rawReplies, re
     replies,
     replyCount,
     permalink: `/room/${item.roomId}?item=${item.id}`
+  }
+  if (base.quote) {
+    const quotedMember = members.get(base.quote.authorId)
+    base.quote = {
+      itemId: base.quote.itemId,
+      text: base.quote.text,
+      author: {
+        userId: base.quote.authorId,
+        displayName: quotedMember ? quotedMember.displayName : 'Former member',
+        role: quotedMember ? quotedMember.role : 'member',
+        isCurrentUser: base.quote.authorId === currentUserId
+      }
+    }
   }
   delete base.authorId
   // Old local materialized views may carry this former presentation field.

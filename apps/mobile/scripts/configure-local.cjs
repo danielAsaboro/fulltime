@@ -61,14 +61,31 @@ async function main() {
   }
   const ca = fs.readFileSync(runtime.caCertificatePath)
   const manifest = verifyNetworkManifest(await fetchManifest(runtime.endpoint, ca), runtime.publicKey)
+  const relayHost = process.env.FULLTIME_MOBILE_FIXTURE_RELAY_HOST
+  const relayPortText = process.env.FULLTIME_MOBILE_FIXTURE_RELAY_PORT
+  if ((relayHost && !relayPortText) || (!relayHost && relayPortText)) {
+    throw new Error('Local mobile fixture relay requires both FULLTIME_MOBILE_FIXTURE_RELAY_HOST and FULLTIME_MOBILE_FIXTURE_RELAY_PORT')
+  }
+  let fixtureRelay
+  if (relayHost && relayPortText) {
+    if (!/^(?:[A-Za-z0-9](?:[A-Za-z0-9.-]{0,251}[A-Za-z0-9])?|\[[A-Fa-f0-9:]+\])$/.test(relayHost)) {
+      throw new Error('Local mobile fixture relay host is invalid')
+    }
+    const relayPort = Number.parseInt(relayPortText, 10)
+    if (!Number.isSafeInteger(relayPort) || relayPort < 1 || relayPort > 65535 || String(relayPort) !== relayPortText) {
+      throw new Error('Local mobile fixture relay port is invalid')
+    }
+    fixtureRelay = { host: relayHost, port: relayPort }
+  }
   const output = path.join(appRoot, '.local-development', 'network-config.json')
   fs.mkdirSync(path.dirname(output), { recursive: true, mode: 0o700 })
   fs.writeFileSync(output, JSON.stringify({
     endpoint: null,
     publicKey: runtime.publicKey,
-    initialManifest: manifest
+    initialManifest: manifest,
+    ...(fixtureRelay ? { fixtureRelay } : {})
   }, null, 2), { mode: 0o600 })
-  console.log(`Wrote verified ${runtime.kind} mobile network cache for fixture feed ${manifest.fixtureFeedKey}`)
+  console.log(`Wrote verified ${runtime.kind} mobile network cache for fixture feed ${manifest.fixtureFeedKey}${fixtureRelay ? ` via proof relay ${fixtureRelay.host}:${fixtureRelay.port}` : ''}`)
 }
 
 main().catch((error) => {

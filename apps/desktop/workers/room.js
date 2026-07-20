@@ -53,7 +53,8 @@ class Room extends EventEmitter {
     bootstrapKey = null,
     encryptionKey = null,
     localKeyPair = null,
-    admissionClaim = null
+    admissionClaim = null,
+    operationClock = Date.now
   }) {
     super()
     this.rootStore = rootStore
@@ -65,6 +66,8 @@ class Room extends EventEmitter {
     this.encryptionKey = encryptionKey
     this.localKeyPair = localKeyPair
     this.admissionClaim = admissionClaim
+    if (typeof operationClock !== 'function') throw new TypeError('Room operation clock must be a function')
+    this.operationClock = operationClock
 
     this.store = rootStore.namespace(`fulltime-room-v1/${roomId}`)
     this.base = null
@@ -306,7 +309,7 @@ class Room extends EventEmitter {
     })
   }
 
-  async append (type, payload, createdAt = Date.now()) {
+  async append (type, payload, createdAt = this.operationClock()) {
     if (!this.base) throw new Error('Room is not open')
     this._refreshDiscoveryForActivity()
     const optimistic = !this.base.writable
@@ -440,7 +443,7 @@ class Room extends EventEmitter {
       preview: created.additional.data,
       signature: created.additional.signature
     })
-    const createdAt = Date.now()
+    const createdAt = this.operationClock()
     await this.append('invite.create', {
       id: b4a.toString(created.id, 'hex'),
       code,
@@ -465,10 +468,19 @@ class Room extends EventEmitter {
     }
     const id = operationId('item')
     const messageId = operationId('message')
+    const quotedItemId = Object.hasOwn(input, 'quotedItemId') ? input.quotedItemId : null
+    if (quotedItemId !== null) {
+      if (typeof quotedItemId !== 'string' || !/^[a-zA-Z0-9._:-]{3,180}$/.test(quotedItemId)) {
+        throw new TypeError('Quoted item ID is invalid')
+      }
+      const pointer = await valueAt(this.view, `item-id/${quotedItemId}`)
+      if (!pointer || pointer.kind !== 'text') throw new Error('Quoted message was not found')
+    }
     const operation = await this.append('message.add', {
       id,
       messageId,
-      text: input.text
+      text: input.text,
+      ...(quotedItemId ? { quotedItemId } : {})
     })
     return this._itemAfter(operation, id)
   }

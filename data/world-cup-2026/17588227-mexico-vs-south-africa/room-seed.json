@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588227",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781134800000
+  },
+  "personas": [
+    { "id": "fan_a", "displayName": "Amina", "joinedAt": 1781134800000, "creator": true },
+    { "id": "fan_b", "displayName": "Tunde", "joinedAt": 1781134920000 },
+    { "id": "fan_c", "displayName": "Maya", "joinedAt": 1781135040000 },
+    { "id": "fan_d", "displayName": "Jo", "joinedAt": 1781135160000 }
+  ],
+  "actions": [
+    {
+      "at": 1781135552000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-mexico-2-0",
+      "text": "Azteca. Opening game. Write it down — Mexico 2-0.",
+      "source": { "kind": "x-post", "postId": "2064858284851364298", "url": "https://x.com/Bridge2Bernabeu/status/2064858284851364298" }
+    },
+    {
+      "at": 1781135755000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-gimenez-doubt",
+      "text": "Giménez barely played for Milan. Who even scores for El Tri?",
+      "source": { "kind": "x-post", "postId": "2064859135787589778", "url": "https://x.com/MundialTracker/status/2064859135787589778" }
+    },
+    {
+      "at": 1781135769000,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "tunde-2010-draw",
+      "text": "2010 was 1-1. Bafana can spoil this again.",
+      "source": { "kind": "x-post", "postId": "2064859194826666124", "url": "https://x.com/___lion_hearted/status/2064859194826666124" }
+    },
+    {
+      "at": 1781135785000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-mexico-2-0",
+      "text": "Two-nil in an opener is brave. Saving this one."
+    },
+    { "at": 1781135795000, "actor": "fan_c", "type": "reaction", "item": "amina-mexico-2-0", "emoji": "😮" },
+    {
+      "at": 1781135941000,
+      "actor": "fan_d",
+      "type": "poll",
+      "key": "opening-night-winner",
+      "question": "Opening night winner?",
+      "options": [
+        { "key": "mexico", "label": "Mexico" },
+        { "key": "south-africa", "label": "South Africa" },
+        { "key": "draw", "label": "Draw" }
+      ],
+      "source": { "kind": "x-post", "postId": "2064859913965171195", "url": "https://x.com/Othmanegfx1/status/2064859913965171195" }
+    },
+    { "at": 1781135950000, "actor": "fan_a", "type": "vote", "poll": "opening-night-winner", "option": "mexico" },
+    { "at": 1781135955000, "actor": "fan_b", "type": "vote", "poll": "opening-night-winner", "option": "draw" },
+    { "at": 1781135960000, "actor": "fan_c", "type": "vote", "poll": "opening-night-winner", "option": "mexico" },
+    { "at": 1781135965000, "actor": "fan_d", "type": "vote", "poll": "opening-night-winner", "option": "south-africa" },
+    {
+      "at": 1781205340473,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "quinones-opener",
+      "text": "9' QUIÑONES. Azteca is shaking already.",
+      "source": { "kind": "archive-event", "sequence": 110, "sourceTs": 1781205335473, "action": "goal", "participant": 1, "clockSeconds": 512 }
+    },
+    {
+      "at": 1781205370473,
+      "actor": "fan_b",
+      "type": "quote",
+      "key": "tunde-one-down",
+      "item": "amina-mexico-2-0",
+      "text": "One down. I still remember the 1-1 though."
+    },
+    { "at": 1781205380473, "actor": "fan_c", "type": "reaction", "item": "quinones-opener", "emoji": "⚽" },
+    {
+      "at": 1781207717801,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-second-half-fast-start-no",
+      "callId": "call:17588227:504:phase:half-time:second-half-fast-start",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 504, "sourceTs": 1781207707801, "action": "half-time" }
+    },
+    {
+      "at": 1781207722801,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-second-half-fast-start-yes",
+      "callId": "call:17588227:504:phase:half-time:second-half-fast-start",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 504, "sourceTs": 1781207707801, "action": "half-time" }
+    },
+    {
+      "at": 1781208966554,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "south-africa-first-red",
+      "text": "Straight red. Bafana are melting before the hour.",
+      "source": { "kind": "archive-event", "sequence": 568, "sourceTs": 1781208961554, "action": "red_card", "participant": 2, "clockSeconds": 2946 }
+    },
+    {
+      "at": 1781208981554,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "south-africa-first-red",
+      "text": "That challenge was panic, not defending."
+    },
+    { "at": 1781208986554, "actor": "fan_a", "type": "reaction", "item": "south-africa-first-red", "emoji": "😮" },
+    {
+      "at": 1781210054424,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "jimenez-second",
+      "text": "Jiménez heads the second. Amina's exact score is staring at us.",
+      "source": { "kind": "archive-event", "sequence": 731, "sourceTs": 1781210049424, "action": "goal", "participant": 1, "clockSeconds": 3997 }
+    },
+    { "at": 1781210064424, "actor": "fan_a", "type": "reaction", "item": "jimenez-second", "emoji": "🔥" },
+    {
+      "at": 1781210998266,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "south-africa-second-red",
+      "text": "Another South Africa red. This opener has turned into a brawl.",
+      "source": { "kind": "archive-event", "sequence": 851, "sourceTs": 1781210993266, "action": "red_card", "participant": 2, "clockSeconds": 4991 }
+    },
+    {
+      "at": 1781211497231,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "mexico-late-red",
+      "text": "Mexico get one sent off at the death too. Three reds total. Chaos.",
+      "source": { "kind": "archive-event", "sequence": 938, "sourceTs": 1781211492231, "action": "red_card", "participant": 1, "clockSeconds": 5487 }
+    },
+    {
+      "at": 1781222203000,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "amina-exact-receipt",
+      "item": "amina-mexico-2-0",
+      "text": "2-0. Before kickoff. I would like my apology in writing.",
+      "source": { "kind": "x-post", "postId": "2065221725281988980", "url": "https://x.com/sportScore25/status/2065221725281988980" }
+    },
+    { "at": 1781222220000, "actor": "fan_b", "type": "reply", "item": "amina-exact-receipt", "text": "Fair. Exact score and everything. You know ball today." },
+    { "at": 1781222230000, "actor": "fan_c", "type": "reaction", "item": "amina-exact-receipt", "emoji": "👏" },
+    {
+      "at": 1781305483000,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "tunde-mexico-not-proven",
+      "text": "Mexico got the points, but South Africa made them look better than they were.",
+      "source": { "kind": "x-post", "postId": "2065571023823544470", "url": "https://x.com/Spredmussel/status/2065571023823544470" }
+    },
+    {
+      "at": 1781307720000,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "duck-celebration",
+      "text": "The duck celebrating Mexico is the only post-match analysis I accept. https://x.com/HumanityChad/status/2065580406632742971",
+      "source": { "kind": "x-post", "postId": "2065580406632742971", "url": "https://x.com/HumanityChad/status/2065580406632742971", "media": "video" }
+    },
+    { "at": 1781307750000, "actor": "fan_c", "type": "reaction", "item": "duck-celebration", "emoji": "🔥" },
+    {
+      "at": 1781307780000,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-duck-quote",
+      "item": "duck-celebration",
+      "text": "Pin this. Tournament mascot decided."
+    }
+  ],
+  "evidence": {
+    "fixture": "../../../../resources/fixtures/world-cup-2026/17588227-mexico-vs-south-africa/fixture.json",
+    "archive": "../../../../resources/fixtures/world-cup-2026/17588227-mexico-vs-south-africa/scores.historical-intervals.json",
+    "conversation": "../../../../resources/fixtures/world-cup-2026/17588227-mexico-vs-south-africa/conversation-weave.json",
+    "sourcePolicy": "Archive event timestamps and identities remain authoritative. X-derived language is restaged into the four disclosed showcase personas and retains its source reference in this seed file."
+  }
+}

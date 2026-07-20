@@ -1,0 +1,220 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "18209181",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1783554600000
+  },
+  "personas": [
+    { "id": "fan_a", "displayName": "Amina", "joinedAt": 1783554600000, "creator": true },
+    { "id": "fan_b", "displayName": "Tunde", "joinedAt": 1783554660000 },
+    { "id": "fan_c", "displayName": "Maya", "joinedAt": 1783554720000 },
+    { "id": "fan_d", "displayName": "Jo", "joinedAt": 1783554780000 }
+  ],
+  "actions": [
+    {
+      "at": 1783554900000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-qf-frame",
+      "text": "Every quarter-final is a former winner against a country that has never reached the final. That is an outrageous bracket.",
+      "source": { "kind": "x-post", "postId": "2075368328378630540", "url": "https://x.com/i/status/2075368328378630540" }
+    },
+    {
+      "at": 1783555020000,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "tunde-france-three-one",
+      "text": "France 3-1. Morocco will hurt them on the counter, then tire. Locking it now.",
+      "source": { "kind": "x-post", "postId": "2075006304825794885", "url": "https://x.com/i/status/2075006304825794885" }
+    },
+    {
+      "at": 1783555025000,
+      "actor": "fan_a",
+      "type": "reply",
+      "item": "tunde-france-three-one",
+      "text": "You have given Morocco a goal and an obituary in the same sentence."
+    },
+    { "at": 1783555030000, "actor": "fan_d", "type": "reaction", "item": "tunde-france-three-one", "emoji": "🔥" },
+    {
+      "at": 1783555080000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-france-attack",
+      "text": "Mbappé, Olise and Dembélé are all in form, but Morocco are the strongest defence France have seen. I am not calling this comfortable.",
+      "source": { "kind": "x-post", "postId": "2075006712788947415", "url": "https://x.com/i/status/2075006712788947415", "media": "video" }
+    },
+    {
+      "at": 1783555140000,
+      "actor": "fan_d",
+      "type": "poll",
+      "key": "boston-quarterfinal",
+      "question": "Who reaches the semi-final?",
+      "options": [
+        { "key": "france", "label": "France" },
+        { "key": "morocco", "label": "Morocco" },
+        { "key": "penalties", "label": "Too close — penalties" }
+      ],
+      "source": { "kind": "x-post", "postId": "2075006947397693842", "url": "https://x.com/i/status/2075006947397693842", "media": "photo" }
+    },
+    { "at": 1783555145000, "actor": "fan_a", "type": "vote", "poll": "boston-quarterfinal", "option": "france" },
+    { "at": 1783555150000, "actor": "fan_b", "type": "vote", "poll": "boston-quarterfinal", "option": "france" },
+    { "at": 1783555155000, "actor": "fan_c", "type": "vote", "poll": "boston-quarterfinal", "option": "morocco" },
+    { "at": 1783555160000, "actor": "fan_d", "type": "vote", "poll": "boston-quarterfinal", "option": "penalties" },
+    {
+      "at": 1783627263085,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:18209181:19:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 19, "sourceTs": 1783627253085, "action": "kickoff" }
+    },
+    {
+      "at": 1783627268085,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-opening-goal-no",
+      "callId": "call:18209181:19:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 19, "sourceTs": 1783627253085, "action": "kickoff" }
+    },
+    {
+      "at": 1783630183066,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "morocco-false-opener",
+      "text": "49' MOROCCO HAVE IT— wait. The feed has pulled the goal straight back. Still 0-0.",
+      "source": { "kind": "archive-event", "sequence": 534, "sourceTs": 1783630178066, "action": "goal", "participant": 2, "clockSeconds": 2924, "confirmed": false }
+    },
+    {
+      "at": 1783630184753,
+      "actor": "fan_a",
+      "type": "reply",
+      "item": "morocco-false-opener",
+      "text": "Discarded immediately. My heart has not received that update."
+    },
+    { "at": 1783630185753, "actor": "fan_d", "type": "reaction", "item": "morocco-false-opener", "emoji": "😮" },
+    {
+      "at": 1783630265424,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-fast-start-yes",
+      "callId": "call:18209181:548:phase:half-time:second-half-fast-start",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 548, "sourceTs": 1783630255424, "action": "half-time", "score": "0-0" }
+    },
+    {
+      "at": 1783630270424,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-fast-start-no",
+      "callId": "call:18209181:548:phase:half-time:second-half-fast-start",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 548, "sourceTs": 1783630255424, "action": "half-time", "score": "0-0" }
+    },
+    {
+      "at": 1783630275424,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-next-goal-france",
+      "callId": "call:18209181:548:phase:half-time:next-goal-second-half",
+      "option": "home",
+      "source": { "kind": "archive-event", "sequence": 548, "sourceTs": 1783630255424, "action": "half-time", "score": "0-0" }
+    },
+    {
+      "at": 1783630280424,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-next-goal-morocco",
+      "callId": "call:18209181:548:phase:half-time:next-goal-second-half",
+      "option": "away",
+      "source": { "kind": "archive-event", "sequence": 548, "sourceTs": 1783630255424, "action": "half-time", "score": "0-0" }
+    },
+    {
+      "at": 1783632337422,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-another-goal-yes",
+      "callId": "call:18209181:739:goal:another-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 739, "sourceTs": 1783632332422, "action": "goal", "participant": 1, "clockSeconds": 3560 }
+    },
+    {
+      "at": 1783632342422,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-another-goal-no",
+      "callId": "call:18209181:739:goal:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 739, "sourceTs": 1783632332422, "action": "goal", "participant": 1, "clockSeconds": 3560 }
+    },
+    {
+      "at": 1783632347422,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "france-breakthrough",
+      "text": "60' France finally break through. Tunde's next-goal call lands; the 3-1 is still alive.",
+      "source": { "kind": "archive-event", "sequence": 739, "sourceTs": 1783632332422, "action": "goal", "participant": 1, "clockSeconds": 3560, "score": "1-0" }
+    },
+    { "at": 1783632352422, "actor": "fan_a", "type": "reaction", "item": "france-breakthrough", "emoji": "⚽" },
+    {
+      "at": 1783632662398,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "france-second",
+      "text": "66' France again. Two goals in six minutes. My 'not comfortable' take has aged quickly.",
+      "source": { "kind": "archive-event", "sequence": 794, "sourceTs": 1783632657398, "action": "goal", "participant": 1, "clockSeconds": 3922, "score": "2-0" }
+    },
+    {
+      "at": 1783632667398,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "amina-attack-receipt",
+      "item": "amina-france-attack",
+      "text": "The front line found the gap. France have turned control into a two-goal lead."
+    },
+    { "at": 1783632672398, "actor": "fan_b", "type": "reaction", "item": "amina-attack-receipt", "emoji": "👏" },
+    {
+      "at": 1783634446507,
+      "actor": "fan_b",
+      "type": "quote",
+      "key": "tunde-three-one-miss",
+      "item": "tunde-france-three-one",
+      "text": "Full-time 2-0. Correct winner, wrong score, and Morocco never got the goal I promised them.",
+      "source": { "kind": "archive-event", "sequence": 1111, "sourceTs": 1783634441507, "action": "full-time", "score": "2-0" }
+    },
+    {
+      "at": 1783634451507,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-morocco-vote-miss",
+      "item": "maya-qf-frame",
+      "text": "The never-finalist run ends here. France were patient, then ruthless."
+    },
+    { "at": 1783634456507, "actor": "fan_d", "type": "reaction", "item": "tunde-three-one-miss", "emoji": "😮" },
+    {
+      "at": 1783641420000,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "france-two-nil-social",
+      "text": "Mbappé and Dembélé on the scoresheet, France 2-0, semi-final booked. That second-half burst was the match.",
+      "source": { "kind": "x-post", "postId": "2075368862686626115", "url": "https://x.com/i/status/2075368862686626115" }
+    },
+    {
+      "at": 1783726680000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "france-spain-next",
+      "text": "France 2-0 was the clean call. Spain are next; now the heavyweight argument starts.",
+      "source": { "kind": "x-post", "postId": "2075726432550982139", "url": "https://x.com/i/status/2075726432550982139" }
+    }
+  ],
+  "evidence": {
+    "fixture": "../../../../resources/fixtures/world-cup-2026/18209181-france-vs-morocco/fixture.json",
+    "archive": "../../../../resources/fixtures/world-cup-2026/18209181-france-vs-morocco/scores.historical.sse",
+    "conversation": "../../../../resources/fixtures/world-cup-2026/18209181-france-vs-morocco/conversation-weave.json",
+    "sourcePolicy": "Archive timestamps, confirmation state, participant sides, discarded events, and terminal score remain authoritative. The archive confirms a participant-two goal event at 48:44 was immediately discarded, followed by two confirmed participant-one goals at 59:20 and 65:22. Player-name attribution in the post-match line is sourced from the linked public post. X-derived language is restaged into disclosed showcase personas."
+  }
+}

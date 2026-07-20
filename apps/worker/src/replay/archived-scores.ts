@@ -58,7 +58,7 @@ function score(stats: Record<string, number>): SoccerFixtureScore {
 }
 
 function archivedStatus(statusId: number | undefined, action: string): number | undefined {
-  if (statusId === 100 || action === "game_finalised") return 5;
+  if (statusId === 100 || action === "game_finalised") return 100;
   return statusId;
 }
 
@@ -67,13 +67,21 @@ function confirmedIncident(record: ArchivedScoreRecord, emitted: Set<number>): S
   const firstConfirmation = record.Confirmed === true && !emitted.has(record.Id);
   if (firstConfirmation) {
     if (record.Action === "goal") data.Goal = true;
+    if (record.Action === "penalty_outcome" && /^scored$/i.test(data.Outcome ?? "")) {
+      data.Goal = true;
+      data.Penalty = true;
+    }
     if (record.Action === "corner") data.Corner = true;
     if (record.Action === "yellow_card") data.YellowCard = true;
+    if (record.Action === "red_card") data.RedCard = true;
     if (record.Action === "var") data.VAR = true;
-    if (["goal", "corner", "yellow_card", "var", "substitution"].includes(record.Action)) emitted.add(record.Id);
+    if (["goal", "penalty_outcome", "corner", "yellow_card", "red_card", "var", "substitution"].includes(record.Action)) {
+      emitted.add(record.Id);
+    }
   }
   if (!firstConfirmation) {
     delete data.Goal;
+    delete data.Penalty;
     delete data.Corner;
     delete data.YellowCard;
     delete data.RedCard;
@@ -115,15 +123,28 @@ export class ArchivedScoresAdapter {
 }
 
 export function parseArchivedScoresSse(source: string): Array<ArchivedScoreRecord> {
-  return source.split(/\r?\n/).flatMap((line) => {
+  const values = source.split(/\r?\n/).flatMap((line) => {
     if (!line.startsWith("data: ")) return [];
-    const value: unknown = JSON.parse(line.slice(6));
-    if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("Archived TxLINE scores SSE contains a non-object data record");
+    return [JSON.parse(line.slice(6)) as unknown];
+  });
+  return parseArchivedScoreValues(values, "SSE");
+}
+
+/** Parse the exact JSON arrays captured by the historical interval collector. */
+export function parseArchivedScoresJson(source: string): Array<ArchivedScoreRecord> {
+  const value: unknown = JSON.parse(source);
+  if (!Array.isArray(value)) throw new Error("Archived TxLINE scores JSON must contain an array");
+  return parseArchivedScoreValues(value, "JSON");
+}
+
+function parseArchivedScoreValues(values: unknown[], format: "SSE" | "JSON"): Array<ArchivedScoreRecord> {
+  return values.map((value) => {
+    if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error(`Archived TxLINE scores ${format} contains a non-object data record`);
     const record = value as Partial<ArchivedScoreRecord>;
     if (!Number.isSafeInteger(record.FixtureId) || !Number.isSafeInteger(record.Seq) || !Number.isSafeInteger(record.Ts) ||
         typeof record.Action !== "string" || typeof record.Participant1IsHome !== "boolean") {
-      throw new Error("Archived TxLINE scores SSE contains an invalid record");
+      throw new Error(`Archived TxLINE scores ${format} contains an invalid record`);
     }
-    return [record as ArchivedScoreRecord];
+    return record as ArchivedScoreRecord;
   }).sort((left, right) => left.Seq - right.Seq);
 }

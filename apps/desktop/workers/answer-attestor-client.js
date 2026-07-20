@@ -191,14 +191,15 @@ class AnswerAttestorClient extends EventEmitter {
   }
 
   /** Read and verify a token from the pinned public receipt Hypercore. */
-  async getVerifiedReceipt (index, { wait = false } = {}) {
+  async getVerifiedReceipt (index, { wait = true } = {}) {
     this._assertOpen()
     if (!Number.isSafeInteger(index) || index < 0) throw new TypeError('Answer receipt index is invalid')
     let block
     try {
-      block = await this.receiptCore.get(index, wait
-        ? { wait: true, timeout: this.requestTimeoutMs }
-        : { wait: false })
+      block = await this.receiptCore.get(index, { wait: false })
+      if (!block && wait) {
+        block = await this.receiptCore.get(index, { wait: true, timeout: this.requestTimeoutMs })
+      }
     } catch (cause) {
       const error = new Error('The pinned answer receipt feed could not be read')
       error.code = 'RECEIPT_FEED_UNAVAILABLE'

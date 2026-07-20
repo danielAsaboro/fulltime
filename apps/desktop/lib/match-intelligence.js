@@ -28,6 +28,7 @@ const EVENT_WEIGHT = Object.freeze({
   foul: 0.06,
   'half-time': 0.02,
   'second-half-start': 0.04,
+  'end-of-regulation': 0.02,
   'extra-time-start': 0.08,
   'penalty-shootout-start': 0.16,
   'full-time': 0,

@@ -95,6 +95,8 @@ function eventNoun(kind: MatchEventKind): string | null {
       return "red card";
     case "half-time":
       return "half-time";
+    case "end-of-regulation":
+      return "end of regulation";
     case "full-time":
       return "full-time";
     case "kickoff":
