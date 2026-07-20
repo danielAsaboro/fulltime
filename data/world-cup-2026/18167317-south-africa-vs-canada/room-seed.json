@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "18167317",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782668700000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782668700000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782668760000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782668820000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782668880000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782669600000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Broos: RO32 already success — but Bafana want more vs Canada tomorrow”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071017139218341999",
+        "url": "https://x.com/clahanna/status/2071017139218341999",
+        "observedAt": "2026-06-27 23:45"
+      }
+    },
+    {
+      "at": 1782669660000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "South Africa may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782669900000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Davies ready for R32 vs South Africa after ‘decoy’ role — Marsch”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071014887921238089",
+        "url": "https://x.com/ESPNsoccer/status/2071014887921238089",
+        "observedAt": "2026-06-27 23:36"
+      }
+    },
+    {
+      "at": 1782669930000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782670020000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. South Africa, Canada, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782670500000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: South Africa or Canada?",
+      "options": [
+        {
+          "key": "home",
+          "label": "South Africa"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Canada"
+        }
+      ]
+    },
+    {
+      "at": 1782670506000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782670512000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782670518000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782670524000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782673218345,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:18167317:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782673213345,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782673223345,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:18167317:16:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782673213345,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782673228345,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:18167317:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782673213345,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782676455907,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “We’ve got 99 problems South Africa ain’t one #Canada”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071383068016050544",
+        "url": "https://x.com/DayoOluyede/status/2071383068016050544",
+        "observedAt": "2026-06-28 23:59"
+      }
+    },
+    {
+      "at": 1782676490907,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: South Africa 0-0 Canada. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 444,
+        "sourceTs": 1782676485907,
+        "action": "halftime_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1782676495907,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782679975234,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "113' GOAL — Canada. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 906,
+        "sourceTs": 1782679970234,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782679980234,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782679985234,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1782680733057,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: South Africa 0-1 Canada. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 960,
+        "sourceTs": 1782680728057,
+        "action": "game_finalised",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782680738057,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782680748057,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 0-1. No scrollback archaeology required."
+    },
+    {
+      "at": 1782680758057,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Canada & Brazil first to officially qualify RO16 — Canada beat SA”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071744452901654810",
+        "url": "https://x.com/Amanda461831071/status/2071744452901654810",
+        "observedAt": "2026-06-29 23:55"
+      }
+    },
+    {
+      "at": 1782680763057,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/18167317-south-africa-vs-canada/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/18167317-south-africa-vs-canada/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/18167317-south-africa-vs-canada/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/clahanna/status/2071017139218341999",
+      "https://x.com/i/status/2071017139218341999",
+      "https://x.com/ESPNsoccer/status/2071014887921238089",
+      "https://x.com/i/status/2071014887921238089",
+      "https://x.com/SportyTV/status/2071014658182467586",
+      "https://x.com/i/status/2071014658182467586",
+      "https://x.com/Nikos07778/status/2071013512176902202",
+      "https://x.com/i/status/2071013512176902202",
+      "https://x.com/joshuakloke/status/2071011734161440995",
+      "https://x.com/i/status/2071011734161440995",
+      "https://x.com/Weskido/status/2071011126121234750",
+      "https://x.com/i/status/2071011126121234750"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 0-1 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

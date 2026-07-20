@@ -1,0 +1,353 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "18175981",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782848700000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782848700000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782848760000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782848820000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782848880000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782849600000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Paraguay qualify RO16; up next France or Sweden”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071744948873920683",
+        "url": "https://x.com/MASINACHIMYKIEL/status/2071744948873920683",
+        "observedAt": "2026-06-29 23:57"
+      }
+    },
+    {
+      "at": 1782849660000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "France may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782849900000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Paraguay face winner of France vs Sweden, R16 Jul 4 Philly”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071744431263269320",
+        "url": "https://x.com/turkeyloin/status/2071744431263269320",
+        "observedAt": "2026-06-29 23:55"
+      }
+    },
+    {
+      "at": 1782849930000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782850020000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. France, Sweden, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782850500000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: France or Sweden?",
+      "options": [
+        {
+          "key": "home",
+          "label": "France"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Sweden"
+        }
+      ]
+    },
+    {
+      "at": 1782850506000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782850512000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782850518000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782850524000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782853215553,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:18175981:15:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1782853210553,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782853220553,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:18175981:15:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1782853210553,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782853225553,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:18175981:15:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1782853210553,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782855974734,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "46' GOAL — France. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 448,
+        "sourceTs": 1782855969734,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1782855979734,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782855984734,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1782856345650,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “France 3-0 Sweden; Mbappé brace, Barcola third; R16 vs Paraguay”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2072107860016959950",
+        "url": "https://x.com/elosim_soy/status/2072107860016959950",
+        "observedAt": "2026-06-30 23:59"
+      }
+    },
+    {
+      "at": 1782856380650,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: France 1-0 Sweden. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 488,
+        "sourceTs": 1782856375650,
+        "action": "halftime_finalised",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1782856385650,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782857574473,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "73' GOAL — France. 2-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 566,
+        "sourceTs": 1782857569473,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1782857579473,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782858863231,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "95' GOAL — France. 3-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 760,
+        "sourceTs": 1782858858231,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "3-0"
+      }
+    },
+    {
+      "at": 1782858868231,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782860214739,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: France 3-0 Sweden. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 993,
+        "sourceTs": 1782860209739,
+        "action": "game_finalised",
+        "score": "3-0"
+      }
+    },
+    {
+      "at": 1782860219739,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782860229739,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 3-0. No scrollback archaeology required."
+    },
+    {
+      "at": 1782860239739,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Mbappé brace vs Sweden; MOTM; knockout scoring record narrative”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2072468936092701009",
+        "url": "https://x.com/ballerswdrip/status/2072468936092701009",
+        "observedAt": "2026-07-01 23:54"
+      }
+    },
+    {
+      "at": 1782860244739,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/18175981-france-vs-sweden/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/18175981-france-vs-sweden/scores.historical.sse",
+    "provenance": "../resources/fixtures/world-cup-2026/18175981-france-vs-sweden/scores.historical.sse.provenance.json",
+    "socialSources": [
+      "https://x.com/MASINACHIMYKIEL/status/2071744948873920683",
+      "https://x.com/i/status/2071744948873920683",
+      "https://x.com/turkeyloin/status/2071744431263269320",
+      "https://x.com/i/status/2071744431263269320",
+      "https://x.com/1onlyToxic/status/2071744300744905031",
+      "https://x.com/i/status/2071744300744905031",
+      "https://x.com/atayyyf/status/2071744300577427603",
+      "https://x.com/i/status/2071744300577427603",
+      "https://x.com/DLawlaar/status/2071744183149187292",
+      "https://x.com/i/status/2071744183149187292",
+      "https://x.com/davidtalks772/status/2071743908078374958",
+      "https://x.com/i/status/2071743908078374958"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 3-0 result. 8 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

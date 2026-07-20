@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "18187298",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1783277100000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1783277100000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1783277160000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1783277220000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1783277280000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1783278000000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Predicts Brazil exit to Norway; Haaland “monster” odds rising”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2073557256424337486",
+        "url": "https://x.com/i/status/2073557256424337486",
+        "observedAt": "2026-07-04 23:59"
+      }
+    },
+    {
+      "at": 1783278060000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Brazil may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1783278300000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: ““Brazil 5 trophies / Norway chance at biggest upset” poll frame”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2073556925187543435",
+        "url": "https://x.com/i/status/2073556925187543435",
+        "observedAt": "2026-07-04 23:57"
+      }
+    },
+    {
+      "at": 1783278330000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1783278420000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Brazil, Norway, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1783278900000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Brazil or Norway?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Brazil"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Norway"
+        }
+      ]
+    },
+    {
+      "at": 1783278906000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1783278912000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1783278918000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1783278924000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1783281617982,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:18187298:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1783281612982,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783281622982,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:18187298:16:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1783281612982,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783281627982,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:18187298:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1783281612982,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783284702263,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: ““Brazil are OUT — Norway brilliant or Brazil failed?””",
+      "source": {
+        "kind": "x-post",
+        "postId": "2073919423216332985",
+        "url": "https://x.com/i/status/2073919423216332985",
+        "observedAt": "2026-07-05 23:58"
+      }
+    },
+    {
+      "at": 1783284737263,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Brazil 0-0 Norway. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 545,
+        "sourceTs": 1783284732263,
+        "action": "halftime_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1783284742263,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1783287767302,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "103' GOAL — Norway. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 887,
+        "sourceTs": 1783287762302,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Head",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1783287772302,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1783287777302,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1783288373332,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "113' GOAL — Norway. 0-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 996,
+        "sourceTs": 1783288368332,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-2"
+      }
+    },
+    {
+      "at": 1783288378332,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1783289395162,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Brazil 1-2 Norway. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1100,
+        "sourceTs": 1783289390162,
+        "action": "game_finalised",
+        "score": "1-2"
+      }
+    },
+    {
+      "at": 1783289400162,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1783289410162,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 1-2. No scrollback archaeology required."
+    },
+    {
+      "at": 1783289420162,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Brazil–Norway (and Mex–Eng) “great matches”; contrast Portugal–Spain “borefest””",
+      "source": {
+        "kind": "x-post",
+        "postId": "2074282084621758529",
+        "url": "https://x.com/i/status/2074282084621758529",
+        "observedAt": "2026-07-06 23:59"
+      }
+    },
+    {
+      "at": 1783289425162,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/18187298-brazil-vs-norway/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/18187298-brazil-vs-norway/scores.historical.sse",
+    "provenance": "../resources/fixtures/world-cup-2026/18187298-brazil-vs-norway/scores.historical.sse.provenance.json",
+    "socialSources": [
+      "https://x.com/i/status/2073557256424337486",
+      "https://x.com/i/status/2073556925187543435",
+      "https://x.com/i/status/2073556796778709272",
+      "https://x.com/i/status/2073556527563071984",
+      "https://x.com/i/status/2073556292782678405",
+      "https://x.com/i/status/2073553824779047298",
+      "https://x.com/i/status/2073919423216332985",
+      "https://x.com/i/status/2073917721105121752",
+      "https://x.com/i/status/2074282084621758529",
+      "https://x.com/i/status/2074281419619160426",
+      "https://x.com/i/status/2074281218707980643",
+      "https://x.com/i/status/2074281127796260959"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 1-2 result. 8 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

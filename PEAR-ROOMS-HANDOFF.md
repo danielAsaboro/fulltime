@@ -741,7 +741,8 @@ Final verification after these changes:
   publisher, answer attestor, Blind Pairing admission, and encrypted Autobase room operations. The
   personas are disclosed fictional room participants; fixture state, event time, calls, settlements,
   and receipts are restricted to what the signed capture proves.
-- Seventeen rooms are complete and persisted: the first three tournament fixtures, USA–Paraguay,
+- One hundred and three terminally captured fixtures now have complete chronological room seeds. Seventeen are
+  already persisted in the promotion-device ledger: the first three tournament fixtures, USA–Paraguay,
   Qatar–Switzerland, Brazil–Morocco, Haiti–Scotland, Australia–Turkey, Germany–Curaçao,
   Netherlands–Japan, all four quarter-finals, France–Spain's semi-final, France–England's third-place match, and
   Spain–Argentina's final. The
@@ -814,6 +815,20 @@ Final verification after these changes:
   and ends on the exact-score receipt. Kickoff and goal calls voided by preserved feed gaps are omitted.
   The real signed fixture, Blind Pairing, encrypted Autobase, and answer-attestor integration passed in
   67.0 seconds.
+- `scripts/build-world-cup-showcase-corpus.mjs` now walks the immutable fixture index strictly in kickoff
+  order, verifies every available provenance sidecar against its target bytes, parses the raw interval
+  JSON or SSE transcript, requires a matching terminal `game_finalised` record, and writes only under
+  `data/world-cup-2026/`. It preserves the eighteen hand-authored showcase rooms and generated the other
+  eighty-five played-match rooms from authenticated match events plus each fixture's sourced before/live/
+  after X research. Every one of the 103 seeds contains messages, a quote, replies, supported reactions,
+  a poll and votes, canonical kickoff-call answers, and archive-timed match/final facts. The audit is
+  `data/world-cup-2026/showcase-generation-report.json`. Schedule entries `17588394` (the stale duplicate
+  USA–Paraguay entry) and `17588400` (Tunisia–Switzerland) each have zero transcript records and no
+  terminal state; their seven provenance sidecars verify, but they are excluded rather than converted
+  into invented match history. A generated Sweden–Tunisia room passed the real signed publisher, local
+  HyperDHT, Blind Pairing, encrypted Autobase replication, production call projection, answer-attestor,
+  settlement, and receipt path with 34 actions and four members. The remaining generated corpus still
+  needs the single persistent provisioning and device-verification pass described below.
 - The persistent provisioner ledger is
   `apps/desktop/.local-development/historical-showcase/rooms.json`; it contains protected invite
   material and must not be printed or committed. The provisioner's console summary now deliberately

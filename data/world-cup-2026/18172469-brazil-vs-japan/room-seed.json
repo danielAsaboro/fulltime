@@ -1,0 +1,353 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "18172469",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782747900000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782747900000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782747960000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782748020000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782748080000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782748800000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “RO32 slate graphic: Brazil 🆚 Japan among knockouts”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071383017927406067",
+        "url": "https://x.com/whodun910/status/2071383017927406067",
+        "observedAt": "2026-06-28 23:59"
+      }
+    },
+    {
+      "at": 1782748860000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Brazil may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782749100000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Tomorrow slate: Morocco–NED, Brazil–Japan, Germany–Paraguay”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071382640855322714",
+        "url": "https://x.com/anytwocardzz/status/2071382640855322714",
+        "observedAt": "2026-06-28 23:58"
+      }
+    },
+    {
+      "at": 1782749130000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782749220000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Brazil, Japan, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782749700000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Brazil or Japan?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Brazil"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Japan"
+        }
+      ]
+    },
+    {
+      "at": 1782749706000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782749712000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782749718000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782749724000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782752422982,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:18172469:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1782752417982,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782752427982,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:18172469:17:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1782752417982,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782752432982,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:18172469:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1782752417982,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782754238222,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "31' GOAL — Japan. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 274,
+        "sourceTs": 1782754233222,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782754243222,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782754248222,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1782755835852,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Amazing Kaishu Sano goal for Japan vs Brazil — fans sad to see Japan leave”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071745042126106907",
+        "url": "https://x.com/MafVosburgh/status/2071745042126106907",
+        "observedAt": "2026-06-29 23:58"
+      }
+    },
+    {
+      "at": 1782755870852,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Brazil 0-1 Japan. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 472,
+        "sourceTs": 1782755865852,
+        "action": "halftime_finalised",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782755875852,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782757126970,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "79' GOAL — Brazil. 1-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 585,
+        "sourceTs": 1782757121970,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Head",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1782757131970,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782759529485,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "119' GOAL — Brazil. 2-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 948,
+        "sourceTs": 1782759524485,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "2-1"
+      }
+    },
+    {
+      "at": 1782759534485,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782760058440,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Brazil 2-1 Japan. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 988,
+        "sourceTs": 1782760053440,
+        "action": "game_finalised",
+        "score": "2-1"
+      }
+    },
+    {
+      "at": 1782760063440,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782760073440,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 2-1. No scrollback archaeology required."
+    },
+    {
+      "at": 1782760083440,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Rewatched Japan–Brazil — frustrating but great effort; proud of Japan”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2072107811656405417",
+        "url": "https://x.com/KayraYolcu5/status/2072107811656405417",
+        "observedAt": "2026-06-30 23:59"
+      }
+    },
+    {
+      "at": 1782760088440,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/18172469-brazil-vs-japan/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/18172469-brazil-vs-japan/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/18172469-brazil-vs-japan/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/whodun910/status/2071383017927406067",
+      "https://x.com/i/status/2071383017927406067",
+      "https://x.com/anytwocardzz/status/2071382640855322714",
+      "https://x.com/i/status/2071382640855322714",
+      "https://x.com/33_fortune/status/2071382441928151466",
+      "https://x.com/i/status/2071382441928151466",
+      "https://x.com/TrebleDreams99/status/2071382344208924709",
+      "https://x.com/i/status/2071382344208924709",
+      "https://x.com/LucLe9/status/2071380987842306392",
+      "https://x.com/i/status/2071380987842306392",
+      "https://x.com/Ultimatepman/status/2071379640258859047",
+      "https://x.com/i/status/2071379640258859047"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 2-1 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

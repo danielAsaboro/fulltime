@@ -1,0 +1,1878 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.generationReport",
+  "generatedAt": "2026-07-20T11:05:49.103Z",
+  "archiveFixtureCount": 105,
+  "seededFixtureCount": 103,
+  "excludedFixtureCount": 2,
+  "fixtures": [
+    {
+      "fixtureId": "17588227",
+      "directory": "17588227-mexico-vs-south-africa",
+      "status": "preserved-existing",
+      "records": 994,
+      "terminalSequence": 994,
+      "provenanceFiles": 9,
+      "actionCount": 29,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17926696",
+      "directory": "17926696-south-korea-vs-czech-republic",
+      "status": "preserved-existing",
+      "records": 921,
+      "terminalSequence": 921,
+      "provenanceFiles": 9,
+      "actionCount": 28,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17926604",
+      "directory": "17926604-canada-vs-bosnia-herzegovina",
+      "status": "preserved-existing",
+      "records": 1119,
+      "terminalSequence": 1119,
+      "provenanceFiles": 9,
+      "actionCount": 29,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588394",
+      "directory": "17588394-usa-vs-paraguay",
+      "status": "excluded-no-terminal-capture",
+      "records": 0,
+      "provenanceFiles": 7
+    },
+    {
+      "fixtureId": "17588396",
+      "directory": "17588396-usa-vs-paraguay",
+      "status": "preserved-existing",
+      "records": 1017,
+      "terminalSequence": 1018,
+      "provenanceFiles": 9,
+      "actionCount": 31,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588308",
+      "directory": "17588308-qatar-vs-switzerland",
+      "status": "preserved-existing",
+      "records": 984,
+      "terminalSequence": 983,
+      "provenanceFiles": 9,
+      "actionCount": 31,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588386",
+      "directory": "17588386-brazil-vs-morocco",
+      "status": "preserved-existing",
+      "records": 982,
+      "terminalSequence": 982,
+      "provenanceFiles": 9,
+      "actionCount": 32,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588316",
+      "directory": "17588316-haiti-vs-scotland",
+      "status": "preserved-existing",
+      "records": 960,
+      "terminalSequence": 960,
+      "provenanceFiles": 9,
+      "actionCount": 36,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17926689",
+      "directory": "17926689-australia-vs-turkey",
+      "status": "preserved-existing",
+      "records": 1054,
+      "terminalSequence": 1054,
+      "provenanceFiles": 9,
+      "actionCount": 39,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588318",
+      "directory": "17588318-germany-vs-curacao",
+      "status": "preserved-existing",
+      "records": 994,
+      "terminalSequence": 994,
+      "provenanceFiles": 9,
+      "actionCount": 58,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588305",
+      "directory": "17588305-netherlands-vs-japan",
+      "status": "preserved-existing",
+      "records": 881,
+      "terminalSequence": 881,
+      "provenanceFiles": 9,
+      "actionCount": 47,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588239",
+      "directory": "17588239-ivory-coast-vs-ecuador",
+      "status": "preserved-existing",
+      "records": 1049,
+      "terminalSequence": 1050,
+      "provenanceFiles": 9,
+      "actionCount": 35,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17926553",
+      "directory": "17926553-sweden-vs-tunisia",
+      "status": "preserved-existing",
+      "records": 1029,
+      "terminalSequence": 1031,
+      "provenanceFiles": 9,
+      "actionCount": 34,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588403",
+      "directory": "17588403-spain-vs-cape-verde",
+      "status": "preserved-existing",
+      "records": 1157,
+      "terminalSequence": 1156,
+      "provenanceFiles": 9,
+      "actionCount": 21,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588230",
+      "directory": "17588230-belgium-vs-egypt",
+      "status": "preserved-existing",
+      "records": 1011,
+      "terminalSequence": 1012,
+      "provenanceFiles": 9,
+      "actionCount": 26,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588311",
+      "directory": "17588311-saudi-arabia-vs-uruguay",
+      "status": "preserved-existing",
+      "records": 1019,
+      "terminalSequence": 1020,
+      "provenanceFiles": 9,
+      "actionCount": 26,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588241",
+      "directory": "17588241-iran-vs-new-zealand",
+      "status": "preserved-existing",
+      "records": 953,
+      "terminalSequence": 954,
+      "provenanceFiles": 9,
+      "actionCount": 30,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588306",
+      "directory": "17588306-france-vs-senegal",
+      "status": "preserved-existing",
+      "records": 937,
+      "terminalSequence": 938,
+      "provenanceFiles": 9,
+      "actionCount": 30,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17926828",
+      "directory": "17926828-iraq-vs-norway",
+      "status": "preserved-existing",
+      "records": 1040,
+      "terminalSequence": 1041,
+      "provenanceFiles": 9,
+      "actionCount": 32,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588322",
+      "directory": "17588322-argentina-vs-algeria",
+      "status": "preserved-existing",
+      "records": 997,
+      "terminalSequence": 997,
+      "provenanceFiles": 9,
+      "actionCount": 28,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588405",
+      "directory": "17588405-austria-vs-jordan",
+      "status": "preserved-existing",
+      "records": 971,
+      "terminalSequence": 971,
+      "provenanceFiles": 9,
+      "actionCount": 28,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17926703",
+      "directory": "17926703-portugal-vs-congo-dr",
+      "status": "preserved-existing",
+      "records": 1044,
+      "terminalSequence": 1044,
+      "provenanceFiles": 9,
+      "actionCount": 26,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588228",
+      "directory": "17588228-england-vs-croatia",
+      "status": "preserved-existing",
+      "records": 991,
+      "terminalSequence": 991,
+      "provenanceFiles": 9,
+      "actionCount": 32,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588406",
+      "directory": "17588406-ghana-vs-panama",
+      "status": "preserved-existing",
+      "records": 1117,
+      "terminalSequence": 1117,
+      "provenanceFiles": 9,
+      "actionCount": 24,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588399",
+      "directory": "17588399-uzbekistan-vs-colombia",
+      "status": "preserved-existing",
+      "records": 1092,
+      "terminalSequence": 1093,
+      "provenanceFiles": 9,
+      "actionCount": 30,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17926765",
+      "directory": "17926765-czech-republic-vs-south-africa",
+      "status": "preserved-existing",
+      "records": 973,
+      "terminalSequence": 973,
+      "provenanceFiles": 9,
+      "actionCount": 24,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17926603",
+      "directory": "17926603-switzerland-vs-bosnia-herzegovina",
+      "status": "preserved-existing",
+      "records": 1061,
+      "terminalSequence": 1062,
+      "provenanceFiles": 9,
+      "actionCount": 30,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588238",
+      "directory": "17588238-canada-vs-qatar",
+      "status": "preserved-existing",
+      "records": 1164,
+      "terminalSequence": 1164,
+      "provenanceFiles": 9,
+      "actionCount": 34,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588223",
+      "directory": "17588223-mexico-vs-south-korea",
+      "status": "preserved-existing",
+      "records": 1024,
+      "terminalSequence": 1024,
+      "provenanceFiles": 9,
+      "actionCount": 24,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588388",
+      "directory": "17588388-usa-vs-australia",
+      "status": "preserved-existing",
+      "records": 1033,
+      "terminalSequence": 1033,
+      "provenanceFiles": 9,
+      "actionCount": 26,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588397",
+      "directory": "17588397-scotland-vs-morocco",
+      "status": "preserved-existing",
+      "records": 883,
+      "terminalSequence": 884,
+      "provenanceFiles": 9,
+      "actionCount": 24,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588317",
+      "directory": "17588317-brazil-vs-haiti",
+      "status": "preserved-existing",
+      "records": 1045,
+      "terminalSequence": 1046,
+      "provenanceFiles": 9,
+      "actionCount": 28,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17926688",
+      "directory": "17926688-turkey-vs-paraguay",
+      "status": "preserved-existing",
+      "records": 1174,
+      "terminalSequence": 1174,
+      "provenanceFiles": 9,
+      "actionCount": 24,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17926687",
+      "directory": "17926687-netherlands-vs-sweden",
+      "status": "preserved-existing",
+      "records": 903,
+      "terminalSequence": 903,
+      "provenanceFiles": 9,
+      "actionCount": 34,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588240",
+      "directory": "17588240-germany-vs-ivory-coast",
+      "status": "preserved-existing",
+      "records": 1071,
+      "terminalSequence": 1071,
+      "provenanceFiles": 9,
+      "actionCount": 28,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588320",
+      "directory": "17588320-ecuador-vs-curacao",
+      "status": "preserved-existing",
+      "records": 1113,
+      "terminalSequence": 1113,
+      "provenanceFiles": 9,
+      "actionCount": 21,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588310",
+      "directory": "17588310-tunisia-vs-japan",
+      "status": "preserved-existing",
+      "records": 1029,
+      "terminalSequence": 1030,
+      "provenanceFiles": 9,
+      "actionCount": 30,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588232",
+      "directory": "17588232-spain-vs-saudi-arabia",
+      "status": "preserved-existing",
+      "records": 966,
+      "terminalSequence": 967,
+      "provenanceFiles": 9,
+      "actionCount": 30,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588390",
+      "directory": "17588390-belgium-vs-iran",
+      "status": "preserved-existing",
+      "records": 1166,
+      "terminalSequence": 1166,
+      "provenanceFiles": 9,
+      "actionCount": 21,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588235",
+      "directory": "17588235-uruguay-vs-cape-verde",
+      "status": "preserved-existing",
+      "records": 1004,
+      "terminalSequence": 1004,
+      "provenanceFiles": 9,
+      "actionCount": 30,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588242",
+      "directory": "17588242-new-zealand-vs-egypt",
+      "status": "preserved-existing",
+      "records": 1021,
+      "terminalSequence": 1021,
+      "provenanceFiles": 9,
+      "actionCount": 30,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588389",
+      "directory": "17588389-argentina-vs-austria",
+      "status": "preserved-existing",
+      "records": 905,
+      "terminalSequence": 905,
+      "provenanceFiles": 9,
+      "actionCount": 26,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17926647",
+      "directory": "17926647-france-vs-iraq",
+      "status": "preserved-existing",
+      "records": 1031,
+      "terminalSequence": 1035,
+      "provenanceFiles": 9,
+      "actionCount": 28,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588313",
+      "directory": "17588313-norway-vs-senegal",
+      "status": "preserved-existing",
+      "records": 1064,
+      "terminalSequence": 1064,
+      "provenanceFiles": 9,
+      "actionCount": 32,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588244",
+      "directory": "17588244-jordan-vs-algeria",
+      "status": "preserved-existing",
+      "records": 1033,
+      "terminalSequence": 1034,
+      "provenanceFiles": 9,
+      "actionCount": 28,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588231",
+      "directory": "17588231-portugal-vs-uzbekistan",
+      "status": "preserved-existing",
+      "records": 1166,
+      "terminalSequence": 1166,
+      "provenanceFiles": 9,
+      "actionCount": 32,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588324",
+      "directory": "17588324-england-vs-ghana",
+      "status": "preserved-existing",
+      "records": 1019,
+      "terminalSequence": 1020,
+      "provenanceFiles": 9,
+      "actionCount": 21,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588401",
+      "directory": "17588401-panama-vs-croatia",
+      "status": "preserved-existing",
+      "records": 865,
+      "terminalSequence": 865,
+      "provenanceFiles": 9,
+      "actionCount": 24,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17926615",
+      "directory": "17926615-colombia-vs-congo-dr",
+      "status": "preserved-existing",
+      "records": 952,
+      "terminalSequence": 952,
+      "provenanceFiles": 9,
+      "actionCount": 24,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588303",
+      "directory": "17588303-switzerland-vs-canada",
+      "status": "preserved-existing",
+      "records": 1148,
+      "terminalSequence": 1149,
+      "provenanceFiles": 9,
+      "actionCount": 28,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17926766",
+      "directory": "17926766-bosnia-herzegovina-vs-qatar",
+      "status": "preserved-existing",
+      "records": 879,
+      "terminalSequence": 880,
+      "provenanceFiles": 9,
+      "actionCount": 30,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588319",
+      "directory": "17588319-morocco-vs-haiti",
+      "status": "preserved-existing",
+      "records": 1102,
+      "terminalSequence": 1103,
+      "provenanceFiles": 9,
+      "actionCount": 34,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588398",
+      "directory": "17588398-scotland-vs-brazil",
+      "status": "preserved-existing",
+      "records": 981,
+      "terminalSequence": 980,
+      "provenanceFiles": 9,
+      "actionCount": 28,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588395",
+      "directory": "17588395-south-africa-vs-south-korea",
+      "status": "preserved-existing",
+      "records": 987,
+      "terminalSequence": 987,
+      "provenanceFiles": 9,
+      "actionCount": 24,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17926764",
+      "directory": "17926764-czech-republic-vs-mexico",
+      "status": "preserved-existing",
+      "records": 968,
+      "terminalSequence": 968,
+      "provenanceFiles": 9,
+      "actionCount": 28,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588302",
+      "directory": "17588302-ecuador-vs-germany",
+      "status": "preserved-existing",
+      "records": 983,
+      "terminalSequence": 983,
+      "provenanceFiles": 9,
+      "actionCount": 28,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588321",
+      "directory": "17588321-curacao-vs-ivory-coast",
+      "status": "preserved-existing",
+      "records": 1136,
+      "terminalSequence": 1137,
+      "provenanceFiles": 9,
+      "actionCount": 26,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588400",
+      "directory": "17588400-tunisia-vs-switzerland",
+      "status": "excluded-no-terminal-capture",
+      "records": 0,
+      "provenanceFiles": 7
+    },
+    {
+      "fixtureId": "17588236",
+      "directory": "17588236-tunisia-vs-netherlands",
+      "status": "preserved-existing",
+      "records": 1002,
+      "terminalSequence": 1002,
+      "provenanceFiles": 9,
+      "actionCount": 30,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17926686",
+      "directory": "17926686-japan-vs-sweden",
+      "status": "preserved-existing",
+      "records": 883,
+      "terminalSequence": 884,
+      "provenanceFiles": 9,
+      "actionCount": 26,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588229",
+      "directory": "17588229-paraguay-vs-australia",
+      "status": "preserved-existing",
+      "records": 886,
+      "terminalSequence": 887,
+      "provenanceFiles": 9,
+      "actionCount": 21,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17926593",
+      "directory": "17926593-turkey-vs-usa",
+      "status": "preserved-existing",
+      "records": 1096,
+      "terminalSequence": 1096,
+      "provenanceFiles": 9,
+      "actionCount": 32,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588234",
+      "directory": "17588234-norway-vs-france",
+      "status": "preserved-existing",
+      "records": 1091,
+      "terminalSequence": 1091,
+      "provenanceFiles": 9,
+      "actionCount": 32,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17926740",
+      "directory": "17926740-senegal-vs-iraq",
+      "status": "preserved-existing",
+      "records": 1168,
+      "terminalSequence": 1168,
+      "provenanceFiles": 9,
+      "actionCount": 32,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588314",
+      "directory": "17588314-cape-verde-vs-saudi-arabia",
+      "status": "preserved-existing",
+      "records": 1072,
+      "terminalSequence": 1072,
+      "provenanceFiles": 9,
+      "actionCount": 21,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588404",
+      "directory": "17588404-uruguay-vs-spain",
+      "status": "preserved-existing",
+      "records": 882,
+      "terminalSequence": 882,
+      "provenanceFiles": 9,
+      "actionCount": 24,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588309",
+      "directory": "17588309-egypt-vs-iran",
+      "status": "preserved-existing",
+      "records": 1140,
+      "terminalSequence": 1140,
+      "provenanceFiles": 9,
+      "actionCount": 26,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588323",
+      "directory": "17588323-new-zealand-vs-belgium",
+      "status": "preserved-existing",
+      "records": 943,
+      "terminalSequence": 944,
+      "provenanceFiles": 9,
+      "actionCount": 34,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588245",
+      "directory": "17588245-croatia-vs-ghana",
+      "status": "preserved-existing",
+      "records": 987,
+      "terminalSequence": 988,
+      "provenanceFiles": 9,
+      "actionCount": 28,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588402",
+      "directory": "17588402-panama-vs-england",
+      "status": "preserved-existing",
+      "records": 1179,
+      "terminalSequence": 1180,
+      "provenanceFiles": 9,
+      "actionCount": 26,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588391",
+      "directory": "17588391-colombia-vs-portugal",
+      "status": "preserved-existing",
+      "records": 1085,
+      "terminalSequence": 1086,
+      "provenanceFiles": 9,
+      "actionCount": 21,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17926704",
+      "directory": "17926704-congo-dr-vs-uzbekistan",
+      "status": "preserved-existing",
+      "records": 1116,
+      "terminalSequence": 1116,
+      "provenanceFiles": 9,
+      "actionCount": 28,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588325",
+      "directory": "17588325-jordan-vs-argentina",
+      "status": "preserved-existing",
+      "records": 979,
+      "terminalSequence": 980,
+      "provenanceFiles": 9,
+      "actionCount": 28,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "17588326",
+      "directory": "17588326-algeria-vs-austria",
+      "status": "preserved-existing",
+      "records": 984,
+      "terminalSequence": 985,
+      "provenanceFiles": 9,
+      "actionCount": 34,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18167317",
+      "directory": "18167317-south-africa-vs-canada",
+      "status": "preserved-existing",
+      "records": 961,
+      "terminalSequence": 960,
+      "provenanceFiles": 9,
+      "actionCount": 24,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18172469",
+      "directory": "18172469-brazil-vs-japan",
+      "status": "preserved-existing",
+      "records": 987,
+      "terminalSequence": 988,
+      "provenanceFiles": 9,
+      "actionCount": 28,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18175983",
+      "directory": "18175983-germany-vs-paraguay",
+      "status": "preserved-existing",
+      "records": 1582,
+      "terminalSequence": 1582,
+      "provenanceFiles": 9,
+      "actionCount": 26,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18172280",
+      "directory": "18172280-netherlands-vs-morocco",
+      "status": "preserved-existing",
+      "records": 1426,
+      "terminalSequence": 1427,
+      "provenanceFiles": 9,
+      "actionCount": 26,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18175397",
+      "directory": "18175397-ivory-coast-vs-norway",
+      "status": "preserved-existing",
+      "records": 1061,
+      "terminalSequence": 1059,
+      "provenanceFiles": 8,
+      "actionCount": 28,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18175981",
+      "directory": "18175981-france-vs-sweden",
+      "status": "preserved-existing",
+      "records": 995,
+      "terminalSequence": 993,
+      "provenanceFiles": 8,
+      "actionCount": 28,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18179759",
+      "directory": "18179759-mexico-vs-ecuador",
+      "status": "preserved-existing",
+      "records": 886,
+      "terminalSequence": 885,
+      "provenanceFiles": 8,
+      "actionCount": 26,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18179764",
+      "directory": "18179764-england-vs-congo-dr",
+      "status": "preserved-existing",
+      "records": 1166,
+      "terminalSequence": 1164,
+      "provenanceFiles": 8,
+      "actionCount": 28,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18179550",
+      "directory": "18179550-belgium-vs-senegal",
+      "status": "preserved-existing",
+      "records": 1317,
+      "terminalSequence": 1315,
+      "provenanceFiles": 8,
+      "actionCount": 30,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18172379",
+      "directory": "18172379-usa-vs-bosnia-herzegovina",
+      "status": "preserved-existing",
+      "records": 1058,
+      "terminalSequence": 1057,
+      "provenanceFiles": 8,
+      "actionCount": 26,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18179551",
+      "directory": "18179551-spain-vs-austria",
+      "status": "preserved-existing",
+      "records": 1043,
+      "terminalSequence": 1041,
+      "provenanceFiles": 8,
+      "actionCount": 28,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18179763",
+      "directory": "18179763-portugal-vs-croatia",
+      "status": "preserved-existing",
+      "records": 1075,
+      "terminalSequence": 1074,
+      "provenanceFiles": 8,
+      "actionCount": 26,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18179552",
+      "directory": "18179552-switzerland-vs-algeria",
+      "status": "preserved-existing",
+      "records": 1072,
+      "terminalSequence": 1070,
+      "provenanceFiles": 8,
+      "actionCount": 26,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18176123",
+      "directory": "18176123-australia-vs-egypt",
+      "status": "preserved-existing",
+      "records": 1354,
+      "terminalSequence": 1352,
+      "provenanceFiles": 8,
+      "actionCount": 26,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18175918",
+      "directory": "18175918-argentina-vs-cape-verde",
+      "status": "preserved-existing",
+      "records": 1243,
+      "terminalSequence": 1242,
+      "provenanceFiles": 8,
+      "actionCount": 32,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18179549",
+      "directory": "18179549-colombia-vs-ghana",
+      "status": "preserved-existing",
+      "records": 1039,
+      "terminalSequence": 1037,
+      "provenanceFiles": 8,
+      "actionCount": 24,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18185036",
+      "directory": "18185036-canada-vs-morocco",
+      "status": "preserved-existing",
+      "records": 1123,
+      "terminalSequence": 1121,
+      "provenanceFiles": 8,
+      "actionCount": 28,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18188721",
+      "directory": "18188721-paraguay-vs-france",
+      "status": "preserved-existing",
+      "records": 966,
+      "terminalSequence": 964,
+      "provenanceFiles": 8,
+      "actionCount": 21,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18187298",
+      "directory": "18187298-brazil-vs-norway",
+      "status": "preserved-existing",
+      "records": 1102,
+      "terminalSequence": 1100,
+      "provenanceFiles": 8,
+      "actionCount": 26,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18192996",
+      "directory": "18192996-mexico-vs-england",
+      "status": "preserved-existing",
+      "records": 1030,
+      "terminalSequence": 1046,
+      "provenanceFiles": 8,
+      "actionCount": 28,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18198205",
+      "directory": "18198205-portugal-vs-spain",
+      "status": "preserved-existing",
+      "records": 994,
+      "terminalSequence": 992,
+      "provenanceFiles": 8,
+      "actionCount": 24,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18193785",
+      "directory": "18193785-usa-vs-belgium",
+      "status": "preserved-existing",
+      "records": 1125,
+      "terminalSequence": 1123,
+      "provenanceFiles": 8,
+      "actionCount": 32,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18202701",
+      "directory": "18202701-argentina-vs-egypt",
+      "status": "preserved-existing",
+      "records": 1048,
+      "terminalSequence": 1045,
+      "provenanceFiles": 8,
+      "actionCount": 32,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18202783",
+      "directory": "18202783-switzerland-vs-colombia",
+      "status": "preserved-existing",
+      "records": 1355,
+      "terminalSequence": 1352,
+      "provenanceFiles": 8,
+      "actionCount": 21,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18209181",
+      "directory": "18209181-france-vs-morocco",
+      "status": "preserved-existing",
+      "records": 1116,
+      "terminalSequence": 1114,
+      "provenanceFiles": 8,
+      "actionCount": 31,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18218149",
+      "directory": "18218149-spain-vs-belgium",
+      "status": "preserved-existing",
+      "records": 1089,
+      "terminalSequence": 1087,
+      "provenanceFiles": 8,
+      "actionCount": 28,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18213979",
+      "directory": "18213979-norway-vs-england",
+      "status": "preserved-existing",
+      "records": 1185,
+      "terminalSequence": 1184,
+      "provenanceFiles": 12,
+      "actionCount": 34,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18222446",
+      "directory": "18222446-argentina-vs-switzerland",
+      "status": "preserved-existing",
+      "records": 1307,
+      "terminalSequence": 1306,
+      "provenanceFiles": 8,
+      "actionCount": 34,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18237038",
+      "directory": "18237038-france-vs-spain",
+      "status": "preserved-existing-late-round",
+      "records": 1027,
+      "terminalSequence": 1026,
+      "provenanceFiles": 3,
+      "actionCount": 32,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18257865",
+      "directory": "18257865-france-vs-england",
+      "status": "preserved-existing-late-round",
+      "records": 1197,
+      "terminalSequence": 1195,
+      "provenanceFiles": 3,
+      "actionCount": 39,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    },
+    {
+      "fixtureId": "18257739",
+      "directory": "18257739-spain-vs-argentina",
+      "status": "preserved-existing-late-round",
+      "records": 1387,
+      "terminalSequence": 1385,
+      "provenanceFiles": 3,
+      "actionCount": 38,
+      "actionTypes": [
+        "call",
+        "message",
+        "poll",
+        "quote",
+        "reaction",
+        "reply",
+        "vote"
+      ]
+    }
+  ]
+}

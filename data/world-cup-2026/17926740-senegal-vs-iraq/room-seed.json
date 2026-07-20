@@ -1,0 +1,399 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17926740",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782495900000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782495900000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782495960000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782496020000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782496080000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782496800000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “20:00 - Senegal vs Iraq Match Prediction Time!!! Who’s winning?”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070293444820422816",
+        "url": "https://x.com/LSAlert_Main/status/2070293444820422816",
+        "observedAt": "2026-06-25 23:49"
+      }
+    },
+    {
+      "at": 1782496860000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Senegal may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782497100000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Senegal vs Iraq Prediction – 2026 World Cup Group I”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070292027061743947",
+        "url": "https://x.com/SportsZooo59057/status/2070292027061743947",
+        "observedAt": "2026-06-25 23:44"
+      }
+    },
+    {
+      "at": 1782497130000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782497220000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Senegal, Iraq, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782497700000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Senegal or Iraq?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Senegal"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Iraq"
+        }
+      ]
+    },
+    {
+      "at": 1782497706000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782497712000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782497718000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782497724000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782500552031,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17926740:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782500547031,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782500557031,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17926740:16:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782500547031,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782500562031,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17926740:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782500547031,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782500827748,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "5' GOAL — Senegal. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 63,
+        "sourceTs": 1782500822748,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Head",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1782500832748,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782500837748,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "Inside ten minutes. The opening-goal yes receipts land immediately."
+    },
+    {
+      "at": 1782503887654,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “📈 YESTERDAY'S PERFORMANCE REVIEW ✅ Senegal vs Iraq — Senegal Win … 3/4 Winners 🎯”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070653544718320069",
+        "url": "https://x.com/AguA64874/status/2070653544718320069",
+        "observedAt": "2026-06-26 23:40"
+      }
+    },
+    {
+      "at": 1782503922654,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Senegal 1-0 Iraq. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 554,
+        "sourceTs": 1782503917654,
+        "action": "halftime_finalised",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1782503927654,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782505483731,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "83' GOAL — Senegal. 2-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 712,
+        "sourceTs": 1782505478731,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1782505488731,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782505644775,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "85' GOAL — Senegal. 3-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 731,
+        "sourceTs": 1782505639775,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "3-0"
+      }
+    },
+    {
+      "at": 1782505649775,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782506387466,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "goal-4",
+      "text": "98' GOAL — Senegal. 4-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 835,
+        "sourceTs": 1782506382466,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "4-0"
+      }
+    },
+    {
+      "at": 1782506392466,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "goal-4",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782507042083,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-5",
+      "text": "109' GOAL — Senegal. 5-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 980,
+        "sourceTs": 1782507037083,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "5-0"
+      }
+    },
+    {
+      "at": 1782507047083,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-5",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782508055798,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Senegal 5-0 Iraq. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1168,
+        "sourceTs": 1782508050798,
+        "action": "game_finalised",
+        "score": "5-0"
+      }
+    },
+    {
+      "at": 1782508060798,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782508070798,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 5-0. No scrollback archaeology required."
+    },
+    {
+      "at": 1782508080798,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “SENEGAL 5–0 IRAQ A big win that secured Senegal’s spot in the World Cup’s second round…”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070977066107884031",
+        "url": "https://x.com/thallesleitte/status/2070977066107884031",
+        "observedAt": "2026-06-27 21:06"
+      }
+    },
+    {
+      "at": 1782508085798,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17926740-senegal-vs-iraq/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17926740-senegal-vs-iraq/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17926740-senegal-vs-iraq/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/LSAlert_Main/status/2070293444820422816",
+      "https://x.com/i/status/2070293444820422816",
+      "https://x.com/SportsZooo59057/status/2070292027061743947",
+      "https://x.com/i/status/2070292027061743947",
+      "https://x.com/GotVelocity/status/2070290579657732128",
+      "https://x.com/i/status/2070290579657732128",
+      "https://x.com/AstroDusler/status/2070289731758285083",
+      "https://x.com/i/status/2070289731758285083",
+      "https://x.com/LSAlert_Main/status/2070289439109111863",
+      "https://x.com/i/status/2070289439109111863",
+      "https://x.com/Kesinzuko/status/2070289264953172190",
+      "https://x.com/i/status/2070289264953172190"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 5-0 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

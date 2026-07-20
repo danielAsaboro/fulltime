@@ -1,0 +1,376 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588242",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782085500000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782085500000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782085560000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782085620000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782085680000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782086400000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “OFFICIAL: Bazeley names unchanged NZ XI vs Egypt at BC Place; Chris Wood captains”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068846388381729035",
+        "url": "https://x.com/MaziEzike_Nedu/status/2068846388381729035",
+        "observedAt": "2026-06-21 23:59"
+      }
+    },
+    {
+      "at": 1782086460000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "New Zealand may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782086700000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “OFFICIAL Egypt XI locked; Salah leads Pharaohs vs NZ”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068846234195083355",
+        "url": "https://x.com/Globadorasports/status/2068846234195083355",
+        "observedAt": "2026-06-21 23:59"
+      }
+    },
+    {
+      "at": 1782086730000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782086820000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. New Zealand, Egypt, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782087300000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: New Zealand or Egypt?",
+      "options": [
+        {
+          "key": "home",
+          "label": "New Zealand"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Egypt"
+        }
+      ]
+    },
+    {
+      "at": 1782087306000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782087312000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782087318000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782087324000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782090016745,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588242:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782090011745,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782090021745,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588242:16:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782090011745,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782090026745,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588242:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782090011745,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782090969374,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "16' GOAL — New Zealand. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 177,
+        "sourceTs": 1782090964374,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Head",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1782090974374,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782090979374,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1782092997086,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “FULL TIME \\”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068920954382954547",
+        "url": "https://x.com/RawScoreLive/status/2068920954382954547",
+        "observedAt": "2026-06-22 04:56"
+      }
+    },
+    {
+      "at": 1782093032086,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: New Zealand 1-0 Egypt. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 503,
+        "sourceTs": 1782093027086,
+        "action": "halftime_finalised",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1782093037086,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782094772924,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "80' GOAL — Egypt. 1-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 659,
+        "sourceTs": 1782094767924,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Head",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1782094777924,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782095344303,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "89' GOAL — Egypt. 1-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 745,
+        "sourceTs": 1782095339303,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "1-2"
+      }
+    },
+    {
+      "at": 1782095349303,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782096195352,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "goal-4",
+      "text": "103' GOAL — Egypt. 1-3. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 843,
+        "sourceTs": 1782096190352,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Head",
+        "score": "1-3"
+      }
+    },
+    {
+      "at": 1782096200352,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "goal-4",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782097410178,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: New Zealand 1-3 Egypt. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1021,
+        "sourceTs": 1782097405178,
+        "action": "game_finalised",
+        "score": "1-3"
+      }
+    },
+    {
+      "at": 1782097415178,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782097425178,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 1-3. No scrollback archaeology required."
+    },
+    {
+      "at": 1782097435178,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Look at Egypt headed goal vs New Zealand — ball gaining speed on keeper”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069205735804654007",
+        "url": "https://x.com/HenryEghaghara/status/2069205735804654007",
+        "observedAt": "2026-06-22 23:47"
+      }
+    },
+    {
+      "at": 1782097440178,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588242-new-zealand-vs-egypt/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588242-new-zealand-vs-egypt/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588242-new-zealand-vs-egypt/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/MaziEzike_Nedu/status/2068846388381729035",
+      "https://x.com/i/status/2068846388381729035",
+      "https://x.com/Globadorasports/status/2068846234195083355",
+      "https://x.com/i/status/2068846234195083355",
+      "https://x.com/Merin_Web3/status/2068846186061254846",
+      "https://x.com/i/status/2068846186061254846",
+      "https://x.com/wundergoal/status/2068846099515789417",
+      "https://x.com/i/status/2068846099515789417",
+      "https://x.com/Geoff_Litwin/status/2068846093786611828",
+      "https://x.com/i/status/2068846093786611828",
+      "https://x.com/JohnMolinaro/status/2068845933408993409",
+      "https://x.com/i/status/2068845933408993409"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 1-3 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

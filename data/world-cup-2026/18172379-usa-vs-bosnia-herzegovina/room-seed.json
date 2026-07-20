@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "18172379",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782945900000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782945900000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782945960000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782946020000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782946080000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782946800000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: ““CHILLS DURING THE NATIONAL ANTHEM AND FLYOVER… HERE WE GO 🇺🇸””",
+      "source": {
+        "kind": "x-post",
+        "postId": "2072470249535058311",
+        "url": "https://x.com/usmntonly/status/2072470249535058311",
+        "observedAt": "2026-07-01 23:59"
+      }
+    },
+    {
+      "at": 1782946860000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "USA may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782947100000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Bosnia & Herzegovina have a route into this if they survive the opening pressure.”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2072470288164614295",
+        "url": "https://x.com/FreshyFive/status/2072470288164614295",
+        "observedAt": "2026-07-01 23:59"
+      }
+    },
+    {
+      "at": 1782947130000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782947220000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. USA, Bosnia & Herzegovina, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782947700000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: USA or Bosnia & Herzegovina?",
+      "options": [
+        {
+          "key": "home",
+          "label": "USA"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Bosnia & Herzegovina"
+        }
+      ]
+    },
+    {
+      "at": 1782947706000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782947712000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782947718000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782947724000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782950417660,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:18172379:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782950412660,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782950422660,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:18172379:16:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782950412660,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782950427660,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:18172379:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782950412660,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782953144586,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "46' GOAL — USA. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 436,
+        "sourceTs": 1782953139586,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1782953149586,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782953154586,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1782953869100,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “FT USA 2-0 Bosnia; Balogun second-half red; first US knockout win since 2002”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2072826478296002708",
+        "url": "https://x.com/snnfeed/status/2072826478296002708",
+        "observedAt": "2026-07-02 23:35"
+      }
+    },
+    {
+      "at": 1782953904100,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: USA 1-0 Bosnia & Herzegovina. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 510,
+        "sourceTs": 1782953899100,
+        "action": "halftime_finalised",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1782953909100,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782956910283,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "109' GOAL — USA. 2-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 856,
+        "sourceTs": 1782956905283,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1782956915283,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782958307500,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: USA 2-0 Bosnia & Herzegovina. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1057,
+        "sourceTs": 1782958302500,
+        "action": "game_finalised",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1782958312500,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782958322500,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 2-0. No scrollback archaeology required."
+    },
+    {
+      "at": 1782958332500,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Players tell Balogun “We’re going to get you another game” after red vs Bosnia”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2073175790686974292",
+        "url": "https://x.com/USMNTOtaku/status/2073175790686974292",
+        "observedAt": "2026-07-03 22:43"
+      }
+    },
+    {
+      "at": 1782958337500,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/18172379-usa-vs-bosnia-herzegovina/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/18172379-usa-vs-bosnia-herzegovina/scores.historical.sse",
+    "provenance": "../resources/fixtures/world-cup-2026/18172379-usa-vs-bosnia-herzegovina/scores.historical.sse.provenance.json",
+    "socialSources": [
+      "https://x.com/usmntonly/status/2072470249535058311",
+      "https://x.com/i/status/2072470249535058311",
+      "https://x.com/FreshyFive/status/2072470288164614295",
+      "https://x.com/i/status/2072470288164614295",
+      "https://x.com/MJFooty_Tips/status/2072470276357398691",
+      "https://x.com/i/status/2072470276357398691",
+      "https://x.com/studiometaxx/status/2072470171365552365",
+      "https://x.com/i/status/2072470171365552365",
+      "https://x.com/EFO_LORLORTOR/status/2072470217511305617",
+      "https://x.com/i/status/2072470217511305617",
+      "https://x.com/bladeeTiger/status/2072470253947212234",
+      "https://x.com/i/status/2072470253947212234"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 2-0 result. 8 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

@@ -1,0 +1,399 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17926828",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781642700000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1781642700000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1781642760000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1781642820000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1781642880000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1781643600000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Arab teams the upsetters this WC — let’s see Iraq Norway”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2066670679886598369",
+        "url": "https://x.com/rhellzgotwavy/status/2066670679886598369",
+        "observedAt": "2026-06-15 23:54"
+      }
+    },
+    {
+      "at": 1781643660000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Iraq may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1781643900000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “IRAQ VS NORWAY FIFA WORLD CUP 2026 GROUP I”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2066670365112189379",
+        "url": "https://x.com/UtdRedDevils20/status/2066670365112189379",
+        "observedAt": "2026-06-15 23:53"
+      }
+    },
+    {
+      "at": 1781643930000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781644020000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Iraq, Norway, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1781644500000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Iraq or Norway?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Iraq"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Norway"
+        }
+      ]
+    },
+    {
+      "at": 1781644506000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781644512000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1781644518000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1781644524000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1781647270568,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17926828:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1781647265568,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781647275568,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17926828:17:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1781647265568,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781647280568,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17926828:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1781647265568,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781649040118,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "30' GOAL — Norway. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 307,
+        "sourceTs": 1781649035118,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1781649045118,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781649050118,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1781649642302,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "40' GOAL — Iraq. 1-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 416,
+        "sourceTs": 1781649637302,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Head",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1781649647302,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781649881989,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "44' GOAL — Norway. 1-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 459,
+        "sourceTs": 1781649876989,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "1-2"
+      }
+    },
+    {
+      "at": 1781649886989,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781650411683,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “GOAL 90'+7 Iraq 1-4 Norway — Thorstvedt; model favoured draw, one-way traffic”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067034426517999825",
+        "url": "https://x.com/Dessistant/status/2067034426517999825",
+        "observedAt": "2026-06-16 23:59"
+      }
+    },
+    {
+      "at": 1781650446683,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Iraq 1-2 Norway. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 559,
+        "sourceTs": 1781650441683,
+        "action": "halftime_finalised",
+        "score": "1-2"
+      }
+    },
+    {
+      "at": 1781650451683,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1781653240800,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "goal-4",
+      "text": "100' GOAL — Norway. 1-3. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 835,
+        "sourceTs": 1781653235800,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Head",
+        "score": "1-3"
+      }
+    },
+    {
+      "at": 1781653245800,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "goal-4",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781654418454,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-5",
+      "text": "120' GOAL — Norway. 1-4. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1034,
+        "sourceTs": 1781654413454,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "1-4"
+      }
+    },
+    {
+      "at": 1781654423454,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-5",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781654855971,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Iraq 1-4 Norway. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1041,
+        "sourceTs": 1781654850971,
+        "action": "game_finalised",
+        "score": "1-4"
+      }
+    },
+    {
+      "at": 1781654860971,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1781654870971,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 1-4. No scrollback archaeology required."
+    },
+    {
+      "at": 1781654880971,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Norway cruise past Iraq 4-1”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067375935888728260",
+        "url": "https://x.com/VermoSports/status/2067375935888728260",
+        "observedAt": "2026-06-17 22:36"
+      }
+    },
+    {
+      "at": 1781654885971,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17926828-iraq-vs-norway/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17926828-iraq-vs-norway/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17926828-iraq-vs-norway/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/rhellzgotwavy/status/2066670679886598369",
+      "https://x.com/i/status/2066670679886598369",
+      "https://x.com/UtdRedDevils20/status/2066670365112189379",
+      "https://x.com/i/status/2066670365112189379",
+      "https://x.com/TintinPoker/status/2066669912198644048",
+      "https://x.com/i/status/2066669912198644048",
+      "https://x.com/BostonGlobe/status/2066668796618723713",
+      "https://x.com/i/status/2066668796618723713",
+      "https://x.com/Mlawrencesport/status/2066662770112901339",
+      "https://x.com/i/status/2066662770112901339",
+      "https://x.com/SportsMole/status/2066661493077143748",
+      "https://x.com/i/status/2066661493077143748"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 1-4 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

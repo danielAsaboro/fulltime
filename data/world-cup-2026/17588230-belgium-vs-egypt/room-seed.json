@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588230",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781545500000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1781545500000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1781545560000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1781545620000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1781545680000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1781546400000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Belgium vs Egypt — kick-off, how to watch, team news, prediction, odds”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2066309164490465430",
+        "url": "https://x.com/standardsport/status/2066309164490465430",
+        "observedAt": "2026-06-14 23:57"
+      }
+    },
+    {
+      "at": 1781546460000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Belgium may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1781546700000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Most anticipated games this week, starting with Belgium v Egypt”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2066308520429924520",
+        "url": "https://x.com/FlierFantasy/status/2066308520429924520",
+        "observedAt": "2026-06-14 23:55"
+      }
+    },
+    {
+      "at": 1781546730000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781546820000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Belgium, Egypt, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1781547300000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Belgium or Egypt?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Belgium"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Egypt"
+        }
+      ]
+    },
+    {
+      "at": 1781547306000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781547312000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1781547318000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1781547324000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1781550042977,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588230:14:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 14,
+        "sourceTs": 1781550037977,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781550047977,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588230:14:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 14,
+        "sourceTs": 1781550037977,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781550052977,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588230:14:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 14,
+        "sourceTs": 1781550037977,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781551268844,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "21' GOAL — Egypt. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 228,
+        "sourceTs": 1781551263844,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1781551273844,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781551278844,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1781553149166,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Emam Ashour goal in Belgium vs Egypt FIFA World Cup game”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2066671802974380174",
+        "url": "https://x.com/dailyfootvibes/status/2066671802974380174",
+        "observedAt": "2026-06-15 23:58"
+      }
+    },
+    {
+      "at": 1781553184166,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Belgium 0-1 Egypt. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 508,
+        "sourceTs": 1781553179166,
+        "action": "halftime_finalised",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1781553189166,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1781555370090,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "89' GOAL — Belgium. 1-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 757,
+        "sourceTs": 1781555365090,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Own",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1781555375090,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781557415742,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Belgium 1-1 Egypt. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1012,
+        "sourceTs": 1781557410742,
+        "action": "game_finalised",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1781557420742,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781557430742,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 1-1. No scrollback archaeology required."
+    },
+    {
+      "at": 1781557440742,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Egypt held Belgium — Africa making its presence felt”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067000196706222176",
+        "url": "https://x.com/DanielEfik9390/status/2067000196706222176",
+        "observedAt": "2026-06-16 21:43"
+      }
+    },
+    {
+      "at": 1781557445742,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588230-belgium-vs-egypt/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588230-belgium-vs-egypt/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588230-belgium-vs-egypt/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/standardsport/status/2066309164490465430",
+      "https://x.com/i/status/2066309164490465430",
+      "https://x.com/FlierFantasy/status/2066308520429924520",
+      "https://x.com/i/status/2066308520429924520",
+      "https://x.com/UtdRedDevils20/status/2066308024243818881",
+      "https://x.com/i/status/2066308024243818881",
+      "https://x.com/standardsport/status/2066306068444004498",
+      "https://x.com/i/status/2066306068444004498",
+      "https://x.com/StevenBisig/status/2066299498763280847",
+      "https://x.com/i/status/2066299498763280847",
+      "https://x.com/SportsMole/status/2066295851346002329",
+      "https://x.com/i/status/2066295851346002329"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 1-1 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

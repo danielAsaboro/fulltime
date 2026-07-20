@@ -1,0 +1,353 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588405",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781664420000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1781664420000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1781664480000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1781664540000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1781664600000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1781665320000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Austria-Jordan Both Teams to Score”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067032886847381766",
+        "url": "https://x.com/theutbsports/status/2067032886847381766",
+        "observedAt": "2026-06-16 23:53"
+      }
+    },
+    {
+      "at": 1781665380000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Austria may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1781665620000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “AUSTRIA VS JORDAN — FIFA World Cup 2026 stats lab”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067032621645775268",
+        "url": "https://x.com/AngleScope/status/2067032621645775268",
+        "observedAt": "2026-06-16 23:52"
+      }
+    },
+    {
+      "at": 1781665650000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781665740000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Austria, Jordan, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1781666220000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Austria or Jordan?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Austria"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Jordan"
+        }
+      ]
+    },
+    {
+      "at": 1781666226000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781666232000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1781666238000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781666244000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1781668990698,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588405:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1781668985698,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781668995698,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588405:17:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1781668985698,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781669000698,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588405:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1781668985698,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781670259321,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "22' GOAL — Austria. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 225,
+        "sourceTs": 1781670254321,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1781670264321,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781670269321,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1781672113216,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Austria 3-1 Jordan — Jordan price shot dead; bad one logged”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067393183097451007",
+        "url": "https://x.com/MickTips365/status/2067393183097451007",
+        "observedAt": "2026-06-17 23:45"
+      }
+    },
+    {
+      "at": 1781672148216,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Austria 1-0 Jordan. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 481,
+        "sourceTs": 1781672143216,
+        "action": "halftime_finalised",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1781672153216,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1781673329470,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "73' GOAL — Jordan. 1-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 542,
+        "sourceTs": 1781673324470,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1781673334470,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781674941049,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "100' GOAL — Austria. 2-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 731,
+        "sourceTs": 1781674936049,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Own",
+        "score": "2-1"
+      }
+    },
+    {
+      "at": 1781674946049,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781676732234,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Austria 3-1 Jordan. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 971,
+        "sourceTs": 1781676727234,
+        "action": "game_finalised",
+        "score": "3-1"
+      }
+    },
+    {
+      "at": 1781676737234,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1781676747234,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 3-1. No scrollback archaeology required."
+    },
+    {
+      "at": 1781676757234,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Austria won 3:1 against Jordan”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067759190794203521",
+        "url": "https://x.com/moleculecolony/status/2067759190794203521",
+        "observedAt": "2026-06-18 23:59"
+      }
+    },
+    {
+      "at": 1781676762234,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588405-austria-vs-jordan/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588405-austria-vs-jordan/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588405-austria-vs-jordan/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/theutbsports/status/2067032886847381766",
+      "https://x.com/i/status/2067032886847381766",
+      "https://x.com/AngleScope/status/2067032621645775268",
+      "https://x.com/i/status/2067032621645775268",
+      "https://x.com/EmpTips/status/2067029644184879491",
+      "https://x.com/i/status/2067029644184879491",
+      "https://x.com/HexKnowsBall/status/2067028722889142363",
+      "https://x.com/i/status/2067028722889142363",
+      "https://x.com/techsavvyy02/status/2067028378218020941",
+      "https://x.com/i/status/2067028378218020941",
+      "https://x.com/cloudslocks/status/2067030070544252985",
+      "https://x.com/i/status/2067030070544252985"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 3-1 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588229",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782434700000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782434700000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782434760000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782434820000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782434880000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782435600000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “My bet for the next 2 games ⚽️ > USA 🇺🇸 vs Turkey 🇹🇷 (USA WIN) > Paraguay 🇵🇾 vs Australia 🇦🇺 (BTTS)”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070295613476925853",
+        "url": "https://x.com/BitBullVault/status/2070295613476925853",
+        "observedAt": "2026-06-25 23:58"
+      }
+    },
+    {
+      "at": 1782435660000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Paraguay may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782435900000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Who's your tip for Australia Vs Paraguay??”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070295475056722133",
+        "url": "https://x.com/goodie4peta/status/2070295475056722133",
+        "observedAt": "2026-06-25 23:58"
+      }
+    },
+    {
+      "at": 1782435930000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782436020000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Paraguay, Australia, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782436500000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Paraguay or Australia?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Paraguay"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Australia"
+        }
+      ]
+    },
+    {
+      "at": 1782436506000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782436512000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782436518000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782436524000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782439217333,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588229:14:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 14,
+        "sourceTs": 1782439212333,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782439222333,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588229:14:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 14,
+        "sourceTs": 1782439212333,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782439227333,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588229:14:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 14,
+        "sourceTs": 1782439212333,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782442671921,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “¡En Santa Clara! 🇵🇾Paraguay 0-0 Australia🇦🇺 Partido trabado y sin goles. Ambos equipos suman un punto en el Grupo D.”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070657831880298506",
+        "url": "https://x.com/RizuXeneixe10/status/2070657831880298506",
+        "observedAt": "2026-06-26 23:57"
+      }
+    },
+    {
+      "at": 1782442706921,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Paraguay 0-0 Australia. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 445,
+        "sourceTs": 1782442701921,
+        "action": "halftime_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1782442711921,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782446916653,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Paraguay 0-0 Australia. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 887,
+        "sourceTs": 1782446911653,
+        "action": "game_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1782446921653,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782446931653,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 0-0. No scrollback archaeology required."
+    },
+    {
+      "at": 1782446941653,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “This Congo vs Uzbekistan match is very action packed… Much better than the boring Australia vs Paraguay match when both teams were playing for a draw.”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071015601242579359",
+        "url": "https://x.com/LemigodMastadon/status/2071015601242579359",
+        "observedAt": "2026-06-27 23:39"
+      }
+    },
+    {
+      "at": 1782446946653,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588229-paraguay-vs-australia/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588229-paraguay-vs-australia/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588229-paraguay-vs-australia/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/BitBullVault/status/2070295613476925853",
+      "https://x.com/i/status/2070295613476925853",
+      "https://x.com/goodie4peta/status/2070295475056722133",
+      "https://x.com/i/status/2070295475056722133",
+      "https://x.com/WorldCupShitPos/status/2070295300581806334",
+      "https://x.com/i/status/2070295300581806334",
+      "https://x.com/wolfspack369/status/2070295166343434453",
+      "https://x.com/i/status/2070295166343434453",
+      "https://x.com/RizuXeneixe10/status/2070657831880298506",
+      "https://x.com/i/status/2070657831880298506",
+      "https://x.com/isaacloz/status/2070649037435412949",
+      "https://x.com/i/status/2070649037435412949"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 0-0 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

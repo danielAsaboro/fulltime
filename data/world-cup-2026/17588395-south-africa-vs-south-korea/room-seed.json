@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588395",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782344700000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782344700000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782344760000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782344820000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782344880000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782345600000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Match 54: 🇿🇦South Africa vs 🇰🇷Korea Republic #RSAKOR #FIFAWorldCup”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069933404141879685",
+        "url": "https://x.com/AimlessHitman/status/2069933404141879685",
+        "observedAt": "2026-06-24 23:59"
+      }
+    },
+    {
+      "at": 1782345660000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "South Africa may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782345900000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “‼️OFFICIAL: South Africa 🇿🇦 vs South Korea 🇰🇷 starting lineups.”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069933383841415298",
+        "url": "https://x.com/AgbaosiSal50457/status/2069933383841415298",
+        "observedAt": "2026-06-24 23:59"
+      }
+    },
+    {
+      "at": 1782345930000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782346020000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. South Africa, South Korea, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782346500000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: South Africa or South Korea?",
+      "options": [
+        {
+          "key": "home",
+          "label": "South Africa"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "South Korea"
+        }
+      ]
+    },
+    {
+      "at": 1782346506000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782346512000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782346518000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782346524000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782349235171,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588395:20:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 20,
+        "sourceTs": 1782349230171,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782349240171,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588395:20:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 20,
+        "sourceTs": 1782349230171,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782349245171,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588395:20:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 20,
+        "sourceTs": 1782349230171,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782352383401,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “🇿🇦 63:11 — ⚡️HISTORY IN THE MAKING ⚡️ Bafana Bafana have just broken the deadlock against South Korea! … South Africa 1-0 South Korea”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070283420547072138",
+        "url": "https://x.com/Pztidnt11/status/2070283420547072138",
+        "observedAt": "2026-06-25 23:10"
+      }
+    },
+    {
+      "at": 1782352418401,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: South Africa 0-0 South Korea. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 476,
+        "sourceTs": 1782352413401,
+        "action": "halftime_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1782352423401,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782354299926,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "85' GOAL — South Africa. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 670,
+        "sourceTs": 1782354294926,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1782354304926,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782354309926,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1782356429595,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: South Africa 1-0 South Korea. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 987,
+        "sourceTs": 1782356424595,
+        "action": "game_finalised",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1782356434595,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782356444595,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 1-0. No scrollback archaeology required."
+    },
+    {
+      "at": 1782356454595,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “…meme from Korean football accounts reacting to South Africa's 1-0 win… sent Bafana Bafana to the knockout rounds for the first time ever… Pure football salt.”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070653224596419069",
+        "url": "https://x.com/grok/status/2070653224596419069",
+        "observedAt": "2026-06-26 23:39"
+      }
+    },
+    {
+      "at": 1782356459595,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588395-south-africa-vs-south-korea/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588395-south-africa-vs-south-korea/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588395-south-africa-vs-south-korea/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/AimlessHitman/status/2069933404141879685",
+      "https://x.com/i/status/2069933404141879685",
+      "https://x.com/AgbaosiSal50457/status/2069933383841415298",
+      "https://x.com/i/status/2069933383841415298",
+      "https://x.com/manunited_kay/status/2069933352757448716",
+      "https://x.com/i/status/2069933352757448716",
+      "https://x.com/0x3iDK/status/2069933342586524035",
+      "https://x.com/i/status/2069933342586524035",
+      "https://x.com/SportPurse/status/2069933058925498460",
+      "https://x.com/i/status/2069933058925498460",
+      "https://x.com/TheModelManiac/status/2069932846865650150",
+      "https://x.com/i/status/2069932846865650150"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 1-0 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

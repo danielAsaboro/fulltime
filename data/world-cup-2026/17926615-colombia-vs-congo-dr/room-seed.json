@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17926615",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782261900000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782261900000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782261960000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782262020000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782262080000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782262800000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Leaño on Mundial + Colombia vs RD Congo preview”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069570997468991837",
+        "url": "https://x.com/Reforma/status/2069570997468991837",
+        "observedAt": "2026-06-23 23:59"
+      }
+    },
+    {
+      "at": 1782262860000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Colombia may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782263100000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Mundial Al Estilo Jalisco fan fest for Colombia vs RD Congo”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069570424992579881",
+        "url": "https://x.com/SalvadorZamoraZ/status/2069570424992579881",
+        "observedAt": "2026-06-23 23:56"
+      }
+    },
+    {
+      "at": 1782263130000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782263220000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Colombia, Congo DR, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782263700000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Colombia or Congo DR?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Colombia"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Congo DR"
+        }
+      ]
+    },
+    {
+      "at": 1782263706000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782263712000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782263718000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782263724000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782266413896,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17926615:18:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 18,
+        "sourceTs": 1782266408896,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782266418896,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17926615:18:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 18,
+        "sourceTs": 1782266408896,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782266423896,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17926615:18:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 18,
+        "sourceTs": 1782266408896,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782269509955,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Final Guadalajara COL 1-0 RDC; Muñoz 76’ — Colombia to R16”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069926961569276269",
+        "url": "https://x.com/JessAntoni45370/status/2069926961569276269",
+        "observedAt": "2026-06-24 23:33"
+      }
+    },
+    {
+      "at": 1782269544955,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Colombia 0-0 Congo DR. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 473,
+        "sourceTs": 1782269539955,
+        "action": "halftime_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1782269549955,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782272278095,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "98' GOAL — Colombia. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 730,
+        "sourceTs": 1782272273095,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1782272283095,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782272288095,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1782273812385,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Colombia 1-0 Congo DR. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 952,
+        "sourceTs": 1782273807385,
+        "action": "game_finalised",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1782273817385,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782273827385,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 1-0. No scrollback archaeology required."
+    },
+    {
+      "at": 1782273837385,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Colombia 1-0 DR Congo — Colombia qualified next round”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069896768272175394",
+        "url": "https://x.com/Joshy742720/status/2069896768272175394",
+        "observedAt": "2026-06-24 21:33"
+      }
+    },
+    {
+      "at": 1782273842385,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17926615-colombia-vs-congo-dr/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17926615-colombia-vs-congo-dr/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17926615-colombia-vs-congo-dr/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/Reforma/status/2069570997468991837",
+      "https://x.com/i/status/2069570997468991837",
+      "https://x.com/SalvadorZamoraZ/status/2069570424992579881",
+      "https://x.com/i/status/2069570424992579881",
+      "https://x.com/Mundofreelibre/status/2069570424422142030",
+      "https://x.com/i/status/2069570424422142030",
+      "https://x.com/FootyBetFrenzy/status/2069570340309651589",
+      "https://x.com/i/status/2069570340309651589",
+      "https://x.com/boxtoboxregista/status/2069570271317549349",
+      "https://x.com/i/status/2069570271317549349",
+      "https://x.com/jaliscoalerta_/status/2069570198076633133",
+      "https://x.com/i/status/2069570198076633133"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 1-0 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

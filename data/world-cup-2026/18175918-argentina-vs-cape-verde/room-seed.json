@@ -1,0 +1,399 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "18175918",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1783111500000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1783111500000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1783111560000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1783111620000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1783111680000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1783112400000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: ““Cape Verde will win and eliminate Argentina… nothing FIFA will do””",
+      "source": {
+        "kind": "x-post",
+        "postId": "2072830449143976223",
+        "url": "https://x.com/Joe__Bassey/status/2072830449143976223",
+        "observedAt": "2026-07-02 23:51"
+      }
+    },
+    {
+      "at": 1783112460000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Argentina may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1783112700000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “8-year-old Manu Litvi invited to watch Argentina vs Cape Verde in Miami”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2072831678234419541",
+        "url": "https://x.com/MessiFCWorld/status/2072831678234419541",
+        "observedAt": "2026-07-02 23:55"
+      }
+    },
+    {
+      "at": 1783112730000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1783112820000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Argentina, Cape Verde, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1783113300000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Argentina or Cape Verde?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Argentina"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Cape Verde"
+        }
+      ]
+    },
+    {
+      "at": 1783113306000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1783113312000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1783113318000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1783113324000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1783116034197,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:18175918:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1783116029197,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783116039197,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:18175918:17:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1783116029197,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783116044197,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:18175918:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1783116029197,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783117813054,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "30' GOAL — Argentina. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 264,
+        "sourceTs": 1783117808054,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1783117818054,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1783117823054,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1783119193152,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: ““Argentina and Cape Verde officially going to extra time… tied 1-1””",
+      "source": {
+        "kind": "x-post",
+        "postId": "2073195080090059088",
+        "url": "https://x.com/PopBase/status/2073195080090059088",
+        "observedAt": "2026-07-03 23:59"
+      }
+    },
+    {
+      "at": 1783119228152,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Argentina 1-0 Cape Verde. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 426,
+        "sourceTs": 1783119223152,
+        "action": "halftime_finalised",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1783119233152,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1783120907360,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "82' GOAL — Cape Verde. 1-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 560,
+        "sourceTs": 1783120902360,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1783120912360,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1783123713302,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "128' GOAL — Argentina. 2-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 915,
+        "sourceTs": 1783123708302,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "2-1"
+      }
+    },
+    {
+      "at": 1783123718302,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1783124363755,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "goal-4",
+      "text": "139' GOAL — Cape Verde. 2-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1020,
+        "sourceTs": 1783124358755,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "2-2"
+      }
+    },
+    {
+      "at": 1783124368755,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "goal-4",
+      "emoji": "😮"
+    },
+    {
+      "at": 1783125192718,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-5",
+      "text": "153' GOAL — Argentina. 3-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1132,
+        "sourceTs": 1783125187718,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Head",
+        "score": "3-2"
+      }
+    },
+    {
+      "at": 1783125197718,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-5",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1783126194288,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Argentina 3-2 Cape Verde. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1242,
+        "sourceTs": 1783126189288,
+        "action": "game_finalised",
+        "score": "3-2"
+      }
+    },
+    {
+      "at": 1783126199288,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1783126209288,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 3-2. No scrollback archaeology required."
+    },
+    {
+      "at": 1783126219288,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Argentina more shots/possession; Cape Verde didn’t “deserve” but could’ve won”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2073557430638690419",
+        "url": "https://x.com/Jonizerr/status/2073557430638690419",
+        "observedAt": "2026-07-04 23:59"
+      }
+    },
+    {
+      "at": 1783126224288,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/18175918-argentina-vs-cape-verde/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/18175918-argentina-vs-cape-verde/scores.historical.sse",
+    "provenance": "../resources/fixtures/world-cup-2026/18175918-argentina-vs-cape-verde/scores.historical.sse.provenance.json",
+    "socialSources": [
+      "https://x.com/Joe__Bassey/status/2072830449143976223",
+      "https://x.com/i/status/2072830449143976223",
+      "https://x.com/MessiFCWorld/status/2072831678234419541",
+      "https://x.com/i/status/2072831678234419541",
+      "https://x.com/MarcioFSMacedo/status/2072828925814751329",
+      "https://x.com/i/status/2072828925814751329",
+      "https://x.com/roamlings/status/2072830955623166023",
+      "https://x.com/i/status/2072830955623166023",
+      "https://x.com/TeksFootball/status/2072824183415853401",
+      "https://x.com/i/status/2072824183415853401",
+      "https://x.com/PopBase/status/2073195080090059088",
+      "https://x.com/i/status/2073195080090059088"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 3-2 result. 8 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

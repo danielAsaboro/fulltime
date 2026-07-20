@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588403",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781534700000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1781534700000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1781534760000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1781534820000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1781534880000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1781535600000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “SPAIN VS CAPE VERDE FIFA WORLD CUP 2026 GROUP H”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2066308079939998028",
+        "url": "https://x.com/UtdRedDevils20/status/2066308079939998028",
+        "observedAt": "2026-06-14 23:53"
+      }
+    },
+    {
+      "at": 1781535660000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Spain may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1781535900000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Lamine Yamal expected to start WC opener vs Cape Verde on the bench despite being declared fit”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2066307756844626234",
+        "url": "https://x.com/ITGDsports/status/2066307756844626234",
+        "observedAt": "2026-06-14 23:52"
+      }
+    },
+    {
+      "at": 1781535930000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781536020000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Spain, Cape Verde, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1781536500000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Spain or Cape Verde?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Spain"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Cape Verde"
+        }
+      ]
+    },
+    {
+      "at": 1781536506000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781536512000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1781536518000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1781536524000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1781539284674,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588403:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1781539279674,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781539289674,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588403:16:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1781539279674,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781539294674,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588403:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1781539279674,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781542366151,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Cape Verde holds Spain to a 0-0 draw! Favorites humbled. Underdogs cooking.”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2066671750532812825",
+        "url": "https://x.com/emperormarvel/status/2066671750532812825",
+        "observedAt": "2026-06-15 23:58"
+      }
+    },
+    {
+      "at": 1781542401151,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Spain 0-0 Cape Verde. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 549,
+        "sourceTs": 1781542396151,
+        "action": "halftime_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1781542406151,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1781546364059,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Spain 0-0 Cape Verde. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1156,
+        "sourceTs": 1781546359059,
+        "action": "game_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1781546369059,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781546379059,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 0-0. No scrollback archaeology required."
+    },
+    {
+      "at": 1781546389059,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Cabo Verde’s 40 y/o keeper Vozinha gained 4M followers after 8-save performance vs Spain”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067029917091459093",
+        "url": "https://x.com/alphamailler/status/2067029917091459093",
+        "observedAt": "2026-06-16 23:41"
+      }
+    },
+    {
+      "at": 1781546394059,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588403-spain-vs-cape-verde/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588403-spain-vs-cape-verde/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588403-spain-vs-cape-verde/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/UtdRedDevils20/status/2066308079939998028",
+      "https://x.com/i/status/2066308079939998028",
+      "https://x.com/ITGDsports/status/2066307756844626234",
+      "https://x.com/i/status/2066307756844626234",
+      "https://x.com/JamaicaGleaner/status/2066306742774853939",
+      "https://x.com/i/status/2066306742774853939",
+      "https://x.com/CATERINAV/status/2066305664893198740",
+      "https://x.com/i/status/2066305664893198740",
+      "https://x.com/0xOliverX/status/2066303816912294286",
+      "https://x.com/i/status/2066303816912294286",
+      "https://x.com/standardsport/status/2066303316343095385",
+      "https://x.com/i/status/2066303316343095385"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 0-0 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

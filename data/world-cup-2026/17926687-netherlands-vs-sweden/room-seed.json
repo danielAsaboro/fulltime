@@ -1,0 +1,422 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17926687",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781970300000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1781970300000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1781970360000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1781970420000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1781970480000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1781971200000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Ladder: Netherlands vs Sweden BTTS”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068121542962131309",
+        "url": "https://x.com/i/status/2068121542962131309",
+        "observedAt": "2026-06-19 23:59"
+      }
+    },
+    {
+      "at": 1781971260000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Netherlands may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1781971500000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Sweden great start, tougher test vs Netherlands”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068118907836129667",
+        "url": "https://x.com/i/status/2068118907836129667",
+        "observedAt": "2026-06-19 23:49"
+      }
+    },
+    {
+      "at": 1781971530000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781971620000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Netherlands, Sweden, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1781972100000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Netherlands or Sweden?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Netherlands"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Sweden"
+        }
+      ]
+    },
+    {
+      "at": 1781972106000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781972112000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1781972118000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781972124000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1781974817040,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17926687:19:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 19,
+        "sourceTs": 1781974812040,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781974822040,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17926687:19:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 19,
+        "sourceTs": 1781974812040,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781974827040,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17926687:19:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 19,
+        "sourceTs": 1781974812040,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781975170884,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "6' GOAL — Netherlands. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 75,
+        "sourceTs": 1781975165884,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1781975175884,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781975180884,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "Inside ten minutes. The opening-goal yes receipts land immediately."
+    },
+    {
+      "at": 1781975850559,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "18' GOAL — Netherlands. 2-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 177,
+        "sourceTs": 1781975845559,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1781975855559,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781978125294,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “FT 5-1: Brobbey 5'/17', Gakpo 47'/54', Elanga 59', Summerville 89'”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068482653511389413",
+        "url": "https://x.com/i/status/2068482653511389413",
+        "observedAt": "2026-06-20 23:54"
+      }
+    },
+    {
+      "at": 1781978160294,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Netherlands 2-0 Sweden. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 446,
+        "sourceTs": 1781978155294,
+        "action": "halftime_finalised",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1781978165294,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1781978971340,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "70' GOAL — Netherlands. 3-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 469,
+        "sourceTs": 1781978966340,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "3-0"
+      }
+    },
+    {
+      "at": 1781978976340,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781979358401,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "goal-4",
+      "text": "76' GOAL — Netherlands. 4-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 531,
+        "sourceTs": 1781979353401,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "4-0"
+      }
+    },
+    {
+      "at": 1781979363401,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "goal-4",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781979611736,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-5",
+      "text": "80' GOAL — Sweden. 4-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 570,
+        "sourceTs": 1781979606736,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "4-1"
+      }
+    },
+    {
+      "at": 1781979616736,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-5",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781981453706,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-6",
+      "text": "111' GOAL — Netherlands. 5-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 830,
+        "sourceTs": 1781981448706,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "5-1"
+      }
+    },
+    {
+      "at": 1781981458706,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-6",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781982229006,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Netherlands 5-1 Sweden. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 903,
+        "sourceTs": 1781982224006,
+        "action": "game_finalised",
+        "score": "5-1"
+      }
+    },
+    {
+      "at": 1781982234006,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1781982244006,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 5-1. No scrollback archaeology required."
+    },
+    {
+      "at": 1781982254006,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Fans storm streets after first WC win; thumped Sweden 5-1”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068841950946447598",
+        "url": "https://x.com/i/status/2068841950946447598",
+        "observedAt": "2026-06-21 23:42"
+      }
+    },
+    {
+      "at": 1781982259006,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17926687-netherlands-vs-sweden/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17926687-netherlands-vs-sweden/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17926687-netherlands-vs-sweden/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/i/status/2068121542962131309",
+      "https://x.com/i/status/2068118907836129667",
+      "https://x.com/i/status/2068118149912781029",
+      "https://x.com/i/status/2068115923806912780",
+      "https://x.com/i/status/2068114199465603456",
+      "https://x.com/i/status/2068482653511389413",
+      "https://x.com/i/status/2068481008387899510",
+      "https://x.com/i/status/2068480931703267379",
+      "https://x.com/i/status/2068476500546830718",
+      "https://x.com/i/status/2068474984671121635",
+      "https://x.com/i/status/2068841950946447598",
+      "https://x.com/i/status/2068837167669919746"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 5-1 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

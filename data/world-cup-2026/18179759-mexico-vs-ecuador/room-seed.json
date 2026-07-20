@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "18179759",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782866700000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782866700000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782866760000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782866820000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782866880000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782867600000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: ““Please don't postpone Mexico vs Ecuador… best game so far””",
+      "source": {
+        "kind": "x-post",
+        "postId": "2072107640763609159",
+        "url": "https://x.com/3PeatUCLWinners/status/2072107640763609159",
+        "observedAt": "2026-06-30 23:58"
+      }
+    },
+    {
+      "at": 1782867660000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Mexico may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782867900000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Ecuador have a route into this if they survive the opening pressure.”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2072107601815359973",
+        "url": "https://x.com/wananqaland/status/2072107601815359973",
+        "observedAt": "2026-06-30 23:58"
+      }
+    },
+    {
+      "at": 1782867930000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782868020000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Mexico, Ecuador, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782868500000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Mexico or Ecuador?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Mexico"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Ecuador"
+        }
+      ]
+    },
+    {
+      "at": 1782868506000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782868512000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782868518000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782868524000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782871253094,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:18179759:25:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 25,
+        "sourceTs": 1782871248094,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782871258094,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:18179759:25:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 25,
+        "sourceTs": 1782871248094,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782871263094,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:18179759:25:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 25,
+        "sourceTs": 1782871248094,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782872594791,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "23' GOAL — Mexico. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 219,
+        "sourceTs": 1782872589791,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1782872599791,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782872604791,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1782873142242,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "32' GOAL — Mexico. 2-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 266,
+        "sourceTs": 1782873137242,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1782873147242,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782874427418,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Mexico end 40-year wait for WC knockout win, 2-0 at Azteca”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2072469258206847042",
+        "url": "https://x.com/Real_AceState/status/2072469258206847042",
+        "observedAt": "2026-07-01 23:55"
+      }
+    },
+    {
+      "at": 1782874462418,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Mexico 2-0 Ecuador. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 431,
+        "sourceTs": 1782874457418,
+        "action": "halftime_finalised",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1782874467418,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782879175255,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Mexico 2-0 Ecuador. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 885,
+        "sourceTs": 1782879170255,
+        "action": "game_finalised",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1782879180255,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782879190255,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 2-0. No scrollback archaeology required."
+    },
+    {
+      "at": 1782879200255,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Four people died during massive CDMX celebrations after Mexico beat Ecuador”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2072462763738136841",
+        "url": "https://x.com/ABC7/status/2072462763738136841",
+        "observedAt": "2026-07-01 23:30"
+      }
+    },
+    {
+      "at": 1782879205255,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/18179759-mexico-vs-ecuador/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/18179759-mexico-vs-ecuador/scores.historical.sse",
+    "provenance": "../resources/fixtures/world-cup-2026/18179759-mexico-vs-ecuador/scores.historical.sse.provenance.json",
+    "socialSources": [
+      "https://x.com/3PeatUCLWinners/status/2072107640763609159",
+      "https://x.com/i/status/2072107640763609159",
+      "https://x.com/wananqaland/status/2072107601815359973",
+      "https://x.com/i/status/2072107601815359973",
+      "https://x.com/SupervisorAlejo/status/2072107514720915707",
+      "https://x.com/i/status/2072107514720915707",
+      "https://x.com/SGIRPC_CDMX/status/2072107305382850817",
+      "https://x.com/i/status/2072107305382850817",
+      "https://x.com/ofootball__/status/2072107183001756027",
+      "https://x.com/i/status/2072107183001756027",
+      "https://x.com/WSSTifo/status/2072106859847098486",
+      "https://x.com/i/status/2072106859847098486"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 2-0 result. 8 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

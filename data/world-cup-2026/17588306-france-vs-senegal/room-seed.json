@@ -1,0 +1,376 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588306",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781631900000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1781631900000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1781631960000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1781632020000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1781632080000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1781632800000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “FRANCE VS SENEGAL FIFA WORLD CUP 2026 GROUP I”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2066670310254883225",
+        "url": "https://x.com/UtdRedDevils20/status/2066670310254883225",
+        "observedAt": "2026-06-15 23:52"
+      }
+    },
+    {
+      "at": 1781632860000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "France may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1781633100000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “France 56% / Draw 25% / Senegal 19% — Senegal not a routine opener; 2002 shock H2H”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2066669950685618313",
+        "url": "https://x.com/DedicatedBets/status/2066669950685618313",
+        "observedAt": "2026-06-15 23:51"
+      }
+    },
+    {
+      "at": 1781633130000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781633220000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. France, Senegal, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1781633700000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: France or Senegal?",
+      "options": [
+        {
+          "key": "home",
+          "label": "France"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Senegal"
+        }
+      ]
+    },
+    {
+      "at": 1781633706000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781633712000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1781633718000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781633724000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1781636579741,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588306:13:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 13,
+        "sourceTs": 1781636574741,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781636584741,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588306:13:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 13,
+        "sourceTs": 1781636574741,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781636589741,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588306:13:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 13,
+        "sourceTs": 1781636574741,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781639701937,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Winning Polymarket during France vs Senegal IRL — 3-1 exact score”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067034302563377347",
+        "url": "https://x.com/JaysonCrypto/status/2067034302563377347",
+        "observedAt": "2026-06-16 23:59"
+      }
+    },
+    {
+      "at": 1781639736937,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: France 0-0 Senegal. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 458,
+        "sourceTs": 1781639731937,
+        "action": "halftime_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1781639741937,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1781641878551,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "89' GOAL — France. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 651,
+        "sourceTs": 1781641873551,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1781641883551,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781641888551,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1781642857215,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "105' GOAL — France. 2-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 776,
+        "sourceTs": 1781642852215,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1781642862215,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781643597716,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "117' GOAL — Senegal. 2-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 898,
+        "sourceTs": 1781643592716,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "2-1"
+      }
+    },
+    {
+      "at": 1781643602716,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781643683288,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "goal-4",
+      "text": "119' GOAL — France. 3-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 906,
+        "sourceTs": 1781643678288,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "3-1"
+      }
+    },
+    {
+      "at": 1781643688288,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "goal-4",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781644221232,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: France 3-1 Senegal. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 938,
+        "sourceTs": 1781644216232,
+        "action": "game_finalised",
+        "score": "3-1"
+      }
+    },
+    {
+      "at": 1781644226232,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1781644236232,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 3-1. No scrollback archaeology required."
+    },
+    {
+      "at": 1781644246232,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Mbappé becomes France’s leading goal scorer in win over Senegal”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067395727110570404",
+        "url": "https://x.com/HotCountryB95/status/2067395727110570404",
+        "observedAt": "2026-06-17 23:55"
+      }
+    },
+    {
+      "at": 1781644251232,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588306-france-vs-senegal/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588306-france-vs-senegal/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588306-france-vs-senegal/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/UtdRedDevils20/status/2066670310254883225",
+      "https://x.com/i/status/2066670310254883225",
+      "https://x.com/DedicatedBets/status/2066669950685618313",
+      "https://x.com/i/status/2066669950685618313",
+      "https://x.com/TintinPoker/status/2066669912198644048",
+      "https://x.com/i/status/2066669912198644048",
+      "https://x.com/Micky_right/status/2066669075883766219",
+      "https://x.com/i/status/2066669075883766219",
+      "https://x.com/CultureGoal/status/2066666789958721867",
+      "https://x.com/i/status/2066666789958721867",
+      "https://x.com/JaysonCrypto/status/2067034302563377347",
+      "https://x.com/i/status/2067034302563377347"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 3-1 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

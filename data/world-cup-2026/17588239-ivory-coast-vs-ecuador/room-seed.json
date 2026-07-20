@@ -1,0 +1,252 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588239",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781474580000
+  },
+  "personas": [
+    { "id": "fan_a", "displayName": "Amina", "joinedAt": 1781474580000, "creator": true },
+    { "id": "fan_b", "displayName": "Tunde", "joinedAt": 1781474640000 },
+    { "id": "fan_c", "displayName": "Maya", "joinedAt": 1781474700000 },
+    { "id": "fan_d", "displayName": "Jo", "joinedAt": 1781474760000 }
+  ],
+  "actions": [
+    {
+      "at": 1781475180000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-ivory-coast-one-zero",
+      "text": "Ecuador have not lost in nearly two years, but Ivory Coast arrive in form. Elephants 1-0, late winner, no apology.",
+      "source": { "kind": "x-post", "postId": "2065932305214869708", "url": "https://x.com/FWC26Philly/status/2065932305214869708" }
+    },
+    {
+      "at": 1781475240000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-ivory-coast-one-zero",
+      "text": "A two-year unbeaten run does not end because you asked nicely. Ecuador 1-0 and the Rocky Steps party keeps going."
+    },
+    {
+      "at": 1781475300000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-zero-zero",
+      "text": "The viral board has 0-0. Two physical teams, first-game caution, nobody gives away the middle. I am locking it.",
+      "source": { "kind": "x-post", "postId": "2065337895590690914", "url": "https://x.com/Dhavidtips/status/2065337895590690914" }
+    },
+    {
+      "at": 1781475360000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-one-one",
+      "item": "maya-zero-zero",
+      "text": "Same cagey game, one mistake each. I have 1-1 and both sides complaining about chances."
+    },
+    { "at": 1781475390000, "actor": "fan_a", "type": "reaction", "item": "maya-zero-zero", "emoji": "👏" },
+    {
+      "at": 1781475480000,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "rocky-steps-orange",
+      "text": "Ecuador supporters took over the Rocky Steps. Philadelphia looks like an away end already.",
+      "source": { "kind": "x-post", "postId": "2065918543569223827", "url": "https://x.com/Jimmyking35/status/2065918543569223827" }
+    },
+    {
+      "at": 1781475540000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "ivory-coast-ecuador-result",
+      "question": "Who takes the underrated Group E opener?",
+      "options": [
+        { "key": "ivory-coast-win", "label": "Ivory Coast" },
+        { "key": "draw", "label": "Draw" },
+        { "key": "ecuador-win", "label": "Ecuador" }
+      ]
+    },
+    { "at": 1781475545000, "actor": "fan_a", "type": "vote", "poll": "ivory-coast-ecuador-result", "option": "ivory-coast-win" },
+    { "at": 1781475550000, "actor": "fan_b", "type": "vote", "poll": "ivory-coast-ecuador-result", "option": "ecuador-win" },
+    { "at": 1781475555000, "actor": "fan_c", "type": "vote", "poll": "ivory-coast-ecuador-result", "option": "draw" },
+    { "at": 1781475560000, "actor": "fan_d", "type": "vote", "poll": "ivory-coast-ecuador-result", "option": "draw" },
+    {
+      "at": 1781478221028,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-no",
+      "callId": "call:17588239:20:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 20, "sourceTs": 1781478216028, "action": "kickoff" }
+    },
+    {
+      "at": 1781478226028,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-yes",
+      "callId": "call:17588239:20:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 20, "sourceTs": 1781478216028, "action": "kickoff" }
+    },
+    {
+      "at": 1781478231028,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-no",
+      "callId": "call:17588239:20:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 20, "sourceTs": 1781478216028, "action": "kickoff" }
+    },
+    {
+      "at": 1781478821028,
+      "actor": "fan_a",
+      "type": "reply",
+      "item": "amina-ivory-coast-one-zero",
+      "text": "Ten minutes, still 0-0. The locked no lands and the match has exactly the patience I expected."
+    },
+    {
+      "at": 1781479880000,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "first-yellow",
+      "text": "27' first yellow to Ivory Coast, still 0-0. This is turning into a test of who loses discipline first.",
+      "source": { "kind": "archive-event", "sequence": 290, "sourceTs": 1781479873494, "action": "yellow_card", "participant": 1, "score": "0-0" }
+    },
+    {
+      "at": 1781480500000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "first-yellow",
+      "text": "Another Ivory Coast booking at 37'. Ecuador are making them defend every transition."
+    },
+    {
+      "at": 1781481169041,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "halftime-zero-zero",
+      "text": "Half-time: Ivory Coast 0-0 Ecuador. The viral board is smiling; the winner calls are all sweating.",
+      "source": { "kind": "archive-event", "sequence": 524, "sourceTs": 1781481164041, "action": "half-time", "score": "0-0" }
+    },
+    { "at": 1781481174041, "actor": "fan_a", "type": "reaction", "item": "halftime-zero-zero", "emoji": "😮" },
+    {
+      "at": 1781481179041,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-halftime-one-one",
+      "item": "jo-one-one",
+      "text": "My 1-1 still needs the game to stop pretending it is a tactical seminar."
+    },
+    {
+      "at": 1781481769041,
+      "actor": "fan_c",
+      "type": "reply",
+      "item": "halftime-zero-zero",
+      "text": "No goal in the first ten minutes after half-time. This 0-0 is becoming a personality."
+    },
+    {
+      "at": 1781483131647,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "ivory-coast-pressure",
+      "text": "59' Ivory Coast corner, still 0-0. They are beginning to pin Ecuador back without finding the finish.",
+      "source": { "kind": "archive-event", "sequence": 711, "sourceTs": 1781483126647, "action": "corner", "participant": 1, "score": "0-0" }
+    },
+    {
+      "at": 1781483884756,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "ecuador-corner",
+      "text": "72' Ecuador corner. One moment either way and every draw expert becomes a witness for the prosecution.",
+      "source": { "kind": "archive-event", "sequence": 804, "sourceTs": 1781483879756, "action": "corner", "participant": 2, "score": "0-0" }
+    },
+    {
+      "at": 1781484770904,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "late-var",
+      "text": "87' VAR, still 0-0. Maya is two minutes from owning the room; Amina is two minutes from needing a miracle.",
+      "source": { "kind": "archive-event", "sequence": 942, "sourceTs": 1781484765904, "action": "var", "score": "0-0" }
+    },
+    { "at": 1781484775904, "actor": "fan_c", "type": "reaction", "item": "late-var", "emoji": "🔥" },
+    {
+      "at": 1781485018831,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "ivory-coast-one-zero",
+      "text": "89' IVORY COAST 1-0. The unbeaten streak, the viral 0-0 and two draw votes just vanished in one shot.",
+      "source": { "kind": "archive-event", "sequence": 967, "sourceTs": 1781485013831, "action": "goal", "participant": 1, "clockSeconds": 5392, "goalType": "Shot", "score": "1-0" }
+    },
+    { "at": 1781485023831, "actor": "fan_b", "type": "reaction", "item": "ivory-coast-one-zero", "emoji": "😮" },
+    {
+      "at": 1781485028831,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "amina-exact-live",
+      "item": "amina-ivory-coast-one-zero",
+      "text": "Ivory Coast 1-0, late winner. The exact call is live with stoppage time still to survive."
+    },
+    {
+      "at": 1781485033831,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-zero-zero-dead",
+      "item": "maya-zero-zero",
+      "text": "One goal at 89' turns my perfect-looking call into a full miss. Keep the receipt; I earned it."
+    },
+    {
+      "at": 1781485261298,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "ecuador-last-corners",
+      "text": "95' another Ecuador corner, score still 1-0. The streak is fighting for one final touch.",
+      "source": { "kind": "archive-event", "sequence": 1009, "sourceTs": 1781485256298, "action": "corner", "participant": 2, "score": "1-0" }
+    },
+    {
+      "at": 1781485761721,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "fulltime-one-zero",
+      "text": "Finalised: Ivory Coast 1-0 Ecuador. One confirmed 89th-minute goal ends a match that stayed level for almost the entire night.",
+      "source": { "kind": "archive-event", "sequence": 1050, "sourceTs": 1781485756721, "action": "game_finalised", "score": "1-0" }
+    },
+    {
+      "at": 1781485766721,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "amina-full-receipt",
+      "item": "amina-ivory-coast-one-zero",
+      "text": "Ivory Coast 1-0, late winner, exactly as called before kickoff. That is the receipt."
+    },
+    { "at": 1781485771721, "actor": "fan_c", "type": "reaction", "item": "amina-full-receipt", "emoji": "👏" },
+    {
+      "at": 1781485776721,
+      "actor": "fan_b",
+      "type": "quote",
+      "key": "tunde-streak-receipt",
+      "item": "rocky-steps-orange",
+      "text": "The supporters owned Philadelphia before kickoff; Ivory Coast owned the final score. My unbeaten-streak logic is officially evidence against me."
+    },
+    {
+      "at": 1781485781721,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "fulltime-one-zero",
+      "text": "Africa's first win on the early results board, and it arrived at the last possible moment.",
+      "source": { "kind": "x-post", "postId": "2066667764152934776", "url": "https://x.com/mygtvsports/status/2066667764152934776" }
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588239-ivory-coast-vs-ecuador/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588239-ivory-coast-vs-ecuador/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588239-ivory-coast-vs-ecuador/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/FWC26Philly/status/2065932305214869708",
+      "https://x.com/Jimmyking35/status/2065918543569223827",
+      "https://x.com/saba_4Nigeria/status/2065941284326359498",
+      "https://x.com/Dhavidtips/status/2065337895590690914",
+      "https://x.com/SaifBKA17/status/2066309524554977489",
+      "https://x.com/greater_glory20/status/2066664126156337456",
+      "https://x.com/mygtvsports/status/2066667764152934776"
+    ],
+    "sourcePolicy": "The authenticated TxLINE archive is authoritative for fixture identity, kickoff, the 0-0 half-time state, cards, corners, VAR, Ivory Coast's single confirmed 89th-minute goal, and the terminal 1-0 result. Pre-match scorelines, Ecuador's unbeaten framing, supporter atmosphere, player evaluation, continent-wide reaction, and streak interpretation are concise fictional-room restagings informed by the cited public X posts; personas do not impersonate source authors. Player names and public xG or woodwork claims are intentionally omitted from archive-event assertions. All nine available provenance sidecars match their corresponding raw bytes. The production replay consumer parses 1,020 preserved interval records ending at sequence 1050; the derived analysis reports 1,049 historical sequence positions. Calls voided by preserved feed gaps are omitted. This room answers only the settled kickoff opening-goal market; the settled half-time fast-start market remains in the fixture facts but is not answered in the room."
+  }
+}

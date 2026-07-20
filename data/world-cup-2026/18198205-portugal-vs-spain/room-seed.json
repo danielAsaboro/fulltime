@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "18198205",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1783359900000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1783359900000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1783359960000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1783360020000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1783360080000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1783360800000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Big teams all have issues this WC… “except one team” meta-rant”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2073919388374249524",
+        "url": "https://x.com/i/status/2073919388374249524",
+        "observedAt": "2026-07-05 23:58"
+      }
+    },
+    {
+      "at": 1783360860000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Portugal may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1783361100000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Eyes on ARG/FRA/POR/ESP/ENG/BRA — not Norway; Vikings smashing through”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2073919220706894330",
+        "url": "https://x.com/i/status/2073919220706894330",
+        "observedAt": "2026-07-05 23:57"
+      }
+    },
+    {
+      "at": 1783361130000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1783361220000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Portugal, Spain, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1783361700000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Portugal or Spain?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Portugal"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Spain"
+        }
+      ]
+    },
+    {
+      "at": 1783361706000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1783361712000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1783361718000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1783361724000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1783364414670,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:18198205:15:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1783364409670,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783364419670,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:18198205:15:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1783364409670,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783364424670,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:18198205:15:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1783364409670,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783367608632,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: ““Ronaldo’s Portugal lost to Spain… Messi’s Argentina still playing””",
+      "source": {
+        "kind": "x-post",
+        "postId": "2074282218415923576",
+        "url": "https://x.com/i/status/2074282218415923576",
+        "observedAt": "2026-07-06 23:59"
+      }
+    },
+    {
+      "at": 1783367643632,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Portugal 0-0 Spain. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 486,
+        "sourceTs": 1783367638632,
+        "action": "halftime_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1783367648632,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1783371245689,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "114' GOAL — Spain. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 904,
+        "sourceTs": 1783371240689,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1783371250689,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1783371255689,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1783372321885,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Portugal 0-1 Spain. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 992,
+        "sourceTs": 1783372316885,
+        "action": "game_finalised",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1783372326885,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1783372336885,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 0-1. No scrollback archaeology required."
+    },
+    {
+      "at": 1783372346885,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “FIFA path-rigging claims re Portugal group finish vs Spain”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2074644148036985333",
+        "url": "https://x.com/i/status/2074644148036985333",
+        "observedAt": "2026-07-07 23:58"
+      }
+    },
+    {
+      "at": 1783372351885,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/18198205-portugal-vs-spain/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/18198205-portugal-vs-spain/scores.historical.sse",
+    "provenance": "../resources/fixtures/world-cup-2026/18198205-portugal-vs-spain/scores.historical.sse.provenance.json",
+    "socialSources": [
+      "https://x.com/i/status/2073919388374249524",
+      "https://x.com/i/status/2073919220706894330",
+      "https://x.com/i/status/2073918982529159587",
+      "https://x.com/i/status/2073918766979727721",
+      "https://x.com/i/status/2073918587555684359",
+      "https://x.com/i/status/2073917772099108996",
+      "https://x.com/i/status/2074282218415923576",
+      "https://x.com/i/status/2074282039881195578",
+      "https://x.com/i/status/2074281938303500648",
+      "https://x.com/i/status/2074281708602654904",
+      "https://x.com/i/status/2074281608341786770",
+      "https://x.com/i/status/2074281625366794515"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 0-1 result. 8 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

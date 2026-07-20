@@ -1,0 +1,370 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588236",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782423900000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782423900000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782423960000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782424020000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782424080000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782424800000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Hervé Renard, Tunisia head coach: \"We must finish our World Cup campaign in the best possible way and preserve our pride and dignity against the Netherlands.\"”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069930509338026190",
+        "url": "https://x.com/alkassenglish/status/2069930509338026190",
+        "observedAt": "2026-06-24 23:47"
+      }
+    },
+    {
+      "at": 1782424860000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Tunisia may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782425100000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “#SportingKC’s Sporting Park serving as host for #Tunisia training tonight ahead of their match vs #Netherlands on Thursday”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069922835087097996",
+        "url": "https://x.com/MattFosterTV/status/2069922835087097996",
+        "observedAt": "2026-06-24 23:17"
+      }
+    },
+    {
+      "at": 1782425130000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782425220000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Tunisia, Netherlands, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782425700000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Tunisia or Netherlands?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Tunisia"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Netherlands"
+        }
+      ]
+    },
+    {
+      "at": 1782425706000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782425712000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782425718000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782425724000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782428412771,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588236:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782428407771,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782428417771,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588236:16:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782428407771,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782428422771,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588236:16:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 16,
+        "sourceTs": 1782428407771,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782428608236,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "4' GOAL — Netherlands. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 48,
+        "sourceTs": 1782428603236,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Own",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782428613236,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782428618236,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "Inside ten minutes. The opening-goal yes receipts land immediately."
+    },
+    {
+      "at": 1782428855978,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "8' GOAL — Netherlands. 0-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 88,
+        "sourceTs": 1782428850978,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-2"
+      }
+    },
+    {
+      "at": 1782428860978,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782431740316,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “🔴(07m) 1st Half: SECOND GOAL for Netherlands was scored by Brian Brobbey … Tunisia 0 Netherlands 1 (score board in post)”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070295895569043666",
+        "url": "https://x.com/SolomonFoskaay/status/2070295895569043666",
+        "observedAt": "2026-06-25 23:59"
+      }
+    },
+    {
+      "at": 1782431775316,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Tunisia 0-2 Netherlands. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 527,
+        "sourceTs": 1782431770316,
+        "action": "halftime_finalised",
+        "score": "0-2"
+      }
+    },
+    {
+      "at": 1782431780316,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782432869140,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "75' GOAL — Tunisia. 1-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 633,
+        "sourceTs": 1782432864140,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Head",
+        "score": "1-2"
+      }
+    },
+    {
+      "at": 1782432874140,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782433321358,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "goal-4",
+      "text": "82' GOAL — Netherlands. 1-3. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 696,
+        "sourceTs": 1782433316358,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Head",
+        "score": "1-3"
+      }
+    },
+    {
+      "at": 1782433326358,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "goal-4",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782435572011,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Tunisia 1-3 Netherlands. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1002,
+        "sourceTs": 1782435567011,
+        "action": "game_finalised",
+        "score": "1-3"
+      }
+    },
+    {
+      "at": 1782435577011,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782435587011,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 1-3. No scrollback archaeology required."
+    },
+    {
+      "at": 1782435597011,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “🇹🇳 Tunisia vs Netherlands 🇳🇱”"
+    },
+    {
+      "at": 1782435602011,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588236-tunisia-vs-netherlands/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588236-tunisia-vs-netherlands/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588236-tunisia-vs-netherlands/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/alkassenglish/status/2069930509338026190",
+      "https://x.com/i/status/2069930509338026190",
+      "https://x.com/MattFosterTV/status/2069922835087097996",
+      "https://x.com/i/status/2069922835087097996",
+      "https://x.com/HaroldRKuntz3/status/2069921756119470264",
+      "https://x.com/i/status/2069921756119470264",
+      "https://x.com/FormPicks/status/2069919059546931297",
+      "https://x.com/i/status/2069919059546931297",
+      "https://x.com/SolomonFoskaay/status/2070295895569043666",
+      "https://x.com/i/status/2070295895569043666",
+      "https://x.com/FjRoebersen/status/2070295796558266682",
+      "https://x.com/i/status/2070295796558266682"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 1-3 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

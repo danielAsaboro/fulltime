@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588404",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782513900000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782513900000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782513960000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782514020000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782514080000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782514800000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Uruguay vs Spain — World Cup bet, odds 1.83, stake 1U”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070658340623946133",
+        "url": "https://x.com/NordicStatsBets/status/2070658340623946133",
+        "observedAt": "2026-06-26 23:59"
+      }
+    },
+    {
+      "at": 1782514860000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Uruguay may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782515100000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Uruguay 🇺🇾 vs Spain 🇪🇸 — What’s your prediction?????”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2070658331614585314",
+        "url": "https://x.com/Dmayor37/status/2070658331614585314",
+        "observedAt": "2026-06-26 23:59"
+      }
+    },
+    {
+      "at": 1782515130000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782515220000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Uruguay, Spain, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782515700000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Uruguay or Spain?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Uruguay"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Spain"
+        }
+      ]
+    },
+    {
+      "at": 1782515706000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782515712000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782515718000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782515724000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782518492750,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588404:14:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 14,
+        "sourceTs": 1782518487750,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782518497750,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588404:14:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 14,
+        "sourceTs": 1782518487750,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782518502750,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588404:14:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 14,
+        "sourceTs": 1782518487750,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782521087621,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "44' GOAL — Spain. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 350,
+        "sourceTs": 1782521082621,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782521092621,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782521097621,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1782521842834,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Spain didn’t score vs Cabo Verde — “what math” calls it easy (reply re: Spain path)”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071016541915676699",
+        "url": "https://x.com/MuzafarSsebuuma/status/2071016541915676699",
+        "observedAt": "2026-06-27 23:43"
+      }
+    },
+    {
+      "at": 1782521877834,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Uruguay 0-1 Spain. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 448,
+        "sourceTs": 1782521872834,
+        "action": "halftime_finalised",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782521882834,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782526055185,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Uruguay 0-1 Spain. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 882,
+        "sourceTs": 1782526050185,
+        "action": "game_finalised",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782526060185,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782526070185,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 0-1. No scrollback archaeology required."
+    },
+    {
+      "at": 1782526080185,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Spain barely beat “the worst Uruguay I have seen in years””",
+      "source": {
+        "kind": "x-post",
+        "postId": "2071366517254504904",
+        "url": "https://x.com/E89jmRhymes/status/2071366517254504904",
+        "observedAt": "2026-06-28 22:53"
+      }
+    },
+    {
+      "at": 1782526085185,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588404-uruguay-vs-spain/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588404-uruguay-vs-spain/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588404-uruguay-vs-spain/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/NordicStatsBets/status/2070658340623946133",
+      "https://x.com/i/status/2070658340623946133",
+      "https://x.com/Dmayor37/status/2070658331614585314",
+      "https://x.com/i/status/2070658331614585314",
+      "https://x.com/NubianThinker/status/2070658326103507191",
+      "https://x.com/i/status/2070658326103507191",
+      "https://x.com/ChillWarriorX/status/2070658282407199170",
+      "https://x.com/i/status/2070658282407199170",
+      "https://x.com/CinemaSporty/status/2070658251289731373",
+      "https://x.com/i/status/2070658251289731373",
+      "https://x.com/kingyoungwizzy/status/2070658234222793029",
+      "https://x.com/i/status/2070658234222793029"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 0-1 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

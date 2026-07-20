@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588324",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782240300000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782240300000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782240360000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782240420000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782240480000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782241200000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “England unbeaten in WC Tuesday games since 1950; face Ghana Tuesday”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069208325216928025",
+        "url": "https://x.com/IsaacAm02935720/status/2069208325216928025",
+        "observedAt": "2026-06-22 23:58"
+      }
+    },
+    {
+      "at": 1782241260000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "England may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782241500000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Ghana facing England tomorrow — WC vlog to cool your heart”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069208002595360936",
+        "url": "https://x.com/adwoa__henewaa/status/2069208002595360936",
+        "observedAt": "2026-06-22 23:56"
+      }
+    },
+    {
+      "at": 1782241530000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782241620000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. England, Ghana, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782242100000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: England or Ghana?",
+      "options": [
+        {
+          "key": "home",
+          "label": "England"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Ghana"
+        }
+      ]
+    },
+    {
+      "at": 1782242106000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782242112000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782242118000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782242124000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782244820143,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588324:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1782244815143,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782244825143,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588324:17:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1782244815143,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782244830143,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588324:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1782244815143,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782247999838,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “England setback: Ghana hold Tuchel side 0-0; work still to do as Group L winners”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069570812991205628",
+        "url": "https://x.com/AJE_Sport/status/2069570812991205628",
+        "observedAt": "2026-06-23 23:58"
+      }
+    },
+    {
+      "at": 1782248034838,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: England 0-0 Ghana. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 501,
+        "sourceTs": 1782248029838,
+        "action": "halftime_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1782248039838,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782252582526,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: England 0-0 Ghana. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1020,
+        "sourceTs": 1782252577526,
+        "action": "game_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1782252587526,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782252597526,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 0-0. No scrollback archaeology required."
+    },
+    {
+      "at": 1782252607526,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “After Ghana draw vs England: “Powder Guy” video call to Stonebwoy”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069925589071401383",
+        "url": "https://x.com/richdudegh_/status/2069925589071401383",
+        "observedAt": "2026-06-24 23:28"
+      }
+    },
+    {
+      "at": 1782252612526,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588324-england-vs-ghana/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588324-england-vs-ghana/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588324-england-vs-ghana/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/IsaacAm02935720/status/2069208325216928025",
+      "https://x.com/i/status/2069208325216928025",
+      "https://x.com/adwoa__henewaa/status/2069208002595360936",
+      "https://x.com/i/status/2069208002595360936",
+      "https://x.com/Belindaseyram/status/2069206255944528074",
+      "https://x.com/i/status/2069206255944528074",
+      "https://x.com/Raficmaker/status/2069206124214006226",
+      "https://x.com/i/status/2069206124214006226",
+      "https://x.com/honest_bets/status/2069205100577333708",
+      "https://x.com/i/status/2069205100577333708",
+      "https://x.com/asutdegreat/status/2069200007283032285",
+      "https://x.com/i/status/2069200007283032285"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 0-0 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

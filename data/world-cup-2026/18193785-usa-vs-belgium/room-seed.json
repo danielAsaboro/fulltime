@@ -1,0 +1,399 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "18193785",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1783377900000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1783377900000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1783377960000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1783378020000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1783378080000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1783378800000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: ““GAME ON — USA take on Belgium R16” live now card”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2074282223268749575",
+        "url": "https://x.com/i/status/2074282223268749575",
+        "observedAt": "2026-07-06 23:59"
+      }
+    },
+    {
+      "at": 1783378860000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "USA may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1783379100000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “FIFA WC in Seattle; USA vs Belgium 5pm PNW”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2074282201479516336",
+        "url": "https://x.com/i/status/2074282201479516336",
+        "observedAt": "2026-07-06 23:59"
+      }
+    },
+    {
+      "at": 1783379130000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1783379220000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. USA, Belgium, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1783379700000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: USA or Belgium?",
+      "options": [
+        {
+          "key": "home",
+          "label": "USA"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Belgium"
+        }
+      ]
+    },
+    {
+      "at": 1783379706000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1783379712000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1783379718000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1783379724000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1783382438294,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:18193785:19:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 19,
+        "sourceTs": 1783382433294,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783382443294,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:18193785:19:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 19,
+        "sourceTs": 1783382433294,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783382448294,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:18193785:19:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 19,
+        "sourceTs": 1783382433294,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783383026599,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "10' GOAL — Belgium. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 127,
+        "sourceTs": 1783383021599,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1783383031599,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1783383036599,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "Inside ten minutes. The opening-goal yes receipts land immediately."
+    },
+    {
+      "at": 1783384338444,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "32' GOAL — USA. 1-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 316,
+        "sourceTs": 1783384333444,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Shot",
+        "score": "1-1"
+      }
+    },
+    {
+      "at": 1783384343444,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1783384464551,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "34' GOAL — Belgium. 1-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 335,
+        "sourceTs": 1783384459551,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Head",
+        "score": "1-2"
+      }
+    },
+    {
+      "at": 1783384469551,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1783385681384,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “QF set graphic after USA exit (Belgium through)”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2074629002501718271",
+        "url": "https://x.com/i/status/2074629002501718271",
+        "observedAt": "2026-07-07 22:57"
+      }
+    },
+    {
+      "at": 1783385716384,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: USA 1-2 Belgium. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 551,
+        "sourceTs": 1783385711384,
+        "action": "halftime_finalised",
+        "score": "1-2"
+      }
+    },
+    {
+      "at": 1783385721384,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1783387331976,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "goal-4",
+      "text": "82' GOAL — Belgium. 1-3. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 703,
+        "sourceTs": 1783387326976,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "1-3"
+      }
+    },
+    {
+      "at": 1783387336976,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "goal-4",
+      "emoji": "😮"
+    },
+    {
+      "at": 1783389475627,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-5",
+      "text": "118' GOAL — Belgium. 1-4. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1110,
+        "sourceTs": 1783389470627,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "1-4"
+      }
+    },
+    {
+      "at": 1783389480627,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-5",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1783389881876,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: USA 1-4 Belgium. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1123,
+        "sourceTs": 1783389876876,
+        "action": "game_finalised",
+        "score": "1-4"
+      }
+    },
+    {
+      "at": 1783389886876,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1783389896876,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 1-4. No scrollback archaeology required."
+    },
+    {
+      "at": 1783389906876,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Belgium top tier / USA second tier; win never in question for attentive fans”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2075005783708684747",
+        "url": "https://x.com/i/status/2075005783708684747",
+        "observedAt": "2026-07-08 23:55"
+      }
+    },
+    {
+      "at": 1783389911876,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/18193785-usa-vs-belgium/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/18193785-usa-vs-belgium/scores.historical.sse",
+    "provenance": "../resources/fixtures/world-cup-2026/18193785-usa-vs-belgium/scores.historical.sse.provenance.json",
+    "socialSources": [
+      "https://x.com/i/status/2074282223268749575",
+      "https://x.com/i/status/2074282201479516336",
+      "https://x.com/i/status/2074282192931364864",
+      "https://x.com/i/status/2074282147184005328",
+      "https://x.com/i/status/2074282103567470854",
+      "https://x.com/i/status/2074282086022721878",
+      "https://x.com/i/status/2074629002501718271",
+      "https://x.com/i/status/2074621054778003817",
+      "https://x.com/i/status/2074616590772162670",
+      "https://x.com/i/status/2074616280628277672",
+      "https://x.com/i/status/2074607995145896447",
+      "https://x.com/i/status/2074607966016196851"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 1-4 result. 8 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

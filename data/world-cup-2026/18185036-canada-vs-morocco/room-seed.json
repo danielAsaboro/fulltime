@@ -1,0 +1,353 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "18185036",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1783179900000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1783179900000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1783179960000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1783180020000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1783180080000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1783180800000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Young Morocco fan energy ahead of pre-match festivities in Houston”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2073192822342135898",
+        "url": "https://x.com/FOX26Houston/status/2073192822342135898",
+        "observedAt": "2026-07-03 23:51"
+      }
+    },
+    {
+      "at": 1783180860000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Canada may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1783181100000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Where to catch Canada vs Morocco in Ottawa Saturday”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2073187692813144196",
+        "url": "https://x.com/ctvottawa/status/2073187692813144196",
+        "observedAt": "2026-07-03 23:30"
+      }
+    },
+    {
+      "at": 1783181130000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1783181220000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Canada, Morocco, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1783181700000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Canada or Morocco?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Canada"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Morocco"
+        }
+      ]
+    },
+    {
+      "at": 1783181706000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1783181712000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1783181718000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1783181724000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1783184453479,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:18185036:14:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 14,
+        "sourceTs": 1783184448479,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783184458479,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:18185036:14:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 14,
+        "sourceTs": 1783184448479,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783184463479,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:18185036:14:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 14,
+        "sourceTs": 1783184448479,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1783187676649,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Canada’s WC over vs Morocco — “don’t call their tournament anything but a success””",
+      "source": {
+        "kind": "x-post",
+        "postId": "2073557287558672843",
+        "url": "https://x.com/joshuakloke/status/2073557287558672843",
+        "observedAt": "2026-07-04 23:59"
+      }
+    },
+    {
+      "at": 1783187711649,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Canada 0-0 Morocco. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 555,
+        "sourceTs": 1783187706649,
+        "action": "halftime_finalised",
+        "score": "0-0"
+      }
+    },
+    {
+      "at": 1783187716649,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1783188911020,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "75' GOAL — Morocco. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 619,
+        "sourceTs": 1783188906020,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1783188916020,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1783188921020,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1783190843115,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "107' GOAL — Morocco. 0-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 920,
+        "sourceTs": 1783190838115,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-2"
+      }
+    },
+    {
+      "at": 1783190848115,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1783191779592,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "123' GOAL — Morocco. 0-3. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1115,
+        "sourceTs": 1783191774592,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-3"
+      }
+    },
+    {
+      "at": 1783191784592,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1783192235603,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Canada 0-3 Morocco. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1121,
+        "sourceTs": 1783192230603,
+        "action": "game_finalised",
+        "score": "0-3"
+      }
+    },
+    {
+      "at": 1783192240603,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1783192250603,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 0-3. No scrollback archaeology required."
+    },
+    {
+      "at": 1783192260603,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Morocco 3-0 Canada to QF; “unbeaten in 34 matches — no longer a fairytale””",
+      "source": {
+        "kind": "x-post",
+        "postId": "2073916779986874860",
+        "url": "https://x.com/ForeSoko/status/2073916779986874860",
+        "observedAt": "2026-07-05 23:47"
+      }
+    },
+    {
+      "at": 1783192265603,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/18185036-canada-vs-morocco/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/18185036-canada-vs-morocco/scores.historical.sse",
+    "provenance": "../resources/fixtures/world-cup-2026/18185036-canada-vs-morocco/scores.historical.sse.provenance.json",
+    "socialSources": [
+      "https://x.com/FOX26Houston/status/2073192822342135898",
+      "https://x.com/i/status/2073192822342135898",
+      "https://x.com/ctvottawa/status/2073187692813144196",
+      "https://x.com/i/status/2073187692813144196",
+      "https://x.com/KashmirDigital1/status/2073190476950176100",
+      "https://x.com/i/status/2073190476950176100",
+      "https://x.com/ghostface_LFC/status/2073186624108638288",
+      "https://x.com/i/status/2073186624108638288",
+      "https://x.com/Bopel2Official/status/2073188729884410137",
+      "https://x.com/i/status/2073188729884410137",
+      "https://x.com/joshuakloke/status/2073557287558672843",
+      "https://x.com/i/status/2073557287558672843"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 0-3 result. 8 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

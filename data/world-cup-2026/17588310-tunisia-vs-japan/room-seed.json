@@ -1,0 +1,376 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588310",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1782009900000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1782009900000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1782009960000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1782010020000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1782010080000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1782010800000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “Tunisia & Japan updated FIFA rankings for match”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068483925198983259",
+        "url": "https://x.com/i/status/2068483925198983259",
+        "observedAt": "2026-06-20 23:59"
+      }
+    },
+    {
+      "at": 1782010860000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "Tunisia may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1782011100000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Pred: Tunisia 0-2 Japan”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068482729016995884",
+        "url": "https://x.com/i/status/2068482729016995884",
+        "observedAt": "2026-06-20 23:54"
+      }
+    },
+    {
+      "at": 1782011130000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782011220000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. Tunisia, Japan, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1782011700000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: Tunisia or Japan?",
+      "options": [
+        {
+          "key": "home",
+          "label": "Tunisia"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Japan"
+        }
+      ]
+    },
+    {
+      "at": 1782011706000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1782011712000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782011718000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1782011724000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1782014413080,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588310:15:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1782014408080,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782014418080,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588310:15:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1782014408080,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782014423080,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588310:15:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 15,
+        "sourceTs": 1782014408080,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1782014718052,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "6' GOAL — Japan. 0-1. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 65,
+        "sourceTs": 1782014713052,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-1"
+      }
+    },
+    {
+      "at": 1782014723052,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782014728052,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "Inside ten minutes. The opening-goal yes receipts land immediately."
+    },
+    {
+      "at": 1782016309991,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "32' GOAL — Japan. 0-2. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 337,
+        "sourceTs": 1782016304991,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-2"
+      }
+    },
+    {
+      "at": 1782016314991,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782017582740,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “Results pack: Tunisia 0-4 Japan”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068842983785480358",
+        "url": "https://x.com/i/status/2068842983785480358",
+        "observedAt": "2026-06-21 23:46"
+      }
+    },
+    {
+      "at": 1782017617740,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: Tunisia 0-2 Japan. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 528,
+        "sourceTs": 1782017612740,
+        "action": "halftime_finalised",
+        "score": "0-2"
+      }
+    },
+    {
+      "at": 1782017622740,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1782019767001,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "goal-3",
+      "text": "90' GOAL — Japan. 0-3. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 790,
+        "sourceTs": 1782019762001,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Shot",
+        "score": "0-3"
+      }
+    },
+    {
+      "at": 1782019772001,
+      "actor": "fan_d",
+      "type": "reaction",
+      "item": "goal-3",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1782020669605,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "goal-4",
+      "text": "105' GOAL — Japan. 0-4. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 903,
+        "sourceTs": 1782020664605,
+        "action": "goal",
+        "participant": 2,
+        "goalType": "Head",
+        "score": "0-4"
+      }
+    },
+    {
+      "at": 1782020674605,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "goal-4",
+      "emoji": "😮"
+    },
+    {
+      "at": 1782021508755,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: Tunisia 0-4 Japan. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1030,
+        "sourceTs": 1782021503755,
+        "action": "game_finalised",
+        "score": "0-4"
+      }
+    },
+    {
+      "at": 1782021513755,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1782021523755,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 0-4. No scrollback archaeology required."
+    },
+    {
+      "at": 1782021533755,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Japan dark horse: 2-2 NED then 4-0 Tunisia demolition”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2069198974397874609",
+        "url": "https://x.com/i/status/2069198974397874609",
+        "observedAt": "2026-06-22 23:20"
+      }
+    },
+    {
+      "at": 1782021538755,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588310-tunisia-vs-japan/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588310-tunisia-vs-japan/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588310-tunisia-vs-japan/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/i/status/2068483925198983259",
+      "https://x.com/i/status/2068482729016995884",
+      "https://x.com/i/status/2068482013368062042",
+      "https://x.com/i/status/2068481380661801025",
+      "https://x.com/i/status/2068480761221742811",
+      "https://x.com/i/status/2068479352887451777",
+      "https://x.com/i/status/2068842983785480358",
+      "https://x.com/i/status/2068830153845727318",
+      "https://x.com/i/status/2068819490364686582",
+      "https://x.com/i/status/2068829544262586440",
+      "https://x.com/i/status/2068828661982097796",
+      "https://x.com/i/status/2069198974397874609"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 0-4 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}

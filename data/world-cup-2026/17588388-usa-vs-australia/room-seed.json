@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588388",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781891100000
+  },
+  "personas": [
+    {
+      "id": "fan_a",
+      "displayName": "Amina",
+      "creator": true,
+      "joinedAt": 1781891100000
+    },
+    {
+      "id": "fan_b",
+      "displayName": "Tunde",
+      "joinedAt": 1781891160000
+    },
+    {
+      "id": "fan_c",
+      "displayName": "Maya",
+      "joinedAt": 1781891220000
+    },
+    {
+      "id": "fan_d",
+      "displayName": "Jo",
+      "joinedAt": 1781891280000
+    }
+  ],
+  "actions": [
+    {
+      "at": 1781892000000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-first-take",
+      "text": "This is the pre-match take doing the rounds: “USA back Friday vs Australia a week after stellar opener”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067758092566098425",
+        "url": "https://x.com/i/status/2067758092566098425",
+        "observedAt": "2026-06-18 23:55"
+      }
+    },
+    {
+      "at": 1781892060000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-first-take",
+      "text": "USA may have the names. I still want the match to prove it before we call this routine."
+    },
+    {
+      "at": 1781892300000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-counter-take",
+      "text": "Counterpoint from the timeline: “Slate: USA vs Australia Lumen Field Seattle 3 PM ET”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2067755783291347399",
+        "url": "https://x.com/i/status/2067755783291347399",
+        "observedAt": "2026-06-18 23:46"
+      }
+    },
+    {
+      "at": 1781892330000,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-counter-take",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781892420000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-locked-take",
+      "item": "maya-counter-take",
+      "text": "I am saving this one. USA, Australia, or a draw: nobody edits the story after full-time."
+    },
+    {
+      "at": 1781892900000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "match-result-poll",
+      "question": "Who takes it: USA or Australia?",
+      "options": [
+        {
+          "key": "home",
+          "label": "USA"
+        },
+        {
+          "key": "draw",
+          "label": "Draw"
+        },
+        {
+          "key": "away",
+          "label": "Australia"
+        }
+      ]
+    },
+    {
+      "at": 1781892906000,
+      "actor": "fan_a",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781892912000,
+      "actor": "fan_b",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "away"
+    },
+    {
+      "at": 1781892918000,
+      "actor": "fan_c",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "home"
+    },
+    {
+      "at": 1781892924000,
+      "actor": "fan_d",
+      "type": "vote",
+      "poll": "match-result-poll",
+      "option": "draw"
+    },
+    {
+      "at": 1781895637109,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-opening-goal-yes",
+      "callId": "call:17588388:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1781895632109,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781895642109,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-opening-goal-no",
+      "callId": "call:17588388:17:phase:kickoff:opening-goal",
+      "option": "no",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1781895632109,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781895647109,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-opening-goal-yes",
+      "callId": "call:17588388:17:phase:kickoff:opening-goal",
+      "option": "yes",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 17,
+        "sourceTs": 1781895632109,
+        "action": "kickoff"
+      }
+    },
+    {
+      "at": 1781896324512,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "goal-1",
+      "text": "12' GOAL — USA. 1-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 143,
+        "sourceTs": 1781896319512,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Own",
+        "score": "1-0"
+      }
+    },
+    {
+      "at": 1781896329512,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "goal-1",
+      "emoji": "🔥"
+    },
+    {
+      "at": 1781896334512,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "goal-1",
+      "text": "The first ten stayed quiet. Opening-goal no gets the receipt; now the match finally opens."
+    },
+    {
+      "at": 1781898342909,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "goal-2",
+      "text": "46' GOAL — USA. 2-0. The room just changed sides in real time.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 414,
+        "sourceTs": 1781898337909,
+        "action": "goal",
+        "participant": 1,
+        "goalType": "Head",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1781898347909,
+      "actor": "fan_c",
+      "type": "reaction",
+      "item": "goal-2",
+      "emoji": "😮"
+    },
+    {
+      "at": 1781898808039,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "timeline-live-reaction",
+      "text": "The live timeline is saying: “USA 2-0 Australia final score ESPN link”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068121481242890667",
+        "url": "https://x.com/i/status/2068121481242890667",
+        "observedAt": "2026-06-19 23:59"
+      }
+    },
+    {
+      "at": 1781898843039,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "half-time-score",
+      "text": "Half-time: USA 2-0 Australia. The predictions are still sitting above us, untouched.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 492,
+        "sourceTs": 1781898838039,
+        "action": "halftime_finalised",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1781898848039,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "halftime-receipt-check",
+      "item": "jo-locked-take",
+      "text": "Half-time receipt check. Confidence levels have moved; the words have not."
+    },
+    {
+      "at": 1781903347516,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "full-time-result",
+      "text": "FULL TIME: USA 2-0 Australia. The score is final; the room receipts are not going anywhere.",
+      "source": {
+        "kind": "archive-event",
+        "sequence": 1033,
+        "sourceTs": 1781903342516,
+        "action": "game_finalised",
+        "score": "2-0"
+      }
+    },
+    {
+      "at": 1781903352516,
+      "actor": "fan_b",
+      "type": "reaction",
+      "item": "full-time-result",
+      "emoji": "👏"
+    },
+    {
+      "at": 1781903362516,
+      "actor": "fan_c",
+      "type": "quote",
+      "key": "maya-final-receipt",
+      "item": "maya-counter-take",
+      "text": "That was the take before kickoff. Final answer: 2-0. No scrollback archaeology required."
+    },
+    {
+      "at": 1781903372516,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "full-time-result",
+      "text": "Post-match timeline: “Ref not the reason Australia lost; USA better, should have won by more”",
+      "source": {
+        "kind": "x-post",
+        "postId": "2068483923659960411",
+        "url": "https://x.com/i/status/2068483923659960411",
+        "observedAt": "2026-06-20 23:59"
+      }
+    },
+    {
+      "at": 1781903377516,
+      "actor": "fan_a",
+      "type": "reaction",
+      "item": "maya-final-receipt",
+      "emoji": "👏"
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588388-usa-vs-australia/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588388-usa-vs-australia/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588388-usa-vs-australia/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/i/status/2067758092566098425",
+      "https://x.com/i/status/2067755783291347399",
+      "https://x.com/i/status/2067755740430004684",
+      "https://x.com/i/status/2067755333263450260",
+      "https://x.com/i/status/2067755337843659199",
+      "https://x.com/i/status/2068121481242890667",
+      "https://x.com/i/status/2068120672610791519",
+      "https://x.com/i/status/2068120579799195786",
+      "https://x.com/i/status/2068119932840059335",
+      "https://x.com/i/status/2068119318240641157",
+      "https://x.com/i/status/2068121048244277570",
+      "https://x.com/i/status/2068483923659960411"
+    ],
+    "sourcePolicy": "Authenticated TxLINE bytes are authoritative for fixture identity, kickoff, match events, phase state, and the terminal 2-0 result. 9 provenance sidecars matched their source bytes. Public X research supplies concise pre-match, live, and post-match language; the four room personas are fictional restagings and do not impersonate source authors. The opening-goal answers use the canonical call created by the production replay consumer at kickoff, so its settled receipt records genuine right and wrong calls."
+  }
+}
