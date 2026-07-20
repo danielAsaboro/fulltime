@@ -102,6 +102,11 @@ function sleep(milliseconds) {
   Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, milliseconds);
 }
 
+function keyboardVisible() {
+  const state = adb("shell", "dumpsys", "input_method");
+  return /\bmInputShown=true\b/.test(state) || /\bmInputViewShown=true\b/.test(state);
+}
+
 function waitFor(value, timeoutMs, failureNeedles = []) {
   const deadline = Date.now() + timeoutMs;
   let last = "";
@@ -235,6 +240,30 @@ function inputInvite(invite) {
   }
 }
 
+function startJoin(fixture) {
+  for (let attempt = 0; attempt < 4; attempt++) {
+    let hierarchy = xml();
+    let current = nodes(hierarchy);
+    if ([fixture.participant1, fixture.participant2].every((value) => current.some((node) => matches(node, value)))) return;
+    const join = current.find((node) => node.clickable && visible(node) && matches(node, "Join with pasted invite"));
+    if (!join?.bounds) {
+      tapAfterScrolling("Join with pasted invite");
+    } else {
+      const [left, top, right, bottom] = join.bounds;
+      adb("shell", "input", "tap", String(Math.round((left + right) / 2)), String(Math.round((top + bottom) / 2)));
+    }
+    const deadline = Date.now() + 5_000;
+    while (Date.now() < deadline) {
+      hierarchy = xml();
+      current = nodes(hierarchy);
+      if (current.some((node) => matches(node, "Joining")) ||
+        [fixture.participant1, fixture.participant2].every((value) => current.some((node) => matches(node, value)))) return;
+      sleep(500);
+    }
+  }
+  throw new Error("Android join button did not enter the joining state");
+}
+
 for (const fixtureId of requestedFixtureIds) {
   const room = byFixture.get(String(fixtureId));
   if (!room || typeof room.inviteCode !== "string" || typeof room.roomId !== "string") {
@@ -246,8 +275,11 @@ for (const fixtureId of requestedFixtureIds) {
   tapNode("HAVE AN INVITE?");
   waitForInviteInput(15_000);
   inputInvite(room.inviteCode);
-  adb("shell", "input", "keyevent", "4");
-  tapAfterScrolling("Join with pasted invite");
+  if (keyboardVisible()) {
+    adb("shell", "input", "keyevent", "4");
+    sleep(500);
+  }
+  startJoin(fixture);
   waitForAll([fixture.participant1, fixture.participant2], 180_000, ["invite has expired", "could not join", "join failed", "has not synchronized"]);
   process.stdout.write(`Joined and opened fixture ${fixtureId} as ${room.roomId}\n`);
   ensureHome();

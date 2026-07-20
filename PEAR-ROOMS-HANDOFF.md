@@ -741,8 +741,8 @@ Final verification after these changes:
   publisher, answer attestor, Blind Pairing admission, and encrypted Autobase room operations. The
   personas are disclosed fictional room participants; fixture state, event time, calls, settlements,
   and receipts are restricted to what the signed capture proves.
-- Fourteen rooms are complete and persisted: the first three tournament fixtures, USA–Paraguay,
-  Qatar–Switzerland, Brazil–Morocco, Haiti–Scotland, all four quarter-finals, France–Spain's semi-final, France–England's third-place match, and
+- Fifteen rooms are complete and persisted: the first three tournament fixtures, USA–Paraguay,
+  Qatar–Switzerland, Brazil–Morocco, Haiti–Scotland, Australia–Turkey, all four quarter-finals, France–Spain's semi-final, France–England's third-place match, and
   Spain–Argentina's final. The
   chronological corpus is `data/world-cup-2026/showcase-corpus.json`. The final archive was fetched at
   `2026-07-20T01:05:26.622Z`; its authenticated raw SSE contains 1,387 source records and terminal
@@ -786,17 +786,23 @@ Final verification after these changes:
   second-half pressure, a socially sourced penalty grievance kept separate from fixture truth, and
   right/wrong receipts. The real signed fixture, Blind Pairing, encrypted Autobase, and attestor
   integration passed in 84.1 seconds.
+- Australia–Turkey fixture `17926689` is backed by 1,054 provenance-valid historical records, two
+  confirmed Australia goals, and terminal `game_finalised` sequence 1054 proving Australia 2–0
+  Turkey. The room contains 39 chronological actions and twelve attested answers across four settled
+  calls, with pre-match Turkey hype/overs positions contrasted against an exact 2–0 Australia call,
+  VAR and half-time beats, the second goal, and preserved right/wrong receipts. The real signed
+  fixture, Blind Pairing, encrypted Autobase, and attestor integration passed in 56.7 seconds.
 - The persistent provisioner ledger is
   `apps/desktop/.local-development/historical-showcase/rooms.json`; it contains protected invite
   material and must not be printed or committed. The provisioner's console summary now deliberately
-  omits invite codes while the mode-0600 ledger retains them for device admission. All fourteen rooms
+  omits invite codes while the mode-0600 ledger retains them for device admission. All fifteen rooms
   were verified in the running desktop
   projection with `scripts/desktop-cdp.mjs`, then joined sequentially and verified on the physical
   Infinix X683 with `scripts/android-join-showcase.mjs` and
-  `scripts/android-verify-showcase.mjs`. Android reported all fourteen expected fixture IDs from its own
+  `scripts/android-verify-showcase.mjs`. Android reported all fifteen expected fixture IDs from its own
   persisted room list. Nine signed physical-iPhone XCTest joins also passed individually, with result
   bundles under `evidence/physical-e2e/ios-showcase-*.xcresult`; all three Apple mobile devices were
-  offline on 2026-07-20 when the eleventh through fourteenth rooms were ready, so no new iOS success is claimed.
+  offline on 2026-07-20 when the eleventh through fifteenth rooms were ready, so no new iOS success is claimed.
 - Cross-runtime proof replay now derives the expected Hypercore key from the serialized manifest and
   compares canonical hex values; it never relies on Node/Bare Buffer identity. Mobile startup also
   prefers a newer verified bundled manifest over an older verified device cache, preventing a stale
@@ -833,7 +839,11 @@ Final verification after these changes:
   admitted through the same path; Android verified all fourteen room IDs and cold-started those stores
   in 36 seconds. The admission driver now retries the in-app back control during room refreshes and
   safely dismisses only the carrier `com.android.stk` promotion with `CANCEL` plus system Back, never
-  selecting an offer or using Android Back for FullTime's internal navigation.
+  selecting an offer or using Android Back for FullTime's internal navigation. It now also reads
+  Android's input-method visibility before sending Back, so an already-hidden keyboard cannot
+  background FullTime, and requires observable `Joining` or target-fixture state before starting its
+  pairing timeout. Australia–Turkey admitted through that corrected path; all fifteen IDs verified and
+  a cold start reopened them in 35 seconds.
 - Verification during this handoff passed all 19 mobile tests, mobile typecheck, desktop syntax checks,
   14 focused fixture-proof/room-operation/projection tests, six authenticated archive/reducer tests,
   and the real four-room historical integration
@@ -844,6 +854,6 @@ Final verification after these changes:
   `npm run typecheck`, repository-wide `npm run lint`, and the full Next.js production build
   (rerun outside the sandbox because Turbopack requires a local worker port). The final room separately
   passed the real fixture/pairing/Autobase/attestor integration in 66 seconds. The physical iPhone
-  remained offline before it could join the final, USA–Paraguay, Qatar–Switzerland, Brazil–Morocco, or Haiti–Scotland; this does not
-  invalidate the nine retained per-room XCTest result bundles, but a fourteen-room accumulated assertion should be run
+  remained offline before it could join the final, USA–Paraguay, Qatar–Switzerland, Brazil–Morocco, Haiti–Scotland, or Australia–Turkey; this does not
+  invalidate the nine retained per-room XCTest result bundles, but a fifteen-room accumulated assertion should be run
   after reconnecting it with `scripts/ios-verify-showcase.mjs`.
