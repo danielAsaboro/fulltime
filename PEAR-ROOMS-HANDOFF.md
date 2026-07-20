@@ -843,6 +843,9 @@ Final verification after these changes:
   omits invite codes. During sequential provisioning, operator-created managers skip reopening old
   room handles and suspend each newly completed handle after its durable state has replicated; account
   records and encrypted Autobases remain intact and are reopened normally by the public/device runtime.
+  If a room's last sourced conversation action precedes the final archive row, the operator publishes
+  the remaining authenticated records through the production replay and waits for terminal fixture
+  replication before recording the room; it does not invent a post-match action to advance the feed.
   The mode-0600 ledger retains invite codes for device admission. All seventeen rooms
   were verified in the running desktop
   projection with `scripts/desktop-cdp.mjs`, then joined sequentially and verified on the physical

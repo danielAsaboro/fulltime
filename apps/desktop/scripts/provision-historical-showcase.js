@@ -85,6 +85,14 @@ async function main () {
               await replay.advanceThrough(seedNetwork.publisher, action.at)
             }
           })
+          if (!replay.complete) {
+            await replay.finish(seedNetwork.publisher)
+            await seedNetwork.publisher.flush()
+            await waitFor(async () => {
+              const states = await Promise.all(seedNetwork.managers.map((manager) => manager.dispatch('fixture.get', { fixtureId: fixture.fixtureId })))
+              return states.every((value) => value?.fixture?.status === replay.state.status)
+            }, `terminal fixture replication for ${fixture.fixtureId}`, 90_000)
+          }
           if (!replay.complete) throw new Error(`Historical replay ${fixture.fixtureId} did not reach its terminal archive record`)
           persisted.rooms[fixture.fixtureId] = {
             seedSha256: fixture.seedSha256,
