@@ -8,6 +8,11 @@ import type { SignedNetworkManifest } from "./network-manifest";
 const PROTOCOL_VERSION = 2;
 const MAX_REQUESTS = 128;
 const REQUEST_TIMEOUT_MS = 60_000;
+// A cold start reopens every real persisted Autobase room before declaring the
+// bridge ready. Large showcase histories can legitimately exceed a minute even
+// with bounded concurrent room opens, especially while the signed fixture feed
+// catches up on a physical device.
+const WORKER_STARTUP_TIMEOUT_MS = 300_000;
 // Joining can legitimately consume the fixture plane's 60-second verified
 // snapshot sync, BlindPairing's 45-second admission window, and the room's
 // 45-second durable membership-open window. Keep the bridge outside those
@@ -92,7 +97,7 @@ export class MobilePeerController {
     }), "utf8"));
     options.deviceSecret.fill(0);
 
-    const timer = setTimeout(() => this.rejectReady?.(new MobilePeerError("WORKER_STARTUP_TIMEOUT", "The mobile peer worker did not become ready", false)), 60_000);
+    const timer = setTimeout(() => this.rejectReady?.(new MobilePeerError("WORKER_STARTUP_TIMEOUT", "The mobile peer worker did not become ready", false)), WORKER_STARTUP_TIMEOUT_MS);
     try {
       await this.readyPromise;
     } finally {

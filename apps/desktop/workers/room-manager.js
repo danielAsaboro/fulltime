@@ -21,6 +21,8 @@ const { PresenceNetwork } = require('./presence-network.js')
 const { phaseOf, valueAt } = require('./room-view.js')
 const { codedError, projectRoomIntelligence, verifyReference } = require('./room-intelligence.js')
 const { Room } = require('./room.js')
+
+const PERSISTED_ROOM_OPEN_CONCURRENCY = 4
 const { operationId } = require('../lib/room-operations.js')
 
 const ROOM_ID_PREFIX = 'room_'
@@ -131,13 +133,13 @@ class RoomManager extends EventEmitter {
     }
 
     const records = await this.account.listRooms()
-    for (const record of records) {
+    await forEachConcurrent(records, PERSISTED_ROOM_OPEN_CONCURRENCY, async (record) => {
       try {
         await this._openRecord(record)
       } catch (error) {
         this._emitRoomError(record.roomId, error, true)
       }
-    }
+    })
     this._emit({
       type: 'bridge.ready',
       mode: 'pear-p2p-rooms',
@@ -838,6 +840,17 @@ class RoomManager extends EventEmitter {
       }
     }
   }
+}
+
+async function forEachConcurrent (values, concurrency, operation) {
+  let cursor = 0
+  const workers = Array.from({ length: Math.min(concurrency, values.length) }, async () => {
+    while (cursor < values.length) {
+      const index = cursor++
+      await operation(values[index])
+    }
+  })
+  await Promise.all(workers)
 }
 
 function requiredObject (value, key) {

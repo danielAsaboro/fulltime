@@ -24,6 +24,11 @@
       "archive": "../resources/fixtures/world-cup-2026/17588396-usa-vs-paraguay"
     },
     {
+      "fixtureId": "17588308",
+      "seed": "data/world-cup-2026/17588308-qatar-vs-switzerland/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588308-qatar-vs-switzerland"
+    },
+    {
       "fixtureId": "18209181",
       "seed": "data/world-cup-2026/18209181-france-vs-morocco/room-seed.json",
       "archive": "../resources/fixtures/world-cup-2026/18209181-france-vs-morocco"

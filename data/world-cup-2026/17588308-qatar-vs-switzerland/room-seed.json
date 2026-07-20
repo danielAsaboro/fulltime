@@ -1,0 +1,221 @@
+{
+  "schemaVersion": 1,
+  "kind": "fulltime.showcase.roomSeed",
+  "fixtureId": "17588308",
+  "room": {
+    "name": "World Cup sofa",
+    "createdAt": 1781373600000
+  },
+  "personas": [
+    { "id": "fan_a", "displayName": "Amina", "joinedAt": 1781373600000, "creator": true },
+    { "id": "fan_b", "displayName": "Tunde", "joinedAt": 1781373660000 },
+    { "id": "fan_c", "displayName": "Maya", "joinedAt": 1781373720000 },
+    { "id": "fan_d", "displayName": "Jo", "joinedAt": 1781373780000 }
+  ],
+  "actions": [
+    {
+      "at": 1781374200000,
+      "actor": "fan_a",
+      "type": "message",
+      "key": "amina-swiss-two-nil",
+      "text": "Switzerland are too organised for this to become dramatic. Qatar 0-2 Switzerland, clean sheet, job done.",
+      "source": { "kind": "x-post", "postId": "2065579227773374705", "url": "https://x.com/tewi91/status/2065579227773374705" }
+    },
+    {
+      "at": 1781374260000,
+      "actor": "fan_b",
+      "type": "reply",
+      "item": "amina-swiss-two-nil",
+      "text": "Two is polite. I have 0-3—Switzerland score early and spend the night passing around them.",
+      "source": { "kind": "x-post", "postId": "2065575816558166490", "url": "https://x.com/29_xhelo/status/2065575816558166490" }
+    },
+    {
+      "at": 1781374320000,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "maya-swiss-control",
+      "text": "Same winner, less noise: Switzerland 1-0. Qatar will sit deep enough to keep the score respectable."
+    },
+    {
+      "at": 1781374380000,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "jo-swiss-two-one",
+      "item": "amina-swiss-two-nil",
+      "text": "Switzerland win, but I do not trust the clean sheet. Qatar 1-2—and that is still the most generous Qatar take here."
+    },
+    { "at": 1781374410000, "actor": "fan_b", "type": "reaction", "item": "jo-swiss-two-one", "emoji": "😮" },
+    {
+      "at": 1781374500000,
+      "actor": "fan_a",
+      "type": "poll",
+      "key": "qatar-take-point",
+      "question": "Can Qatar take a point from Switzerland?",
+      "options": [
+        { "key": "yes-point", "label": "Yes" },
+        { "key": "no-point", "label": "No — Swiss win" }
+      ]
+    },
+    { "at": 1781374505000, "actor": "fan_a", "type": "vote", "poll": "qatar-take-point", "option": "no-point" },
+    { "at": 1781374510000, "actor": "fan_b", "type": "vote", "poll": "qatar-take-point", "option": "no-point" },
+    { "at": 1781374515000, "actor": "fan_c", "type": "vote", "poll": "qatar-take-point", "option": "no-point" },
+    { "at": 1781374520000, "actor": "fan_d", "type": "vote", "poll": "qatar-take-point", "option": "no-point" },
+    {
+      "at": 1781378494984,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "switzerland-penalty",
+      "text": "16' Switzerland score the penalty: Qatar 0-1 Switzerland. Every pre-match read is comfortable already.",
+      "source": { "kind": "archive-event", "sequence": 173, "sourceTs": 1781378489984, "action": "penalty-scored", "participant": 2, "clockSeconds": 1008, "score": "0-1" }
+    },
+    { "at": 1781378499984, "actor": "fan_a", "type": "reaction", "item": "switzerland-penalty", "emoji": "⚽" },
+    {
+      "at": 1781378504984,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "amina-clean-sheet-alive",
+      "item": "amina-swiss-two-nil",
+      "text": "One down. The 0-2 card is exactly where it should be; Qatar have offered nothing."
+    },
+    {
+      "at": 1781380573300,
+      "actor": "fan_d",
+      "type": "message",
+      "key": "halftime-zero-one",
+      "text": "Half-time: Qatar 0-1 Switzerland. The favourite leads, but one goal still turns every confident card into an argument.",
+      "source": { "kind": "archive-event", "sequence": 483, "sourceTs": 1781380568300, "action": "half-time", "score": "0-1" }
+    },
+    {
+      "at": 1781380578300,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-fast-start-no",
+      "callId": "call:17588308:483:phase:half-time:second-half-fast-start",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 483, "sourceTs": 1781380568300, "action": "half-time" }
+    },
+    {
+      "at": 1781380583300,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-fast-start-yes",
+      "callId": "call:17588308:483:phase:half-time:second-half-fast-start",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 483, "sourceTs": 1781380568300, "action": "half-time" }
+    },
+    {
+      "at": 1781380588300,
+      "actor": "fan_d",
+      "type": "call",
+      "key": "jo-fast-start-no",
+      "callId": "call:17588308:483:phase:half-time:second-half-fast-start",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 483, "sourceTs": 1781380568300, "action": "half-time" }
+    },
+    {
+      "at": 1781381173300,
+      "actor": "fan_a",
+      "type": "reply",
+      "item": "halftime-zero-one",
+      "text": "Ten second-half minutes, no goal. The locked no wins; Tunde's fast-start call is gone."
+    },
+    { "at": 1781381178300, "actor": "fan_d", "type": "reaction", "item": "halftime-zero-one", "emoji": "👏" },
+    {
+      "at": 1781384200000,
+      "actor": "fan_b",
+      "type": "message",
+      "key": "swiss-nearly-home",
+      "text": "Still 0-1 this deep. Switzerland never needed the second; all four winner calls are walking home."
+    },
+    {
+      "at": 1781384547624,
+      "actor": "fan_d",
+      "type": "quote",
+      "key": "qatar-equaliser",
+      "item": "jo-swiss-two-one",
+      "text": "93:59 QATAR 1-1. I warned about the clean sheet and still picked Switzerland. Every one of us has just lost the winner call.",
+      "source": { "kind": "archive-event", "sequence": 959, "confirmedSequence": 960, "sourceTs": 1781384542624, "action": "goal", "participant": 1, "clockSeconds": 5639, "goalType": "Head", "score": "1-1" }
+    },
+    { "at": 1781384552624, "actor": "fan_a", "type": "reaction", "item": "qatar-equaliser", "emoji": "😮" },
+    {
+      "at": 1781384557624,
+      "actor": "fan_c",
+      "type": "reply",
+      "item": "qatar-equaliser",
+      "text": "One action erased 0-1, 0-2, 0-3 and the poll. Nobody gets to say they saw this coming."
+    },
+    {
+      "at": 1781384562615,
+      "actor": "fan_a",
+      "type": "call",
+      "key": "amina-another-goal-no",
+      "callId": "call:17588308:959:goal:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 959, "confirmedSequence": 960, "sourceTs": 1781384561615, "action": "goal-confirmed", "score": "1-1" }
+    },
+    {
+      "at": 1781384566615,
+      "actor": "fan_b",
+      "type": "call",
+      "key": "tunde-another-goal-yes",
+      "callId": "call:17588308:959:goal:another-goal",
+      "option": "yes",
+      "source": { "kind": "archive-event", "sequence": 959, "confirmedSequence": 960, "sourceTs": 1781384561615, "action": "goal-confirmed", "score": "1-1" }
+    },
+    {
+      "at": 1781384570615,
+      "actor": "fan_c",
+      "type": "call",
+      "key": "maya-another-goal-no",
+      "callId": "call:17588308:959:goal:another-goal",
+      "option": "no",
+      "source": { "kind": "archive-event", "sequence": 959, "confirmedSequence": 960, "sourceTs": 1781384561615, "action": "goal-confirmed", "score": "1-1" }
+    },
+    {
+      "at": 1781384745570,
+      "actor": "fan_c",
+      "type": "message",
+      "key": "fulltime-one-one",
+      "text": "Finalised: Qatar 1-1 Switzerland. The late equaliser survives, and no further goal settles the last call.",
+      "source": { "kind": "archive-event", "sequence": 983, "sourceTs": 1781384740570, "action": "game_finalised", "score": "1-1" }
+    },
+    {
+      "at": 1781384750570,
+      "actor": "fan_a",
+      "type": "quote",
+      "key": "amina-wrong-receipt",
+      "item": "amina-swiss-two-nil",
+      "text": "I called a comfortable 0-2 and a clean sheet. Wrong result, wrong score, wrong certainty—the timestamp keeps all three."
+    },
+    {
+      "at": 1781384755570,
+      "actor": "fan_b",
+      "type": "quote",
+      "key": "tunde-wrong-receipt",
+      "item": "swiss-nearly-home",
+      "text": "I declared every Swiss call safe before 94 minutes. That may be the fastest a whole room has been cooked."
+    },
+    { "at": 1781384760570, "actor": "fan_d", "type": "reaction", "item": "tunde-wrong-receipt", "emoji": "🔥" },
+    {
+      "at": 1781384765570,
+      "actor": "fan_d",
+      "type": "reply",
+      "item": "amina-wrong-receipt",
+      "text": "Be honest: who had the draw? Nobody. That is why preserving the wrong calls is half the fun.",
+      "source": { "kind": "x-post", "postId": "2065946136192405605", "url": "https://x.com/OddScore_app/status/2065946136192405605" }
+    }
+  ],
+  "evidence": {
+    "fixture": "../resources/fixtures/world-cup-2026/17588308-qatar-vs-switzerland/fixture.json",
+    "archive": "../resources/fixtures/world-cup-2026/17588308-qatar-vs-switzerland/scores.historical-intervals.json",
+    "provenance": "../resources/fixtures/world-cup-2026/17588308-qatar-vs-switzerland/scores.historical-intervals.json.provenance.json",
+    "socialSources": [
+      "https://x.com/tewi91/status/2065579227773374705",
+      "https://x.com/29_xhelo/status/2065575816558166490",
+      "https://x.com/kirabolinks/status/2065945826749288763",
+      "https://x.com/OddScore_app/status/2065946136192405605",
+      "https://x.com/Dhavidtips/status/2065943013306614041"
+    ],
+    "sourcePolicy": "The authenticated TxLINE archive is authoritative for fixture identity, kickoff, Switzerland's penalty score state, half-time, Qatar's confirmed 93:59 headed equaliser, and the 1-1 terminal result. Pre-match takes are concise fictional-room restagings informed by the cited public X posts; personas do not impersonate source authors. No player attribution is asserted from the archive. Only canonical calls with settled outcomes are answered; kickoff calls voided by preserved feed gaps are intentionally omitted."
+  }
+}
