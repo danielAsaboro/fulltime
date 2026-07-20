@@ -149,6 +149,7 @@ function networkConfig(): MobileNetworkConfig {
 
 function usePeer(epoch: number) {
   const controller = useRef<MobilePeerController | null>(null);
+  const revisionTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [stage, setStage] = useState<"starting" | "ready" | "error">("starting");
   const [error, setError] = useState<string | null>(null);
   const [resolution, setResolution] = useState<NetworkResolution | null>(null);
@@ -162,7 +163,15 @@ function usePeer(epoch: number) {
     const unsubscribe = peer.subscribe((event: PeerEvent) => {
       if (!active) return;
       if (event.type === "transport.status") setTransport(event);
-      if (["fixture.updated", "room.state", "room.details"].includes(event.type)) setRevision((value) => value + 1);
+      if (["fixture.updated", "room.state", "room.details"].includes(event.type) && revisionTimer.current === null) {
+        // Opening or catching up a durable room can emit a large burst of
+        // projections. The screens need one fresh read after that burst, not
+        // one overlapping IPC request set per Autobase update.
+        revisionTimer.current = setTimeout(() => {
+          revisionTimer.current = null;
+          if (active) setRevision((value) => value + 1);
+        }, 250);
+      }
       if (event.type === "room.error" && event.recoverable === false) setError(String(event.message));
     });
 
@@ -194,6 +203,8 @@ function usePeer(epoch: number) {
 
     return () => {
       active = false;
+      if (revisionTimer.current !== null) clearTimeout(revisionTimer.current);
+      revisionTimer.current = null;
       unsubscribe();
       void peer.close();
       controller.current = null;
@@ -276,17 +287,25 @@ function Home({ peer, session, onSession, onSettings, onOpenRoom }: { peer: Retu
   const [scannerOpen, setScannerOpen] = useState(false);
   const [roomName, setRoomName] = useState("");
   const [selectedFixture, setSelectedFixture] = useState<string | null>(null);
+  const loadInFlight = useRef<Promise<void> | null>(null);
 
-  const load = useCallback(async () => {
-    setError(null);
-    const [fixtureResult, roomResult] = await Promise.allSettled([
-      peer.request<Json[]>("fixture.list", {}),
-      peer.request<Json[]>("room.list", null),
-    ]);
-    if (fixtureResult.status === "fulfilled") setFixtures(fixtureResult.value);
-    if (roomResult.status === "fulfilled") setRooms(roomResult.value);
-    if (roomResult.status === "rejected") setError(message(roomResult.reason));
-    else if (fixtureResult.status === "rejected") setError(`Match schedule unavailable: ${message(fixtureResult.reason)}`);
+  const load = useCallback(() => {
+    if (loadInFlight.current) return loadInFlight.current;
+    const task = (async () => {
+      setError(null);
+      const [fixtureResult, roomResult] = await Promise.allSettled([
+        peer.request<Json[]>("fixture.list", {}),
+        peer.request<Json[]>("room.list", null),
+      ]);
+      if (fixtureResult.status === "fulfilled") setFixtures(fixtureResult.value);
+      if (roomResult.status === "fulfilled") setRooms(roomResult.value);
+      if (roomResult.status === "rejected") setError(message(roomResult.reason));
+      else if (fixtureResult.status === "rejected") setError(`Match schedule unavailable: ${message(fixtureResult.reason)}`);
+    })().finally(() => {
+      if (loadInFlight.current === task) loadInFlight.current = null;
+    });
+    loadInFlight.current = task;
+    return task;
   }, [peer.request]);
 
   useEffect(() => { void load(); }, [load, peer.revision]);
@@ -453,19 +472,27 @@ function RoomScreen({ peer, roomId, session, onSession, onSettings, onBack }: { 
   const [busy, setBusy] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const loadInFlight = useRef<Promise<void> | null>(null);
 
-  const load = useCallback(async () => {
-    setRefreshing(true); setError(null);
-    try {
-      const [nextRoom, nextState, nextDetails, page] = await Promise.all([
-        peer.request<Json | null>("room.get", { roomId }),
-        peer.request<Json>("room.state", { roomId }),
-        peer.request<Json | null>("room.details", { roomId }),
-        peer.request<Json>("room.history.page", { roomId, limit: 100 }),
-      ]);
-      setRoom(nextRoom); setState(nextState); setDetails(nextDetails); setHistory(chronologicalPage(page.items));
-    } catch (reason) { setError(message(reason)); }
-    finally { setRefreshing(false); }
+  const load = useCallback(() => {
+    if (loadInFlight.current) return loadInFlight.current;
+    const task = (async () => {
+      setRefreshing(true); setError(null);
+      try {
+        const [nextRoom, nextState, nextDetails, page] = await Promise.all([
+          peer.request<Json | null>("room.get", { roomId }),
+          peer.request<Json>("room.state", { roomId }),
+          peer.request<Json | null>("room.details", { roomId }),
+          peer.request<Json>("room.history.page", { roomId, limit: 100 }),
+        ]);
+        setRoom(nextRoom); setState(nextState); setDetails(nextDetails); setHistory(chronologicalPage(page.items));
+      } catch (reason) { setError(message(reason)); }
+      finally { setRefreshing(false); }
+    })().finally(() => {
+      if (loadInFlight.current === task) loadInFlight.current = null;
+    });
+    loadInFlight.current = task;
+    return task;
   }, [peer.request, roomId]);
 
   useEffect(() => { void load(); }, [load, peer.revision]);

@@ -741,8 +741,8 @@ Final verification after these changes:
   publisher, answer attestor, Blind Pairing admission, and encrypted Autobase room operations. The
   personas are disclosed fictional room participants; fixture state, event time, calls, settlements,
   and receipts are restricted to what the signed capture proves.
-- Twelve rooms are complete and persisted: the first three tournament fixtures, USA–Paraguay,
-  Qatar–Switzerland, all four quarter-finals, France–Spain's semi-final, France–England's third-place match, and
+- Thirteen rooms are complete and persisted: the first three tournament fixtures, USA–Paraguay,
+  Qatar–Switzerland, Brazil–Morocco, all four quarter-finals, France–Spain's semi-final, France–England's third-place match, and
   Spain–Argentina's final. The
   chronological corpus is `data/world-cup-2026/showcase-corpus.json`. The final archive was fetched at
   `2026-07-20T01:05:26.622Z`; its authenticated raw SSE contains 1,387 source records and terminal
@@ -771,17 +771,25 @@ Final verification after these changes:
   rejected an answer submitted four seconds after the goal call's 30-second lock; all three answers
   were moved inside the real post-confirmation window, and the full integration then passed in 95.7
   seconds. Kickoff calls voided by preserved archive gaps are not answered or rewritten.
+- Brazil–Morocco fixture `17588386` is backed by 982 provenance-valid source records and terminal
+  `game_finalised` sequence 982. Every captured artifact hash matches its sidecar provenance. Production
+  replay proves Morocco's 20th-minute opening goal, Brazil's 31st-minute equaliser, the 1–1 half-time and
+  terminal states, and settled kickoff and half-time calls; calls voided by preserved feed gaps are omitted.
+  Its room has 32 chronological actions, seven attested answers, pre-match scoreline positions, a poll,
+  replies, quotes, supported reactions, stoppage-time pressure, and exact-result/right-wrong receipts. The
+  real signed publisher, Blind Pairing, Autobase, and answer-attestor integration passed after the room's
+  join/pre-match timestamps were aligned to its actual kickoff order.
 - The persistent provisioner ledger is
   `apps/desktop/.local-development/historical-showcase/rooms.json`; it contains protected invite
   material and must not be printed or committed. The provisioner's console summary now deliberately
-  omits invite codes while the mode-0600 ledger retains them for device admission. All twelve rooms
+  omits invite codes while the mode-0600 ledger retains them for device admission. All thirteen rooms
   were verified in the running desktop
   projection with `scripts/desktop-cdp.mjs`, then joined sequentially and verified on the physical
   Infinix X683 with `scripts/android-join-showcase.mjs` and
-  `scripts/android-verify-showcase.mjs`. Android reported all twelve expected fixture IDs from its own
+  `scripts/android-verify-showcase.mjs`. Android reported all thirteen expected fixture IDs from its own
   persisted room list. Nine signed physical-iPhone XCTest joins also passed individually, with result
   bundles under `evidence/physical-e2e/ios-showcase-*.xcresult`; all three Apple mobile devices were
-  offline on 2026-07-20 when the eleventh and twelfth rooms were ready, so no new iOS success is claimed.
+  offline on 2026-07-20 when the eleventh through thirteenth rooms were ready, so no new iOS success is claimed.
 - Cross-runtime proof replay now derives the expected Hypercore key from the serialized manifest and
   compares canonical hex values; it never relies on Node/Bare Buffer identity. Mobile startup also
   prefers a newer verified bundled manifest over an older verified device cache, preventing a stale
@@ -799,7 +807,7 @@ Final verification after these changes:
   `66c3bb39cb2c3a36ba5431c209e20570194120ce110aa0dd995043fea5de6407`.
   The temporary recovery copies were deleted after the build. Installing this artifact over the
   attached development-signed app correctly failed with `INSTALL_FAILED_UPDATE_INCOMPATIBLE`; the
-  device was not uninstalled or cleared, so its twelve-room showcase state remains intact. Android
+  device was not uninstalled or cleared, so its accumulated showcase state remains intact. Android
   invite automation now clears the Compose field to a verified empty value and enters long canonical
   invites as paced, prefix-checked chunks without retapping and relocating the horizontal cursor.
 - A cold Android restart with eleven rooms exposed a real scale boundary: `RoomManager.open()` reopened
@@ -808,7 +816,13 @@ Final verification after these changes:
   legitimate large-corpus cold start. The regenerated Bare worker was embedded in a local Release APK,
   installed in place without clearing data, and reached the room list in 32.3 seconds with eleven rooms.
   After Qatar–Switzerland joined, a second physical cold restart reached ready in 31.2 seconds and the
-  verifier again observed all twelve fixture IDs.
+  verifier again observed all twelve fixture IDs. Brazil–Morocco admission then exposed a second scale
+  boundary: bursty durable room projections caused the mobile UI to launch overlapping room, detail,
+  history, fixture, and room-list reads until the controller's 128-request safety ceiling correctly
+  rejected another join. Mobile projection revisions are now debounced and both home and room refreshes
+  coalesce onto a single in-flight read set instead of weakening that ceiling. The corrected local Release
+  APK installed in place, cold-started the prior twelve stores in 30 seconds, admitted Brazil–Morocco
+  through live Blind Pairing, and verified all thirteen persisted fixture IDs.
 - Verification during this handoff passed all 19 mobile tests, mobile typecheck, desktop syntax checks,
   14 focused fixture-proof/room-operation/projection tests, six authenticated archive/reducer tests,
   and the real four-room historical integration
@@ -819,6 +833,6 @@ Final verification after these changes:
   `npm run typecheck`, repository-wide `npm run lint`, and the full Next.js production build
   (rerun outside the sandbox because Turbopack requires a local worker port). The final room separately
   passed the real fixture/pairing/Autobase/attestor integration in 66 seconds. The physical iPhone
-  remained offline before it could join the final, USA–Paraguay, or Qatar–Switzerland; this does not
-  invalidate the nine retained per-room XCTest result bundles, but a twelve-room accumulated assertion should be run
+  remained offline before it could join the final, USA–Paraguay, Qatar–Switzerland, or Brazil–Morocco; this does not
+  invalidate the nine retained per-room XCTest result bundles, but a thirteen-room accumulated assertion should be run
   after reconnecting it with `scripts/ios-verify-showcase.mjs`.

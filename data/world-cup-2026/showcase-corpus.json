@@ -29,6 +29,11 @@
       "archive": "../resources/fixtures/world-cup-2026/17588308-qatar-vs-switzerland"
     },
     {
+      "fixtureId": "17588386",
+      "seed": "data/world-cup-2026/17588386-brazil-vs-morocco/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588386-brazil-vs-morocco"
+    },
+    {
       "fixtureId": "18209181",
       "seed": "data/world-cup-2026/18209181-france-vs-morocco/room-seed.json",
       "archive": "../resources/fixtures/world-cup-2026/18209181-france-vs-morocco"
