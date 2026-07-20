@@ -708,12 +708,12 @@ Final verification after these changes:
   production build instead of producing an unsafe link.
 - The GitHub repository is public, and desktop/mobile consumer release configs now pin the live
   authority documented below. The current verified artifacts are published at
-  `https://github.com/danielAsaboro/fulltime/releases/tag/v0.1.0-beta.2`; the Vercel production site
+  `https://github.com/danielAsaboro/fulltime/releases/tag/v0.1.0-beta.3`; the Vercel production site
   at `https://www.usefulltime.xyz/` renders those exact macOS and Android asset URLs and links iPhone
-  users to the real Xcode source-build path. The beta.2 GitHub asset digests match
+  users to the real Xcode source-build path. The beta.3 GitHub asset digests match
   `release/SHA256SUMS`: macOS
-  `0cbd9a22c12fdd8afc041b80c45a09ee5bf6a3bda2b3564af4be0c5a61c3d56e`, Android
-  `d30380cadc94a34a5b0a5ee820ef2ac3b4176c09ab909e5aaf31add7bd996ae8`. The
+  `d11ef268c2f850ccbc8d4ffe80a231b2e59f45769d01c78ab723ed7d0a66ba4d`, Android
+  `07a2125f0bcac4fb06c3eaa527d080c3e206ed8b460853df382cb117110a5643`. The
   local-development APK remains outside that release boundary.
 
 ### Live release authority
@@ -829,6 +829,14 @@ Final verification after these changes:
   HyperDHT, Blind Pairing, encrypted Autobase replication, production call projection, answer-attestor,
   settlement, and receipt path with 34 actions and four members. The remaining generated corpus still
   needs the single persistent provisioning and device-verification pass described below.
+- The earlier interrupted Ivory Coast–Ecuador append left two unreferenced real local rooms while its
+  global opening-goal call had already settled. `apps/desktop/scripts/recover-ivory-coast-showcase.js`
+  locates the unique four-member partial room with three attested opening-call answers, replays the
+  remaining authenticated archive through the same publisher, appends only the missing durable actions,
+  verifies replication, regenerates admission, and atomically records the room. It recovered fixture
+  `17588239` with all 35 current seed actions without deleting either partial room or manufacturing a
+  retroactive answer. The persistent ledger therefore contains eighteen completed rooms before the
+  remaining first-time fixtures are provisioned.
 - The persistent provisioner ledger is
   `apps/desktop/.local-development/historical-showcase/rooms.json`; it contains protected invite
   material and must not be printed or committed. The provisioner's console summary now deliberately
