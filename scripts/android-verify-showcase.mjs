@@ -32,7 +32,11 @@ const expected = (provisioned.rooms ?? []).map((room) => {
   const seedPath = directory && path.join(dataRoot, directory, "room-seed.json");
   if (!seedPath || !fs.existsSync(seedPath)) throw new Error(`Room seed is unavailable for fixture ${room.fixtureId}`);
   const seed = JSON.parse(fs.readFileSync(seedPath, "utf8"));
-  const fixturePath = path.resolve(path.dirname(seedPath), seed.evidence?.fixture ?? "archive/fixture.json");
+  const fixtureReference = seed.evidence?.fixture ?? "archive/fixture.json";
+  const seedRelativeFixturePath = path.resolve(path.dirname(seedPath), fixtureReference);
+  const fixturePath = fs.existsSync(seedRelativeFixturePath)
+    ? seedRelativeFixturePath
+    : path.resolve(repoRoot, fixtureReference);
   const fixture = JSON.parse(fs.readFileSync(fixturePath, "utf8"));
   return { fixtureId: String(room.fixtureId), participant1: fixture.Participant1, participant2: fixture.Participant2 };
 });

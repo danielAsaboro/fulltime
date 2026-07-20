@@ -149,7 +149,18 @@ async function main () {
       storage: storageRoot,
       fixtureFeedKey: descriptor.key,
       answerAttestor,
-      rooms: corpus.fixtures.map((fixture) => ({ fixtureId: fixture.fixtureId, ...persisted.rooms[fixture.fixtureId] }))
+      rooms: corpus.fixtures.map((fixture) => {
+        const room = persisted.rooms[fixture.fixtureId]
+        return {
+          fixtureId: fixture.fixtureId,
+          roomId: room.roomId,
+          actionCount: room.actionCount,
+          memberCount: room.memberCount,
+          seededItemCount: room.seededItemCount,
+          provisionedAt: room.provisionedAt,
+          inviteRefreshedAt: room.inviteRefreshedAt
+        }
+      })
     }, null, 2)}\n`)
     process.stdout.write('[showcase] peers remain online; use the room invite codes on desktop, Android, and iPhone.\n')
     await waitForShutdown()

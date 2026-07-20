@@ -19,6 +19,11 @@
       "archive": "../resources/fixtures/world-cup-2026/17926604-canada-vs-bosnia-herzegovina"
     },
     {
+      "fixtureId": "17588396",
+      "seed": "data/world-cup-2026/17588396-usa-vs-paraguay/room-seed.json",
+      "archive": "../resources/fixtures/world-cup-2026/17588396-usa-vs-paraguay"
+    },
+    {
       "fixtureId": "18209181",
       "seed": "data/world-cup-2026/18209181-france-vs-morocco/room-seed.json",
       "archive": "../resources/fixtures/world-cup-2026/18209181-france-vs-morocco"

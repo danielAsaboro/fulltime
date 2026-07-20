@@ -155,28 +155,61 @@ function inviteInput() {
   return input;
 }
 
+function waitForInviteInput(timeoutMs) {
+  const deadline = Date.now() + timeoutMs;
+  let lastError = null;
+  while (Date.now() < deadline) {
+    try {
+      return inviteInput();
+    } catch (error) {
+      lastError = error;
+      sleep(250);
+    }
+  }
+  throw new Error(`Android invite input did not become editable within ${timeoutMs}ms: ${lastError?.message ?? "unavailable"}`);
+}
+
+function clearInviteInput() {
+  for (let attempt = 0; attempt < 80; attempt++) {
+    const input = inviteInput();
+    const value = input.text === "Paste room invite" ? "" : input.text;
+    if (value.length === 0) return;
+    const [left, top, right, bottom] = input.bounds;
+    adb("shell", "input", "tap", String(Math.max(left + 1, right - 12)), String(Math.round((top + bottom) / 2)));
+    const deleteCount = Math.min(16, value.length);
+    adb("shell", "input", "keyevent", ...Array(deleteCount).fill("67"));
+    sleep(500);
+  }
+  throw new Error("Android invite input could not be cleared deterministically");
+}
+
 function inputInvite(invite) {
   if (!/^ft2\.[a-z0-9.]+$/.test(invite)) throw new Error("Provisioned invite is not a canonical FullTime v2 code");
   let input = inviteInput();
   const [left, top, right, bottom] = input.bounds;
-  adb("shell", "input", "tap", String(Math.round((left + right) / 2)), String(Math.round((top + bottom) / 2)));
+  adb("shell", "input", "tap", String(Math.max(left + 1, right - 12)), String(Math.round((top + bottom) / 2)));
   if (input.text && input.text !== "Paste room invite") {
-    const clearCount = input.text.length + 8;
-    for (const keyCode of ["67", "112"]) {
-      for (let offset = 0; offset < clearCount; offset += 80) {
-        adb("shell", "input", "keyevent", ...Array(Math.min(80, clearCount - offset)).fill(keyCode));
-      }
-    }
+    clearInviteInput();
   }
-  for (let offset = 0; offset < invite.length; offset += 120) {
-    const chunk = invite.slice(offset, offset + 120);
+  const inputChunkSize = 24;
+  for (let offset = 0; offset < invite.length; offset += inputChunkSize) {
+    const chunk = invite.slice(offset, offset + inputChunkSize);
     adb("shell", "input", "text", chunk);
-    input = inviteInput();
     const expected = invite.slice(0, offset + chunk.length);
+    const deadline = Date.now() + 5_000;
+    do {
+      input = inviteInput();
+      if (input.text === expected) break;
+      sleep(100);
+    } while (Date.now() < deadline);
     if (input.text !== expected) {
       const mismatch = [...expected].findIndex((character, index) => input.text[index] !== character);
-      throw new Error(`Android invite input diverged at ${mismatch} for fixture admission`);
+      throw new Error(`Android invite input diverged at ${mismatch < 0 ? input.text.length : mismatch} for fixture admission`);
     }
+    // `adb input text` returns before every key event has drained through some
+    // physical-device IMEs. Keep batches paced so a later tap cannot interrupt
+    // the tail of the preceding canonical invite segment.
+    sleep(1_000);
   }
 }
 
@@ -189,7 +222,7 @@ for (const fixtureId of requestedFixtureIds) {
   if (!fixture?.participant1 || !fixture?.participant2) throw new Error(`Fixture identity is unavailable for ${fixtureId}`);
   ensureHome();
   tapNode("HAVE AN INVITE?");
-  waitFor("Paste room invite", 15_000);
+  waitForInviteInput(15_000);
   inputInvite(room.inviteCode);
   adb("shell", "input", "keyevent", "4");
   tapAfterScrolling("Join with pasted invite");
